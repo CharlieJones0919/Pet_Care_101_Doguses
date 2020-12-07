@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour
 
 
     /** \fn Awake 
-     *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object before runtime.
+     *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object before runtime and sets the camera's initial orientation values.
      */
     private void Awake()
     {
