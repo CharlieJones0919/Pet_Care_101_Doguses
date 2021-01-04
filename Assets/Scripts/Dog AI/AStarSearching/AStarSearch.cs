@@ -1,4 +1,4 @@
-﻿/** \file AStarSearching.cs
+﻿/** \file AStarSearch.cs
 *  \brief An implementation of A* searching.
 */
 using System.Collections;
@@ -6,23 +6,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-/** \class AStarSearching
+/** \class AStarSearch
 *  \brief Contains the functions required to execute and A* search for a path to a goal node.
 */
-public class AStarSearching : MonoBehaviour
+public class AStarSearch : MonoBehaviour
 {
     // Grid Map Data
     private ASNode[,] grid;                         //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
     [SerializeField] private Vector2 gridSize;      //!< Size of thr grid on the X & Y axes.
     [SerializeField] private Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
-    [SerializeField] private float nodeSize = 3f;   //!< Translation of physical world scale to node size.
-    public LayerMask obstacleLayer;                 //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
+    [SerializeField] private float nodeSize;   //!< Translation of physical world scale to node size.
+    [SerializeField] private LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
 
     // Node Set Data
     private Heap<ASNode> openSet;        //!< A heap class instance for nodes that should be looked at for traversal next to be stored in.
     private HashSet<ASNode> closedSet;   //!< A list for the nodes which have already been considered for the path.
     private ASNode currentNode;          //!< The node the search is currently in and calculating from.
-
 
     // Path Data
     [SerializeField] private Vector3 rootNodePos;    //!< The starting node of the path.
@@ -31,19 +30,16 @@ public class AStarSearching : MonoBehaviour
     [SerializeField] private bool searching = false; //!< If a search is currently occurring.
     private List<ASNode> m_path;                     //!< A path composed of nodes which can be used to reach the goal node.
 
-
     /** \fn Start
     *  \brief Initialises the grid data from the world when runtime starts then creates a grid map based on this data.
     */
     private void Start()
     {
         // Set grid size to the ground plane's GameObject scale. (This script should be attached to the ground plane).
-        gridSize = transform.localScale * 10f;       
+        gridSize = new Vector3(transform.localScale.x * 10.0f, transform.localScale.z * 10.0f);       
         // Calculate and set how many nodes high and wide the ground plane (and subsequent grid map) should be divided into.
         gridNodes = new Vector2(Mathf.RoundToInt(gridSize.x / nodeSize), Mathf.RoundToInt(gridSize.y / nodeSize));
-        // Set the non-traversable object layer.
-        obstacleLayer = LayerMask.GetMask("PathfindingObstacle");
-       
+
         // Populate the grid with nodes based on its now initialised data.
         CreateGrid();
     }
@@ -68,9 +64,8 @@ public class AStarSearching : MonoBehaviour
                 // Calculate the node's physical position in world space based on its position in the grid map.
                 Vector3 nodePos = gridBottomLeft + Vector3.right * (i * nodeSize + (nodeSize / 2)) + Vector3.forward * (j * nodeSize + (nodeSize / 2));
 
-
                 // Set whether or not the node is traverable: if it doesn't contain any objects in the obstacle layer.
-                bool traversable = !(Physics.CheckSphere(nodePos, nodeSize / 2, obstacleLayer));
+                bool traversable = !(Physics.CheckSphere(nodePos, nodeSize / 2, obstacleLayerMask));
 
                 // Add the node to grid map with its newly found data AS a node.
                 grid[i, j] = new ASNode(nodePos, traversable, i, j);
