@@ -74,7 +74,7 @@ public class DogAI : MonoBehaviour
         }
 
         //If path is not null and more than 1.
-        if ((path != null) && (path.Count > 0))
+        if ((path != null) && (path.Count >= 1))
         {
             //Clear old m_foundPath.
             m_foundPath.Clear();
@@ -84,10 +84,6 @@ public class DogAI : MonoBehaviour
             {
                 m_foundPath.Add(item.m_worldPos);
             }
-        }
-        else
-        {
-           FindPathTo(point);
         }
     }
 
@@ -101,7 +97,7 @@ public class DogAI : MonoBehaviour
         if (point != null)
         {
             //If a path has been found.
-            if (m_foundPath.Count >= 1)
+            if (m_foundPath.Count > 0)
             {
                 foreach (Vector3 node in m_foundPath)
                 {
@@ -119,15 +115,15 @@ public class DogAI : MonoBehaviour
                     }
                 }
             }
-            else if (Vector3.Distance(transform.position, point.transform.position) > m_foundDistance)
+            else 
             {
                 m_randomNodeFound = false;
-                FindPathTo(point);
-                return;
-            }
-            else
-            {
-                m_randomNodeFound = false;
+
+                if (Vector3.Distance(transform.position, point.transform.position) > m_foundDistance)
+                {
+                    FindPathTo(point);
+                }
+
                 DogLookAt(point.transform.position);
                 return;
             }
@@ -144,11 +140,6 @@ public class DogAI : MonoBehaviour
         {
             StartCoroutine(GenerateRandomPointInWorld());
         }
-    }
-
-    public void FindNewRandomPoint()
-    {
-        m_randomNodeFound = false;
     }
 
     IEnumerator GenerateRandomPointInWorld()

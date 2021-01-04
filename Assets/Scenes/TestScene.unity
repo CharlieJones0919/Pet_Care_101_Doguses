@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20338581}
   m_LocalRotation: {x: -0, y: 0.10360227, z: -0, w: 0.99461883}
-  m_LocalPosition: {x: 0.1, y: 1, z: 9.56}
+  m_LocalPosition: {x: -1.4, y: 1, z: 2.3}
   m_LocalScale: {x: 32.95, y: 3, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -824,9 +824,6 @@ MonoBehaviour:
   m_rotationSpeed: 1
   m_foundDistance: 1.5
   groundPlane: {fileID: 1238925872}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,7 +1344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680516387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.56, y: 0.5, z: -10.48}
+  m_LocalPosition: {x: 8.2, y: 0.5, z: -14.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
