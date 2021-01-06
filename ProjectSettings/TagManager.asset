@@ -5,6 +5,23 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Dog
+  - AgeText
+  - NameText
+  - BreedText
+  - NameTextbox
+  - HungerValue
+  - AttentionValue
+  - RestValue
+  - HygieneValue
+  - HealthValue
+  - HappinessValue
+  - BondValue
+  - S_ToleranceValue
+  - S_AffectionValue
+  - S_IntelligenceValue
+  - S_EnergyValue
+  - S_ObedienceValue
   layers:
   - Default
   - TransparentFX

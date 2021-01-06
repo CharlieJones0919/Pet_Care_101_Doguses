@@ -11,17 +11,16 @@ using UnityEngine;
 */
 public class Pathfinding : MonoBehaviour
 {
+    private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
+    [SerializeField] private GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
+
     [SerializeField] private float m_moveSpeed;         //!< Speed of movement.
     [SerializeField] private float m_rotationSpeed;     //!< Speed of rotation.
     [SerializeField] private float m_foundDistance;     //!< Distance the dog object must be to a node/point for it to be considered "found" and removed from the path list.
 
-    private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
     private List<Vector3> m_foundPath = new List<Vector3>();    //!< Requested path to a destination as a list of Vector3 positions.
     private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
     private GameObject m_randomPoint;                   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
-
-    public GameObject testTarget;                       //!< Test target object to find paths to.
-    [SerializeField] private GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
 
     /** \class Start
     *  \brief Instantiate variable values when application starts.
@@ -30,15 +29,6 @@ public class Pathfinding : MonoBehaviour
     {
         m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
         m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
-    }
-
-    /** \class Update
-    *  \brief ...
-    */
-    private void Update()
-    {
-        //FollowPathToRandomPoint();
-        FollowPathTo(testTarget);
     }
 
     /** \fn FindPathTo

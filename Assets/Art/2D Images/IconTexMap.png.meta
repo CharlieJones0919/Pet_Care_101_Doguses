@@ -10,7 +10,19 @@ TextureImporter:
     second: CamRotation
   - first:
       213: 3900886196572870508
-    second: IconTexMap_2
+    second: BackButton
+  - first:
+      213: 301900159468245231
+    second: EditFieldButton
+  - first:
+      213: -3160320107578275879
+    second: EnterButton
+  - first:
+      213: -1447428141550297706
+    second: StarsEmpty
+  - first:
+      213: 2740894969695140467
+    second: StarsFull
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -157,6 +169,111 @@ TextureImporter:
       bones: []
       spriteID: 20bef5912622e2990800000000000000
       internalID: -7408946532250031358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackButton
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 767
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6753f7f35bb22630800000000000000
+      internalID: 3900886196572870508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EditFieldButton
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 767
+        width: 33
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe01db27890903400800000000000000
+      internalID: 301900159468245231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnterButton
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 737
+        width: 46
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d7c5433b994424d0800000000000000
+      internalID: -3160320107578275879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarsEmpty
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 686
+        width: 226
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69d9df826c3b9ebe0800000000000000
+      internalID: -1447428141550297706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StarsFull
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 635
+        width: 226
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37a755bf37d990620800000000000000
+      internalID: 2740894969695140467
       vertices: []
       indices: 
       edges: []
