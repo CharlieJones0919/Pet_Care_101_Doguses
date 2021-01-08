@@ -8,9 +8,9 @@ public class InfoPanel : MonoBehaviour
 {
     public Dog focusedDog;
 
-    public Dictionary<string, Text> textDisplayUI = new Dictionary<string, Text>();
-    public Dictionary<string, Slider> dynamicValueDisplayUI = new Dictionary<string, Slider>();
-    public Dictionary<string, Slider> dailyValueDisplayUI = new Dictionary<string, Slider>();
+    public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
+    public Dictionary<string, Slider> careValueDisplayUI = new Dictionary<string, Slider>();
+    public Dictionary<string, Slider> personalityValueDisplayUI = new Dictionary<string, Slider>();
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public class InfoPanel : MonoBehaviour
     {
         if (focusedDog != null)
         {
-            foreach (KeyValuePair<string, Text> textElement in textDisplayUI)
+            foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
             {
                 switch (textElement.Key)
                 {
@@ -42,30 +42,22 @@ public class InfoPanel : MonoBehaviour
                         break;
                     default:
                         if (textElement.Key != "NameTextbox")
-                            Debug.Log("Attempting to set an incorrectly tagged Text UI element.");
+                        {
+                            Debug.Log("Attempting to set incorrectly tagged Text UI element: " + textElement.Key);
+                        }
                         break;
                 }
             }
 
-            foreach (KeyValuePair<string, Slider> valueElement in dailyValueDisplayUI)
+            foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
             {
-                switch (valueElement.Key)
+                foreach (Property propValue in focusedDog.personalityValues)
                 {
-                    case ("S_ToleranceValue"):
-                        valueElement.Value.value = focusedDog.m_tolerance;
+                    if (sliderValue.Key == propValue.GetPropertyName())
+                    {
+                        sliderValue.Value.value = propValue.GetValue();
                         break;
-                    case ("S_AffectionValue"):
-                        valueElement.Value.value = focusedDog.m_affection;
-                        break;
-                    case ("S_IntelligenceValue"):
-                        valueElement.Value.value = focusedDog.m_intelligence;
-                        break;
-                    case ("S_EnergyValue"):
-                        valueElement.Value.value = focusedDog.m_energy;
-                        break;
-                    case ("S_ObedienceValue"):
-                        valueElement.Value.value = focusedDog.m_obedience;
-                        break;
+                    }
                 }
             }
         }
@@ -75,34 +67,15 @@ public class InfoPanel : MonoBehaviour
     {
         if (focusedDog != null)
         {
-            foreach (KeyValuePair<string, Slider> valueElement in dynamicValueDisplayUI)
+            foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
             {
-                switch (valueElement.Key)
+                foreach (Property propValue in focusedDog.careValues)
                 {
-                    case ("HungerValue"):
-                        valueElement.Value.value = focusedDog.m_hunger;
+                    if (sliderValue.Key == propValue.GetPropertyName())
+                    {
+                        sliderValue.Value.value = propValue.GetValue();
                         break;
-                    case ("AttentionValue"):
-                        valueElement.Value.value = focusedDog.m_attention;
-                        break;
-                    case ("RestValue"):
-                        valueElement.Value.value = focusedDog.m_rest;
-                        break;
-                    case ("HygieneValue"):
-                        valueElement.Value.value = focusedDog.m_hygiene;
-                        break;
-                    case ("HealthValue"):
-                        valueElement.Value.value = focusedDog.m_health;
-                        break;
-                    case ("HappinessValue"):
-                        valueElement.Value.value = focusedDog.m_happiness;
-                        break;
-                    case ("BondValue"):
-                        valueElement.Value.value = focusedDog.m_bond;
-                        break;
-                    default:
-                        Debug.Log("Attempting to set an incorrectly tagged Slider UI element.");
-                        break;
+                    }
                 }
             }
         }
@@ -124,13 +97,12 @@ public class InfoPanel : MonoBehaviour
         {
             focusedDog.m_name = name;
 
-            foreach (KeyValuePair<string, Text> textElement in textDisplayUI)
+            foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
             {
-                switch (textElement.Key)
+                if (textElement.Key == "NameText")
                 {
-                    case ("NameText"):
-                        textElement.Value.text = focusedDog.m_name;
-                        break;
+                    textElement.Value.text = focusedDog.m_name;
+                    break;
                 }
             }
 
@@ -140,7 +112,7 @@ public class InfoPanel : MonoBehaviour
 
     public void ToggleNameInputField(bool activeState)
     {
-        foreach (KeyValuePair<string, Text> textElement in textDisplayUI)
+        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
         {
             if (textElement.Key == "NameTextbox")
             {

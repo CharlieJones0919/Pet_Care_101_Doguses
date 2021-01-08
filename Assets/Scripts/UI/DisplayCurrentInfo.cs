@@ -9,20 +9,30 @@ public class DisplayCurrentInfo : MonoBehaviour
 
     private void Start()
     {
+
+
         if (GetComponent<InputField>() != null)
         {
-            infoPanel.GetComponent<InfoPanel>().textDisplayUI.Add(transform.tag, GetComponent<InputField>().textComponent);
+            infoPanel.GetComponent<InfoPanel>().generalDataDisplayUI.Add(transform.tag, GetComponent<InputField>().textComponent);
         }
         else if (GetComponent<Text>() != null)
         {
-            infoPanel.GetComponent<InfoPanel>().textDisplayUI.Add(transform.tag, GetComponent<Text>());
+            infoPanel.GetComponent<InfoPanel>().generalDataDisplayUI.Add(transform.tag, GetComponent<Text>());
         }
         else if (GetComponent<Slider>() != null)
         {
-            if (transform.tag.Substring(0, 2) == "S_")
-            infoPanel.GetComponent<InfoPanel>().dailyValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
-            else
-            infoPanel.GetComponent<InfoPanel>().dynamicValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
+            switch (transform.parent.parent.tag)
+            {
+                case ("CareData"):
+                    infoPanel.GetComponent<InfoPanel>().careValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
+                    break;
+                case ("PersonalityData"):
+                    infoPanel.GetComponent<InfoPanel>().personalityValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
+                    break;
+                default:
+                    Debug.Log("Invalid Property Slider Tag: " + transform.parent.parent.tag);
+                    break;
+            }
         }
         else
         {

@@ -10,18 +10,20 @@ TagManager:
   - NameText
   - BreedText
   - NameTextbox
-  - HungerValue
-  - AttentionValue
-  - RestValue
-  - HygieneValue
-  - HealthValue
-  - HappinessValue
-  - BondValue
-  - S_ToleranceValue
-  - S_AffectionValue
-  - S_IntelligenceValue
-  - S_EnergyValue
-  - S_ObedienceValue
+  - Hunger
+  - Attention
+  - Rest
+  - Hygiene
+  - Health
+  - Happiness
+  - Bond
+  - Tolerance
+  - Intelligence
+  - Energy
+  - Obedience
+  - PersonalityData
+  - CareData
+  - Affection
   layers:
   - Default
   - TransparentFX
