@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayCurrentInfo : MonoBehaviour
+public class GetUIComponent : MonoBehaviour
 {
     [SerializeField] private GameObject infoPanel;
 
     private void Start()
     {
-
-
         if (GetComponent<InputField>() != null)
         {
             infoPanel.GetComponent<InfoPanel>().generalDataDisplayUI.Add(transform.tag, GetComponent<InputField>().textComponent);

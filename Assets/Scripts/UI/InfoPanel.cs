@@ -51,7 +51,7 @@ public class InfoPanel : MonoBehaviour
 
             foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.personalityValues)
+                foreach (Property propValue in focusedDog.m_personalityValues)
                 {
                     if (sliderValue.Key == propValue.GetPropertyName())
                     {
@@ -63,13 +63,33 @@ public class InfoPanel : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        focusedDog = null;
+
+        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
+        {
+            textElement.Value.text = "UNKNOWN - NO FOCUS";
+        }
+
+        foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
+        {
+            sliderValue.Value.value = 0;
+        }
+
+        foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
+        {
+            sliderValue.Value.value = 0;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (focusedDog != null)
         {
             foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.careValues)
+                foreach (Property propValue in focusedDog.m_careValues)
                 {
                     if (sliderValue.Key == propValue.GetPropertyName())
                     {
@@ -84,11 +104,6 @@ public class InfoPanel : MonoBehaviour
     public void SetFocusDog(Dog focus)
     {
         focusedDog = focus;
-    }
-
-    public void ClearFocusDog()
-    {
-        focusedDog = null;
     }
 
     public void SetNewDogName(string name)
