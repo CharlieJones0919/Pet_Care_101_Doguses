@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class InfoPanel : MonoBehaviour
+public class DataDisplay : MonoBehaviour
 {
-    public Dog focusedDog;
+    [SerializeField] private GameObject timeController;
+    [SerializeField] private Dog focusedDog;
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
     public Dictionary<string, Slider> careValueDisplayUI = new Dictionary<string, Slider>();
@@ -14,6 +14,32 @@ public class InfoPanel : MonoBehaviour
 
     private void Start()
     {
+        bool[] textSetSuccessfully = new bool[2] { false, false };
+
+        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
+        {
+            if (textElement.Key == "DateText")
+            {
+                timeController.GetComponent<DogController>().gameTime.dateTextbox = textElement.Value;
+                textSetSuccessfully[0] = true;
+            }
+            else if (textElement.Key == "TimeText")
+            {
+                timeController.GetComponent<DogController>().gameTime.timeTextbox = textElement.Value;
+                textSetSuccessfully[1] = true;
+            }
+        }
+
+        if (textSetSuccessfully[0] && textSetSuccessfully[1])
+        {
+            generalDataDisplayUI.Remove("DateText");
+            generalDataDisplayUI.Remove("TimeText");
+        }
+        else
+        {
+            Debug.Log("Date and Time Textboxes Failed to be Set");
+        }
+
         gameObject.SetActive(false);
     }
 
@@ -69,7 +95,7 @@ public class InfoPanel : MonoBehaviour
 
         foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
         {
-            textElement.Value.text = "UNKNOWN - NO FOCUS";
+            textElement.Value.text = "UNKNOWN - " + textElement.Key;
         }
 
         foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
@@ -89,7 +115,7 @@ public class InfoPanel : MonoBehaviour
         {
             foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.m_careValues)
+                foreach (Property propValue in focusedDog.m_careValues.Keys)
                 {
                     if (sliderValue.Key == propValue.GetPropertyName())
                     {
@@ -104,6 +130,14 @@ public class InfoPanel : MonoBehaviour
     public void SetFocusDog(Dog focus)
     {
         focusedDog = focus;
+    }
+
+    public GameObject GetFocusDog()
+    {
+        if (focusedDog != null)
+            return focusedDog.gameObject;
+        else
+            return null;
     }
 
     public void SetNewDogName(string name)

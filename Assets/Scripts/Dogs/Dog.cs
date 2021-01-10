@@ -6,30 +6,27 @@ using UnityEditor;
 
 public class Dog : MonoBehaviour
 {
-    // public GameObject testTarget;  //!< Test target object to find paths to.
-
-    private DogController m_dogController;
+    public DogController m_controller;
 
     [SerializeField] private GameObject infoPanelObject;
-    private InfoPanel infoPanelScript;
+    private DataDisplay UIOutputScript;
     private Pathfinding navigationScript;
 
     public string m_name;
     public string m_breed;
     public int m_age;
 
-    public List<Property> m_careValues = new List<Property>();
+    public Dictionary<Property, float> m_careValues = new Dictionary<Property, float>();
     public List<Property> m_personalityValues = new List<Property>();
 
     private void Awake()
     {
-        m_dogController = transform.parent.GetComponent<DogController>();
-        m_dogController.InitializeCareProperties(m_careValues);
-        m_dogController.InitializePersonalityProperties(m_personalityValues);
+        m_controller = transform.parent.GetComponent<DogController>();
+        m_controller.InitializeCareProperties(m_careValues);
+        m_controller.InitializePersonalityProperties(m_personalityValues);
         
-
         navigationScript = GetComponent<Pathfinding>();
-        infoPanelScript = infoPanelObject.GetComponent<InfoPanel>();
+        UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
 
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
         newStates.Add(typeof(Hungry), new Hungry(this));
@@ -55,8 +52,6 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(Die), new Die(this));
 
         GetComponent<FiniteStateMachine>().SetStates(newStates);
-
-
     }
 
     // Update is called once per frame
@@ -66,11 +61,17 @@ public class Dog : MonoBehaviour
         {
             //navigationScript.FollowPathTo(testTarget);
         }
-        else if (!infoPanelObject.active || (infoPanelScript != transform.gameObject))
+        else if (!infoPanelObject.active)
         {
-            infoPanelScript.SetFocusDog(this);
+            if (UIOutputScript.GetFocusDog() != gameObject)
+            {
+                UIOutputScript.SetFocusDog(this);
+            }
+
             infoPanelObject.SetActive(true);
         }
+
+        UpdateCareValues();
     }
 
 #if !UNITY_EDITOR
@@ -101,11 +102,19 @@ public class Dog : MonoBehaviour
             if (Physics.Raycast(raycast, out raycastHit))
             {
                 Debug.Log("Selected: " + raycastHit.collider.tag);
-
                 if (raycastHit.collider.tag == transform.tag) return true;
             }
         }
         return false;
     }
 #endif
+
+    public void UpdateCareValues()
+    {
+        foreach (KeyValuePair<Property, float> careProperty in m_careValues)
+        {
+            careProperty.Key.UpdateValue(careProperty.Value);
+            //Debug.Log(careProperty.Key.GetPropertyName() + ": " + careProperty.Key.GetValue());
+        }
+    }
 }

@@ -5,27 +5,27 @@ using UnityEngine.UI;
 
 public class GetUIComponent : MonoBehaviour
 {
-    [SerializeField] private GameObject infoPanel;
+    [SerializeField] private GameObject UIOutputScript;
 
     private void Start()
     {
         if (GetComponent<InputField>() != null)
         {
-            infoPanel.GetComponent<InfoPanel>().generalDataDisplayUI.Add(transform.tag, GetComponent<InputField>().textComponent);
+            UIOutputScript.GetComponent<DataDisplay>().generalDataDisplayUI.Add(transform.tag, GetComponent<InputField>().textComponent);
         }
         else if (GetComponent<Text>() != null)
         {
-            infoPanel.GetComponent<InfoPanel>().generalDataDisplayUI.Add(transform.tag, GetComponent<Text>());
+            UIOutputScript.GetComponent<DataDisplay>().generalDataDisplayUI.Add(transform.tag, GetComponent<Text>());
         }
         else if (GetComponent<Slider>() != null)
         {
             switch (transform.parent.parent.tag)
             {
                 case ("CareData"):
-                    infoPanel.GetComponent<InfoPanel>().careValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
+                    UIOutputScript.GetComponent<DataDisplay>().careValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
                     break;
                 case ("PersonalityData"):
-                    infoPanel.GetComponent<InfoPanel>().personalityValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
+                    UIOutputScript.GetComponent<DataDisplay>().personalityValueDisplayUI.Add(transform.tag, GetComponent<Slider>());
                     break;
                 default:
                     Debug.Log("Invalid Property Slider Tag: " + transform.parent.parent.tag);
@@ -34,7 +34,7 @@ public class GetUIComponent : MonoBehaviour
         }
         else
         {
-            Debug.Log("Invalid UI Retrieval Attempted.");
+            Debug.Log("Invalid UI Retrieval Attempted: " + transform.name);
         }
     }
 }
