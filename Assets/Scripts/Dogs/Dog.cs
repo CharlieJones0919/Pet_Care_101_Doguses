@@ -6,9 +6,8 @@ using UnityEditor;
 
 public class Dog : MonoBehaviour
 {
-    public DogController m_controller;
-
     [SerializeField] private GameObject infoPanelObject;
+    public DogController m_controller;
     private DataDisplay UIOutputScript;
     private Pathfinding navigationScript;
 
@@ -16,15 +15,22 @@ public class Dog : MonoBehaviour
     public string m_breed;
     public int m_age;
 
-    public Dictionary<Property, float> m_careValues = new Dictionary<Property, float>();
+    public List<Property> m_careValues = new List<Property>();
     public List<Property> m_personalityValues = new List<Property>();
+
+    public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
+    public List<Rule> m_rules = new List<Rule>();
+
+    private List<Consumable> m_freeFoodBowls = new List<Consumable>();
+    private Consumable m_currentFoodTarget = null;
+    private bool m_eating = false;
 
     private void Awake()
     {
         m_controller = transform.parent.GetComponent<DogController>();
         m_controller.InitializeCareProperties(m_careValues);
         m_controller.InitializePersonalityProperties(m_personalityValues);
-        
+
         navigationScript = GetComponent<Pathfinding>();
         UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
 
@@ -52,17 +58,25 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(Die), new Die(this));
 
         GetComponent<FiniteStateMachine>().SetStates(newStates);
+
+
+        //////////////////// Set RBS Facts and Rules ////////////////////
+        //m_facts.Add("HUNGRY", true);
+
+        //m_facts.Add("S2S_Hungry", true);
+
+        //m_rules.Add(new Rule("HUNGRY", "S2S_Hungry", Rule.Predicate.And, typeof(Hungry)));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!InFocus())
+        UpdateCareValues();
+
+        if (InFocus())
         {
-            //navigationScript.FollowPathTo(testTarget);
-        }
-        else if (!infoPanelObject.active)
-        {
+            infoPanelObject.SetActive(false);
+
             if (UIOutputScript.GetFocusDog() != gameObject)
             {
                 UIOutputScript.SetFocusDog(this);
@@ -70,8 +84,6 @@ public class Dog : MonoBehaviour
 
             infoPanelObject.SetActive(true);
         }
-
-        UpdateCareValues();
     }
 
 #if !UNITY_EDITOR
@@ -111,10 +123,117 @@ public class Dog : MonoBehaviour
 
     public void UpdateCareValues()
     {
-        foreach (KeyValuePair<Property, float> careProperty in m_careValues)
+        foreach (Property careProperty in m_careValues)
         {
-            careProperty.Key.UpdateValue(careProperty.Value);
-            //Debug.Log(careProperty.Key.GetPropertyName() + ": " + careProperty.Key.GetValue());
+            if ((careProperty.GetPropertyName() == "Hunger") && m_eating)
+            {
+                careProperty.UpdateValue(m_currentFoodTarget.GetFufillmentValue());
+            }
+            else
+            {
+                careProperty.UpdateValue(careProperty.GetIncrement());
+            }
         }
+    }
+
+    public bool Hungry()
+    {
+        foreach (Property careProperty in m_careValues)
+        {
+            if (careProperty.GetPropertyName() == "Hunger")
+            {
+                if (careProperty.GetValue() <= 40.0f)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public bool Full()
+    {
+        foreach (Property careProperty in m_careValues)
+        {
+            if (careProperty.GetPropertyName() == "Hunger")
+            {
+                if (careProperty.GetValue() < 100.0f)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool Eating()
+    {
+        return m_eating;
+    }
+
+    public bool FindFood()
+    {
+        m_currentFoodTarget = null;
+        int nodeDistanceToBowl = 1000;
+        m_freeFoodBowls = m_controller.GetActiveBowlObjects();
+
+        foreach (Consumable bowl in m_freeFoodBowls)
+        {
+            if ((bowl.GetUser() == null) && bowl.GetUsable())
+            {
+                navigationScript.FindPathTo(bowl.GetObject());
+                int dist = navigationScript.GetFoundPathLength();
+
+                if ((dist < nodeDistanceToBowl) && (dist > 0))
+                {
+                    m_currentFoodTarget = bowl;
+                    nodeDistanceToBowl = dist;
+                }
+            }
+        }
+
+        if (m_currentFoodTarget != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool AttemptToEat()
+    {
+        if (m_currentFoodTarget == null)
+        {
+            FindFood();
+            return false;
+        }
+        else if (navigationScript.FollowPathTo(m_currentFoodTarget.GetObject()))
+        {
+            foreach (Property careValue in m_careValues)
+            {
+                if (careValue.GetPropertyName() == "Hunger")
+                {
+                    if (((m_currentFoodTarget.GetUser() == null) || (m_currentFoodTarget.GetUser() == gameObject)) && m_currentFoodTarget.GetUsable())
+                    {
+                        m_currentFoodTarget.StartUse(gameObject);
+                        StartCoroutine(Eat(5));
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+
+
+    private IEnumerator Eat(float eatTime)
+    {
+        m_eating = true;
+        yield return new WaitForSeconds(eatTime);
+        m_eating = false;
+        m_currentFoodTarget.EndUse();
+        m_currentFoodTarget = null;
     }
 }

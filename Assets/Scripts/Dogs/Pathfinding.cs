@@ -14,9 +14,10 @@ public class Pathfinding : MonoBehaviour
     private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
     [SerializeField] private GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
 
-    [SerializeField] private float m_moveSpeed;         //!< Speed of movement.
-    [SerializeField] private float m_rotationSpeed;     //!< Speed of rotation.
-    [SerializeField] private float m_foundDistance;     //!< Distance the dog object must be to a node/point for it to be considered "found" and removed from the path list.
+    [SerializeField] private float m_moveSpeed = 2.5f;         //!< Speed of movement.
+    [SerializeField] private float m_rotationSpeed = 2.0f;     //!< Speed of rotation.
+    [SerializeField] private float m_foundDistance = 1.0f;     //!< Distance the dog object must be to a node/point for it to be considered "found" and removed from the path list.
+    [SerializeField] private float m_relativeFoundDistance;    //!< Found distance with compensation for the moving and target obejcts' sizes.
 
     private List<Vector3> m_foundPath = new List<Vector3>();    //!< Requested path to a destination as a list of Vector3 positions.
     private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
@@ -61,50 +62,55 @@ public class Pathfinding : MonoBehaviour
             {
                 m_foundPath.Add(item.m_worldPos);
             }
+
+            //Set relative required distance for "finding" the target.
+            m_relativeFoundDistance = m_foundDistance + (transform.localScale.z + point.transform.localScale.z);
         }
+    }
+
+    public int GetFoundPathLength()
+    {
+        return m_foundPath.Count;
     }
 
     /** \fn FollowPathTo
      *  \brief Moves this GameObject along a found A* path to a specified point.
      *  \param point The point to follow the path to.
      */
-    public void FollowPathTo(GameObject point)
+    public bool FollowPathTo(GameObject point)
     {
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            //If a path has been found.
-            if (m_foundPath.Count > 0)
+            if (Vector3.Distance(transform.position, point.transform.position) <= m_relativeFoundDistance)
             {
-                //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
-                if (Vector3.Distance(transform.position, m_foundPath[0]) > m_foundDistance)
-                {
-                    DogLookAt(m_foundPath[0]); //Look at the first position in the path list.
-                    MoveDog();   //Move forwards towards the position.
-                    return;
-                }
-                else //If within the "found" distance of the node, remove it from the list.
-                {
-                    m_foundPath.Remove(m_foundPath[0]); 
-                    return;
-                }
-            }
-            else //If there are no more positions in the path...
-            {
-                //Random node needs generating again if applicable.
-                m_randomNodeFound = false;
-
-                //If the dog still isn't within range of the specified GameObject, find a new path to it.
-                if (Vector3.Distance(transform.position, point.transform.position) > m_foundDistance)
-                {
-                    FindPathTo(point);
-                }
-
-                //Look at the target point.
                 DogLookAt(point.transform.position);
-                return;
+                m_randomNodeFound = false; //Random node needs generating again if applicable.
+                m_foundPath.Clear();
+                return true;
+            }
+            else if (m_foundPath.Count == 0)  //If there are no more positions left in the path or no path was found...
+            {
+                m_randomNodeFound = false; //Random node needs generating again if applicable.
+                FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
+                Debug.Log(2);
+                return false;
+            }   //If a path has been found and hasn't been traversed yet...
+            else if (Vector3.Distance(transform.position, m_foundPath[0]) > m_foundDistance) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
+            {
+                DogLookAt(m_foundPath[0]); //Look at the first position in the path list.
+                MoveDog();   //Move forwards towards the position.
+                return false;
+            }
+            else //If within the "found" distance of the node, remove it from the list.
+            {
+                m_foundPath.Remove(m_foundPath[0]);
+                return false;
             }
         }
+
+        Debug.Log("Trying to find path to non-existant GameObject.");
+        return false;
     }
 
     /** \fn FollowPathToRandomPoint

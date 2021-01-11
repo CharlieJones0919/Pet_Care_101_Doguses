@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DataDisplay : MonoBehaviour
 {
-    [SerializeField] private GameObject timeController;
+    [SerializeField] private GameObject controller;
     [SerializeField] private Dog focusedDog;
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
@@ -20,12 +20,12 @@ public class DataDisplay : MonoBehaviour
         {
             if (textElement.Key == "DateText")
             {
-                timeController.GetComponent<DogController>().gameTime.dateTextbox = textElement.Value;
+                controller.GetComponent<DogController>().gameTime.dateTextbox = textElement.Value;
                 textSetSuccessfully[0] = true;
             }
             else if (textElement.Key == "TimeText")
             {
-                timeController.GetComponent<DogController>().gameTime.timeTextbox = textElement.Value;
+                controller.GetComponent<DogController>().gameTime.timeTextbox = textElement.Value;
                 textSetSuccessfully[1] = true;
             }
         }
@@ -115,7 +115,7 @@ public class DataDisplay : MonoBehaviour
         {
             foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.m_careValues.Keys)
+                foreach (Property propValue in focusedDog.m_careValues)
                 {
                     if (sliderValue.Key == propValue.GetPropertyName())
                     {

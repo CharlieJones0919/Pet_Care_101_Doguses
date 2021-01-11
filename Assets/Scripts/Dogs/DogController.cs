@@ -4,63 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTime 
-{
-
-    public Text dateTextbox;
-    public Text timeTextbox;
-
-    [SerializeField] private const int timeAdjustment = 72; // 15 minutes of real time is 1 day in game time.
-    [SerializeField] private float gameTimeSeconds;
-    [SerializeField] private int gameTimeMinutes;
-    [SerializeField] private int gameTimeHours;
-    [SerializeField] private int gameTimeDays;
-    [SerializeField] private int gameTimeWeeks;
-
-    private void Start()
-    {
-        //Read previous game time from constant external save file.
-    }
-
-    public void Update()
-    {
-        gameTimeSeconds += Time.deltaTime * timeAdjustment;
-
-        if (gameTimeSeconds >= 60)
-        {
-            gameTimeSeconds = 0.0f;
-            gameTimeMinutes++;
-
-            if (gameTimeMinutes >= 60)
-            {
-                gameTimeMinutes = 0;
-                gameTimeHours++;
-
-                if (gameTimeHours >= 24)
-                {
-                    gameTimeHours = 0;
-                    gameTimeDays++;
-
-                    if (gameTimeDays >= 7)
-                    {
-                        gameTimeDays = 0;
-                        gameTimeWeeks++;
-                    }
-                }
-            }
-        }
-
-        dateTextbox.text = String.Format("Week: {0:D1}          Days: {1:D1}", gameTimeWeeks, gameTimeDays);
-        timeTextbox.text = String.Format("Time: [ {0:D2}:{1:D2} ]", gameTimeHours, gameTimeMinutes);
-    }
-
-    public float GetGameTimeSeconds() { return gameTimeSeconds; }
-    public int GetGameTimeMinutes() { return gameTimeMinutes; }
-    public int GetGameTimeHours() { return gameTimeHours; }
-    public int GetGameTimeDays() { return gameTimeDays; }
-    public int GetGameTimeWeeks() { return gameTimeWeeks; }
-}
-
 public class DogController : MonoBehaviour
 {
     public GameTime gameTime = new GameTime();
@@ -79,7 +22,12 @@ public class DogController : MonoBehaviour
     private List<string> energyStates = new List<string>();
     private List<string> obedienceStates = new List<string>();
 
-    public List<GameObject> objectList = new List<GameObject>();
+    private List<GameObject> objectsForDeletion = new List<GameObject>();
+
+    [SerializeField] private GameObject bowlPrefabRef;
+    private GameObject bowlObjectDestination;
+    private List<Vector3> bowlPositions = new List<Vector3>();
+    private List<Consumable> foodBowls = new List<Consumable>();
 
     // Start is called before the first frame update
     void Start()
@@ -134,17 +82,27 @@ public class DogController : MonoBehaviour
 
         obedienceStates.Add("Bad");
         obedienceStates.Add("Good");
+
+        ////////////////////////////// Food Bowl Objects //////////////////////////////
+
+        bowlObjectDestination = new GameObject("FoodBowls");
+        bowlObjectDestination.transform.parent = transform;
+        bowlPositions.Add(new Vector3(-20.0f, 0.125f, 20.0f));
+        bowlPositions.Add(new Vector3(-5.0f, 0.125f, -10.0f));
+
+        InstantiateFoodBowl();
+        InstantiateFoodBowl();
     }
 
-    public void InitializeCareProperties(Dictionary<Property, float> propertyListRef)
+    public void InitializeCareProperties(List<Property> propertyListRef)
     {    
-        propertyListRef.Add(new Property("Hunger", hungerStates), 5.0f) ;
-        propertyListRef.Add(new Property("Attention", attentionStates), 1.0f);
-        propertyListRef.Add(new Property("Rest", restStates), 1.0f);
-        propertyListRef.Add(new Property("Hygiene", hygieneStates), 1.0f);
-        propertyListRef.Add(new Property("Health", healthStates), 1.0f);
-        propertyListRef.Add(new Property("Happiness", happinessStates), 1.0f);
-        propertyListRef.Add(new Property("Bond", bondStates), 1.0f);
+        propertyListRef.Add(new Property("Hunger", hungerStates, -0.015f)) ;
+        propertyListRef.Add(new Property("Attention", attentionStates, -1.0f));
+        propertyListRef.Add(new Property("Rest", restStates, -1.0f));
+        propertyListRef.Add(new Property("Hygiene", hygieneStates, -1.0f));
+        propertyListRef.Add(new Property("Health", healthStates, -1.0f));
+        propertyListRef.Add(new Property("Happiness", happinessStates, -1.0f));
+        propertyListRef.Add(new Property("Bond", bondStates, -1.0f));
     }
 
     public void InitializePersonalityProperties(List<Property> propertyListRef)
@@ -160,17 +118,111 @@ public class DogController : MonoBehaviour
     {
         gameTime.Update();
     }
+
+    private void InstantiateFoodBowl()
+    {
+        Vector3 foundFreePos = Vector3.zero;
+
+        foreach (Vector3 position in bowlPositions)
+        {
+            foundFreePos = position;
+            foodBowls.Add(new Consumable(bowlPrefabRef, bowlObjectDestination, foundFreePos, "GenericFood", 1.00f, "Desc.", 0.05f, 5.0f));
+            break;
+        }
+
+        if (foundFreePos != Vector3.zero)
+        {
+            bowlPositions.Remove(foundFreePos);
+            return;
+        }
+
+        Debug.Log("Maximum Number of Food Bowls Already Placed");
+    }
+
+    public List<Consumable> GetActiveBowlObjects()
+    {
+        return foodBowls;
+    }
+}
+
+public class GameTime
+{
+    public Text dateTextbox;
+    public Text timeTextbox;
+
+    [SerializeField] private const int timeAdjustment = 72; // 15 minutes of real time is 1 day in game time.
+    [SerializeField] private float gameTimeSeconds;
+    [SerializeField] private int gameTimeMinutes;
+    [SerializeField] private int gameTimeHours;
+    [SerializeField] private int gameTimeDays;
+    [SerializeField] private int gameTimeWeeks;
+
+    private void Start()
+    {
+        //Read previous game time from constant external save file.
+    }
+
+    public void Update()
+    {
+        gameTimeSeconds += Time.deltaTime * timeAdjustment;
+
+        if (gameTimeSeconds >= 60)
+        {
+            gameTimeSeconds = 0.0f;
+            gameTimeMinutes++;
+
+            if (gameTimeMinutes >= 60)
+            {
+                gameTimeMinutes = 0;
+                gameTimeHours++;
+
+                if (gameTimeHours >= 24)
+                {
+                    gameTimeHours = 0;
+                    gameTimeDays++;
+
+                    if (gameTimeDays >= 7)
+                    {
+                        gameTimeDays = 0;
+                        gameTimeWeeks++;
+                    }
+                }
+            }
+        }
+
+        dateTextbox.text = String.Format("Week: {0:D1}     Days: {1:D1}", gameTimeWeeks, gameTimeDays);
+        timeTextbox.text = String.Format("Time: [ {0:D2}:{1:D2} ]", gameTimeHours, gameTimeMinutes);
+    }
+
+    public float GetGameTimeSeconds() { return gameTimeSeconds; }
+    public int GetGameTimeMinutes() { return gameTimeMinutes; }
+    public int GetGameTimeHours() { return gameTimeHours; }
+    public int GetGameTimeDays() { return gameTimeDays; }
+    public int GetGameTimeWeeks() { return gameTimeWeeks; }
 }
 
 public class Property
 {
-    private string m_property;
-    private float m_value = 5;
+    private string m_propertyName;
+    private float m_value = 50;
+    private float m_increment = 0;
     private Dictionary<string, bool> m_states = new Dictionary<string, bool>();
 
-    public Property(string property, List<string> states)
+    public Property(string name, List<string> states, float increment)
     {
-        m_property = property;
+        m_propertyName = name;
+
+        foreach (string newState in states)
+        {
+            m_states.Add(newState, false);
+        }
+
+        m_increment = increment;
+    }
+
+    public Property(string name, List<string> states)
+    {
+        m_propertyName = name;
 
         foreach (string newState in states)
         {
@@ -178,8 +230,9 @@ public class Property
         }
     }
 
-    public string GetPropertyName() { return m_property; }
+    public string GetPropertyName() { return m_propertyName; }
     public float GetValue() { return m_value; }
+    public float GetIncrement() { return m_increment; }
 
-    public void UpdateValue(float amount) { m_value = Mathf.Clamp(m_value + amount * Time.deltaTime, 0.0f, 100.0f); }
+    public void UpdateValue(float amount) { m_value = Mathf.Clamp(m_value + amount, 0.0f, 100.0f); }
 }

@@ -16,6 +16,7 @@ public class Hungry : State
 
     public override Type StateEnter()
     {
+        Debug.Log("AAAAAAAAAAA");
         return null;
     }
 
@@ -26,16 +27,14 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        //doggo.UpdateProperties();
+        if ((doggo.Hungry()/* || !doggo.Full()*/) && !doggo.Eating())
+        {
+            if (doggo.AttemptToEat())
+            {
+                return null;
+            }
+        }
 
-        //if (doggo.CheckFact()) 
-        //{
-        //    return typeof(NewState);
-        //}
-        //else
-        //{
-        //    return null;
-        //}
         return null;
     }
 }

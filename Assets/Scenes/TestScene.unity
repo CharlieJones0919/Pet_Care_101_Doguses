@@ -581,7 +581,7 @@ RectTransform:
   m_Children:
   - {fileID: 1452231951}
   m_Father: {fileID: 683673109}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1348,8 +1348,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1837990817}
+  - {fileID: 2132800433}
   m_Father: {fileID: 683673109}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1399,7 +1400,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 963194229}
         m_MethodName: ResetCamera
         m_Mode: 1
         m_Arguments:
@@ -1682,7 +1683,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 2132800433}
   - {fileID: 633434611}
   - {fileID: 1793242817}
   - {fileID: 301359708}
@@ -3282,7 +3282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 0, y: 0}
   gridNodes: {x: 0, y: 0}
-  nodeSize: 1.5
+  nodeSize: 2
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -4820,7 +4820,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1485344438
 MonoBehaviour:
@@ -5874,7 +5874,7 @@ RectTransform:
   - {fileID: 2056016719}
   - {fileID: 1347717779}
   m_Father: {fileID: 683673109}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -5930,7 +5930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd19481534485ad488c22405d075c6f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeController: {fileID: 1958195942}
+  controller: {fileID: 1958195942}
   focusedDog: {fileID: 0}
 --- !u!1 &1837990816
 GameObject:
@@ -6169,7 +6169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defa79a83ebbe51418ff1c574c88cead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectList: []
+  bowlPrefabRef: {fileID: 8451974279864578185, guid: 194b1b69afe1f4948bed4695c8d48261,
+    type: 3}
 --- !u!1 &2011454208
 GameObject:
   m_ObjectHideFlags: 0
@@ -7141,19 +7142,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132800432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 588323679}
-  m_Father: {fileID: 683673109}
-  m_RootOrder: 0
+  m_Father: {fileID: 633434611}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 365, y: -180}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2132800434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7200,7 +7201,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 963194229}
         m_MethodName: ToggleRotation
         m_Mode: 1
         m_Arguments:
@@ -7451,7 +7452,7 @@ PrefabInstance:
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.72
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
@@ -7503,11 +7504,31 @@ PrefabInstance:
       propertyPath: infoPanelObject
       value: 
       objectReference: {fileID: 1793242816}
+    - target: {fileID: 9089536525100727225, guid: be36d44d95883ff4b9532da8692a06ff,
+        type: 3}
+      propertyPath: m_controller
+      value: 
+      objectReference: {fileID: 1958195944}
     - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: groundPlane
       value: 
       objectReference: {fileID: 1238925872}
+    - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
+        type: 3}
+      propertyPath: m_moveSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
+        type: 3}
+      propertyPath: m_rotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
+        type: 3}
+      propertyPath: m_foundDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_Name
