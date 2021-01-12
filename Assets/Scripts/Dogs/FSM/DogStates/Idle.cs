@@ -4,45 +4,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hungry : State
+public class Idle : State
 {
     protected Dog doggo;
 
     //Called in the Chuck script to set this state's reference to itself.
-    public Hungry(Dog subjectDog)
+    public Idle(Dog subjectDog)
     {
         doggo = subjectDog;
     }
 
     public override Type StateEnter()
     {
-        Debug.Log("Entering Hungry State");
+        Debug.Log("Entering Idle State");
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log("Exiting Hungry State");
+        Debug.Log("Exiting Idle State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        if (doggo.Hungry() && (doggo.UsingItemFor() != "Hunger"))
+        if (!doggo.Tired() && !doggo.Hungry())
         {
-            if (doggo.AttemptToUseItem(ItemType.BOWL))
-            {
-                doggo.StartCoroutine(doggo.UseItem(5.0f, false));
-                return null;
-            }
+            doggo.Wander();
+            return null;
+        }
+        else if (doggo.Hungry())
+        {
+            return typeof(Hungry);
         }
         else if (doggo.Tired())
         {
             return typeof(Tired);
-        }
-        else
-        {
-            return typeof(Idle);
         }
 
         return null;

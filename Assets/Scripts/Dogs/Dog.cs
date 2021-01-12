@@ -21,9 +21,10 @@ public class Dog : MonoBehaviour
     public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
     public List<Rule> m_rules = new List<Rule>();
 
-    private List<Consumable> m_freeFoodBowls = new List<Consumable>();
-    private Consumable m_currentFoodTarget = null;
-    private bool m_eating = false;
+    private List<Item> m_freeItems = new List<Item>();
+    private Item m_currentItemTarget = null;
+   private bool m_usingItem = false;
+   private bool m_waiting = true;
 
     private void Awake()
     {
@@ -35,10 +36,11 @@ public class Dog : MonoBehaviour
         UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
 
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
+        newStates.Add(typeof(Pause), new Pause(this));
+        newStates.Add(typeof(Idle), new Idle(this));
         newStates.Add(typeof(Hungry), new Hungry(this));
-        //newStates.Add(typeof(Tired), new Tired(this));
+        newStates.Add(typeof(Tired), new Tired(this));
 
-        //newStates.Add(typeof(Idle), new Idle(this));
         //newStates.Add(typeof(Distressed), new Distressed(this));
         //newStates.Add(typeof(Happy), new Happy(this));
 
@@ -46,7 +48,7 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(FearMania), new FearMania(this));
         //newStates.Add(typeof(ExcitementMania), new ExcitementMania(this));
 
-        //newStates.Add(typeof(Pause), new Pause(this));
+
         //newStates.Add(typeof(Play), new Play(this));
         //newStates.Add(typeof(Grabbed), new Grabbed(this));
         //newStates.Add(typeof(Interact), new Interact(this));
@@ -125,9 +127,9 @@ public class Dog : MonoBehaviour
     {
         foreach (Property careProperty in m_careValues)
         {
-            if ((careProperty.GetPropertyName() == "Hunger") && m_eating)
+            if (UsingItemFor() == careProperty.GetPropertyName())
             {
-                careProperty.UpdateValue(m_currentFoodTarget.GetFufillmentValue());
+                careProperty.UpdateValue(m_currentItemTarget.GetFufillmentValue());
             }
             else
             {
@@ -142,11 +144,25 @@ public class Dog : MonoBehaviour
         {
             if (careProperty.GetPropertyName() == "Hunger")
             {
-                if (careProperty.GetValue() <= 40.0f)
+                if (careProperty.GetValue() <= 50.0f)
                 {
                     return true;
                 }
-                return false;
+            }
+        }
+        return false;
+    }
+
+    public bool Tired()
+    {
+        foreach (Property careProperty in m_careValues)
+        {
+            if (careProperty.GetPropertyName() == "Rest")
+            {
+                if (careProperty.GetValue() <= 50.0f)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -162,78 +178,101 @@ public class Dog : MonoBehaviour
                 {
                     return false;
                 }
-                return true;
             }
         }
         return false;
     }
 
-    public bool Eating()
+    public string UsingItemFor()
     {
-        return m_eating;
+        if (m_usingItem)
+        {
+            return m_currentItemTarget.GetPropertySubject();
+        }
+
+        return null;
     }
 
-    public bool FindFood()
+    public bool Waiting()
     {
-        m_currentFoodTarget = null;
+        return m_waiting;
+    }
+
+    public bool FindItem(ItemType type)
+    {
+        m_currentItemTarget = null;
         int nodeDistanceToBowl = 1000;
-        m_freeFoodBowls = m_controller.GetActiveBowlObjects();
+        m_freeItems = m_controller.GetActiveObjects(type);
 
-        foreach (Consumable bowl in m_freeFoodBowls)
+        foreach (Item item in m_freeItems)
         {
-            if ((bowl.GetUser() == null) && bowl.GetUsable())
+            if ((item.GetUser() == null) && item.GetUsable())
             {
-                navigationScript.FindPathTo(bowl.GetObject());
-                int dist = navigationScript.GetFoundPathLength();
+                navigationScript.FindPathTo(item.GetObject());
 
+                int dist = navigationScript.GetFoundPathLength();
                 if ((dist < nodeDistanceToBowl) && (dist > 0))
                 {
-                    m_currentFoodTarget = bowl;
+                    m_currentItemTarget = item;
                     nodeDistanceToBowl = dist;
                 }
             }
         }
 
-        if (m_currentFoodTarget != null)
+        if (m_currentItemTarget != null)
         {
             return true;
         }
         return false;
     }
 
-    public bool AttemptToEat()
+    public bool AttemptToUseItem(ItemType type)
     {
-        if (m_currentFoodTarget == null)
+        if (m_currentItemTarget == null)
         {
-            FindFood();
+            FindItem(type);
             return false;
         }
-        else if (navigationScript.FollowPathTo(m_currentFoodTarget.GetObject()))
+        else if (navigationScript.FollowPathTo(m_currentItemTarget.GetObject()))
         {
-            foreach (Property careValue in m_careValues)
+            if (((m_currentItemTarget.GetUser() == null) || (m_currentItemTarget.GetUser() == gameObject)) && m_currentItemTarget.GetUsable())
             {
-                if (careValue.GetPropertyName() == "Hunger")
-                {
-                    if (((m_currentFoodTarget.GetUser() == null) || (m_currentFoodTarget.GetUser() == gameObject)) && m_currentFoodTarget.GetUsable())
-                    {
-                        m_currentFoodTarget.StartUse(gameObject);
-                        StartCoroutine(Eat(5));
-                        return true;
-                    }
-                }
+                m_currentItemTarget.StartUse(gameObject);
+                return true;
             }
-
         }
         return false;
     }
 
-
-    private IEnumerator Eat(float eatTime)
+    public IEnumerator UseItem(float useTime, bool willRemainUsableAfter)
     {
-        m_eating = true;
-        yield return new WaitForSeconds(eatTime);
-        m_eating = false;
-        m_currentFoodTarget.EndUse();
-        m_currentFoodTarget = null;
+        if (m_currentItemTarget != null)
+        {
+            if (m_currentItemTarget.GetCentrePreference())
+            {
+                Vector3 usePosition = new Vector3(m_currentItemTarget.GetPosition().x, transform.position.y, m_currentItemTarget.GetPosition().z);
+                transform.position = usePosition;
+            }
+
+            m_usingItem = true;
+            yield return new WaitForSeconds(useTime);
+            m_usingItem = false;
+
+            m_currentItemTarget.EndUse(willRemainUsableAfter);
+            m_currentItemTarget = null;
+        }
     }
+
+    public void Wander()
+    {
+        navigationScript.FollowPathToRandomPoint();
+    }
+
+    public IEnumerator Pause(float waitTime)
+    {
+        m_waiting = true;
+        yield return new WaitForSeconds(waitTime);
+        m_waiting = false;
+    }
+
 }

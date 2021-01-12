@@ -16,8 +16,7 @@ public class Pathfinding : MonoBehaviour
 
     [SerializeField] private float m_moveSpeed = 2.5f;         //!< Speed of movement.
     [SerializeField] private float m_rotationSpeed = 2.0f;     //!< Speed of rotation.
-    [SerializeField] private float m_foundDistance = 1.0f;     //!< Distance the dog object must be to a node/point for it to be considered "found" and removed from the path list.
-    [SerializeField] private float m_relativeFoundDistance;    //!< Found distance with compensation for the moving and target obejcts' sizes.
+    [SerializeField] private float m_foundDistance = 1.0f;    //!< Distance the dog object must be to a node for it to be considered "found" and removed from the path list.
 
     private List<Vector3> m_foundPath = new List<Vector3>();    //!< Requested path to a destination as a list of Vector3 positions.
     private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
@@ -30,6 +29,16 @@ public class Pathfinding : MonoBehaviour
     {
         m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
         m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
+    }
+
+    public void SetMoveSpeed(float newSpeed) 
+    {
+        m_moveSpeed = newSpeed;
+    }
+
+    public void SetRotationSpeed(float newSpeed)
+    {
+        m_rotationSpeed = newSpeed;
     }
 
     /** \fn FindPathTo
@@ -62,9 +71,6 @@ public class Pathfinding : MonoBehaviour
             {
                 m_foundPath.Add(item.m_worldPos);
             }
-
-            //Set relative required distance for "finding" the target.
-            m_relativeFoundDistance = m_foundDistance + (transform.localScale.z + point.transform.localScale.z);
         }
     }
 
@@ -82,9 +88,9 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            if (Vector3.Distance(transform.position, point.transform.position) <= m_relativeFoundDistance)
+            if (Vector3.Distance(transform.position, point.transform.position) <= (m_foundDistance + point.transform.localScale.z))
             {
-                DogLookAt(point.transform.position);
+                DogLookAt(point.transform.position, true);
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
                 m_foundPath.Clear();
                 return true;
@@ -93,12 +99,11 @@ public class Pathfinding : MonoBehaviour
             {
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
-                Debug.Log(2);
                 return false;
             }   //If a path has been found and hasn't been traversed yet...
             else if (Vector3.Distance(transform.position, m_foundPath[0]) > m_foundDistance) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
             {
-                DogLookAt(m_foundPath[0]); //Look at the first position in the path list.
+                DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
                 return false;
             }
@@ -150,7 +155,7 @@ public class Pathfinding : MonoBehaviour
     /** \fn MoveDog
     *  \brief Move the dog object to its local direction of forwards - to the direction it's rotated towwards.
     */
-    private void MoveDog()
+    public void MoveDog()
     {
        transform.position += transform.forward * m_moveSpeed * Time.deltaTime;
     }
@@ -159,7 +164,7 @@ public class Pathfinding : MonoBehaviour
     *  \brief Rotates the dog object towards a specified position on the Y-axis.
     *  \param target The position to rotate towards.
     */
-    private void DogLookAt(Vector3 target)
+    public void DogLookAt(Vector3 target, bool instant)
     {
         //The looking direction/rotation of the target from the dog object.
         var targetPosition = Quaternion.LookRotation(target - transform.position);
@@ -169,7 +174,10 @@ public class Pathfinding : MonoBehaviour
         targetPosition.z = 0.0f;
 
         //Rotate dog towards target position.
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_rotationSpeed);
+        if (!instant)
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_rotationSpeed);
+        else
+            transform.rotation = targetPosition;
     }
 
     /** \fn DogLookAt

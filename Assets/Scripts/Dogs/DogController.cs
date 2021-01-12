@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ItemType { BOWL, BED };
+
 public class DogController : MonoBehaviour
 {
     public GameTime gameTime = new GameTime();
@@ -24,10 +26,63 @@ public class DogController : MonoBehaviour
 
     private List<GameObject> objectsForDeletion = new List<GameObject>();
 
-    [SerializeField] private GameObject bowlPrefabRef;
-    private GameObject bowlObjectDestination;
-    private List<Vector3> bowlPositions = new List<Vector3>();
-    private List<Consumable> foodBowls = new List<Consumable>();
+    [SerializeField] private GameObject bowlPrefab;
+    [SerializeField] private GameObject bedPrefab;
+
+    private class ItemPool
+    {
+        public ItemType type;
+        private GameObject prefabRef;
+        private GameObject destinationRef;
+        private List<Vector3> allowedPositions;
+        public List<Item> itemList;
+
+        public ItemPool(ItemType iType, GameObject prefab, GameObject parentObj, List<Vector3> spawnPositions)
+        {
+            type = iType;
+            prefabRef = prefab;
+            destinationRef = new GameObject(type.ToString() + " OBJECTS");
+            destinationRef.transform.parent = parentObj.transform;
+            allowedPositions = spawnPositions;
+            itemList = new List<Item>();
+        }
+
+        public void InstantiateNewToList()
+        {
+            string propertySubject = null;
+            Vector3 foundFreePos = Vector3.zero;
+            bool centrePref = false;
+
+            foreach (Vector3 position in allowedPositions)
+            {
+                foundFreePos = position;
+
+                switch (type)
+                {
+                    case (ItemType.BOWL):
+                        propertySubject = "Hunger";
+                        centrePref = false;
+                        break;
+                    case (ItemType.BED):
+                        propertySubject = "Rest";
+                        centrePref = true;
+                        break; 
+                }
+
+                itemList.Add(new Item(prefabRef, destinationRef, foundFreePos, "GENERIC " + type.ToString(), 1.00f, "Desc.", 0.05f, 0.015f, propertySubject, centrePref));
+                break;
+            }
+
+            if ((propertySubject != null))
+            {
+                allowedPositions.Remove(foundFreePos);
+                return;
+            }
+            Debug.Log("Maximum Number of " + type.ToString() + "'s Already Placed");
+        }
+    };
+
+    List<ItemPool> itemPool = new List<ItemPool>();
 
     // Start is called before the first frame update
     void Start()
@@ -83,26 +138,38 @@ public class DogController : MonoBehaviour
         obedienceStates.Add("Bad");
         obedienceStates.Add("Good");
 
-        ////////////////////////////// Food Bowl Objects //////////////////////////////
+        ////////////////////////////// Object Pool Testing //////////////////////////////
 
-        bowlObjectDestination = new GameObject("FoodBowls");
-        bowlObjectDestination.transform.parent = transform;
-        bowlPositions.Add(new Vector3(-20.0f, 0.125f, 20.0f));
-        bowlPositions.Add(new Vector3(-5.0f, 0.125f, -10.0f));
+        float yHeight = bowlPrefab.transform.localScale.y / 2.0f;
 
-        InstantiateFoodBowl();
-        InstantiateFoodBowl();
+        List<Vector3> tempBowlPositions = new List<Vector3>();
+        tempBowlPositions.Add(new Vector3(-20.0f, yHeight, 20.0f));
+        tempBowlPositions.Add(new Vector3(-5.0f, yHeight, -10.0f));
+
+        yHeight = bedPrefab.transform.localScale.y / 2.0f;
+        List<Vector3> tempBedPositions = new List<Vector3>();
+        tempBedPositions.Add(new Vector3(20.0f, yHeight, 10.0f));
+
+
+        itemPool.Add(new ItemPool(ItemType.BOWL, bowlPrefab, gameObject, tempBowlPositions));
+        itemPool.Add(new ItemPool(ItemType.BED, bedPrefab, gameObject, tempBedPositions));
+
+        foreach (ItemPool pool in itemPool)
+        {
+            pool.InstantiateNewToList();
+            pool.InstantiateNewToList();
+        }
     }
 
     public void InitializeCareProperties(List<Property> propertyListRef)
     {    
-        propertyListRef.Add(new Property("Hunger", hungerStates, -0.015f)) ;
-        propertyListRef.Add(new Property("Attention", attentionStates, -1.0f));
-        propertyListRef.Add(new Property("Rest", restStates, -1.0f));
-        propertyListRef.Add(new Property("Hygiene", hygieneStates, -1.0f));
-        propertyListRef.Add(new Property("Health", healthStates, -1.0f));
-        propertyListRef.Add(new Property("Happiness", happinessStates, -1.0f));
-        propertyListRef.Add(new Property("Bond", bondStates, -1.0f));
+        propertyListRef.Add(new Property("Hunger", hungerStates, -0.01f)) ;
+        propertyListRef.Add(new Property("Attention", attentionStates, -0.01f));
+        propertyListRef.Add(new Property("Rest", restStates, -0.01f));
+        propertyListRef.Add(new Property("Hygiene", hygieneStates, -0.01f));
+        propertyListRef.Add(new Property("Health", healthStates, -0.01f));
+        propertyListRef.Add(new Property("Happiness", happinessStates, -0.01f));
+        propertyListRef.Add(new Property("Bond", bondStates, 0.0f));
     }
 
     public void InitializePersonalityProperties(List<Property> propertyListRef)
@@ -119,29 +186,17 @@ public class DogController : MonoBehaviour
         gameTime.Update();
     }
 
-    private void InstantiateFoodBowl()
+    public List<Item> GetActiveObjects(ItemType type)
     {
-        Vector3 foundFreePos = Vector3.zero;
-
-        foreach (Vector3 position in bowlPositions)
+        foreach (ItemPool pool in itemPool)
         {
-            foundFreePos = position;
-            foodBowls.Add(new Consumable(bowlPrefabRef, bowlObjectDestination, foundFreePos, "GenericFood", 1.00f, "Desc.", 0.05f, 5.0f));
-            break;
+            if (pool.type == type)
+            {
+                return pool.itemList;
+            }
         }
-
-        if (foundFreePos != Vector3.zero)
-        {
-            bowlPositions.Remove(foundFreePos);
-            return;
-        }
-
-        Debug.Log("Maximum Number of Food Bowls Already Placed");
-    }
-
-    public List<Consumable> GetActiveBowlObjects()
-    {
-        return foodBowls;
+        Debug.Log("No Objects of that Type Available");
+        return null;
     }
 }
 
@@ -199,6 +254,8 @@ public class GameTime
     public int GetGameTimeHours() { return gameTimeHours; }
     public int GetGameTimeDays() { return gameTimeDays; }
     public int GetGameTimeWeeks() { return gameTimeWeeks; }
+
+    public float getSecondMultiplier() { return timeAdjustment; }
 }
 
 public class Property
@@ -236,3 +293,4 @@ public class Property
 
     public void UpdateValue(float amount) { m_value = Mathf.Clamp(m_value + amount, 0.0f, 100.0f); }
 }
+

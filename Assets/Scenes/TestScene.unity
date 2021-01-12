@@ -6169,7 +6169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defa79a83ebbe51418ff1c574c88cead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowlPrefabRef: {fileID: 8451974279864578185, guid: 194b1b69afe1f4948bed4695c8d48261,
+  bowlPrefab: {fileID: 8451974279864578185, guid: 194b1b69afe1f4948bed4695c8d48261,
+    type: 3}
+  bedPrefab: {fileID: 6292049011481810776, guid: c5fa6c2235488bf4e8fdb578da5f0450,
     type: 3}
 --- !u!1 &2011454208
 GameObject:
