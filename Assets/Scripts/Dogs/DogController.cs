@@ -151,6 +151,7 @@ public class DogController : MonoBehaviour
         yHeight = bedPrefab.transform.localScale.y / 2.0f;
         List<Vector3> tempBedPositions = new List<Vector3>();
         tempBedPositions.Add(new Vector3(20.0f, yHeight, 10.0f));
+        tempBedPositions.Add(new Vector3(-20.0f, yHeight, 5.0f));
 
 
         itemPool.Add(new ItemPool(ItemType.BOWL, bowlPrefab, gameObject, tempBowlPositions));
