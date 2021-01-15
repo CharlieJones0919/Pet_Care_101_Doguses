@@ -51,6 +51,7 @@ public class DogController : MonoBehaviour
         {
             string propertySubject = null;
             Vector3 foundFreePos = Vector3.zero;
+            bool singleUse = false;
             bool centrePref = false;
 
             foreach (Vector3 position in allowedPositions)
@@ -61,6 +62,7 @@ public class DogController : MonoBehaviour
                 {
                     case (ItemType.BOWL):
                         propertySubject = "Hunger";
+                        singleUse = true;
                         centrePref = false;
                         break;
                     case (ItemType.BED):
@@ -69,7 +71,7 @@ public class DogController : MonoBehaviour
                         break; 
                 }
 
-                itemList.Add(new Item(prefabRef, destinationRef, foundFreePos, "GENERIC " + type.ToString(), 1.00f, "Desc.", 0.05f, 0.015f, propertySubject, centrePref));
+                itemList.Add(new Item(prefabRef, destinationRef, foundFreePos, "GENERIC " + type.ToString(), 1.00f, "Desc.", 0.05f, 0.015f, propertySubject, singleUse, centrePref));
                 break;
             }
 
@@ -205,7 +207,7 @@ public class GameTime
     public Text dateTextbox;
     public Text timeTextbox;
 
-    [SerializeField] private const int timeAdjustment = 72; // 15 minutes of real time is 1 day in game time.
+    [SerializeField] private const int timeAdjustment = 72; // 20 minutes of real time is 1 day in game time.
     [SerializeField] private float gameTimeSeconds;
     [SerializeField] private int gameTimeMinutes;
     [SerializeField] private int gameTimeHours;

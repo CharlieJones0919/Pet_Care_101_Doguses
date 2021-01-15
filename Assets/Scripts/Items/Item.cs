@@ -18,9 +18,10 @@ public class Item
 
     private GameObject m_user;
     private bool m_usable;
+    private bool m_singleUse;
     private bool m_centreOnUse;
 
-    public Item(GameObject objectRef, GameObject objectParent, Vector3 position, string name, float price, string description, float fufillment, float healthModifiyer, string subjectProp, bool centrePref) 
+    public Item(GameObject objectRef, GameObject objectParent, Vector3 position, string name, float price, string description, float fufillment, float healthModifiyer, string subjectProp, bool isSingleUse, bool centrePref) 
     {
         m_object = MonoBehaviour.Instantiate(objectRef, position, Quaternion.identity);
         m_object.transform.parent = objectParent.transform;
@@ -36,6 +37,7 @@ public class Item
 
         m_user = null;
         m_usable = true;
+        m_singleUse = isSingleUse;
         m_centreOnUse = centrePref;
     }
 
@@ -54,10 +56,10 @@ public class Item
         m_user = user;
     }
 
-    public void EndUse(bool stillUsable)
+    public void EndUse()
     {
         m_user = null;
-        m_usable = stillUsable;
+        if (m_singleUse) m_usable = false;
     }
 
     public GameObject GetUser()

@@ -23,6 +23,13 @@ public class Pause : State
     public override Type StateExit()
     {
         Debug.Log("Exiting Pause State");
+
+        if (doggo.Waiting())
+        {
+            doggo.StopWaiting();
+            doggo.StopAllCoroutines();
+        } 
+
         return null;
     }
 
@@ -30,15 +37,10 @@ public class Pause : State
     {
         if (doggo.Waiting())
         {
-            doggo.StartCoroutine(doggo.Pause(10.0f));
+            doggo.StartCoroutine(doggo.Pause(3.0f));
             return null;
         }
-        else
-        {
-            return typeof(Idle);
-        }
 
-
-        //return null;
+        return typeof(Idle);
     }
 }

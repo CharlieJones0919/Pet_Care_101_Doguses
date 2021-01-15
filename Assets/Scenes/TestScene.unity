@@ -7444,7 +7444,7 @@ PrefabInstance:
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
@@ -7454,7 +7454,7 @@ PrefabInstance:
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727224, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
@@ -7519,12 +7519,12 @@ PrefabInstance:
     - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_moveSpeed
-      value: 2.5
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
       propertyPath: m_rotationSpeed
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 9089536525100727226, guid: be36d44d95883ff4b9532da8692a06ff,
         type: 3}
@@ -7535,6 +7535,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Dog
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be36d44d95883ff4b9532da8692a06ff, type: 3}
