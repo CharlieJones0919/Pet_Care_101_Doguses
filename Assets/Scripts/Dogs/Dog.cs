@@ -99,7 +99,7 @@ public class Dog : MonoBehaviour
     /** \fn InFocus
      *  \brief An API agnostic function to check whether the dog has been tapped or clicked on by the player. If in the editor it's defined by the function checking for mouse input but is otherwise defined by the function checking for touch input.
      *  */
-#if !UNITY_EDITOR   //If not in the editor check for touch input.
+#if UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
     private bool InFocus()
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
@@ -115,7 +115,7 @@ public class Dog : MonoBehaviour
         }
         return false;
     }
-#else
+#elif UNITY_EDITOR //If in the editor, check for mouse input.
     private bool InFocus() //If presumably in the editor check for left mouse button click input.
     {
         if (Input.GetMouseButtonDown(0))
