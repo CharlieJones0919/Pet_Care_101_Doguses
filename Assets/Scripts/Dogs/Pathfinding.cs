@@ -93,7 +93,7 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            if (Vector3.Distance(transform.position, point.transform.position) <= m_foundDistance + point.transform.localScale.z)
+            if (Vector3.Distance(transform.position, point.transform.position) <= (m_foundDistance * 2))
             {
                 DogLookAt(point.transform.position, true);
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
@@ -106,7 +106,7 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }   //If a path has been found and hasn't been traversed yet...
-            else if (Vector3.Distance(transform.position, m_foundPath[0]) > m_foundDistance) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
+            else if (Vector3.Distance(transform.position, m_foundPath[0]) >= m_foundDistance) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.

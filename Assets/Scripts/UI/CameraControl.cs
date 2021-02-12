@@ -58,7 +58,6 @@ public class CameraControl : MonoBehaviour
                             var pos1 = PlanePosition(Input.GetTouch(0).position);
                             var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
                             m_camera.transform.RotateAround(pos1, m_plane.normal, -Vector3.SignedAngle(pos1, pos1b, m_plane.normal) * m_rotationSpeed);
-
                             break;
                         case (false):
                             m_camera.transform.Translate(PlanePositionDelta(touch1) * m_movementSpeed, Space.World);

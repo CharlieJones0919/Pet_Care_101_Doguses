@@ -99,23 +99,7 @@ public class Dog : MonoBehaviour
     /** \fn InFocus
      *  \brief An API agnostic function to check whether the dog has been tapped or clicked on by the player. If in the editor it's defined by the function checking for mouse input but is otherwise defined by the function checking for touch input.
      *  */
-#if UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
-    private bool InFocus()
-    {
-        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
-        {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
-            RaycastHit raycastHit;
-
-            if (Physics.Raycast(raycast, out raycastHit)) //If the raycast hits anything...
-            {
-                Debug.Log("Selected: " + raycastHit.collider.gameObject.name); //Output the name of the object hit by the raycast.
-                if (raycastHit.collider == m_collider) return true; //If the collider hit belongs to this object, this dog is in focus.
-            }
-        }
-        return false;
-    }
-#elif UNITY_EDITOR //If in the editor, check for mouse input.
+#if UNITY_EDITOR //If in the editor, check for mouse input.
     private bool InFocus() //If presumably in the editor check for left mouse button click input.
     {
         if (Input.GetMouseButtonDown(0))
@@ -127,6 +111,23 @@ public class Dog : MonoBehaviour
             {
                 Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
                 if (raycastHit.collider == m_collider) return true;
+            }
+        }
+        return false;
+    }
+#elif UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
+    private bool InFocus()
+    {
+        Debug.Log("AAAAAAAAAAA");
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
+        {
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
+            RaycastHit raycastHit;
+
+            if (Physics.Raycast(raycast, out raycastHit)) //If the raycast hits anything...
+            {
+                Debug.Log("Selected: " + raycastHit.collider.gameObject.name); //Output the name of the object hit by the raycast.
+                if (raycastHit.collider == m_collider) return true; //If the collider hit belongs to this object, this dog is in focus.
             }
         }
         return false;
@@ -247,9 +248,8 @@ public class Dog : MonoBehaviour
             else if ((item.GetUser() == null) && item.GetUsable())
             {
                 navigationScript.FindPathTo(item.GetObject());
-
                 int dist = navigationScript.GetFoundPathLength();
-                if ((dist < nodeDistanceToBowl) && (dist > 0))
+                if (dist < nodeDistanceToBowl)
                 {
                     m_prospectItemTarget = item;
                     nodeDistanceToBowl = dist;
@@ -257,6 +257,7 @@ public class Dog : MonoBehaviour
             }
         }
 
+        if (m_prospectItemTarget != null) navigationScript.FindPathTo(m_prospectItemTarget.GetObject());
         return m_prospectItemTarget;
     }
 
