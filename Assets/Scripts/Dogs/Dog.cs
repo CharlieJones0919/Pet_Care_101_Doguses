@@ -10,28 +10,41 @@ using UnityEditor;
 */
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private GameObject infoPanelObject; //!< Reference to the dog information UI panel to send this object's instance of this script to so if this dog is tapped on its data can be displayed. 
-    public DogController m_controller;      //!< Reference to the game's DogController script to retrieve data required by all dogs. 
+    public DogController m_controller;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
+    public GameObject infoPanelObject;     //!< Reference to the dog information UI panel to send this object's instance of this script to so if this dog is tapped on its data can be displayed. 
+
     private DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
     private Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
     private Collider m_collider;
 
-
     public string m_name;   //!< This dog's name. 
-    public string m_breed;  //!< The breed of this dog.
+    public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
 
-    public List<Property> m_careValues = new List<Property>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
-    public List<Property> m_personalityValues = new List<Property>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
+    public List<CareProperty> m_careValues = new List<CareProperty>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
+    public List<PersonalityProperty> m_personalityValues = new List<PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
 
-    // WIll be used to store definitions for the dog's different "facts" and rules based on them.
-    //public Dictionary<string, bool> m_facts = new Dictionary<string, bool>(); 
-    //public List<Rule> m_rules = new List<Rule>();
+    // Will be used to store definitions for the dog's different "facts" and rules based on them.
+    public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
+    public List<Rule> m_rules = new List<Rule>();
 
-    private Item m_currentItemTarget = null; //!< An item on the map the dog is currently using or travelling towards.
-    private Item m_prospectItemTarget = null;//!< An item on the map the dog could use or travel towards.
-    private bool m_usingItem = false;        //!< Whether the dog is currently using an item.
-    private bool m_waiting = true;           //!< Whether the dog is currently paused and waiting to stop pausing.
+    private Item m_currentItemTarget = null;  //!< An item on the map the dog is currently using or travelling towards.
+    private Item m_prospectItemTarget = null; //!< An item on the map the dog could use or travel towards.
+    private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
+    private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Action nodes which are children to sequence nodes which must be successful in a sequence for the sequence node to succeed.
+
+    //Swap to different FSM state actions.
+    public BTAction swp_pause;
+    public BTAction swp_idle;
+    public BTAction swp_hungry;
+    public BTAction swp_tired;
+
+    public BTSequence seq_Pause;
 
     /** \fn Awake
     *  \brief Callled once when the scene loads to instantiate variable values and functions before the application starts. Used to define and add states to the FSM.
@@ -39,14 +52,11 @@ public class Dog : MonoBehaviour
     private void Awake()
     {
         //Get the controller script from this object's parent (the controller's object is the parent of all dog objects). Then initialise the dog's starting care and personality values from the script's given defaults.
-        m_controller = transform.parent.GetComponent<DogController>();
-        m_controller.InitializeCareProperties(m_careValues);
-        m_controller.InitializePersonalityProperties(m_personalityValues);
+       // m_controller = transform.parent.GetComponent<DogController>();
+        //m_controller.InitializeCareProperties(m_careValues);
+        //m_controller.InitializePersonalityProperties(m_personalityValues);
 
-        //Get other required components from this object.
-        navigationScript = GetComponent<Pathfinding>();
-        UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
-        m_collider = gameObject.GetComponent<Collider>();
+
 
         //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
@@ -75,6 +85,44 @@ public class Dog : MonoBehaviour
 
         GetComponent<FiniteStateMachine>().SetStates(newStates); //Add defined states to FSM.
     }
+
+    void Start()
+    {
+        //Get other required components from this object.
+        navigationScript = GetComponent<Pathfinding>();
+        UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
+        m_collider = gameObject.GetComponent<Collider>();
+
+        ///////// Rules /////
+  
+
+
+
+        ////m_facts.Add("paused", true);
+        ////m_facts.Add("idle", false);
+        ////m_facts.Add("hungry", false);
+        ////m_facts.Add("tired", false);
+
+        ////m_facts.Add("swp2_pause", false);
+        ////m_facts.Add("swp2_idle", false);
+        ////m_facts.Add("swp2_hungry", false);
+        ////m_facts.Add("swp2_tired", false);
+
+        ////m_rules.Add(new Rule("paused", "swp2_idle", Rule.Predicate.And, typeof(Idle)));
+
+
+
+
+
+        seq_Pause = new BTSequence(new List<BTNode> {  });
+
+
+
+        ///////// Behaviour Trees /////
+        //swp_pause = new BTAction(SwapToSearch);
+
+    }
+
 
     /** \fn Update
      *  \brief Called every frame on a loop to check if the dog has been tapped on (is InFocus) and updates the dog's current care values with time progression.
@@ -136,7 +184,7 @@ public class Dog : MonoBehaviour
 
     public void UpdateCareValues()
     {
-        foreach (Property careProperty in m_careValues)
+        foreach (CareProperty careProperty in m_careValues)
         {
             if (UsingItemFor() == careProperty.GetPropertyName())
             {
@@ -144,7 +192,7 @@ public class Dog : MonoBehaviour
             }
             else
             {
-                careProperty.UpdateValue(careProperty.GetIncrement());
+                careProperty.UpdateValue(careProperty.GetCurrenntIncrement());
             }
         }
     }
@@ -154,9 +202,9 @@ public class Dog : MonoBehaviour
 *  */
     public bool Hungry()
     {
-        foreach (Property careProperty in m_careValues)
+        foreach (CareProperty careProperty in m_careValues)
         {
-            if (careProperty.GetPropertyName() == "Hunger")
+            if (careProperty.GetPropertyName() == DogCareValue.Hunger)
             {
                 if (careProperty.GetValue() <= 25.0f)
                 {
@@ -172,9 +220,9 @@ public class Dog : MonoBehaviour
 *  */
     public bool Full()
     {
-        foreach (Property careProperty in m_careValues)
+        foreach (CareProperty careProperty in m_careValues)
         {
-            if (careProperty.GetPropertyName() == "Hunger")
+            if (careProperty.GetPropertyName() == DogCareValue.Hunger)
             {
                 if (careProperty.GetValue() >= 50.0f)
                 {
@@ -190,9 +238,9 @@ public class Dog : MonoBehaviour
     *  */
     public bool Tired()
     {
-        foreach (Property careProperty in m_careValues)
+        foreach (CareProperty careProperty in m_careValues)
         {
-            if (careProperty.GetPropertyName() == "Rest")
+            if (careProperty.GetPropertyName() == DogCareValue.Rest)
             {
                 if (careProperty.GetValue() <= 30.0f)
                 {
@@ -205,9 +253,9 @@ public class Dog : MonoBehaviour
 
     public bool Rested()
     {
-        foreach (Property careProperty in m_careValues)
+        foreach (CareProperty careProperty in m_careValues)
         {
-            if (careProperty.GetPropertyName() == "Rest")
+            if (careProperty.GetPropertyName() == DogCareValue.Rest)
             {
                 if (careProperty.GetValue() >= 75.0f)
                 {
@@ -218,14 +266,14 @@ public class Dog : MonoBehaviour
         return false;
     }
 
-    public string UsingItemFor()
+    public DogCareValue UsingItemFor()
     {
         if (m_usingItem)
         {
             return m_currentItemTarget.GetPropertySubject();
         }
 
-        return null;
+        return DogCareValue.NONE;
     }
 
     public bool Waiting()

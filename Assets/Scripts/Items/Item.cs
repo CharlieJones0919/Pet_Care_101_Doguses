@@ -14,14 +14,14 @@ public class Item
 
     private float m_fufillmentValue;
     private float m_healthiness;
-    private string m_propSubject;
+    private DogCareValue m_propSubject;
 
     private GameObject m_user;
     private bool m_usable;
     private bool m_singleUse;
     private bool m_centreOnUse;
 
-    public Item(GameObject objectRef, GameObject objectParent, Vector3 position, string name, float price, string description, float fufillment, float healthModifiyer, string subjectProp, bool isSingleUse, bool centrePref) 
+    public Item(GameObject objectRef, GameObject objectParent, Vector3 position, string name, float price, string description, float fufillment, float healthModifiyer, DogCareValue subjectProp, bool isSingleUse, bool centrePref) 
     {
         m_object = MonoBehaviour.Instantiate(objectRef, position, Quaternion.identity);
         m_object.transform.parent = objectParent.transform;
@@ -82,7 +82,7 @@ public class Item
         return m_fufillmentValue;
     }
 
-    public string GetPropertySubject()
+    public DogCareValue GetPropertySubject()
     {
         return m_propSubject;
     }

@@ -37,7 +37,7 @@ public class Hungry : State
     {
         if ((doggo.Hungry() || !doggo.Full()) && (doggo.FindItem(ItemType.BOWL) != null))
         {
-            if (doggo.UsingItemFor() != "Hunger")
+            if (doggo.UsingItemFor() != DogCareValue.Hunger)
             {
                 if (doggo.AttemptToUseItem(ItemType.BOWL))
                 {

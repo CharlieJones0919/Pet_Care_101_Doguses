@@ -1,33 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum ItemType { BOWL, BED };
 
 public class DogController : MonoBehaviour
 {
-    public GameTime gameTime = new GameTime();
-
-    private List<string> hungerStates = new List<string>();
-    private List<string> attentionStates = new List<string>();
-    private List<string> restStates = new List<string>();
-    private List<string> hygieneStates = new List<string>();
-    private List<string> healthStates = new List<string>();
-    private List<string> happinessStates = new List<string>();
-    private List<string> bondStates = new List<string>();
-
-    private List<string> toleranceStates = new List<string>();
-    private List<string> affectionStates = new List<string>();
-    private List<string> intelligenceStates = new List<string>();
-    private List<string> energyStates = new List<string>();
-    private List<string> obedienceStates = new List<string>();
-
-    private List<GameObject> objectsForDeletion = new List<GameObject>();
-
     [SerializeField] private GameObject bowlPrefab;
     [SerializeField] private GameObject bedPrefab;
+    private List<GameObject> objectsForDeletion = new List<GameObject>();
 
     private class ItemPool
     {
@@ -49,7 +30,7 @@ public class DogController : MonoBehaviour
 
         public void InstantiateNewToList()
         {
-            string propertySubject = null;
+            DogCareValue propertySubject = DogCareValue.NONE;
             Vector3 foundFreePos = Vector3.zero;
             bool singleUse = false;
             bool centrePref = false;
@@ -61,12 +42,12 @@ public class DogController : MonoBehaviour
                 switch (type)
                 {
                     case (ItemType.BOWL):
-                        propertySubject = "Hunger";
+                        propertySubject = DogCareValue.Hunger;
                         singleUse = true;
                         centrePref = false;
                         break;
                     case (ItemType.BED):
-                        propertySubject = "Rest";
+                        propertySubject = DogCareValue.Rest;
                         centrePref = true;
                         break; 
                 }
@@ -89,59 +70,7 @@ public class DogController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ////////////////////////////// Care Property Values //////////////////////////////
-        hungerStates.Add("Starving");
-        hungerStates.Add("Fed");
-        hungerStates.Add("Overfed");
-
-        attentionStates.Add("Lonely");
-        attentionStates.Add("Loved");
-        attentionStates.Add("Overcrowded");
-
-        restStates.Add("Exhausted");
-        restStates.Add("Tired");
-        restStates.Add("Rested");
-
-        hygieneStates.Add("Filthy");
-        hygieneStates.Add("Dirty");
-        hygieneStates.Add("Clean");
-
-        healthStates.Add("Dying");
-        healthStates.Add("Sick");
-        healthStates.Add("Good");
-
-        happinessStates.Add("Distressed");
-        happinessStates.Add("Upset");
-        happinessStates.Add("Happy");
-
-        bondStates.Add("Wary");
-        bondStates.Add("Friendly");
-
-        ////////////////////////////// Personality Property Values //////////////////////////////
-
-        toleranceStates.Add("Nervous");
-        toleranceStates.Add("Neutral");
-        toleranceStates.Add("Calm");
-
-        affectionStates.Add("Aggressive");
-        affectionStates.Add("Grouchy");
-        affectionStates.Add("Apathetic");
-        affectionStates.Add("Friendly");
-        affectionStates.Add("Loving");
-
-        intelligenceStates.Add("Dumb");
-        intelligenceStates.Add("Average");
-        intelligenceStates.Add("Smart");
-
-        energyStates.Add("Sleepy");
-        energyStates.Add("Normal");
-        energyStates.Add("Hyper");
-
-        obedienceStates.Add("Bad");
-        obedienceStates.Add("Good");
-
         ////////////////////////////// Object Pool Testing //////////////////////////////
-
         float yHeight = bowlPrefab.transform.localScale.y / 2.0f;
 
         List<Vector3> tempBowlPositions = new List<Vector3>();
@@ -153,7 +82,6 @@ public class DogController : MonoBehaviour
         tempBedPositions.Add(new Vector3(20.0f, yHeight, 10.0f));
         tempBedPositions.Add(new Vector3(-20.0f, yHeight, 5.0f));
 
-
         itemPool.Add(new ItemPool(ItemType.BOWL, bowlPrefab, gameObject, tempBowlPositions));
         itemPool.Add(new ItemPool(ItemType.BED, bedPrefab, gameObject, tempBedPositions));
 
@@ -162,31 +90,6 @@ public class DogController : MonoBehaviour
             pool.InstantiateNewToList();
             pool.InstantiateNewToList();
         }
-    }
-
-    public void InitializeCareProperties(List<Property> propertyListRef)
-    {    
-        propertyListRef.Add(new Property("Hunger", hungerStates, -0.01f)) ;
-        propertyListRef.Add(new Property("Attention", attentionStates, -0.01f));
-        propertyListRef.Add(new Property("Rest", restStates, -0.01f));
-        propertyListRef.Add(new Property("Hygiene", hygieneStates, -0.01f));
-        propertyListRef.Add(new Property("Health", healthStates, -0.01f));
-        propertyListRef.Add(new Property("Happiness", happinessStates, -0.01f));
-        propertyListRef.Add(new Property("Bond", bondStates, 0.0f));
-    }
-
-    public void InitializePersonalityProperties(List<Property> propertyListRef)
-    {
-        propertyListRef.Add(new Property("Tolerance", toleranceStates));
-        propertyListRef.Add(new Property("Affection", affectionStates));
-        propertyListRef.Add(new Property("Intelligence", intelligenceStates));
-        propertyListRef.Add(new Property("Energy", energyStates));
-        propertyListRef.Add(new Property("Obedience", obedienceStates));
-    }
-
-    private void Update()
-    {
-        gameTime.Update();
     }
 
     public List<Item> GetActiveObjects(ItemType type)
@@ -203,97 +106,52 @@ public class DogController : MonoBehaviour
     }
 }
 
-public class GameTime
+public class CareProperty
 {
-    public Text dateTextbox;
-    public Text timeTextbox;
-
-    [SerializeField] private const int timeAdjustment = 72; // 20 minutes of real time is 1 day in game time.
-    [SerializeField] private float gameTimeSeconds;
-    [SerializeField] private int gameTimeMinutes;
-    [SerializeField] private int gameTimeHours;
-    [SerializeField] private int gameTimeDays;
-    [SerializeField] private int gameTimeWeeks;
-
-    private void Start()
-    {
-        //Read previous game time from constant external save file.
-    }
-
-    public void Update()
-    {
-        gameTimeSeconds += Time.deltaTime * timeAdjustment;
-
-        if (gameTimeSeconds >= 60)
-        {
-            gameTimeSeconds = 0.0f;
-            gameTimeMinutes++;
-
-            if (gameTimeMinutes >= 60)
-            {
-                gameTimeMinutes = 0;
-                gameTimeHours++;
-
-                if (gameTimeHours >= 24)
-                {
-                    gameTimeHours = 0;
-                    gameTimeDays++;
-
-                    if (gameTimeDays >= 7)
-                    {
-                        gameTimeDays = 0;
-                        gameTimeWeeks++;
-                    }
-                }
-            }
-        }
-
-        dateTextbox.text = String.Format("Week: {0:D1}     Days: {1:D1}", gameTimeWeeks, gameTimeDays);
-        timeTextbox.text = String.Format("Time: [ {0:D2}:{1:D2} ]", gameTimeHours, gameTimeMinutes);
-    }
-
-    public float GetGameTimeSeconds() { return gameTimeSeconds; }
-    public int GetGameTimeMinutes() { return gameTimeMinutes; }
-    public int GetGameTimeHours() { return gameTimeHours; }
-    public int GetGameTimeDays() { return gameTimeDays; }
-    public int GetGameTimeWeeks() { return gameTimeWeeks; }
-
-    public float getSecondMultiplier() { return timeAdjustment; }
-}
-
-public class Property
-{
-    private string m_propertyName;
+    private DogCareValue m_name;
     private float m_value = 50;
     private float m_increment = 0;
-    private Dictionary<string, bool> m_states = new Dictionary<string, bool>();
+    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
 
-    public Property(string name, List<string> states, float increment)
+    public CareProperty(DogCareValue prop, Dictionary<string, Vector2> states, float defaultInc)
     {
-        m_propertyName = name;
-
-        foreach (string newState in states)
-        {
-            m_states.Add(newState, false);
-        }
-
-        m_increment = increment;
+        m_name = prop;
+        m_states = states;
+        m_increment = defaultInc;
     }
 
-    public Property(string name, List<string> states)
-    {
-        m_propertyName = name;
-
-        foreach (string newState in states)
-        {
-            m_states.Add(newState, false);
-        }
-    }
-
-    public string GetPropertyName() { return m_propertyName; }
+    public DogCareValue GetPropertyName() { return m_name; }
     public float GetValue() { return m_value; }
-    public float GetIncrement() { return m_increment; }
+    public float GetCurrenntIncrement() { return m_increment; }
+    public Vector2 GetStateRange(string state)
+    {
+        if (m_states.ContainsKey(state)) { return m_states[state]; }
+        else { Debug.Log("The state " + "'" + state + "'" + " is not defined in " + m_name.ToString() + "."); return Vector2.zero; }
+    }
 
-    public void UpdateValue(float amount) { m_value = Mathf.Clamp(m_value + amount, 0.0f, 100.0f); }
+    public void UpdateValue(float increment) { m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f); }
 }
 
+public class PersonalityProperty
+{
+    private DogPersonalityValue m_name;
+    private float m_value = 2.5f;
+    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
+
+    public PersonalityProperty(DogPersonalityValue prop, Dictionary<string, Vector2> states, float value)
+    {
+        m_name = prop;
+        m_states = states;
+        m_value = value;
+    }
+
+    public DogPersonalityValue GetPropertyName() { return m_name; }
+    public float GetValue() { return m_value; }
+    public Vector2 GetStateRange(string state)
+    {
+        if (m_states.ContainsKey(state)) { return m_states[state]; }
+        else { Debug.Log("The state " + "'" + state + "'" + " is not defined in " + m_name.ToString() + ".");  return Vector2.zero;  }
+    }
+
+    public void SetValue(float newVal) { m_value = Mathf.Clamp(newVal, 0.0f, 5.0f); }
+};

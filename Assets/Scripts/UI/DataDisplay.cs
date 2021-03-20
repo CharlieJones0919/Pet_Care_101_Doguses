@@ -14,32 +14,6 @@ public class DataDisplay : MonoBehaviour
 
     private void Start()
     {
-        bool[] textSetSuccessfully = new bool[2] { false, false };
-
-        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
-        {
-            if (textElement.Key == "DateText")
-            {
-                controller.GetComponent<DogController>().gameTime.dateTextbox = textElement.Value;
-                textSetSuccessfully[0] = true;
-            }
-            else if (textElement.Key == "TimeText")
-            {
-                controller.GetComponent<DogController>().gameTime.timeTextbox = textElement.Value;
-                textSetSuccessfully[1] = true;
-            }
-        }
-
-        if (textSetSuccessfully[0] && textSetSuccessfully[1])
-        {
-            generalDataDisplayUI.Remove("DateText");
-            generalDataDisplayUI.Remove("TimeText");
-        }
-        else
-        {
-            Debug.Log("Date and Time Textboxes Failed to be Set");
-        }
-
         gameObject.SetActive(false);
     }
 
@@ -55,7 +29,7 @@ public class DataDisplay : MonoBehaviour
                         if (focusedDog.m_name != "")
                         {
                             ToggleNameInputField(false);
-                            textElement.Value.text = focusedDog.m_name;
+                            textElement.Value.text = focusedDog.m_name.Replace("_", " ");
                         }
                         else
                             ToggleNameInputField(true);
@@ -64,7 +38,7 @@ public class DataDisplay : MonoBehaviour
                         textElement.Value.text = focusedDog.m_age.ToString() + " yrs";
                         break;
                     case ("BreedText"):
-                        textElement.Value.text = focusedDog.m_breed;
+                        textElement.Value.text = focusedDog.m_breed.ToString().Replace("_", " ");
                         break;
                     default:
                         if (textElement.Key != "NameTextbox")
@@ -77,9 +51,9 @@ public class DataDisplay : MonoBehaviour
 
             foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.m_personalityValues)
+                foreach (PersonalityProperty propValue in focusedDog.m_personalityValues)
                 {
-                    if (sliderValue.Key == propValue.GetPropertyName())
+                    if (sliderValue.Key == propValue.GetPropertyName().ToString())
                     {
                         sliderValue.Value.value = propValue.GetValue();
                         break;
@@ -115,9 +89,9 @@ public class DataDisplay : MonoBehaviour
         {
             foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
             {
-                foreach (Property propValue in focusedDog.m_careValues)
+                foreach (CareProperty propValue in focusedDog.m_careValues)
                 {
-                    if (sliderValue.Key == propValue.GetPropertyName())
+                    if (sliderValue.Key == propValue.GetPropertyName().ToString())
                     {
                         sliderValue.Value.value = propValue.GetValue();
                         break;

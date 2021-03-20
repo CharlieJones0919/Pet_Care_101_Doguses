@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9089536525100727228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.204}
+  m_LocalPosition: {x: 0, y: 0, z: -1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3760339481355274807}
@@ -174,11 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1c208e92dc4b34e853976615913202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoPanelObject: {fileID: 0}
   m_controller: {fileID: 0}
-  m_name: Paula
-  m_breed: Pomeranian
-  m_age: 15
+  infoPanelObject: {fileID: 0}
+  m_name: 
+  m_breed: 0
+  m_age: 0
 --- !u!114 &243922474303207471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LegsObj
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151023354082563727, guid: 0e7517745b5b5a549b0232115095a705,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e7517745b5b5a549b0232115095a705, type: 3}
@@ -418,6 +423,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pointedSnout
       objectReference: {fileID: 0}
+    - target: {fileID: 6670750800964580405, guid: 0a476a51fc403bd498ff09eb90fd7f02,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a476a51fc403bd498ff09eb90fd7f02, type: 3}
 --- !u!4 &2430782958759445196 stripped
@@ -487,6 +497,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4157524182732408741, guid: 6b9302750d0893e4da1eebf99b67545c,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4157524182732408741, guid: 6b9302750d0893e4da1eebf99b67545c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6b9302750d0893e4da1eebf99b67545c,
         type: 3}
@@ -563,6 +583,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6423999684894043245, guid: fe464798c09e4024c9e0ba89b946c0cb,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe464798c09e4024c9e0ba89b946c0cb,
         type: 3}
       propertyPath: m_Name
@@ -637,6 +662,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6652725513331149018, guid: 03d4902001c515141bd52b76d61f1321,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 03d4902001c515141bd52b76d61f1321,
         type: 3}

@@ -9,8 +9,9 @@ using UnityEngine;
 */
 public class Pathfinding : MonoBehaviour
 {
+    public GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
+
     private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
-    [SerializeField] private GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
     private Vector2 randomPosRange;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
 
     [SerializeField] private float m_moveSpeed = 2.75f;        //!< Speed of movement.

@@ -23,6 +23,24 @@ TextureImporter:
   - first:
       213: 2740894969695140467
     second: StarsFull
+  - first:
+      213: 8928086259850985797
+    second: StoreButton
+  - first:
+      213: 5500069735973167353
+    second: BoneCoin
+  - first:
+      213: 4469721050524578469
+    second: GBPCoin
+  - first:
+      213: 9057915042819255622
+    second: ItemTab
+  - first:
+      213: 9057915042819255622
+    second: ItemTab
+  - first:
+      213: 4944840169702778181
+    second: ItemSlot
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -82,10 +100,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -94,10 +112,10 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,10 +124,10 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: iPhone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,10 +136,10 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 3
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -241,9 +259,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 5
-        y: 686
+        y: 681
         width: 226
-        height: 51
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -262,11 +280,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 5
-        y: 635
+        y: 629
         width: 226
-        height: 51
+        height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,6 +292,111 @@ TextureImporter:
       bones: []
       spriteID: 37a755bf37d990620800000000000000
       internalID: 2740894969695140467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StoreButton
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 742
+        width: 57
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 541c67a762fe6eb70800000000000000
+      internalID: 8928086259850985797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BoneCoin
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 693
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f0ae84c84c245c40800000000000000
+      internalID: 5500069735973167353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GBPCoin
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 635
+        width: 48
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a27a952d93a70e30800000000000000
+      internalID: 4469721050524578469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemTab
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 527
+        width: 220
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64da8e49dbd24bd70800000000000000
+      internalID: 9057915042819255622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemSlot
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 422
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 545673a7fe99f9440800000000000000
+      internalID: 4944840169702778181
       vertices: []
       indices: 
       edges: []
