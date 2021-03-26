@@ -72,8 +72,16 @@ public class DogGeneration : MonoBehaviour
 {
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>();
+    public string modelsFilePath = "/Art/3D Models/DogComponents";
+
 
     public GameObject dogPrefabBase;
+    public List<GameObject> snoutMdls = new List<GameObject>();
+    public List<GameObject> earMdls = new List<GameObject>();
+    public List<GameObject> tailMdls = new List<GameObject>();
+    private Dictionary<string, Transform> earOrientations = new Dictionary<string, Transform>;
+    private Dictionary<string, Transform> tailOrientations = new Dictionary<string, Transform>;
+
     public List<GameObject> currentDogs;
     private DogController dogController;
 
@@ -89,8 +97,9 @@ public class DogGeneration : MonoBehaviour
     {
         dogController = GetComponent<DogController>();
 
+        ////////////////// Read the Breed Data from the Dog Data Text File //////////////////
         string[] data = System.IO.File.ReadAllLines(Application.dataPath + breedDataFileDir);
-        for (int i = 0; i < data.Length; i++) //Remove Blank Spaces from Data
+        for (int i = 0; i < data.Length; i++) //Removes Blank Spaces from Data
         {
             data[i] = string.Concat(data[i].Where(c => !char.IsWhiteSpace(c)));
         }
@@ -117,8 +126,30 @@ public class DogGeneration : MonoBehaviour
             breedData.Rows.Add(newData);
         }
 
+        ////////////////// Model Component Orienations //////////////////
+        string[] earOrientDescs = { "UpFront", "UpSide", "DownFront", "DownSide" };
+        Vector3[] earOrientsPos = { new Vector3(earOrientsPos); "UpFront", "UpSide", "DownFront", "DownSide" };
+        earOrientations.Add();
+
+
+        ////////////////// Retrieve Dog Component Model Files //////////////////
+
+
+        //string[] modelFilePath = modelsFilePath.Split(new char[] {'/'});
+        //string modelFolder = modelFilePath[0] + "/" + modelFilePath[1] + "/";
+
+        //string[] assetFilePaths = Directory.GetFiles(modelFolder);
+
+        //foreach (string filePath in assetFilePaths)
+        //{
+        //    if (Path.GetExtension(filePath) == ".obj")
+        //    {
+
+        //    }
+        //}
+
+        ////////////////// Initialise the States Possessed by Each Dog Property Value //////////////////
         DefineDogPropStates();
-       
     }
 
     private string GetBreedValue(DogBreed breed, DogDataField dataField)
@@ -139,13 +170,13 @@ public class DogGeneration : MonoBehaviour
     {
         //////////////////// Care Value States ////////////////////
         string[] hungerStateNames = { "Starving", "Fed", "Overfed" };
-        Vector2[] hungerStateRanges = { new Vector2(0,20), new Vector2(20,85), new Vector2(85,100) };
+        Vector2[] hungerStateRanges = { new Vector2(0, 20), new Vector2(20, 85), new Vector2(85, 100) };
 
         string[] attentionStateNames = { "Lonely", "Loved", "Overcrowded" };
-        Vector2[] attentionStateRanges = { new Vector2(0,50), new Vector2(50,95), new Vector2(95,100) };
+        Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 95), new Vector2(95, 100) };
 
         string[] restStateNames = { "Exhausted", "Tired", "Rested" };
-        Vector2[] restStateRanges = { new Vector2(0,15), new Vector2(15,50), new Vector2(50,100) };
+        Vector2[] restStateRanges = { new Vector2(0, 15), new Vector2(15, 50), new Vector2(50, 100) };
 
         string[] hygieneStateNames = { "Filthy", "Dirty", "Clean" };
         Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(20, 60), new Vector2(60, 100) };
@@ -169,8 +200,8 @@ public class DogGeneration : MonoBehaviour
 
         //////////////////// Personality Value States ////////////////////
         string[] obedienceStateNames = { "Bad", "Average", "Good" };
-        Vector2[] obedienceStateRanges = { new Vector2(0.0f,2.5f), new Vector2(2.5f,3.5f), new Vector2(3.5f,5.0f) };
-       
+        Vector2[] obedienceStateRanges = { new Vector2(0.0f, 2.5f), new Vector2(2.5f, 3.5f), new Vector2(3.5f, 5.0f) };
+
         string[] affectionStates = { "Aggressive", "Grouchy", "Apathetic", "Friendly", "Loving" };
         Vector2[] affectionStateRanges = { new Vector2(0.0f, 1.0f), new Vector2(1.0f, 2.0f), new Vector2(2.0f, 3.0f), new Vector2(3.0f, 4.0f), new Vector2(4.0f, 5.0f) };
 
@@ -208,7 +239,7 @@ public class DogGeneration : MonoBehaviour
 
     public void GenerateRandomNewDog()
     {
-        GameObject newDog = Instantiate(dogPrefabBase, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject newDog = Instantiate(dogPrefabBase, dogPrefabBase.transform.position, Quaternion.identity);
         newDog.transform.parent = transform;
         newDog.name = "Unnamed_Dog";
         currentDogs.Add(newDog);
@@ -218,13 +249,14 @@ public class DogGeneration : MonoBehaviour
         newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
         dogScript.infoPanelObject = dogInfoPanel;
         dogScript.m_controller = dogController;
-  
+
         dogScript.m_breed = (DogBreed)UnityEngine.Random.Range(0, numDogBreedsDefined);
 
         int maxBreedAge = int.Parse(GetBreedValue(dogScript.m_breed, DogDataField.Max_Age));
         dogScript.m_age = UnityEngine.Random.Range(1, maxBreedAge);
 
         DefineDogProperties(dogScript);
+        CreateDogBody(dogScript);
     }
 
     private void DefineDogProperties(Dog dog)
@@ -232,7 +264,7 @@ public class DogGeneration : MonoBehaviour
         foreach (DogCareValue careValue in (DogCareValue[])DogCareValue.GetValues(typeof(DogCareValue)))
         {
             if (careValue != DogCareValue.NONE)
-            dog.m_careValues.Add(new CareProperty(careValue, careValueStates[careValue], -0.01f));
+                dog.m_careValues.Add(new CareProperty(careValue, careValueStates[careValue], -0.01f));
         }
 
         foreach (DogPersonalityValue personalityValue in (DogPersonalityValue[])DogPersonalityValue.GetValues(typeof(DogPersonalityValue)))
@@ -252,6 +284,149 @@ public class DogGeneration : MonoBehaviour
                 }
                 else Debug.Log(personalityValue + " is not defined as a data field in the dog data file.");
             }
+        }
+    }
+
+    private void CreateDogBody(Dog dog)
+    {
+        /*                              <- Waist -> <-ChestPiv-> <- Chest -> <--------- Neck ---------> <------ Head ------>           */
+        GameObject head = dog.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("NeckJoint").transform.GetChild(0).gameObject;
+        /*                                   <- Waist -> <-RearPiv-> <- Rear ->  <------- TailJoint ------->          */
+        GameObject tailJoint = dog.transform.GetChild(0).GetChild(1).GetChild(0).transform.Find("TailJoint").gameObject;
+
+        GameObject leftEarPivot = head.transform.Find("EarPivotLeft").gameObject;
+        GameObject rightEarPivot = head.transform.Find("EarPivotRight").gameObject;
+
+
+
+        GameObject leftEarModel = CreateModelComponent(dog.m_breed, DogDataField.Ear_Kind, leftEarPivot, earMdls);
+        leftEarModel.transform.localScale = new Vector3(-1, 1, 1);
+        GameObject rightEarModel = CreateModelComponent(dog.m_breed, DogDataField.Ear_Kind, rightEarPivot, earMdls);
+
+        GameObject snoutModel = CreateModelComponent(dog.m_breed, DogDataField.Snout_Kind, head, snoutMdls);
+        GameObject tailModel = CreateModelComponent(dog.m_breed, DogDataField.Tail_Kind, tailJoint, tailMdls);
+    }
+
+    private GameObject CreateModelComponent(DogBreed breed, DogDataField componentType, GameObject parentObj, List<GameObject> modelList)
+    {
+        GameObject newComponent;
+        foreach (GameObject model in modelList)
+        {
+            if (model.name == GetBreedValue(breed, componentType))
+            {
+                newComponent = Instantiate(model, dogPrefabBase.transform.position, Quaternion.identity);
+                newComponent.transform.parent = parentObj.transform;
+               // SetModelComponentTransforms(breed, componentType, newComponent);
+                return newComponent;
+            }
+        }
+        Debug.Log("No " + componentType + " model was found for the breed: " + breed);
+        return null;
+    }
+
+    private void SetComponentOrientation(DogBreed breed, DogDataField componentType, GameObject component)
+    {
+        switch (componentType)
+        {
+            case (DogDataField.Ear_Orientation):
+                string earOrientation = GetBreedValue(breed, componentType);
+                switch (earOrientation)
+                    {
+                        case ("UpFront"):
+                            return;
+                        case ("UpSide"):
+                        component.
+                            return;
+                        case ("DownSide"):
+                            return;
+                        case ("DownFront"):
+                            return;
+                        default: Debug.Log(breed + " has the following invalid data entry for ear orientation: " + earOrientation); return;
+                    }
+            case (DogDataField.Tail_Orientation):
+                string tailOrientation = GetBreedValue(breed, componentType);
+                switch (tailOrientation)
+                {
+                    case ("Up"):
+                        return;
+                    case ("Middle"):
+                        return;
+                    case ("Down"):
+                        return;
+  
+                    default: Debug.Log(breed + " has the following invalid data entry for tail orientation: " + tailOrientation); return;
+                }
+            default: Debug.Log(componentType + " is not a component with orientation data."); return;
+        }
+    }
+
+    private void SetComponentScale(DogBreed breed, DogDataField componentType, GameObject component)
+    {
+        Vector3 vectorMod = Vector3.zero;
+        bool scaling = true;
+        bool up = false;
+        bool side = false;
+
+        switch (componentType)
+        {
+            case (DogDataField.Size):
+                vectorMod = new Vector3(1, 1, 1);
+                break;
+            case (DogDataField.Leg_Length):
+                vectorMod = new Vector3(0, 1, 0);
+                break;
+            case (DogDataField.Body_Length):
+            case (DogDataField.Snout_Length):
+                vectorMod = new Vector3(0, 0, 1);
+                break;
+
+            case (DogDataField.Ear_Orientation):
+            case (DogDataField.Tail_Orientation):
+                string orientation = GetBreedValue(breed, componentType);
+
+                up = (orientation.Substring(0, 1) == "Up");
+                if (up) orientation.Replace("Up", "");
+                else orientation.Replace("Down", "");
+
+                side = (orientation.Substring(0, 3) == "Down");
+
+                scaling = false;
+                break;
+            default:
+                Debug.Log(componentType + " is not a scalable or rotatable component.");
+                return;
+        }
+
+        /////////////// SCALABLE COMPONENT ///////////////
+        if (scaling)
+        {
+            switch (GetBreedValue(breed, componentType))
+            {
+                case ("X.Short"):
+                case ("X.Small"):
+                    vectorMod *= -0.5f;
+                    break;
+                case ("Short"):
+                case ("Small"):
+                    vectorMod *= -0.25f;
+                    break;
+                case ("Medium"):
+                    vectorMod *= 0.0f;
+                    break;
+                case ("Long"):
+                case ("Large"):
+                    vectorMod *= 0.25f;
+                    break;
+                case ("X.Long"):
+                case ("X.Large"):
+                    vectorMod *= 0.5f;
+                    break;
+                default:
+                    Debug.Log("No " + componentType + " scale description was found for the breed: " + breed);
+                    break;
+            }
+            component.transform.localScale += vectorMod;
+            return;
         }
     }
 }

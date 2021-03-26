@@ -7222,8 +7222,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelsFilePath: /Art/3D Models/DogComponents
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
+  snoutMdls:
+  - {fileID: 919132149155446097, guid: bc49adb05ef43dc458a650136588b19f, type: 3}
+  - {fileID: 919132149155446097, guid: 75fb4e90ea15bd342a12cbe951b6ce2b, type: 3}
+  - {fileID: 919132149155446097, guid: 3e39974acd9ab9a4794bd651c3d94c8c, type: 3}
+  earMdls:
+  - {fileID: 919132149155446097, guid: 7a445543b0a34dd42b2b85f4104b7b12, type: 3}
+  - {fileID: 919132149155446097, guid: dffb13618af52be4c9690c4eead22e24, type: 3}
+  - {fileID: 919132149155446097, guid: 08d229621f3b3494f88ec22a65adf5ce, type: 3}
+  tailMdls:
+  - {fileID: 919132149155446097, guid: bc72db8a41036244da222ede4a71bb7c, type: 3}
+  - {fileID: 919132149155446097, guid: 7453a1ff009e0e2469f1e766df19973a, type: 3}
+  - {fileID: 919132149155446097, guid: 7a11e1d0e80e34241951c1c752d8706d, type: 3}
+  - {fileID: 919132149155446097, guid: 4596bfb416d9fdb419e71ef7f76cba6a, type: 3}
+  - {fileID: 919132149155446097, guid: acc5d5baf634d304b8a8984415d60755, type: 3}
+  - {fileID: 919132149155446097, guid: 703c073d501f59947a89bcdccdf520ac, type: 3}
+  - {fileID: 919132149155446097, guid: ae3918ef4586ec8488f914b796738c26, type: 3}
   currentDogs: []
   groundObject: {fileID: 1238925872}
   dogInfoPanel: {fileID: 1793242816}
