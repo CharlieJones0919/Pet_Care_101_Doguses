@@ -24,7 +24,7 @@ public class Hungry : State
     {
         Debug.Log("Exiting Hungry State");
 
-        if (doggo.UsingItemFor() != null)
+        if (doggo.UsingItemFor() != DogCareValue.NONE)
         {
             doggo.EndItemUse();
             doggo.StopAllCoroutines();

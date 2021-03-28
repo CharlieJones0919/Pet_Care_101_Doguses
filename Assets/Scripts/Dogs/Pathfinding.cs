@@ -29,6 +29,7 @@ public class Pathfinding : MonoBehaviour
     {
         m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
         m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
+        m_randomPoint.transform.parent = transform.parent.parent.Find("PathfindingRandomPoints");
 
         //Set random position range.
         Vector3 groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.

@@ -74,13 +74,13 @@ public class DogGeneration : MonoBehaviour
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>();
     public string modelsFilePath = "/Art/3D Models/DogComponents";
 
-
     public GameObject dogPrefabBase;
     public List<GameObject> snoutMdls = new List<GameObject>();
     public List<GameObject> earMdls = new List<GameObject>();
     public List<GameObject> tailMdls = new List<GameObject>();
-    private Dictionary<string, Transform> earOrientations = new Dictionary<string, Transform>;
-    private Dictionary<string, Transform> tailOrientations = new Dictionary<string, Transform>;
+    private Dictionary<string, KeyValuePair<Vector3, Quaternion>> earOrientations = new Dictionary<string, KeyValuePair<Vector3, Quaternion>>();
+    private Dictionary<string, KeyValuePair<Vector3, Quaternion>> mirroredEarOrientations = new Dictionary<string, KeyValuePair<Vector3, Quaternion>>();
+    private Dictionary<string, float> tailOrientations = new Dictionary<string, float>();
 
     public List<GameObject> currentDogs;
     private DogController dogController;
@@ -127,30 +127,37 @@ public class DogGeneration : MonoBehaviour
         }
 
         ////////////////// Model Component Orienations //////////////////
-        string[] earOrientDescs = { "UpFront", "UpSide", "DownFront", "DownSide" };
-        Vector3[] earOrientsPos = { new Vector3(earOrientsPos); "UpFront", "UpSide", "DownFront", "DownSide" };
-        earOrientations.Add();
+        {
+            string[] earOrientDescriptions = { "UpFront", "UpSide", "DownFront", "DownSide" };
+            Vector3[] earOrientPositions = { new Vector3(0.1f, 1.475f, 0.5f), new Vector3(0.1f, 1.475f, 0.535f), new Vector3(0.115f, 1.475f, 0.555f), new Vector3(0.125f, 1.45f, 0.55f) };
+            Quaternion[] earOrientRotations = { Quaternion.Euler(0.0f, 0.0f, 0.0f), Quaternion.Euler(25.0f, 37.5f, -3.75f), Quaternion.Euler(33.25f, 31.25f, -7.75f), Quaternion.Euler(45.0f, -50.0f, -115.0f) };
 
+            if ((earOrientDescriptions.Length == earOrientPositions.Length) && (earOrientDescriptions.Length == earOrientRotations.Length))
+                for (int i = 0; i < earOrientDescriptions.Length; i++)
+                {
+                    earOrientations.Add(earOrientDescriptions[i], new KeyValuePair<Vector3, Quaternion>(earOrientPositions[i], earOrientRotations[i]));
 
-        ////////////////// Retrieve Dog Component Model Files //////////////////
+                    Vector3 mirroredPos = earOrientPositions[i];
+                    mirroredPos.x = -mirroredPos.x;
 
+                    Quaternion mirroredRot = Quaternion.identity;
+                    mirroredRot.Set(earOrientRotations[i].x, -earOrientRotations[i].y, -earOrientRotations[i].z, earOrientRotations[i].w);
+                    mirroredEarOrientations.Add(earOrientDescriptions[i], new KeyValuePair<Vector3, Quaternion>(mirroredPos, mirroredRot));
+                }
+            else Debug.Log("Inequal number of ear orientation positions and rotations to defined descriptions.");
+        }
+        {
+            string[] tailOrientDescriptions = { "Up", "Middle", "Down" };
+            float[] tailOrientRotations = { 60.0f, 0.0f, -40.0f };
 
-        //string[] modelFilePath = modelsFilePath.Split(new char[] {'/'});
-        //string modelFolder = modelFilePath[0] + "/" + modelFilePath[1] + "/";
-
-        //string[] assetFilePaths = Directory.GetFiles(modelFolder);
-
-        //foreach (string filePath in assetFilePaths)
-        //{
-        //    if (Path.GetExtension(filePath) == ".obj")
-        //    {
-
-        //    }
-        //}
-
+            if (tailOrientDescriptions.Length == tailOrientRotations.Length)
+                for (int i = 0; i < tailOrientDescriptions.Length; i++) tailOrientations.Add(tailOrientDescriptions[i], tailOrientRotations[i]); 
+            else Debug.Log("Inequal number of tail orientation rotations to defined descriptions.");
+        }
+         
         ////////////////// Initialise the States Possessed by Each Dog Property Value //////////////////
-        DefineDogPropStates();
-    }
+            DefineDogPropStates();
+        }
 
     private string GetBreedValue(DogBreed breed, DogDataField dataField)
     {
@@ -237,34 +244,49 @@ public class DogGeneration : MonoBehaviour
         personalityValueStates.Add(property, states);
     }
 
+    public void GenerateAllDogsLineUp()
+    {
+        foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
+        {
+            if (dogBreed != DogBreed.NONE) GenerateDog(dogBreed);
+        }
+    }
+
     public void GenerateRandomNewDog()
+    {     
+        GenerateDog((DogBreed)UnityEngine.Random.Range(0, numDogBreedsDefined));
+    }
+
+    float firstPos = -25f;
+
+    public void GenerateDog(DogBreed breed)
     {
         GameObject newDog = Instantiate(dogPrefabBase, dogPrefabBase.transform.position, Quaternion.identity);
-        newDog.transform.parent = transform;
-        newDog.name = "Unnamed_Dog";
+        newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
+        newDog.transform.parent = transform.GetChild(0);
+        newDog.name = "Unnamed_" + breed;
+
         currentDogs.Add(newDog);
 
         Dog dogScript = newDog.GetComponent<Dog>();
-
-        newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
         dogScript.infoPanelObject = dogInfoPanel;
         dogScript.m_controller = dogController;
 
-        dogScript.m_breed = (DogBreed)UnityEngine.Random.Range(0, numDogBreedsDefined);
-
-        int maxBreedAge = int.Parse(GetBreedValue(dogScript.m_breed, DogDataField.Max_Age));
-        dogScript.m_age = UnityEngine.Random.Range(1, maxBreedAge);
+        dogScript.m_breed = breed;
+        dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));
 
         DefineDogProperties(dogScript);
         CreateDogBody(dogScript);
+
+        newDog.transform.Translate(firstPos, 0.0f, 0.0f);
+        firstPos += 2.5f;
     }
 
     private void DefineDogProperties(Dog dog)
     {
         foreach (DogCareValue careValue in (DogCareValue[])DogCareValue.GetValues(typeof(DogCareValue)))
         {
-            if (careValue != DogCareValue.NONE)
-                dog.m_careValues.Add(new CareProperty(careValue, careValueStates[careValue], -0.01f));
+            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(new CareProperty(careValue, careValueStates[careValue], -0.01f));
         }
 
         foreach (DogPersonalityValue personalityValue in (DogPersonalityValue[])DogPersonalityValue.GetValues(typeof(DogPersonalityValue)))
@@ -293,18 +315,19 @@ public class DogGeneration : MonoBehaviour
         GameObject head = dog.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("NeckJoint").transform.GetChild(0).gameObject;
         /*                                   <- Waist -> <-RearPiv-> <- Rear ->  <------- TailJoint ------->          */
         GameObject tailJoint = dog.transform.GetChild(0).GetChild(1).GetChild(0).transform.Find("TailJoint").gameObject;
-
         GameObject leftEarPivot = head.transform.Find("EarPivotLeft").gameObject;
         GameObject rightEarPivot = head.transform.Find("EarPivotRight").gameObject;
 
-
-
         GameObject leftEarModel = CreateModelComponent(dog.m_breed, DogDataField.Ear_Kind, leftEarPivot, earMdls);
         leftEarModel.transform.localScale = new Vector3(-1, 1, 1);
-        GameObject rightEarModel = CreateModelComponent(dog.m_breed, DogDataField.Ear_Kind, rightEarPivot, earMdls);
+        CreateModelComponent(dog.m_breed, DogDataField.Ear_Kind, rightEarPivot, earMdls);
 
-        GameObject snoutModel = CreateModelComponent(dog.m_breed, DogDataField.Snout_Kind, head, snoutMdls);
-        GameObject tailModel = CreateModelComponent(dog.m_breed, DogDataField.Tail_Kind, tailJoint, tailMdls);
+        CreateModelComponent(dog.m_breed, DogDataField.Snout_Kind, head, snoutMdls);
+        CreateModelComponent(dog.m_breed, DogDataField.Tail_Kind, tailJoint, tailMdls);
+
+        SetComponentOrientations(dog.m_breed, DogDataField.Ear_Orientation, leftEarPivot);
+        SetComponentOrientations(dog.m_breed, DogDataField.Ear_Orientation, rightEarPivot);
+        SetComponentOrientations(dog.m_breed, DogDataField.Tail_Orientation, tailJoint);
     }
 
     private GameObject CreateModelComponent(DogBreed breed, DogDataField componentType, GameObject parentObj, List<GameObject> modelList)
@@ -316,7 +339,6 @@ public class DogGeneration : MonoBehaviour
             {
                 newComponent = Instantiate(model, dogPrefabBase.transform.position, Quaternion.identity);
                 newComponent.transform.parent = parentObj.transform;
-               // SetModelComponentTransforms(breed, componentType, newComponent);
                 return newComponent;
             }
         }
@@ -324,40 +346,37 @@ public class DogGeneration : MonoBehaviour
         return null;
     }
 
-    private void SetComponentOrientation(DogBreed breed, DogDataField componentType, GameObject component)
+    private void SetComponentOrientations(DogBreed breed, DogDataField componentType, GameObject component)
     {
+        string orientDesc = GetBreedValue(breed, componentType);
+
         switch (componentType)
         {
             case (DogDataField.Ear_Orientation):
-                string earOrientation = GetBreedValue(breed, componentType);
-                switch (earOrientation)
-                    {
-                        case ("UpFront"):
-                            return;
-                        case ("UpSide"):
-                        component.
-                            return;
-                        case ("DownSide"):
-                            return;
-                        case ("DownFront"):
-                            return;
-                        default: Debug.Log(breed + " has the following invalid data entry for ear orientation: " + earOrientation); return;
-                    }
-            case (DogDataField.Tail_Orientation):
-                string tailOrientation = GetBreedValue(breed, componentType);
-                switch (tailOrientation)
+                Dictionary<string, KeyValuePair<Vector3, Quaternion>> orientationList = new Dictionary<string, KeyValuePair<Vector3, Quaternion>>();
+                if (component.name.Contains("Right")) { orientationList = earOrientations; }
+                else if (component.name.Contains("Left")) { orientationList = mirroredEarOrientations; }
+
+                foreach (KeyValuePair<string, KeyValuePair<Vector3, Quaternion>> orientation in orientationList)
                 {
-                    case ("Up"):
+                    if (orientDesc == orientation.Key)
+                    {
+                        component.transform.localPosition = orientation.Value.Key;
+                        component.transform.localRotation = orientation.Value.Value;
                         return;
-                    case ("Middle"):
-                        return;
-                    case ("Down"):
-                        return;
-  
-                    default: Debug.Log(breed + " has the following invalid data entry for tail orientation: " + tailOrientation); return;
+                    }
                 }
+                break;
+            case (DogDataField.Tail_Orientation):
+                foreach (KeyValuePair<string, float> orientation in tailOrientations)
+                {
+                    if (orientDesc == orientation.Key) { component.transform.Rotate(orientation.Value, 0.0f, 0.0f); return; }
+                }
+                break;
             default: Debug.Log(componentType + " is not a component with orientation data."); return;
         }
+
+        Debug.Log(breed + " has the following invalid data entry for " + componentType + " orientation: " + orientDesc); return;
     }
 
     private void SetComponentScale(DogBreed breed, DogDataField componentType, GameObject component)

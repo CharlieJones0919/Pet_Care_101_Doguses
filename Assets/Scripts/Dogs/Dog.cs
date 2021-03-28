@@ -372,6 +372,7 @@ public class Dog : MonoBehaviour
     {
         if (m_currentItemTarget != null)
         {
+
             m_usingItem = false;
             m_currentItemTarget.EndUse();
             m_currentItemTarget = null;

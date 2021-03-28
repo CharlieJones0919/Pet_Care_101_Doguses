@@ -24,7 +24,7 @@ public class Tired : State
     {
         Debug.Log("Exiting Tired State");
 
-        if (doggo.UsingItemFor() != null)
+        if (doggo.UsingItemFor() != DogCareValue.NONE)
         {
             doggo.EndItemUse();
             doggo.StopAllCoroutines();

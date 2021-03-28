@@ -56,7 +56,7 @@ public class DogController : MonoBehaviour
                 break;
             }
 
-            if ((propertySubject != null))
+            if ((propertySubject != DogCareValue.NONE))
             {
                 allowedPositions.Remove(foundFreePos);
                 return;

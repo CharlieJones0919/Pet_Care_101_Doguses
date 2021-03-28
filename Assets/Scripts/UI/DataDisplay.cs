@@ -125,6 +125,7 @@ public class DataDisplay : MonoBehaviour
                 if (textElement.Key == "NameText")
                 {
                     textElement.Value.text = focusedDog.m_name;
+                    focusedDog.gameObject.name = name;
                     break;
                 }
             }

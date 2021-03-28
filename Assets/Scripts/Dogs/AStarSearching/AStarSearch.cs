@@ -65,7 +65,7 @@ public class AStarSearch : MonoBehaviour
                 Vector3 nodePos = gridBottomLeft + Vector3.right * (i * nodeSize + (nodeSize / 2)) + Vector3.forward * (j * nodeSize + (nodeSize / 2));
 
                 // Set whether or not the node is traverable: if it doesn't contain any objects in the obstacle layer.
-                bool traversable = !(Physics.CheckSphere(nodePos, nodeSize / 2, obstacleLayerMask));
+                bool traversable = !(Physics.CheckBox(nodePos, new Vector3(nodeSize, nodeSize, nodeSize) / 2, Quaternion.identity,  obstacleLayerMask));
 
                 // Add the node to grid map with its newly found data AS a node.
                 grid[i, j] = new ASNode(nodePos, traversable, i, j);
@@ -85,7 +85,7 @@ public class AStarSearch : MonoBehaviour
         goalNodePos = goalObject.transform.position;
 
         // Re-construct the grid. For use in the case of moving start points, goals, or obstacles.
-        //CreateGrid();
+        CreateGrid();
        
         AStarPathFind(); // Run path search.
         return m_path; // Return the path between objects found.
