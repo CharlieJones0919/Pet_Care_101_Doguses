@@ -5,6 +5,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+public enum BodyPart
+{
+    Waist, Chest, Rear,
+    Neck, Head, Snout, Eyes,
+    Ear0, Ear1,
+    Tail,
+
+    Shoulder0, Shoulder1, Shoulder2, Shoulder3,
+    UpperLeg0, UpperLeg1, UpperLeg2, UpperLeg3,
+    Knee0, Knee1, Knee2, Knee3,
+    LowerLeg0, LowerLeg1, LowerLeg2, LowerLeg3,
+    Ankle0, Ankle1, Ankle2, Ankle3,
+    Foot0, Foot1, Foot2, Foot3
+}
+
+public struct BodyComponent
+{
+    private BodyPart m_part;
+    private GameObject m_component;
+    private GameObject m_parent;
+    private List<DogDataField> m_data;
+
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent)
+    {
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+    }
+
+    public BodyComponent(BodyPart type, GameObject obj, bool isParent = false)
+    {
+        m_part = type;
+        if (!isParent) { m_component = obj; m_parent = null; }
+        else { m_parent = obj; m_component = null; }
+        m_data = new List<DogDataField>();
+    }
+
+    public void SetComponent(GameObject obj) { m_component = obj; }
+    public void SetData(DogDataField data) { m_data.Add(data); }
+    public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
+
+    public BodyPart GetPartType() { return m_part; }
+    public GameObject GetComponent() { return m_component; }
+    public GameObject GetParent() { return m_parent; }
+    public List<DogDataField> GetDataList() { return m_data; }
+
+    public bool DefinesDataField(DogDataField field) { return m_data.Contains(field); }
+    public bool HasFieldContaining(string str)
+    {
+        foreach (DogDataField field in m_data)
+        {
+            if (field.ToString().Contains(str)) { return true; }
+        }
+        return false;
+    }
+}
+
 /** \class Dog
 *  \brief This class contains the implementations of functions (or behaviour actions) that can be employed by the dog's FSM states, and the individual dog's personality and care state values.
 */
@@ -15,11 +73,13 @@ public class Dog : MonoBehaviour
 
     private DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
     private Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
-    private Collider m_collider;
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
+    public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
+
+    public BoxCollider m_collider;
 
     public List<CareProperty> m_careValues = new List<CareProperty>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
     public List<PersonalityProperty> m_personalityValues = new List<PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
@@ -51,13 +111,6 @@ public class Dog : MonoBehaviour
     */
     private void Awake()
     {
-        //Get the controller script from this object's parent (the controller's object is the parent of all dog objects). Then initialise the dog's starting care and personality values from the script's given defaults.
-       // m_controller = transform.parent.GetComponent<DogController>();
-        //m_controller.InitializeCareProperties(m_careValues);
-        //m_controller.InitializePersonalityProperties(m_personalityValues);
-
-
-
         //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
 
@@ -84,6 +137,7 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(Die), new Die(this));
 
         GetComponent<FiniteStateMachine>().SetStates(newStates); //Add defined states to FSM.
+        GetExistingBodyParts();
     }
 
     void Start()
@@ -91,13 +145,10 @@ public class Dog : MonoBehaviour
         //Get other required components from this object.
         navigationScript = GetComponent<Pathfinding>();
         UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
-        m_collider = gameObject.GetComponent<Collider>();
+
 
         ///////// Rules /////
-  
-
-
-
+        
         ////m_facts.Add("paused", true);
         ////m_facts.Add("idle", false);
         ////m_facts.Add("hungry", false);
@@ -127,7 +178,7 @@ public class Dog : MonoBehaviour
     /** \fn Update
      *  \brief Called every frame on a loop to check if the dog has been tapped on (is InFocus) and updates the dog's current care values with time progression.
      *  */
-    void Update()
+    private void Update()
     {
         UpdateCareValues();
 
@@ -142,6 +193,56 @@ public class Dog : MonoBehaviour
 
             infoPanelObject.SetActive(true);
         }
+    }
+
+    private void GetExistingBodyParts()
+    {
+        m_collider = gameObject.GetComponent<BoxCollider>();
+
+        foreach (Transform child in transform)
+        {
+            if (Enum.IsDefined(typeof(BodyPart), child.name))
+            {
+                BodyPart type = (BodyPart)Enum.Parse(typeof(BodyPart), child.name);
+                m_body.Add(type, new BodyComponent(type, child.gameObject, child.parent.gameObject));
+                Debug.Log("Found " + child.name + " and set as " + type);
+            }         
+        }
+
+        m_body[BodyPart.Waist].SetData(DogDataField.Size);
+        m_body[BodyPart.Chest].SetData(DogDataField.Body_Length);
+        m_body[BodyPart.Rear].SetData(DogDataField.Body_Length);
+        foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
+        {
+            if (part.ToString().Contains("Leg")) { m_body[part].SetData(DogDataField.Leg_Length); }
+        }
+
+
+
+        //m_body.Add(BodyPart.Waist, new BodyComponent(BodyPart.Waist, transform.GetChild(0).gameObject, gameObject, DogDataField.Size));
+
+        //m_body.Add(BodyPart.Chest, new BodyComponent(BodyPart.Chest, m_body[BodyPart.Waist].GetComponent().transform.GetChild(0).gameObject, m_body[BodyPart.Waist].GetComponent(), DogDataField.Body_Length));
+        //m_body.Add(BodyPart.Rear, new BodyComponent(BodyPart.Rear, m_body[BodyPart.Waist].GetComponent().transform.GetChild(1).gameObject, m_body[BodyPart.Waist].GetComponent(), DogDataField.Body_Length));
+
+        //m_body.neck.SetComponentAndParent(m_body.chest.GetComponent().transform.Find("NeckJoint").transform.gameObject, m_body.chest.GetComponent());
+        //m_body.head.SetComponentAndParent(m_body.neck.GetComponent().transform.GetChild(0).gameObject, m_body.neck.GetComponent());
+        ////Snout component is set in DogGeneration dependent on dog breed. 
+        //DogDataField[] snoutData = { DogDataField.Snout_Kind , DogDataField.Snout_Length };
+        //m_body.snout.SetParentAndData(m_body.head.GetComponent(), snoutData);
+
+        ////Ear components are set in DogGeneration dependent on dog breed. 
+
+        //m_body.legs = new BodyComponent[4];
+        //string[] legNames = { "FrontLegLeft", "FrontLegRight", "BackLegLeft", "BackLegRight" };
+        //for (int i = 0; i < m_body.legs.Length; i++)
+        //{
+        //    if (i < 1) { new BodyComponent(m_body.chest.GetComponent().transform.Find(legNames[i]).gameObject, m_body.chest.GetComponent(), DogDataField.Leg_Length); }
+        //    else { new BodyComponent(m_body.rear.GetComponent().transform.Find(legNames[i]).gameObject, m_body.rear.GetComponent(), DogDataField.Leg_Length); }
+        //}
+
+        ////Tail component is set in DogGeneration dependent on dog breed.
+        //DogDataField[] tailData = { DogDataField.Tail_Kind, DogDataField.Tail_Orientation };
+        //m_body.tail.SetParentAndData(m_body.rear.GetComponent(), tailData); 
     }
 
     /** \fn InFocus

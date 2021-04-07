@@ -328,8 +328,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66242523}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 5}
-  m_LocalScale: {x: 1.0000005, y: 4.9999995, z: 2}
+  m_LocalPosition: {x: 0, y: 7.5, z: 5}
+  m_LocalScale: {x: 1.0000005, y: 2, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1067725366}
   m_RootOrder: 0
@@ -1596,8 +1596,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596725317}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 10, z: -5}
-  m_LocalScale: {x: 1.0000005, y: 4.9999995, z: 2}
+  m_LocalPosition: {x: 0, y: 7.5, z: -5}
+  m_LocalScale: {x: 1.0000005, y: 2, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1067725366}
   m_RootOrder: 3
@@ -2469,8 +2469,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807378296}
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -5, y: 10, z: 0}
-  m_LocalScale: {x: 1.0000005, y: 4.9999995, z: 2}
+  m_LocalPosition: {x: -5, y: 7.5, z: 0}
+  m_LocalScale: {x: 1.0000005, y: 2, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1067725366}
   m_RootOrder: 1
@@ -3124,8 +3124,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 500
+  near clip plane: 0.01
+  far clip plane: 150
   field of view: 50
   orthographic: 0
   orthographic size: 5
@@ -3858,7 +3858,7 @@ Transform:
   m_GameObject: {fileID: 1238925872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 2.5, y: 1, z: 2.5}
   m_Children:
   - {fileID: 1067725366}
   m_Father: {fileID: 0}
@@ -3878,7 +3878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 0, y: 0}
   gridNodes: {x: 0, y: 0}
-  nodeSize: 2
+  nodeSize: 1.5
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -7284,25 +7284,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelsFilePath: /Art/3D Models/DogComponents
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   snoutMdls:
-  - {fileID: 919132149155446097, guid: bc49adb05ef43dc458a650136588b19f, type: 3}
-  - {fileID: 919132149155446097, guid: 75fb4e90ea15bd342a12cbe951b6ce2b, type: 3}
-  - {fileID: 919132149155446097, guid: 3e39974acd9ab9a4794bd651c3d94c8c, type: 3}
+  - {fileID: 1801050110699239234, guid: 087e173b5db20c74e9f5b144d4651c98, type: 3}
+  - {fileID: 1068974662893307166, guid: 9ae798eba9439ec47858e076f159b02f, type: 3}
+  - {fileID: 500927123591317504, guid: 4f8b45932414f364aa9d162b5fdc95f8, type: 3}
   earMdls:
-  - {fileID: 919132149155446097, guid: 7a445543b0a34dd42b2b85f4104b7b12, type: 3}
-  - {fileID: 919132149155446097, guid: dffb13618af52be4c9690c4eead22e24, type: 3}
-  - {fileID: 919132149155446097, guid: 08d229621f3b3494f88ec22a65adf5ce, type: 3}
+  - {fileID: 3345338663579669643, guid: 49a0cf4778820754a84b8706ebb4f03a, type: 3}
+  - {fileID: 3600070904918517330, guid: 8ebd031a90e56fe4db7c2f1742358af8, type: 3}
+  - {fileID: 4808348927921108567, guid: c615e5d913ac02d429dd398f851bd813, type: 3}
   tailMdls:
-  - {fileID: 919132149155446097, guid: bc72db8a41036244da222ede4a71bb7c, type: 3}
-  - {fileID: 919132149155446097, guid: 7453a1ff009e0e2469f1e766df19973a, type: 3}
-  - {fileID: 919132149155446097, guid: 7a11e1d0e80e34241951c1c752d8706d, type: 3}
-  - {fileID: 919132149155446097, guid: 4596bfb416d9fdb419e71ef7f76cba6a, type: 3}
-  - {fileID: 919132149155446097, guid: acc5d5baf634d304b8a8984415d60755, type: 3}
-  - {fileID: 919132149155446097, guid: 703c073d501f59947a89bcdccdf520ac, type: 3}
-  - {fileID: 919132149155446097, guid: ae3918ef4586ec8488f914b796738c26, type: 3}
+  - {fileID: 919132149155446097, guid: 8968342a2c6549046bce2a1215474de2, type: 3}
+  - {fileID: 919132149155446097, guid: a69d4e832ac344e47958d58504726c78, type: 3}
+  - {fileID: 919132149155446097, guid: 62daf8ec98753e140a2971d9ea96186a, type: 3}
+  - {fileID: 919132149155446097, guid: efcb3150aaa57e14d81ad8db2fdb58e7, type: 3}
+  - {fileID: 919132149155446097, guid: 5d6831e82d8bba845a14b7eb9f389311, type: 3}
+  - {fileID: 919132149155446097, guid: 79cc47ca882ff32468f656e73ebacbd3, type: 3}
+  - {fileID: 919132149155446097, guid: 66146bd427139df47863358e1f270379, type: 3}
   currentDogs: []
   groundObject: {fileID: 1238925872}
   dogInfoPanel: {fileID: 1793242816}
@@ -7744,8 +7743,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029690494}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 5, y: 10, z: 0}
-  m_LocalScale: {x: 1.0000005, y: 4.9999995, z: 2}
+  m_LocalPosition: {x: 5, y: 7.5, z: 0}
+  m_LocalScale: {x: 1.0000005, y: 2, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1067725366}
   m_RootOrder: 2
