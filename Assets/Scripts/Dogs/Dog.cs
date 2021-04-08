@@ -7,25 +7,47 @@ using UnityEditor;
 
 public enum BodyPart
 {
-    Waist, Chest, Rear,
-    Neck, Head, Snout, Eyes,
+    Neck, Head, Eye0, Eye1,
+    Snout, 
     Ear0, Ear1,
     Tail,
 
     Shoulder0, Shoulder1, Shoulder2, Shoulder3,
     UpperLeg0, UpperLeg1, UpperLeg2, UpperLeg3,
+
     Knee0, Knee1, Knee2, Knee3,
+
     LowerLeg0, LowerLeg1, LowerLeg2, LowerLeg3,
     Ankle0, Ankle1, Ankle2, Ankle3,
-    Foot0, Foot1, Foot2, Foot3
+    Foot0, Foot1, Foot2, Foot3,
+
+    Chest, Rear, Waist
 }
 
 public struct BodyComponent
 {
     private BodyPart m_part;
-    private GameObject m_component;
+    public GameObject m_component;
     private GameObject m_parent;
     private List<DogDataField> m_data;
+
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField data)
+    {
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+        m_data.Add(data);
+    }
+
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField[] dataList)
+    {
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+        foreach (DogDataField field in dataList) { m_data.Add(field); };
+    }
 
     public BodyComponent(BodyPart type, GameObject component, GameObject parent)
     {
@@ -35,21 +57,11 @@ public struct BodyComponent
         m_data = new List<DogDataField>();
     }
 
-    public BodyComponent(BodyPart type, GameObject obj, bool isParent = false)
-    {
-        m_part = type;
-        if (!isParent) { m_component = obj; m_parent = null; }
-        else { m_parent = obj; m_component = null; }
-        m_data = new List<DogDataField>();
-    }
-
-    public void SetComponent(GameObject obj) { m_component = obj; }
     public void SetData(DogDataField data) { m_data.Add(data); }
     public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
 
     public BodyPart GetPartType() { return m_part; }
-    public GameObject GetComponent() { return m_component; }
-    public GameObject GetParent() { return m_parent; }
+    public GameObject GetParent() { return m_parent.gameObject; }
     public List<DogDataField> GetDataList() { return m_data; }
 
     public bool DefinesDataField(DogDataField field) { return m_data.Contains(field); }
@@ -199,14 +211,16 @@ public class Dog : MonoBehaviour
     {
         m_collider = gameObject.GetComponent<BoxCollider>();
 
-        foreach (Transform child in transform)
+        var allChildObjects = transform.GetComponentsInChildren<Transform>();
+
+        foreach (Transform child in allChildObjects)
         {
             if (Enum.IsDefined(typeof(BodyPart), child.name))
             {
                 BodyPart type = (BodyPart)Enum.Parse(typeof(BodyPart), child.name);
-                m_body.Add(type, new BodyComponent(type, child.gameObject, child.parent.gameObject));
-                Debug.Log("Found " + child.name + " and set as " + type);
-            }         
+                m_body.Add(type, new BodyComponent(type, child.gameObject, child.transform.parent.gameObject));
+               // Debug.Log("Found " + child.name + " and set as " + type);
+            }
         }
 
         m_body[BodyPart.Waist].SetData(DogDataField.Size);
@@ -267,7 +281,6 @@ public class Dog : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
     private bool InFocus()
     {
-        Debug.Log("AAAAAAAAAAA");
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
@@ -420,7 +433,7 @@ public class Dog : MonoBehaviour
             }
             else
             {
-                Debug.Log("Can't find required item: " + type);
+                Debug.LogWarning("Can't find required item: " + type);
                 return false;
             }
         }
@@ -453,7 +466,7 @@ public class Dog : MonoBehaviour
         }
         else
         {
-            Debug.Log("No item to use.");
+            Debug.LogWarning("No item to use.");
         }
     }
 
@@ -480,7 +493,7 @@ public class Dog : MonoBehaviour
         }
         else
         {
-            Debug.Log("No item to end use of.");
+            Debug.LogWarning("No item to end use of.");
         }
     }
 

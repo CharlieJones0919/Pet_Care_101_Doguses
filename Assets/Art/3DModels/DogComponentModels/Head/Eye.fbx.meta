@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: EyeMat
     second: {fileID: 2100000, guid: eb008208af8320642a795fa2896fe577, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeMat1
+    second: {fileID: 2100000, guid: eb008208af8320642a795fa2896fe577, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

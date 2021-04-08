@@ -3,7 +3,27 @@ guid: 0387004389419c846be3f46b106aadc3
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fur Material
+    second: {fileID: 2100000, guid: 351aedab16e41014b8313d72f899df74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fur Material1
+    second: {fileID: 2100000, guid: 351aedab16e41014b8313d72f899df74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn3SG.001
+    second: {fileID: 2100000, guid: ec4a5ca0016c569489bb7daf8ce5974a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn3SG.002
+    second: {fileID: 2100000, guid: ec4a5ca0016c569489bb7daf8ce5974a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -3,7 +3,22 @@ guid: ca26b55d25e2fc34d945338eb080b04b
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeMat.004
+    second: {fileID: 2100000, guid: eb008208af8320642a795fa2896fe577, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 351aedab16e41014b8313d72f899df74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material1
+    second: {fileID: 2100000, guid: 351aedab16e41014b8313d72f899df74, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
