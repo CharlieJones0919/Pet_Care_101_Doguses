@@ -12,9 +12,9 @@ using UnityEngine;
 public class AStarSearch : MonoBehaviour
 {
     // Grid Map Data
-    private ASNode[,] grid;                         //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
-    [SerializeField] private Vector2 gridSize;      //!< Size of thr grid on the X & Y axes.
-    [SerializeField] private Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
+    private ASNode[,] grid;       //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
+    public Vector2 gridSize;      //!< Size of the grid on the X & Y axes.
+    public Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
     [SerializeField] private float nodeSize = 2;    //!< Translation of physical world scale to node size.
     [SerializeField] private LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
 
@@ -248,5 +248,10 @@ public class AStarSearch : MonoBehaviour
     {
         // Return the distance as calculated by the Heuristic class.
         return Heuristic.GetDistanceEuclidean(nodeA, nodeB); 
+    }
+
+    public bool IsTraversable(Vector3 pos, Transform objectDims)
+    {
+        return !(Physics.CheckBox(pos, objectDims.position, objectDims.rotation, obstacleLayerMask));
     }
 }

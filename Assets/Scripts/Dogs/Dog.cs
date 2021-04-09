@@ -84,7 +84,7 @@ public class Dog : MonoBehaviour
     public GameObject infoPanelObject;     //!< Reference to the dog information UI panel to send this object's instance of this script to so if this dog is tapped on its data can be displayed. 
 
     private DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
-    private Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
+    public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
@@ -158,9 +158,16 @@ public class Dog : MonoBehaviour
         navigationScript = GetComponent<Pathfinding>();
         UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
 
+        Vector3 spawnPoint = Vector3.zero;
+        while (spawnPoint == Vector3.zero)
+        {
+            spawnPoint = navigationScript.GetRandomPointInWorld();
+        }
+        spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        transform.position = spawnPoint;
 
         ///////// Rules /////
-        
+
         ////m_facts.Add("paused", true);
         ////m_facts.Add("idle", false);
         ////m_facts.Add("hungry", false);

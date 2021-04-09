@@ -10,6 +10,7 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
     public GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
+    public Vector2 requiredNodeSpace; 
 
     private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
     private Vector2 randomPosRange;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
@@ -30,6 +31,8 @@ public class Pathfinding : MonoBehaviour
         m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
         m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
         m_randomPoint.transform.parent = transform.parent.parent.Find("PathfindingRandomPoints");
+
+        requiredNodeSpace = m_aStarSearch.gridNodes;
 
         //Set random position range.
         Vector3 groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
@@ -132,6 +135,7 @@ public class Pathfinding : MonoBehaviour
     {
         if (m_randomNodeFound)  //If a random point has already been found, follow the path to it.
         {
+            StopCoroutine(GenerateRandomPointInWorld());
             FollowPathTo(m_randomPoint);
         }
         else  //If a random node hasn't been found yet, generate a new random position and set the randomPoint to it.
@@ -143,7 +147,7 @@ public class Pathfinding : MonoBehaviour
     /** \fn GenerateRandomPointInWorld
      *  \brief Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.
      */
-    IEnumerator GenerateRandomPointInWorld()
+    private IEnumerator GenerateRandomPointInWorld()
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
         ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-randomPosRange.x, randomPosRange.x), 0, Random.Range(-randomPosRange.y, randomPosRange.y))); //Locate a random node on the grid.
@@ -157,6 +161,18 @@ public class Pathfinding : MonoBehaviour
 
         m_randomNodeFound = true; //A random traversable node has been found.
         m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
+    }
+
+    public Vector3 GetRandomPointInWorld()
+    {
+        if (m_randomNodeFound)  //If a random point has already been found, return it.
+        {
+            StopCoroutine(GenerateRandomPointInWorld());
+            return m_randomPoint.transform.position;
+        }
+
+        StartCoroutine(GenerateRandomPointInWorld());
+        return new Vector3(0,0,0);
     }
 
     /** \fn MoveDog

@@ -276,11 +276,9 @@ public class DogGeneration : MonoBehaviour
         GenerateDog((DogBreed)UnityEngine.Random.Range(0, numDogBreedsDefined));
     }
 
-    float firstPos = -25f;
-
     public void GenerateDog(DogBreed breed)
     {
-        GameObject newDog = Instantiate(dogPrefabBase, dogPrefabBase.transform.position, Quaternion.identity);
+        GameObject newDog = Instantiate(dogPrefabBase, Vector3.zero, Quaternion.identity);
         newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
         newDog.transform.parent = transform.GetChild(0);
         newDog.name = "Unnamed_" + breed;
@@ -296,9 +294,6 @@ public class DogGeneration : MonoBehaviour
 
         DefineDogProperties(dogScript);
         FinaliseDogBody(dogScript.m_breed, dogScript.m_body);
-
-        newDog.transform.Translate(firstPos, 0.0f, 0.0f);
-        firstPos += 2.5f;
     }
 
     private void DefineDogProperties(Dog dog)
@@ -363,8 +358,7 @@ public class DogGeneration : MonoBehaviour
             }
         }
 
-        //if (dog[part].GetDataList().Count > 0)
-        //{
+        // Set Body Component's Orientation and Scale Values
         foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
         {
             foreach (DogDataField entry in dog[part].GetDataList())
@@ -374,51 +368,9 @@ public class DogGeneration : MonoBehaviour
                     if (!dog[part].GetPartType().ToString().Contains("1")) { SetComponentOrientations(breed, dog[part], entry); }
                     else { SetComponentOrientations(breed, dog[part], entry, true); }
                 }
-                if (entry.ToString().Contains("Length") || entry.ToString().Contains("Size")) { SetComponentScale(breed, dog[part]); }
-                //  { Debug.LogWarning("The " + component.GetType().ToString() + " doesn't define any dog data fields."); }
+                if (entry.ToString().Contains("Length") || entry.ToString().Contains("Size")) { SetComponentScale(breed, dog[part], true); }
             }
-        }
-        //}
-
-
-        //foreach (KeyValuePair<BodyPart, BodyComponent> component in dog)
-        //{
-        //    if (component.Value.m_component() == null) { Debug.LogWarning("No object found for the " + component.Value.GetType()); }
-
-        //    else if (component.Value.GetDataList().Count > 0)
-        //    {
-        //        foreach (DogDataField entry in component.Value.GetDataList())
-        //        {
-        //            if (entry.ToString().Contains("Orientation")) { SetComponentOrientations(breed, component.Value); }
-        //            if (entry.ToString().Contains("Size") || entry.ToString().Contains("Length")) { SetComponentScale(breed, dog[component.Key]); }
-        //            { Debug.LogWarning("The " + component.GetType().ToString() + " doesn't define any dog data fields."); }
-        //        }
-        //    }
-        //}
-
-        //dog.leftEar.SetComponent(SetComponentModel(breed, dog.leftEar, earMdls));
-        //dog.leftEar.GetComponent().transform.localScale = new Vector3(-1, 1, 1);
-        //dog.rightEar.SetComponent(CreateModelComponent(breed, dog.rightEar, earMdls));
-
-        //dog.snout.SetComponent(CreateModelComponent(breed, dog.snout, snoutMdls));
-
-        //dog.tail.SetComponent(CreateModelComponent(breed, dog.tail, tailMdls));
-
-        //BodyComponent[] orientationComponents = { dog.leftEar, dog.rightEar, dog.tail };
-        //foreach (BodyComponent component in orientationComponents) { SetComponentOrientations(breed, component); };
-
-        //BodyComponent[] scalableComponents = { dog.snoutPivot, dog.legs[0], dog.legs[1], dog.legs[2], dog.legs[3], dog.chestPivot, dog.rearPivot, dog.waist };
-        //foreach (BodyComponent component in scalableComponents) { SetComponentScale(breed, component); };
-
-        //Renderer[] renderers = dog.waist.m_component.transform.parent.GetComponentsInChildren<Renderer>();
-        //Bounds bounds = renderers[0].bounds;
-        //bounds.center = dog.waist.m_component.transform.position;
-        //for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
-
-        //dog.collider.center = dog.waist.m_component.transform.localPosition;
-        //dog.collider.size = bounds.size;
-
-        //dog.waist.m_component.transform.parent.Translate(0, groundObject.transform.position.y - dog.collider.bounds.min.y, 0);
+        }    
     }
 
     private GameObject CreateComponentModel(DogBreed breed, GameObject parent, DogDataField modelKind)
@@ -443,50 +395,6 @@ public class DogGeneration : MonoBehaviour
 
     private void SetComponentOrientations(DogBreed breed, BodyComponent component, DogDataField orientationDesc, bool mirror = false)
     {
-        // string orientDescription = GetBreedValue(breed, orientationDesc);
-        //foreach (DogDataField entry in component.GetDataList())
-        //{
-        //    switch (entry)
-        //    {
-        //        case (DogDataField.Ear_Orientation):
-        //            orientDescription = GetBreedValue(breed, DogDataField.Ear_Orientation);
-
-        //            Dictionary<string, KeyValuePair<Vector3, Vector3>> orientationList = new Dictionary<string, KeyValuePair<Vector3, Vector3>>();
-        //           /* if (component.GetPartType().ToString().Contains("0")) */ {orientationList = componentOrientations[]; }
-        //            //else if (component.GetPartType().ToString().Contains("1"))
-        //            //{
-        //            //    //Vector3 leftEarScale = component.m_component.transform.localScale;
-        //            //    //leftEarScale.x = -leftEarScale.x;
-        //            //    //component.m_component.transform.localScale = leftEarScale;
-        //            //    orientationList = mirroredEarOrientations;
-        //            //}
-        //          //  else { Debug.Log("This component isn't an ear: " + component.m_component.name); return; }
-
-        //            foreach (KeyValuePair<string, KeyValuePair<Vector3, Vector3>> orientation in orientationList)
-        //            {
-        //                if (earOrient == orientation.Key)
-        //                {                      
-        //                    component.m_component.transform.localPosition = orientation.Value.Key;
-        //                    component.m_component.transform.localEulerAngles = orientation.Value.Value;
-        //                    return;
-        //                }
-        //            }
-        //            Debug.LogWarning(breed + " has the following invalid data entry for ear orientation: " + earOrient); return;
-
-        //        case (DogDataField.Tail_Orientation):
-        //            orientation = GetBreedValue(breed, DogDataField.Tail_Orientation);
-
-        //        foreach (KeyValuePair<string, float> orientation in tailOrientations)
-        //        {
-        //            if (tailOrient == orientation.Key)
-        //            {
-        //                component.m_component.transform.Rotate(orientation.Value, 0.0f, 0.0f);
-        //                return;
-        //            }
-        //        }
-        //        Debug.LogWarning(breed + " has the following invalid data entry for tail orientation: " + tailOrient); return;
-        //}
-
         foreach (ModelOrientation orientation in modelOrientations)
         {
             if ((orientation.m_type == orientationDesc) && (orientation.m_description == GetBreedValue(breed, orientationDesc)))
@@ -535,7 +443,7 @@ public class DogGeneration : MonoBehaviour
                             foreach (Transform child in children) { child.localScale -= scalingDirections[entry] * scale.Value; }
                             return;
                         }
-                        else { component.m_component.transform.localScale = newScale; return; }                   
+                        else { Debug.Log(component.m_component.name); component.m_component.transform.localScale = newScale; return; }                   
                     }
                 }
                 Debug.LogWarning(entry + " is not a component with scale data."); return;
