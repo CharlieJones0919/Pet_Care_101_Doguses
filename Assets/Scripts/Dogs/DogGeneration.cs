@@ -67,7 +67,7 @@ public enum DogDataField
     Tail_Orientation
 }
 
-public struct ModelConfig
+public struct ModelOrientation
 {
     public DogDataField m_type;
     public string m_description;
@@ -78,7 +78,7 @@ public struct ModelConfig
     public Vector3 m_mirrorPos;
     public Vector3 m_mirrorRot;
 
-    public ModelConfig(DogDataField type, string description, Vector3 position, Vector3 rotation, bool usePosition = true)
+    public ModelOrientation(DogDataField type, string description, Vector3 position, Vector3 rotation, bool usePosition = true)
     {
         m_type = type; m_description = description; m_position = position; m_rotation = rotation; m_usePosition = usePosition;
 
@@ -100,15 +100,13 @@ public class DogGeneration : MonoBehaviour
     public List<GameObject> earMdls = new List<GameObject>();
     public List<GameObject> tailMdls = new List<GameObject>();
 
-    private List<ModelConfig> modelConfigurations = new List<ModelConfig>();
- //   private Dictionary<string, KeyValuePair<Vector3, Quaternion>> mirroredEarOrientations = new Dictionary<string, KeyValuePair<Vector3, Quaternion>>();
-//    private Dictionary<string, float> tailOrientations = new Dictionary<string, float>();
-    private Dictionary<string, float> scalingIncrements = new Dictionary<string, float>();
+    private List<ModelOrientation> modelOrientations = new List<ModelOrientation>();
+    private Dictionary<string, float> modelScalers = new Dictionary<string, float>();
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();
 
     public List<GameObject> currentDogs;
-    private DogController dogController;
 
+    private DogController dogController;
     [SerializeField] private GameObject groundObject;
     [SerializeField] private GameObject dogInfoPanel;
 
@@ -151,56 +149,27 @@ public class DogGeneration : MonoBehaviour
         }
 
         ////////////////// Model Component Orienations //////////////////
-        {
-            string[] earOrientDescriptions = { "UpFront",                       "UpSide",                         "DownFront",                        "DownSide" };
-            Vector3[] earOrientPositions =   { new Vector3(0.45f, 1.15f, 0.6f), new Vector3(0.45f, 1.15f, 0.55f), new Vector3(0.45f, 1.15f, 0.55f),   new Vector3(0.6f, 1.15f, 0.55f) };
-            Vector3[] earOrientRotations =   { new Vector3(0.0f, 3.5f, 3.5f),   new Vector3(35.0f, 55.0f, 30.0f), new Vector3(50.0f, -20.0f, -55.0f), new Vector3(125.0f, 95.0f, 30.0f) };
+        string[] earOrientDescriptions = { "UpFront",                       "UpSide",                         "DownFront",                        "DownSide" };
+        Vector3[] earOrientPositions =   { new Vector3(0.45f, 1.15f, 0.6f), new Vector3(0.45f, 1.15f, 0.55f), new Vector3(0.45f, 1.15f, 0.55f),   new Vector3(0.6f, 1.15f, 0.55f) };
+        Vector3[] earOrientRotations =   { new Vector3(0.0f, 3.5f, 3.5f),   new Vector3(35.0f, 55.0f, 30.0f), new Vector3(50.0f, -20.0f, -55.0f), new Vector3(125.0f, 95.0f, 30.0f) };
+        for (int i = 0; i < earOrientDescriptions.Length; i++) modelOrientations.Add(new ModelOrientation(DogDataField.Ear_Orientation, earOrientDescriptions[i], earOrientPositions[i], earOrientRotations[i]));
+   
+        string[] tailOrientDescriptions = { "Up",                       "Middle",                   "Down" };
+        Vector3[] tailOrientRotations =   { new Vector3(35.0f, 0f, 0f), new Vector3(0.0f, 0f, 0f), new Vector3(45.0f, 0f, 0f) };
+        for (int i = 0; i < tailOrientDescriptions.Length; i++) modelOrientations.Add(new ModelOrientation(DogDataField.Tail_Orientation, tailOrientDescriptions[i], Vector3.zero, tailOrientRotations[i], false));
 
-            if ((earOrientDescriptions.Length == earOrientPositions.Length) && (earOrientDescriptions.Length == earOrientRotations.Length))
-            {
-                for (int i = 0; i < earOrientDescriptions.Length; i++)
-                {
-                    modelConfigurations.Add(new ModelConfig(DogDataField.Ear_Orientation, earOrientDescriptions[i], earOrientPositions[i], earOrientRotations[i]));
+        ////////////////// Model Component Scalers //////////////////
+  
+        string[] scalingDescriptions = { "X.Short", "X.Small", "Short", "Small", "Medium", "Long", "Large", "X.Long", "X.Large" };
+        float[] scalingAmounts =       { -0.15f,    -0.15f,    -0.1f,   -0.075f, -0.025f,   0.0f,   0.0f,    0.075f,   0.075f };
+        for (int i = 0; i < scalingDescriptions.Length; i++)  modelScalers.Add(scalingDescriptions[i], scalingAmounts[i]);
 
-                    //    Vector3 mirroredPos = earOrientPositions[i];
-                    //    mirroredPos.x = -mirroredPos.x;
-                    //    Quaternion mirroredRot = Quaternion.identity;
-                    //    mirroredRot.Set(earOrientRotations[i].x, -earOrientRotations[i].y, -earOrientRotations[i].z);
+        scalingDirections.Add(DogDataField.Size, new Vector3(1,1,1));
+        scalingDirections.Add(DogDataField.Snout_Length, new Vector3(0, 0, 1));
+        scalingDirections.Add(DogDataField.Body_Length, new Vector3(0,0,1));
+        scalingDirections.Add(DogDataField.Leg_Length, new Vector3(0,1,0));
 
-                    //    mirroredEarOrientations.Add(earOrientDescriptions[i], new KeyValuePair<Vector3, Quaternion>(mirroredPos, mirroredRot));
-                }
-            }
-            else Debug.LogWarning("Inequal number of ear orientation positions and rotations to defined descriptions.");
-        }
-        {
-            string[] tailOrientDescriptions = { "Up",                       "Middle",                   "Down" };
-            Vector3[] tailOrientRotations =   { new Vector3(35.0f, 0f, 0f), new Vector3(0.0f, 0f, 0f), new Vector3(45.0f, 0f, 0f) };
-
-            if (tailOrientDescriptions.Length == tailOrientRotations.Length)
-            {
-                for (int i = 0; i < tailOrientDescriptions.Length; i++)
-                {
-                    modelConfigurations.Add(new ModelConfig(DogDataField.Tail_Orientation, tailOrientDescriptions[i], Vector3.zero, tailOrientRotations[i], false));
-                }
-            }
-            else Debug.LogWarning("Inequal number of tail orientation rotations to defined descriptions.");
-        }
-
-        ////////////////// Model Component Scales //////////////////
-        {
-            string[] scalingDescriptions = { "X.Short", "X.Small", "Short", "Small", "Medium", "Long", "Large", "X.Long", "X.Large" };
-            float[] scalingAmounts =       { -0.15f,    -0.15f,    -0.1f,   -0.075f, -0.025f,   0.0f,   0.0f,    0.075f,   0.075f };
-
-            if (scalingDescriptions.Length == scalingAmounts.Length)
-                for (int i = 0; i < scalingDescriptions.Length; i++) scalingIncrements.Add(scalingDescriptions[i], scalingAmounts[i]);
-            else Debug.LogWarning("Inequal number of scaling increments to defined descriptions.");
-
-            scalingDirections.Add(DogDataField.Size, new Vector3(1,1,1));
-            scalingDirections.Add(DogDataField.Snout_Length, new Vector3(0, 0, 1));
-            scalingDirections.Add(DogDataField.Body_Length, new Vector3(0,0,1));
-            scalingDirections.Add(DogDataField.Leg_Length, new Vector3(0,1,0));
-        }
-
+        ////////////////// Add Models to the Iteratable List of all Models //////////////////
         modelList.Add(DogDataField.Snout_Kind, snoutMdls);
         modelList.Add(DogDataField.Ear_Kind, earMdls);
         modelList.Add(DogDataField.Tail_Kind, tailMdls);
@@ -378,6 +347,7 @@ public class DogGeneration : MonoBehaviour
         dataAssignments.Add(BodyPart.Snout, snoutData);
         dataAssignments.Add(BodyPart.Tail, tailData);
 
+        // Create Non-Existing Component Models
         foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
         {
             if (!dog.ContainsKey(part))
@@ -390,22 +360,26 @@ public class DogGeneration : MonoBehaviour
                         if (dog[part].m_component == null) { Debug.Log("Component unsucessfully set: " + part.ToString()); }
                     }
                 };
-    
-                if (dog[part].GetDataList().Count > 0)
-                {
-                    foreach (DogDataField entry in dog[part].GetDataList())
-                    {
-                        if (entry.ToString().Contains("Orientation"))
-                        {
-                            if (!dog[part].GetPartType().ToString().Contains("1")) { SetComponentOrientations(breed, dog[part], entry); }
-                            else { SetComponentOrientations(breed, dog[part], entry, true); }
-                        }
-                        //    if (entry.ToString().Contains("Size") || entry.ToString().Contains("Length")) { SetComponentScale(breed, dog[component.Key]); }
-                        //  { Debug.LogWarning("The " + component.GetType().ToString() + " doesn't define any dog data fields."); }
-                    }
-                }
             }
         }
+
+        //if (dog[part].GetDataList().Count > 0)
+        //{
+        foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
+        {
+            foreach (DogDataField entry in dog[part].GetDataList())
+            {
+                if (entry.ToString().Contains("Orientation"))
+                {
+                    if (!dog[part].GetPartType().ToString().Contains("1")) { SetComponentOrientations(breed, dog[part], entry); }
+                    else { SetComponentOrientations(breed, dog[part], entry, true); }
+                }
+                if (entry.ToString().Contains("Length")) { SetComponentScale(breed, dog[part]); }
+                //  { Debug.LogWarning("The " + component.GetType().ToString() + " doesn't define any dog data fields."); }
+            }
+        }
+        //}
+
 
         //foreach (KeyValuePair<BodyPart, BodyComponent> component in dog)
         //{
@@ -513,9 +487,8 @@ public class DogGeneration : MonoBehaviour
         //        Debug.LogWarning(breed + " has the following invalid data entry for tail orientation: " + tailOrient); return;
         //}
 
-        foreach (ModelConfig orientation in modelConfigurations)
+        foreach (ModelOrientation orientation in modelOrientations)
         {
-            //  Debug.Log(breed + " " + orientationDesc.ToString() + " = " + orientation.Key.Key);
             if ((orientation.m_type == orientationDesc) && (orientation.m_description == GetBreedValue(breed, orientationDesc)))
             {
                 if (orientation.m_usePosition)
@@ -536,22 +509,35 @@ public class DogGeneration : MonoBehaviour
             }
         }
         Debug.LogWarning(breed + " has the following invalid data entry for: " + orientationDesc); return;
-
-        //  Debug.LogWarning(component + " is not a component with orientation data."); return;
     }
 
-    private void SetComponentScale(DogBreed breed, BodyComponent component)
+    private void SetComponentScale(DogBreed breed, BodyComponent component, bool scaleChildren = false)
     {
         foreach (DogDataField entry in component.GetDataList())
         {
             if (scalingDirections.ContainsKey(entry))
             {
-                foreach (KeyValuePair<string, float> scale in scalingIncrements)
+                foreach (KeyValuePair<string, float> scale in modelScalers)
                 {
                     if (scale.Key == GetBreedValue(breed, entry))
                     {
-                        component.m_component.transform.localScale += scalingDirections[entry] * scale.Value;
-                        return;
+                        Debug.Log(component.m_component.name);
+
+                        if (!scaleChildren && (component.m_component.transform.childCount > 0))
+                        {
+                            List<Transform> children = new List<Transform>();
+                            for (int i = 0; i < component.m_component.transform.childCount; i++)
+                            {
+                                children.Add(component.m_component.transform.GetChild(i).transform);
+                                children[i].parent = transform;
+                            }
+
+                            component.m_component.transform.localScale += scalingDirections[entry] * scale.Value;
+
+                            foreach (Transform child in children) { child.parent = component.m_component.transform; }
+                            return;
+                        }
+                        else { component.m_component.transform.localScale += scalingDirections[entry] * scale.Value; }                   
                     }
                 }
                 Debug.LogWarning(entry + " is not a component with scale data."); return;

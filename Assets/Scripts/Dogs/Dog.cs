@@ -230,33 +230,6 @@ public class Dog : MonoBehaviour
         {
             if (part.ToString().Contains("Leg")) { m_body[part].SetData(DogDataField.Leg_Length); }
         }
-
-
-
-        //m_body.Add(BodyPart.Waist, new BodyComponent(BodyPart.Waist, transform.GetChild(0).gameObject, gameObject, DogDataField.Size));
-
-        //m_body.Add(BodyPart.Chest, new BodyComponent(BodyPart.Chest, m_body[BodyPart.Waist].GetComponent().transform.GetChild(0).gameObject, m_body[BodyPart.Waist].GetComponent(), DogDataField.Body_Length));
-        //m_body.Add(BodyPart.Rear, new BodyComponent(BodyPart.Rear, m_body[BodyPart.Waist].GetComponent().transform.GetChild(1).gameObject, m_body[BodyPart.Waist].GetComponent(), DogDataField.Body_Length));
-
-        //m_body.neck.SetComponentAndParent(m_body.chest.GetComponent().transform.Find("NeckJoint").transform.gameObject, m_body.chest.GetComponent());
-        //m_body.head.SetComponentAndParent(m_body.neck.GetComponent().transform.GetChild(0).gameObject, m_body.neck.GetComponent());
-        ////Snout component is set in DogGeneration dependent on dog breed. 
-        //DogDataField[] snoutData = { DogDataField.Snout_Kind , DogDataField.Snout_Length };
-        //m_body.snout.SetParentAndData(m_body.head.GetComponent(), snoutData);
-
-        ////Ear components are set in DogGeneration dependent on dog breed. 
-
-        //m_body.legs = new BodyComponent[4];
-        //string[] legNames = { "FrontLegLeft", "FrontLegRight", "BackLegLeft", "BackLegRight" };
-        //for (int i = 0; i < m_body.legs.Length; i++)
-        //{
-        //    if (i < 1) { new BodyComponent(m_body.chest.GetComponent().transform.Find(legNames[i]).gameObject, m_body.chest.GetComponent(), DogDataField.Leg_Length); }
-        //    else { new BodyComponent(m_body.rear.GetComponent().transform.Find(legNames[i]).gameObject, m_body.rear.GetComponent(), DogDataField.Leg_Length); }
-        //}
-
-        ////Tail component is set in DogGeneration dependent on dog breed.
-        //DogDataField[] tailData = { DogDataField.Tail_Kind, DogDataField.Tail_Orientation };
-        //m_body.tail.SetParentAndData(m_body.rear.GetComponent(), tailData); 
     }
 
     /** \fn InFocus
