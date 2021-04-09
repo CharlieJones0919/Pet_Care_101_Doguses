@@ -161,7 +161,7 @@ public class DogGeneration : MonoBehaviour
         ////////////////// Model Component Scalers //////////////////
   
         string[] scalingDescriptions = { "X.Short", "X.Small", "Short", "Small", "Medium", "Long", "Large", "X.Long", "X.Large" };
-        float[] scalingAmounts =       { -0.15f,    -0.15f,    -0.1f,   -0.075f, -0.025f,   0.0f,   0.0f,    0.075f,   0.075f };
+        float[] scalingAmounts =       { -1.0f,     -1.0f,    -0.5f,    -0.5f,  -0.25f,    0.0f,   0.0f,    0.25f,   0.25f };
         for (int i = 0; i < scalingDescriptions.Length; i++)  modelScalers.Add(scalingDescriptions[i], scalingAmounts[i]);
 
         scalingDirections.Add(DogDataField.Size, new Vector3(1,1,1));
@@ -374,7 +374,7 @@ public class DogGeneration : MonoBehaviour
                     if (!dog[part].GetPartType().ToString().Contains("1")) { SetComponentOrientations(breed, dog[part], entry); }
                     else { SetComponentOrientations(breed, dog[part], entry, true); }
                 }
-                if (entry.ToString().Contains("Length")) { SetComponentScale(breed, dog[part]); }
+                if (entry.ToString().Contains("Length") || entry.ToString().Contains("Size")) { SetComponentScale(breed, dog[part]); }
                 //  { Debug.LogWarning("The " + component.GetType().ToString() + " doesn't define any dog data fields."); }
             }
         }
@@ -521,23 +521,21 @@ public class DogGeneration : MonoBehaviour
                 {
                     if (scale.Key == GetBreedValue(breed, entry))
                     {
-                        Debug.Log(component.m_component.name);
+                        Vector3 newScale = component.m_component.transform.localScale;
+                        newScale += scalingDirections[entry] * scale.Value;
+                        for (int i = 0; i < 3; i++) { newScale[i] = Mathf.Abs(newScale[i]); }
 
                         if (!scaleChildren && (component.m_component.transform.childCount > 0))
                         {
                             List<Transform> children = new List<Transform>();
-                            for (int i = 0; i < component.m_component.transform.childCount; i++)
-                            {
-                                children.Add(component.m_component.transform.GetChild(i).transform);
-                                children[i].parent = transform;
-                            }
+                            for (int i = 0; i < component.m_component.transform.childCount; i++) { children.Add(component.m_component.transform.GetChild(i).transform); }
 
-                            component.m_component.transform.localScale += scalingDirections[entry] * scale.Value;
+                            component.m_component.transform.localScale = newScale;
 
-                            foreach (Transform child in children) { child.parent = component.m_component.transform; }
+                            foreach (Transform child in children) { child.localScale -= scalingDirections[entry] * scale.Value; }
                             return;
                         }
-                        else { component.m_component.transform.localScale += scalingDirections[entry] * scale.Value; }                   
+                        else { component.m_component.transform.localScale = newScale; return; }                   
                     }
                 }
                 Debug.LogWarning(entry + " is not a component with scale data."); return;
