@@ -207,8 +207,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0, y: 0, z: 0}
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Size: {x: 1.75, y: 4.65, z: 4.28}
+  m_Center: {x: 0, y: -0.2, z: 0.35}
 --- !u!114 &9089536525100727226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPlane: {fileID: 0}
+  requiredSpace: {x: 0, y: 0, z: 0}
   m_moveSpeed: 3
   m_rotationSpeed: 2.5
   m_foundDistance: 3
@@ -239,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_controller: {fileID: 0}
   infoPanelObject: {fileID: 0}
+  navigationScript: {fileID: 0}
   m_name: 
   m_breed: 0
   m_age: 0

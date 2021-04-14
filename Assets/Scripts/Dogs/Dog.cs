@@ -90,7 +90,6 @@ public class Dog : MonoBehaviour
     public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
     public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
-
     public BoxCollider m_collider;
 
     public List<CareProperty> m_careValues = new List<CareProperty>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
@@ -165,6 +164,8 @@ public class Dog : MonoBehaviour
         }
         spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
         transform.position = spawnPoint;
+
+      //  navigationScript.requiredSpace = m_dimensions.size;
 
         ///////// Rules /////
 

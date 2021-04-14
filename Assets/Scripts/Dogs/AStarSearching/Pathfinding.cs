@@ -10,7 +10,7 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
     public GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
-    public Vector2 requiredNodeSpace; 
+    public Vector3 requiredSpace; 
 
     private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
     private Vector2 randomPosRange;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
@@ -32,12 +32,10 @@ public class Pathfinding : MonoBehaviour
         m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
         m_randomPoint.transform.parent = transform.parent.parent.Find("PathfindingRandomPoints");
 
-        requiredNodeSpace = m_aStarSearch.gridNodes;
-
         //Set random position range.
         Vector3 groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
-        float randX = groundWorldScale.x - 5.0f; //Subtract 5 from the edge to leave room to turn.
-        float randZ = groundWorldScale.z - 5.0f;
+        float randX = groundWorldScale.x - requiredSpace.x; //Subtract object scale from the edge to leave room to turn.
+        float randZ = groundWorldScale.z - requiredSpace.z;
         randomPosRange = new Vector2(randX, randZ);
     }
 
@@ -63,11 +61,11 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to a GameObject.
         if (point != null)
         { 
-            //Where to temporarily store the new A* search.
-            AStarSearch tempAStar = m_aStarSearch;
+            ////Where to temporarily store the new A* search.
+            //AStarSearch tempAStar = m_aStarSearch;
 
             //Request a path between this object (the dog) and the input object parameter
-            path = tempAStar.RequestPath(this.gameObject, point);
+            path = m_aStarSearch.RequestPath(gameObject, point);
         }
 
         //If path is not null and more than 0.

@@ -294,6 +294,13 @@ public class DogGeneration : MonoBehaviour
 
         DefineDogProperties(dogScript);
         FinaliseDogBody(dogScript.m_breed, dogScript.m_body);
+
+        Renderer[] renderers = dogScript.m_body[BodyPart.Waist].m_component.transform.parent.GetComponentsInChildren<Renderer>();
+        Bounds bounds = renderers[0].bounds;
+        bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
+        for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
+        dogScript.m_collider.center = bounds.center;
+        dogScript.m_collider.size = bounds.size;
     }
 
     private void DefineDogProperties(Dog dog)
@@ -368,9 +375,9 @@ public class DogGeneration : MonoBehaviour
                     if (!dog[part].GetPartType().ToString().Contains("1")) { SetComponentOrientations(breed, dog[part], entry); }
                     else { SetComponentOrientations(breed, dog[part], entry, true); }
                 }
-                if (entry.ToString().Contains("Length") || entry.ToString().Contains("Size")) { SetComponentScale(breed, dog[part], true); }
+                if (entry.ToString().Contains("Length") || entry.ToString().Contains("Size")) { SetComponentScale(breed, dog[part]); }
             }
-        }    
+        }
     }
 
     private GameObject CreateComponentModel(DogBreed breed, GameObject parent, DogDataField modelKind)
@@ -443,7 +450,7 @@ public class DogGeneration : MonoBehaviour
                             foreach (Transform child in children) { child.localScale -= scalingDirections[entry] * scale.Value; }
                             return;
                         }
-                        else { Debug.Log(component.m_component.name); component.m_component.transform.localScale = newScale; return; }                   
+                        else { component.m_component.transform.localScale = newScale; return; }                   
                     }
                 }
                 Debug.LogWarning(entry + " is not a component with scale data."); return;
