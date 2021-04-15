@@ -5,85 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum BodyPart
-{
-    Neck, Head, Eye0, Eye1,
-    Snout, 
-    Ear0, Ear1,
-    Tail,
-
-    Shoulder0, Shoulder1, Shoulder2, Shoulder3,
-    UpperLeg0, UpperLeg1, UpperLeg2, UpperLeg3,
-
-    Knee0, Knee1, Knee2, Knee3,
-
-    LowerLeg0, LowerLeg1, LowerLeg2, LowerLeg3,
-    Ankle0, Ankle1, Ankle2, Ankle3,
-    Foot0, Foot1, Foot2, Foot3,
-
-    Chest, Rear, Waist
-}
-
-public struct BodyComponent
-{
-    private BodyPart m_part;
-    public GameObject m_component;
-    private GameObject m_parent;
-    private List<DogDataField> m_data;
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField data)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-        m_data.Add(data);
-    }
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField[] dataList)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-        foreach (DogDataField field in dataList) { m_data.Add(field); };
-    }
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-    }
-
-    public void SetData(DogDataField data) { m_data.Add(data); }
-    public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
-
-    public BodyPart GetPartType() { return m_part; }
-    public GameObject GetParent() { return m_parent.gameObject; }
-    public List<DogDataField> GetDataList() { return m_data; }
-
-    public bool DefinesDataField(DogDataField field) { return m_data.Contains(field); }
-    public bool HasFieldContaining(string str)
-    {
-        foreach (DogDataField field in m_data)
-        {
-            if (field.ToString().Contains(str)) { return true; }
-        }
-        return false;
-    }
-}
-
 /** \class Dog
 *  \brief This class contains the implementations of functions (or behaviour actions) that can be employed by the dog's FSM states, and the individual dog's personality and care state values.
 */
 public class Dog : MonoBehaviour
 {
-    public DogController m_controller;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
-    public GameObject infoPanelObject;     //!< Reference to the dog information UI panel to send this object's instance of this script to so if this dog is tapped on its data can be displayed. 
-
-    private DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
+    public DogController controllerScript;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
+    public DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
     public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
 
     public string m_name;   //!< This dog's name. 
@@ -91,6 +19,8 @@ public class Dog : MonoBehaviour
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
     public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
     public BoxCollider m_collider;
+
+    private int lastDayUpdated = 0;
 
     public List<CareProperty> m_careValues = new List<CareProperty>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
     public List<PersonalityProperty> m_personalityValues = new List<PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
@@ -101,8 +31,10 @@ public class Dog : MonoBehaviour
 
     private Item m_currentItemTarget = null;  //!< An item on the map the dog is currently using or travelling towards.
     private Item m_prospectItemTarget = null; //!< An item on the map the dog could use or travel towards.
-    private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
-    private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
+    [SerializeField] private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
+    [SerializeField] private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
+
+  //  public GameObject currentObject;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
@@ -133,9 +65,9 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(Distressed), new Distressed(this));
         //newStates.Add(typeof(Happy), new Happy(this));
 
-        //newStates.Add(typeof(AngerMania), new AngerMania(this));
-        //newStates.Add(typeof(FearMania), new FearMania(this));
-        //newStates.Add(typeof(ExcitementMania), new ExcitementMania(this));
+        //newStates.Add(typeof(Angery), new Angery(this));
+        //newStates.Add(typeof(Scared), new Scared(this));
+        //newStates.Add(typeof(Excited), new Excited(this));
 
         //newStates.Add(typeof(Play), new Play(this));
         //newStates.Add(typeof(Grabbed), new Grabbed(this));
@@ -153,10 +85,6 @@ public class Dog : MonoBehaviour
 
     void Start()
     {
-        //Get other required components from this object.
-        navigationScript = GetComponent<Pathfinding>();
-        UIOutputScript = infoPanelObject.GetComponent<DataDisplay>();
-
         Vector3 spawnPoint = Vector3.zero;
         while (spawnPoint == Vector3.zero)
         {
@@ -201,17 +129,47 @@ public class Dog : MonoBehaviour
     private void Update()
     {
         UpdateCareValues();
+      //  currentObject = m_currentItemTarget.GetObject();
+
+        int currentDay = controllerScript.localTime.GetGameTimeDays();
+        if (lastDayUpdated != currentDay)
+        {
+            for (int day = lastDayUpdated; lastDayUpdated < currentDay; lastDayUpdated--)
+            {
+                UpdatePersonalityValues();
+            }        
+        }
 
         if (InFocus())
         {
-            infoPanelObject.SetActive(false);
+            UIOutputScript.gameObject.SetActive(false);
 
             if (UIOutputScript.GetFocusDog() != gameObject)
             {
                 UIOutputScript.SetFocusDog(this);
             }
 
-            infoPanelObject.SetActive(true);
+            UIOutputScript.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log("Detected collision with: " + collision.gameObject.name);
+
+        if (collision.gameObject == m_currentItemTarget.GetObject())
+        {
+            navigationScript.SetTargetAsFound();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Detected collision with: " + collision.gameObject.name);
+
+        if (collision.gameObject == m_currentItemTarget.GetObject())
+        {
+            navigationScript.SetTargetAsFound();
         }
     }
 
@@ -227,11 +185,10 @@ public class Dog : MonoBehaviour
             {
                 BodyPart type = (BodyPart)Enum.Parse(typeof(BodyPart), child.name);
                 m_body.Add(type, new BodyComponent(type, child.gameObject, child.transform.parent.gameObject));
-               // Debug.Log("Found " + child.name + " and set as " + type);
             }
         }
 
-        m_body[BodyPart.Waist].SetData(DogDataField.Size);
+     //   m_body[BodyPart.Waist].SetData(DogDataField.Size);
         m_body[BodyPart.Chest].SetData(DogDataField.Body_Length);
         m_body[BodyPart.Rear].SetData(DogDataField.Body_Length);
         foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
@@ -289,6 +246,14 @@ public class Dog : MonoBehaviour
             {
                 careProperty.UpdateValue(careProperty.GetCurrenntIncrement());
             }
+        }
+    }
+
+    public void UpdatePersonalityValues()
+    {
+        foreach (PersonalityProperty personalityProperty in m_personalityValues)
+        {
+            personalityProperty.SetValue(personalityProperty.GetValue() - 0.15f);
         }
     }
 
@@ -381,7 +346,7 @@ public class Dog : MonoBehaviour
         m_prospectItemTarget = null;
         int nodeDistanceToBowl = 1000;
 
-        foreach (Item item in m_controller.GetActiveObjects(type))
+        foreach (Item item in controllerScript.GetActiveObjects(type))
         {
             if ((item.GetUser() == gameObject) && item.GetUsable())
             {
@@ -482,4 +447,7 @@ public class Dog : MonoBehaviour
     {
         m_waiting = false;
     }
+
+    public void Spooked() { }
+    public void Attack() { }
 }

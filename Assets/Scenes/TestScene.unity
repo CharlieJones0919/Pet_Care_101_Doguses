@@ -2785,7 +2785,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1958195945}
-        m_MethodName: GenerateRandomNewDog
+        m_MethodName: GenerateAllDogsLineUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7268,6 +7268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defa79a83ebbe51418ff1c574c88cead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localTime: {fileID: 1958195946}
   bowlPrefab: {fileID: 8451974279864578185, guid: 194b1b69afe1f4948bed4695c8d48261,
     type: 3}
   bedPrefab: {fileID: 6292049011481810776, guid: c5fa6c2235488bf4e8fdb578da5f0450,
@@ -7304,7 +7305,8 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 66146bd427139df47863358e1f270379, type: 3}
   currentDogs: []
   groundObject: {fileID: 1238925872}
-  dogInfoPanel: {fileID: 1793242816}
+  dogController: {fileID: 1958195944}
+  dogUIOutputScript: {fileID: 1793242820}
 --- !u!114 &1958195946
 MonoBehaviour:
   m_ObjectHideFlags: 0

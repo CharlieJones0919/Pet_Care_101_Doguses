@@ -26,6 +26,7 @@ TagManager:
   - Affection
   - DateText
   - TimeText
+  - Joint
   layers:
   - Default
   - TransparentFX

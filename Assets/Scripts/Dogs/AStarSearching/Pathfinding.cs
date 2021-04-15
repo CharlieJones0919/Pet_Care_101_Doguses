@@ -17,7 +17,7 @@ public class Pathfinding : MonoBehaviour
 
     [SerializeField] private float m_moveSpeed = 2.75f;        //!< Speed of movement.
     [SerializeField] private float m_rotationSpeed = 2.5f;     //!< Speed of rotation.
-    [SerializeField] private float m_foundDistance = 1.0f;     //!< Distance the dog object must be to a node for it to be considered "found" and removed from the path list.
+    [SerializeField] private bool m_foundTarget;     //!< Whether or not the dog has made contact with its target object.
 
     private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
     private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
@@ -96,23 +96,24 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            if (Vector3.Distance(transform.position, point.transform.position) <= (m_foundDistance * 2))
+            if (m_foundTarget)
             {
                 DogLookAt(point.transform.position, true);
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
                 m_foundPath.Clear();
+                m_foundTarget = false;
                 return true;
+            }      
+            else if (!m_foundTarget) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
+            {
+                DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
+                MoveDog();   //Move forwards towards the position.
+                return false;
             }
             else if (m_foundPath.Count == 0)  //If there are no more positions left in the path or no path was found...
             {
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
-                return false;
-            }   //If a path has been found and hasn't been traversed yet...
-            else if (Vector3.Distance(transform.position, m_foundPath[0]) >= m_foundDistance) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
-            {
-                DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
-                MoveDog();   //Move forwards towards the position.
                 return false;
             }
             else //If within the "found" distance of the node, remove it from the list.
@@ -199,6 +200,11 @@ public class Pathfinding : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_rotationSpeed);
         else
             transform.rotation = targetPosition;
+    }
+
+    public void SetTargetAsFound()
+    {
+        m_foundTarget = true;
     }
 
     /** \fn DogLookAt

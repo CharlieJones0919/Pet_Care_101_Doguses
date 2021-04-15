@@ -15,7 +15,7 @@ public class AStarSearch : MonoBehaviour
     private ASNode[,] grid;       //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
     public Vector2 gridSize;      //!< Size of the grid on the X & Y axes.
     public Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
-    private float nodeSize = 2;      //!< Translation of physical world scale to node size.
+    public float nodeSize = 2;    //!< Translation of physical world scale to node size.
     [SerializeField] private LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
 
     // Node Set Data
