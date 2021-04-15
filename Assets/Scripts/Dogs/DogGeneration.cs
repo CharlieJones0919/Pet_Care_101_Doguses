@@ -292,7 +292,7 @@ public class DogGeneration : MonoBehaviour
         FinaliseDogBody(dogScript.m_breed, dogScript.m_body);
         newDog.transform.localScale += scalingDirections[DogDataField.Size] * modelScalers[GetBreedValue(breed, DogDataField.Size)];
 
-        Renderer[] renderers = dogScript.m_body[BodyPart.Waist].m_component.transform.parent.GetComponentsInChildren<Renderer>();
+        Renderer[] renderers = newDog.transform.parent.GetComponentsInChildren<Renderer>();
         Bounds bounds = renderers[0].bounds;
         bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
         for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
