@@ -41,6 +41,9 @@ TextureImporter:
   - first:
       213: 4944840169702778181
     second: ItemSlot
+  - first:
+      213: 6081320964432555937
+    second: NextButton
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -397,6 +400,27 @@ TextureImporter:
       bones: []
       spriteID: 545673a7fe99f9440800000000000000
       internalID: 4944840169702778181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NextButton
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 774
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1af632a6231356450800000000000000
+      internalID: 6081320964432555937
       vertices: []
       indices: 
       edges: []
