@@ -34,7 +34,7 @@ public class Dog : MonoBehaviour
     [SerializeField] private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     [SerializeField] private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
 
-  //  public GameObject currentObject;
+    //  public GameObject currentObject;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
@@ -93,7 +93,7 @@ public class Dog : MonoBehaviour
         spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
         transform.position = spawnPoint;
 
-      //  navigationScript.requiredSpace = m_dimensions.size;
+        //  navigationScript.requiredSpace = m_dimensions.size;
 
         ///////// Rules /////
 
@@ -113,7 +113,7 @@ public class Dog : MonoBehaviour
 
 
 
-        seq_Pause = new BTSequence(new List<BTNode> {  });
+        seq_Pause = new BTSequence(new List<BTNode> { });
 
 
 
@@ -129,7 +129,7 @@ public class Dog : MonoBehaviour
     private void Update()
     {
         UpdateCareValues();
-      //  currentObject = m_currentItemTarget.GetObject();
+        //  currentObject = m_currentItemTarget.GetObject();
 
         int currentDay = controllerScript.localTime.GetGameTimeDays();
         if (lastDayUpdated != currentDay)
@@ -137,7 +137,7 @@ public class Dog : MonoBehaviour
             for (int day = lastDayUpdated; lastDayUpdated < currentDay; lastDayUpdated--)
             {
                 UpdatePersonalityValues();
-            }        
+            }
         }
 
         if (InFocus())
@@ -188,7 +188,6 @@ public class Dog : MonoBehaviour
             }
         }
 
-     //   m_body[BodyPart.Waist].SetData(DogDataField.Size);
         m_body[BodyPart.Chest].SetData(DogDataField.Body_Length);
         m_body[BodyPart.Rear].SetData(DogDataField.Body_Length);
         foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
@@ -238,9 +237,9 @@ public class Dog : MonoBehaviour
     {
         foreach (CareProperty careProperty in m_careValues)
         {
-            if (UsingItemFor() == careProperty.GetPropertyName())
+            if (UsingItemFor(careProperty.GetPropertyName()))
             {
-                careProperty.UpdateValue(m_currentItemTarget.GetFufillmentValue());
+                careProperty.UpdateValue(m_currentItemTarget.GetFufillmentAmount(careProperty.GetPropertyName()));
             }
             else
             {
@@ -326,14 +325,13 @@ public class Dog : MonoBehaviour
         return false;
     }
 
-    public DogCareValue UsingItemFor()
+    public bool UsingItemFor(DogCareValue value)
     {
         if (m_usingItem)
         {
-            return m_currentItemTarget.GetPropertySubject();
+            return m_currentItemTarget.FufillsCareValue(value);
         }
-
-        return DogCareValue.NONE;
+        return false;
     }
 
     public bool Waiting()
@@ -400,11 +398,8 @@ public class Dog : MonoBehaviour
     {
         if (m_currentItemTarget != null)
         {
-            if (m_currentItemTarget.GetCentrePreference())
-            {
-                Vector3 usePosition = new Vector3(m_currentItemTarget.GetPosition().x, transform.position.y, m_currentItemTarget.GetPosition().z);
-                transform.position = usePosition;
-            }
+            transform.position = m_currentItemTarget.GetUsePosition();
+            transform.localRotation.SetLookRotation(m_currentItemTarget.GetUseRotation());
 
             m_usingItem = true;
             yield return new WaitForSeconds(useTime);

@@ -24,7 +24,7 @@ public class Tired : State
     {
         Debug.Log("Exiting Tired State");
 
-        if (doggo.UsingItemFor() != DogCareValue.NONE)
+        if (!doggo.UsingItemFor(DogCareValue.NONE))
         {
             doggo.EndItemUse();
             doggo.StopAllCoroutines();
@@ -41,7 +41,7 @@ public class Tired : State
         }
         else if ((doggo.Tired() || !doggo.Rested()) && (doggo.FindItem(ItemType.BED) != null))
         {
-            if (doggo.UsingItemFor() != DogCareValue.Rest)
+            if (!doggo.UsingItemFor(DogCareValue.Rest))
             {
                 if (doggo.AttemptToUseItem(ItemType.BED))
                 {

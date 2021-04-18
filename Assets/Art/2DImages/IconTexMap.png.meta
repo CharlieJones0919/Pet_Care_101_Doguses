@@ -44,6 +44,15 @@ TextureImporter:
   - first:
       213: 6081320964432555937
     second: NextButton
+  - first:
+      213: -7472021294669642611
+    second: Arrow
+  - first:
+      213: -7498124939576778177
+    second: RightArrow
+  - first:
+      213: -7498124939576778177
+    second: HexButton
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -198,10 +207,10 @@ TextureImporter:
       name: BackButton
       rect:
         serializedVersion: 2
-        x: 106
-        y: 767
-        width: 35
-        height: 32
+        x: 102
+        y: 760
+        width: 42
+        height: 39
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -366,9 +375,9 @@ TextureImporter:
       name: ItemTab
       rect:
         serializedVersion: 2
-        x: 5
+        x: 6
         y: 527
-        width: 220
+        width: 231
         height: 100
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -421,6 +430,48 @@ TextureImporter:
       bones: []
       spriteID: 1af632a6231356450800000000000000
       internalID: 6081320964432555937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 405
+        width: 156
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d84cf01983c0e4890800000000000000
+      internalID: -7472021294669642611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HexButton
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 522
+        width: 230
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f32670f181f41f790800000000000000
+      internalID: -7498124939576778177
       vertices: []
       indices: 
       edges: []
