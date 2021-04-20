@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public enum StoreCatergory
 {
-    FOOD = 0, LEADS = 1, FURNITURE = 2, TREATS = 3, TOYS = 4, HYGIENE = 5
+   FOOD = 0, LEADS = 1, FURNITURE = 2, TREATS = 3, TOYS = 4, HYGIENE = 5
 };
 
 public class StoreController : MonoBehaviour
@@ -20,14 +20,15 @@ public class StoreController : MonoBehaviour
     [SerializeField] private GameObject baseTab;
     [SerializeField] private RectTransform tabContentSpace;
     [SerializeField] private Scrollbar tabScrollbar; 
-   // private Dictionary<GameObject, Text> sectionTabs = new Dictionary<GameObject, Text>();
 
     [SerializeField] private GameObject itemInfoPanel;
     [SerializeField] private Button backPageButton;
     [SerializeField] private Button nextPageButton;
 
     [SerializeField] private GameObject itemSlotsParent;
-    private Item[] itemSlots;
+    [SerializeField] private GameObject[] itemSlotObjects;
+
+    private List<KeyValuePair<Toggle, Image>> itemSlots = new List<KeyValuePair<Toggle, Image>>();
 
     [SerializeField] private Text focusItemName;
     [SerializeField] private Image focusItemImage;
@@ -38,52 +39,50 @@ public class StoreController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        itemSlots = itemSlotsParent.GetComponentsInChildren<Item>();
+        itemSlotObjects = itemSlotsParent.GetComponentsInChildren<GameObject>();
+        for (int i = 0; i < itemSlotObjects.Length; i++)
+        {
+            itemSlots.Add(new KeyValuePair<Toggle, Image>(itemSlotObjects[i].GetComponent<Toggle>(), itemSlotObjects[i].transform.GetChild(0).GetComponent<Image>()));
+        }        
+            
         itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
 
         int numStoreCatergories = StoreCatergory.GetNames(typeof(StoreCatergory)).Length;
 
         float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
-  
-       // tabScrollbar.numberOfSteps = numStoreCatergories;
-        //tabScrollbar.size = 0.16f;
-        //  tabScrollbar.value = 0;
-
-
+        float requiredContentSpace = (tabWidth * (numStoreCatergories - 1)) - (3 * tabWidth);
+        tabContentSpace.offsetMax = new Vector2(requiredContentSpace, tabContentSpace.offsetMax.y);
 
         for (int i = 0; i < numStoreCatergories; i++)
         {
-            string tabName = ((StoreCatergory)i).ToString();
+            StoreCatergory tabCat = (StoreCatergory)i;
 
-            if (i == 0) { baseTab.transform.GetChild(0).GetComponent<Text>().text = tabName; }
+            GameObject currentTab;
+
+            if (tabCat == (StoreCatergory)0) { currentTab = baseTab; }
             else
             {
-                GameObject newTab = Instantiate(baseTab, baseTab.transform.position, Quaternion.identity).gameObject;
-                newTab.transform.parent = baseTab.transform.parent;
-                newTab.transform.localScale = baseTab.transform.localScale;
-                newTab.transform.localPosition += new Vector3(i * tabWidth, 0, 0);
-                newTab.transform.GetChild(0).GetComponent<Text>().text = tabName;
+                currentTab = Instantiate(baseTab, baseTab.transform.position, Quaternion.identity).gameObject;
+                currentTab.transform.SetParent(baseTab.transform.parent);
+                currentTab.transform.localScale = baseTab.transform.localScale;
+                currentTab.transform.localPosition += new Vector3(i * tabWidth, 0, 0);
+            }
+            currentTab.transform.GetChild(0).GetComponent<Text>().text = tabCat.ToString();
+
+            List<Item> catergoryItems = new List<Item>();
+            foreach (Item item in itemPrefabs)
+            {
+                if (item.GetCatergory() == tabCat) { catergoryItems.Add(item); }
             }
 
+            StoreSection tabSection = currentTab.GetComponent<StoreSection>();
+            tabSection.SetSectionValues(tabCat, catergoryItems);
+            storeSections.Add(tabCat, tabSection);
+
+            if (catergoryItems.Count == 0) { Debug.LogWarning("No definition or items found for store catergory: " + tabCat.ToString()); }
         }
 
-        float requiredContentSpace = (tabWidth * numStoreCatergories) - (3 * tabWidth);
-        tabContentSpace.offsetMax = new Vector2(requiredContentSpace, tabContentSpace.offsetMax.y);
-
-
-
-        ////foreach (StoreCatergory catergory in (StoreCatergory[])StoreCatergory.GetValues(typeof(StoreCatergory)))
-        ////{
-        ////    List<Item> catergoryItems = new List<Item>();
-        ////    foreach (Item item in itemPrefabs) { if (item.GetCatergory() == catergory) { catergoryItems.Add(item); } }
-
-        ////    if (catergoryItems.Count > 0) { storeSections.Add(catergory, new StoreSection(catergory, catergoryItems)); }
-        ////    else { Debug.LogWarning("No definition or items found for store catergory: " + catergory.ToString()); }
-        ////}
-        //currentSection = (StoreCatergory)0;
-        //baseTab.text = ((StoreCatergory)0).ToString();
-
-
+        SectionSelected(storeSections[(StoreCatergory)0]);
 
         //backPageButton.interactable = false;
         //UpdateDisplayedItems();
@@ -92,10 +91,6 @@ public class StoreController : MonoBehaviour
 
         //if (itemSlots[0].GetName() != null) { SetFocusItem(itemSlots[0]); }
         //else { itemInfoPanel.SetActive(false); }
-
-        //   Instantiate<sectionPanel>();
-
-
 
         // gameObject.SetActive(false);
     }
@@ -110,20 +105,41 @@ public class StoreController : MonoBehaviour
 
     private void UpdateDisplayedItems()
     {
-        for (int i = 0; i < itemSlots.Length; i++)
-        {
-            int pageItem = (currentSectionPage * 8) + i;
+        if (storeSections[currentSection].HasMultiplePages()) { nextPageButton.interactable = true; }
+        else { nextPageButton.interactable = false; }
 
-            if (i < storeSections[currentSection].sectionItems.Count)
+        for (int i = 0; i < itemSlots.Count; i++)
+        {
+            int pageItem = (currentSectionPage * itemSlots.Count) + i;
+
+            if (i < storeSections[currentSection].GetNumItems())
             {
-                itemSlots[i] = storeSections[currentSection].sectionItems[pageItem];
+                itemSlots[i].Key.interactable = true;
+                itemSlots[i].Value.sprite = storeSections[currentSection].GetItems()[pageItem].GetSprite();
+
+             //   itemSlots[i] = storeSections[currentSection].GetItems()[pageItem];
+             //   itemSlots[i].SetSprite(storeSections[currentSection].GetItems()[pageItem].GetSprite());
+             //   itemSlots[i].ToggleInteractive(true);
+            }
+            else
+            {
+                itemSlots[i].Key.interactable = false;
+                itemSlots[i].Value.sprite = null;
             }
         }
+
+        if (itemSlots[0].Key.interactable != false ) { itemInfoPanel.SetActive(true); SetFocusItem(storeSections[currentSection].GetItems()[0]); }
+        else { itemInfoPanel.SetActive(false); }
     }
 
-    public void SectionSelected()
+    public void SectionSelected(StoreSection tabButton)
     {
+        currentSection = tabButton.GetCatergory();
 
+        backPageButton.interactable = false;
+        currentSectionPage = 0;
+
+        UpdateDisplayedItems();
     }
 
     public void ChangeSectionPage(bool turnRight)
@@ -131,8 +147,8 @@ public class StoreController : MonoBehaviour
         switch (turnRight)
         {
             case (true):
-                if (currentSectionPage < storeSections[currentSection].extraSectionPages) { currentSectionPage++; }
-                if (currentSectionPage == storeSections[currentSection].extraSectionPages) { nextPageButton.interactable = false; }
+                if (currentSectionPage < storeSections[currentSection].GetNumOfPages()) { currentSectionPage++; }
+                if (currentSectionPage == storeSections[currentSection].GetNumOfPages()) { nextPageButton.interactable = false; }
                 break;
             case (false):
                 if (currentSectionPage > 0) { currentSectionPage--; }

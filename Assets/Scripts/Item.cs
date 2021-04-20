@@ -9,6 +9,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     [SerializeField] private List<DogCareValue> fufills = new List<DogCareValue>();
     [SerializeField] private List<float> fufillmentAmounts = new List<float>();
 
+    [SerializeField] private Toggle itemToggle;
     [SerializeField] private GameObject m_object;
     [SerializeField] private StoreCatergory m_storeCatergory;
     [SerializeField] private Vector3 m_activeSpawnPos;
@@ -36,6 +37,8 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         m_price = price;
         m_description = description;
 
+        itemToggle.GetComponent<Toggle>();
+
         m_object = Instantiate(objectRef, new Vector3(0, -50, 0), Quaternion.identity);
         m_object.SetActive(false);
         m_object.transform.parent = objectParent.transform;
@@ -53,10 +56,12 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     }
 
     public StoreCatergory GetCatergory() { return m_storeCatergory; }
+    public void ToggleInteractive(bool state) { if (itemToggle) { itemToggle.interactable = state; }; }
     public GameObject GetObject() { return m_object; }
 
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }
+    public void SetSprite(Sprite sprite) { m_sprite = sprite; }
     public float GetPrice() { return m_price; }
     public string GetDescription() { return m_description; }
 
