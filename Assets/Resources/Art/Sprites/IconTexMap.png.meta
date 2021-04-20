@@ -375,9 +375,9 @@ TextureImporter:
       name: ItemTab
       rect:
         serializedVersion: 2
-        x: 6
+        x: 7
         y: 527
-        width: 231
+        width: 229
         height: 100
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -464,7 +464,7 @@ TextureImporter:
         width: 230
         height: 94
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

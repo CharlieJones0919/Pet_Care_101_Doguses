@@ -10,16 +10,19 @@ public enum StoreCatergory
 
 public class StoreController : MonoBehaviour
 {
-    [SerializeField] private string itemPrefabBaseDir = "/Prefabs/Items/";
+    [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
+    [SerializeField] private Object[] itemPrefabs;
 
     private Dictionary<StoreCatergory, StoreSection> storeSections = new Dictionary<StoreCatergory, StoreSection>();
     private StoreCatergory currentSection;
     [SerializeField] private int currentSectionPage = 0;
 
-    [SerializeField] private ScrollRect tabScrollbar; 
-    [SerializeField] private List<Text> sectionTabs = new List<Text>();
-    [SerializeField] private GameObject itemInfoPanel;
+    [SerializeField] private GameObject baseTab;
+    [SerializeField] private RectTransform tabContentSpace;
+    [SerializeField] private Scrollbar tabScrollbar; 
+   // private Dictionary<GameObject, Text> sectionTabs = new Dictionary<GameObject, Text>();
 
+    [SerializeField] private GameObject itemInfoPanel;
     [SerializeField] private Button backPageButton;
     [SerializeField] private Button nextPageButton;
 
@@ -30,41 +33,71 @@ public class StoreController : MonoBehaviour
     [SerializeField] private Image focusItemImage;
     [SerializeField] private Text focusItemPrice;
     [SerializeField] private Text focusItemDesc;
-
     [SerializeField] private Button purchaseButton;
 
     // Start is called before the first frame update
     void Start()
     {
         itemSlots = itemSlotsParent.GetComponentsInChildren<Item>();
-        Item[] itemPrefabs = (Item[])Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
+        itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
+
+        int numStoreCatergories = StoreCatergory.GetNames(typeof(StoreCatergory)).Length;
+
+        float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
+  
+       // tabScrollbar.numberOfSteps = numStoreCatergories;
+        //tabScrollbar.size = 0.16f;
+        //  tabScrollbar.value = 0;
 
 
-        foreach (StoreCatergory catergory in (StoreCatergory[])StoreCatergory.GetValues(typeof(StoreCatergory)))
+
+        for (int i = 0; i < numStoreCatergories; i++)
         {
-            List<Item> catergoryItems = new List<Item>();
-            foreach (Item item in itemPrefabs) { if (item.GetCatergory() == catergory) { catergoryItems.Add(item); } }
+            string tabName = ((StoreCatergory)i).ToString();
 
-            if (catergoryItems.Count > 0) { storeSections.Add(catergory, new StoreSection(catergory, catergoryItems)); }
-            else { Debug.LogWarning("No definition or items found for store catergory: " + catergory.ToString()); }
-
+            if (i == 0) { baseTab.transform.GetChild(0).GetComponent<Text>().text = tabName; }
+            else
+            {
+                GameObject newTab = Instantiate(baseTab, baseTab.transform.position, Quaternion.identity).gameObject;
+                newTab.transform.parent = baseTab.transform.parent;
+                newTab.transform.localScale = baseTab.transform.localScale;
+                newTab.transform.localPosition += new Vector3(i * tabWidth, 0, 0);
+                newTab.transform.GetChild(0).GetComponent<Text>().text = tabName;
+            }
 
         }
-        currentSection = (StoreCatergory)0;
 
-        backPageButton.interactable = false;
-        UpdateDisplayedItems();
-        if (storeSections[currentSection].extraSectionPages > 0) { nextPageButton.interactable = true; }
-        else { nextPageButton.interactable = false; }
+        float requiredContentSpace = (tabWidth * numStoreCatergories) - (3 * tabWidth);
+        tabContentSpace.offsetMax = new Vector2(requiredContentSpace, tabContentSpace.offsetMax.y);
 
-        if (itemSlots[0].GetName() != null) { SetFocusItem(itemSlots[0]); }
-        else { itemInfoPanel.SetActive(false); }
+
+
+        ////foreach (StoreCatergory catergory in (StoreCatergory[])StoreCatergory.GetValues(typeof(StoreCatergory)))
+        ////{
+        ////    List<Item> catergoryItems = new List<Item>();
+        ////    foreach (Item item in itemPrefabs) { if (item.GetCatergory() == catergory) { catergoryItems.Add(item); } }
+
+        ////    if (catergoryItems.Count > 0) { storeSections.Add(catergory, new StoreSection(catergory, catergoryItems)); }
+        ////    else { Debug.LogWarning("No definition or items found for store catergory: " + catergory.ToString()); }
+        ////}
+        //currentSection = (StoreCatergory)0;
+        //baseTab.text = ((StoreCatergory)0).ToString();
+
+
+
+        //backPageButton.interactable = false;
+        //UpdateDisplayedItems();
+        //if (storeSections[currentSection].extraSectionPages > 0) { nextPageButton.interactable = true; }
+        //else { nextPageButton.interactable = false; }
+
+        //if (itemSlots[0].GetName() != null) { SetFocusItem(itemSlots[0]); }
+        //else { itemInfoPanel.SetActive(false); }
 
         //   Instantiate<sectionPanel>();
 
 
 
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     private void SetFocusItem(Item focus)

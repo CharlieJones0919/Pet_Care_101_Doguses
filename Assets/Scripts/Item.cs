@@ -91,14 +91,14 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()
     {
-        if (fufills.Count != fufillmentAmounts.Count) { Debug.LogWarning("The following item has been set an inequal number of fufillments to fufillment amounts: " + m_name); }
-        else
-        {
-            for (int i = 0; i < fufills.Count; i++)
-            {
-                if (!m_fufillments.ContainsKey(fufills[i])) { m_fufillments.Add(fufills[i], fufillmentAmounts[i]); }
-                else { m_fufillments[fufills[i]] = fufillmentAmounts[i]; }
-            }
-        }
+        //if (fufills.Count != fufillmentAmounts.Count) { Debug.LogWarning("The following item has been set an inequal number of fufillments to fufillment amounts: " + m_name); }
+        //else
+        //{
+        //    for (int i = 0; i < fufills.Count; i++)
+        //    {
+        //        if (!m_fufillments.ContainsKey(fufills[i])) { m_fufillments.Add(fufills[i], fufillmentAmounts[i]); }
+        //        else { m_fufillments[fufills[i]] = fufillmentAmounts[i]; }
+        //    }
+        //}
     }
 }
