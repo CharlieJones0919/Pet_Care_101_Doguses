@@ -14,7 +14,7 @@ public class StoreSection : MonoBehaviour
     {
         sectionCatergory = catergory;
         sectionItems = items;
-        extraSectionPages = Mathf.Abs(sectionItems.Count / 8);
+        extraSectionPages = (int)Mathf.Abs(sectionItems.Count / 8);
         numItems = sectionItems.Count;
     }
 
@@ -27,6 +27,17 @@ public class StoreSection : MonoBehaviour
     }
 
     public int GetNumOfPages() { return extraSectionPages; }
+
     public List<Item> GetItems() { return sectionItems; }
-    public int GetNumItems() { return numItems; }
+    public List<Item> GetPageItems(int pageNum)
+    {
+        Debug.Log(pageNum);
+
+        List<Item> pageItems = new List<Item>();
+        for (int i = (8 * pageNum); i < numItems; i++)
+        {
+            pageItems.Add(sectionItems[i]);
+        }
+        return pageItems;
+    }
 }

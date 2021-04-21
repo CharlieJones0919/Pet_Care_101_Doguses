@@ -26,9 +26,7 @@ public class StoreController : MonoBehaviour
     [SerializeField] private Button nextPageButton;
 
     [SerializeField] private GameObject itemSlotsParent;
-    [SerializeField] private GameObject[] itemSlotObjects;
-
-    private List<KeyValuePair<Toggle, Image>> itemSlots = new List<KeyValuePair<Toggle, Image>>();
+    [SerializeField] private ItemSlot[] itemSlots;
 
     [SerializeField] private Text focusItemName;
     [SerializeField] private Image focusItemImage;
@@ -39,12 +37,7 @@ public class StoreController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        itemSlotObjects = itemSlotsParent.GetComponentsInChildren<GameObject>();
-        for (int i = 0; i < itemSlotObjects.Length; i++)
-        {
-            itemSlots.Add(new KeyValuePair<Toggle, Image>(itemSlotObjects[i].GetComponent<Toggle>(), itemSlotObjects[i].transform.GetChild(0).GetComponent<Image>()));
-        }        
-            
+        itemSlots= itemSlotsParent.GetComponentsInChildren<ItemSlot>();               
         itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
 
         int numStoreCatergories = StoreCatergory.GetNames(typeof(StoreCatergory)).Length;
@@ -95,12 +88,13 @@ public class StoreController : MonoBehaviour
         // gameObject.SetActive(false);
     }
 
-    private void SetFocusItem(Item focus)
+    public void SetFocusItem(ItemSlot focusSlot)
     {
-        focusItemName.text = focus.GetName();
-        focusItemImage.sprite = focus.GetSprite();
-        focusItemPrice.text = focus.GetPrice().ToString();
-        focusItemDesc.text = focus.GetDescription();
+        Item focusItem = focusSlot.GetItem();
+        focusItemName.text = focusItem.GetName();
+        focusItemImage.sprite = focusItem.GetSprite();
+        focusItemPrice.text = focusItem.GetPrice().ToString();
+        focusItemDesc.text = focusItem.GetDescription();
     }
 
     private void UpdateDisplayedItems()
@@ -108,34 +102,26 @@ public class StoreController : MonoBehaviour
         if (storeSections[currentSection].HasMultiplePages()) { nextPageButton.interactable = true; }
         else { nextPageButton.interactable = false; }
 
-        for (int i = 0; i < itemSlots.Count; i++)
-        {
-            int pageItem = (currentSectionPage * itemSlots.Count) + i;
+        List<Item> pageItems = storeSections[currentSection].GetPageItems(currentSectionPage);
+        int numPageItems = pageItems.Count;
 
-            if (i < storeSections[currentSection].GetNumItems())
-            {
-                itemSlots[i].Key.interactable = true;
-                itemSlots[i].Value.sprite = storeSections[currentSection].GetItems()[pageItem].GetSprite();
+        for (int i = 0; i < itemSlots.Length; i++)
+        {      
+            itemSlots[i].SetToNoItem();
 
-             //   itemSlots[i] = storeSections[currentSection].GetItems()[pageItem];
-             //   itemSlots[i].SetSprite(storeSections[currentSection].GetItems()[pageItem].GetSprite());
-             //   itemSlots[i].ToggleInteractive(true);
-            }
-            else
+            if (i < numPageItems)
             {
-                itemSlots[i].Key.interactable = false;
-                itemSlots[i].Value.sprite = null;
+                itemSlots[i].SetItem(true, pageItems[i].GetSprite(), pageItems[i]);
             }
         }
 
-        if (itemSlots[0].Key.interactable != false ) { itemInfoPanel.SetActive(true); SetFocusItem(storeSections[currentSection].GetItems()[0]); }
+        if (itemSlots[0].IsSet()) { itemInfoPanel.SetActive(true); SetFocusItem(itemSlots[0]); }
         else { itemInfoPanel.SetActive(false); }
     }
 
     public void SectionSelected(StoreSection tabButton)
     {
         currentSection = tabButton.GetCatergory();
-
         backPageButton.interactable = false;
         currentSectionPage = 0;
 
@@ -147,19 +133,23 @@ public class StoreController : MonoBehaviour
         switch (turnRight)
         {
             case (true):
-                if (currentSectionPage < storeSections[currentSection].GetNumOfPages()) { currentSectionPage++; }
+                if (currentSectionPage < storeSections[currentSection].GetNumOfPages())
+                {
+                    currentSectionPage++;
+                    backPageButton.interactable = true;
+                    UpdateDisplayedItems();
+                }
                 if (currentSectionPage == storeSections[currentSection].GetNumOfPages()) { nextPageButton.interactable = false; }
                 break;
             case (false):
-                if (currentSectionPage > 0) { currentSectionPage--; }
+                if (currentSectionPage > 0) {
+                    currentSectionPage--;
+                    nextPageButton.interactable = true;
+                    UpdateDisplayedItems();
+                }
                 if (currentSectionPage == 0) { backPageButton.interactable = false; }
                 break;
         }
-    }
-
-    public void ItemSelected(Item item)
-    {
-
     }
 }
 
