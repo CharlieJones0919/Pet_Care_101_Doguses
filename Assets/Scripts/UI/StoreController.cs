@@ -76,25 +76,20 @@ public class StoreController : MonoBehaviour
         }
 
         SectionSelected(storeSections[(StoreCatergory)0]);
-
-        //backPageButton.interactable = false;
-        //UpdateDisplayedItems();
-        //if (storeSections[currentSection].extraSectionPages > 0) { nextPageButton.interactable = true; }
-        //else { nextPageButton.interactable = false; }
-
-        //if (itemSlots[0].GetName() != null) { SetFocusItem(itemSlots[0]); }
-        //else { itemInfoPanel.SetActive(false); }
-
-        // gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void SetFocusItem(ItemSlot focusSlot)
     {
-        Item focusItem = focusSlot.GetItem();
-        focusItemName.text = focusItem.GetName();
-        focusItemImage.sprite = focusItem.GetSprite();
-        focusItemPrice.text = focusItem.GetPrice().ToString();
-        focusItemDesc.text = focusItem.GetDescription();
+        if (focusSlot.IsSet())
+        {
+            Item focusItem = focusSlot.GetItem();
+            focusItemName.text = focusItem.GetName();
+            focusItemImage.sprite = focusItem.GetSprite();
+            focusItemPrice.text = string.Format("{0:F2}", focusItem.GetPrice());
+            focusItemDesc.text = focusItem.GetDescription();
+            return;
+        }
     }
 
     private void UpdateDisplayedItems()

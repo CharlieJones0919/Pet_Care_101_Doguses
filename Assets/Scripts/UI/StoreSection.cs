@@ -31,8 +31,6 @@ public class StoreSection : MonoBehaviour
     public List<Item> GetItems() { return sectionItems; }
     public List<Item> GetPageItems(int pageNum)
     {
-        Debug.Log(pageNum);
-
         List<Item> pageItems = new List<Item>();
         for (int i = (8 * pageNum); i < numItems; i++)
         {

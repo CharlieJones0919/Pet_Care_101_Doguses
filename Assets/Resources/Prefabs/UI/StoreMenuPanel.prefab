@@ -1530,6 +1530,21 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 7533305427292907430}
+    - target: {fileID: 8683274990340944726, guid: 362e833048845b047b1efa4abe8189ce,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683274990340944727, guid: 362e833048845b047b1efa4abe8189ce,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683274990340944727, guid: 362e833048845b047b1efa4abe8189ce,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8683274991815952290, guid: 362e833048845b047b1efa4abe8189ce,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

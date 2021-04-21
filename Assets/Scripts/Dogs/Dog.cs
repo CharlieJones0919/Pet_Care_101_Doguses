@@ -239,12 +239,9 @@ public class Dog : MonoBehaviour
         {
             if (UsingItemFor(careProperty.GetPropertyName()))
             {
-                careProperty.UpdateValue(m_currentItemTarget.GetFufillmentAmount(careProperty.GetPropertyName()));
+                careProperty.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(careProperty.GetPropertyName()));
             }
-            else
-            {
-                careProperty.UpdateValue(careProperty.GetCurrenntIncrement());
-            }
+            else { careProperty.UpdateValue(careProperty.GetCurrenntIncrement()); }
         }
     }
 
