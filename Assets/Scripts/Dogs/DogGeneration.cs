@@ -261,9 +261,15 @@ public class DogGeneration : MonoBehaviour
 
     public void GenerateAllDogsLineUp()
     {
+        float dogSpace = 3;
+        Vector3 posOffset = groundObject.transform.position;
+        posOffset.y = dogSpace;
+
         foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
         {
-            GenerateDog(dogBreed);
+            GameObject dog = GenerateDog(dogBreed);        
+            dog.transform.position = posOffset;
+            posOffset.x += dogSpace;
         }
     }
 
@@ -272,7 +278,7 @@ public class DogGeneration : MonoBehaviour
         GenerateDog((DogBreed)UnityEngine.Random.Range(0, dogBreedsDefined));
     }
 
-    public void GenerateDog(DogBreed breed)
+    public GameObject GenerateDog(DogBreed breed)
     {
         GameObject newDog = Instantiate(dogPrefabBase, Vector3.zero, Quaternion.identity);
         newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
@@ -290,9 +296,8 @@ public class DogGeneration : MonoBehaviour
 
         DefineDogProperties(dogScript);
         FinaliseDogBody(dogScript.m_breed, dogScript.m_body);
-        newDog.transform.localScale += scalingDirections[DogDataField.Size] * modelScalers[GetBreedValue(breed, DogDataField.Size)];
-
-        Renderer[] renderers = newDog.transform.parent.GetComponentsInChildren<Renderer>();
+        
+        Renderer[] renderers = newDog.transform.GetComponentsInChildren<Renderer>();
         Bounds bounds = renderers[0].bounds;
         bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
         for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
@@ -301,6 +306,8 @@ public class DogGeneration : MonoBehaviour
 
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;
+
+        return newDog;
     }
 
     private void DefineDogProperties(Dog dog)
@@ -376,7 +383,9 @@ public class DogGeneration : MonoBehaviour
             }
         }
         foreach (KeyValuePair<BodyPart, DogDataField> entry in compsToScale) { SetComponentScale(breed, dog[entry.Key], entry.Value); }
-        foreach (KeyValuePair<BodyPart, DogDataField> entry in compsToRotate) { SetComponentOrientations(breed, dog[entry.Key], entry.Value); } 
+        foreach (KeyValuePair<BodyPart, DogDataField> entry in compsToRotate) { SetComponentOrientations(breed, dog[entry.Key], entry.Value); }
+
+        dog[BodyPart.Waist].m_component.transform.localScale += scalingDirections[DogDataField.Size] * modelScalers[GetBreedValue(breed, DogDataField.Size)];
     }
 
     private GameObject CreateComponentModel(DogBreed breed, GameObject parent, DogDataField modelKind)
@@ -441,17 +450,17 @@ public class DogGeneration : MonoBehaviour
                     for (int i = 0; i < component.m_component.transform.childCount; i++)
                     {
                         GameObject child = component.m_component.transform.GetChild(i).gameObject;
-                        //if (child.tag == "Joint")
-                        //{
+                        if (child.tag == "Joint")
+                        {
                             children.Add(child, child.transform.localScale);
-                        //}
+                        }
                     }
 
                     component.m_component.transform.localScale += newScale;
 
                     foreach (KeyValuePair<GameObject, Vector3> child in children)
                     {
-                        child.Key.transform.localScale = (child.Value - newScale); 
+                        child.Key.transform.localScale = child.Value - newScale; 
                     }
                     return;
                 }

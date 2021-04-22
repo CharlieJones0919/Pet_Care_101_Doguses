@@ -85,13 +85,13 @@ public class Dog : MonoBehaviour
 
     void Start()
     {
-        Vector3 spawnPoint = Vector3.zero;
-        while (spawnPoint == Vector3.zero)
-        {
-            spawnPoint = navigationScript.GetRandomPointInWorld();
-        }
-        spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
-        transform.position = spawnPoint;
+        //////////Vector3 spawnPoint = Vector3.zero;
+        //////////while (spawnPoint == Vector3.zero)
+        //////////{
+        //////////    spawnPoint = navigationScript.GetRandomPointInWorld();
+        //////////}
+        //////////spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        //////////transform.position = spawnPoint;
 
         //  navigationScript.requiredSpace = m_dimensions.size;
 
