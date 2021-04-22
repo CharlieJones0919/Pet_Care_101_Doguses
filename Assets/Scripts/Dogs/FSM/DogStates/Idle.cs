@@ -28,7 +28,7 @@ public class Idle : State
 
     public override Type StateUpdate()
     {
-        if (doggo.Hungry() && (doggo.FindItem(ItemType.BOWL) != null))
+        if (doggo.Hungry() && (doggo.FindItem(ItemType.SUSTINANCE) != null))
         {
             return typeof(Hungry);
         }

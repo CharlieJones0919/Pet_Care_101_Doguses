@@ -35,7 +35,7 @@ public class Tired : State
 
     public override Type StateUpdate()
     {
-        if (!doggo.Tired() && doggo.Hungry() && (doggo.FindItem(ItemType.BOWL) != null))
+        if (!doggo.Tired() && doggo.Hungry() && (doggo.FindItem(ItemType.SUSTINANCE) != null))
         {
             return typeof(Hungry);
         }

@@ -5,6 +5,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+public class ItemReference
+{
+    public ItemType type;
+    public Item itemOrigin;
+    public ItemInstance instance;
+
+    public void SetItemRef(ItemType itemGroup, Item item, ItemInstance obj)
+    {
+        type = itemGroup;
+        itemOrigin = item;
+        instance = obj;
+    }
+}
+
 /** \class Dog
 *  \brief This class contains the implementations of functions (or behaviour actions) that can be employed by the dog's FSM states, and the individual dog's personality and care state values.
 */
@@ -29,8 +43,8 @@ public class Dog : MonoBehaviour
     public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
     public List<Rule> m_rules = new List<Rule>();
 
-    private Item m_currentItemTarget = null;  //!< An item on the map the dog is currently using or travelling towards.
-    private Item m_prospectItemTarget = null; //!< An item on the map the dog could use or travel towards.
+    private ItemReference m_currentItemTarget = null;  //!< An item on the map the dog is currently using or travelling towards.
+    private ItemReference m_prospectItemTarget = null; //!< An item on the map the dog could use or travel towards.
     [SerializeField] private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     [SerializeField] private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
 
@@ -85,13 +99,13 @@ public class Dog : MonoBehaviour
 
     void Start()
     {
-        //////////Vector3 spawnPoint = Vector3.zero;
-        //////////while (spawnPoint == Vector3.zero)
-        //////////{
-        //////////    spawnPoint = navigationScript.GetRandomPointInWorld();
-        //////////}
-        //////////spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
-        //////////transform.position = spawnPoint;
+        Vector3 spawnPoint = Vector3.zero;
+        while (spawnPoint == Vector3.zero)
+        {
+            spawnPoint = navigationScript.GetRandomPointInWorld();
+        }
+        spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        transform.position = spawnPoint;
 
         //  navigationScript.requiredSpace = m_dimensions.size;
 
@@ -157,7 +171,7 @@ public class Dog : MonoBehaviour
     {
         Debug.Log("Detected collision with: " + collision.gameObject.name);
 
-        if (collision.gameObject == m_currentItemTarget.GetObject())
+        if (collision.gameObject == m_currentItemTarget.instance)
         {
             navigationScript.SetTargetAsFound();
         }
@@ -167,7 +181,7 @@ public class Dog : MonoBehaviour
     {
         Debug.Log("Detected collision with: " + collision.gameObject.name);
 
-        if (collision.gameObject == m_currentItemTarget.GetObject())
+        if (collision.gameObject == m_currentItemTarget.instance)
         {
             navigationScript.SetTargetAsFound();
         }
@@ -239,7 +253,7 @@ public class Dog : MonoBehaviour
         {
             if (UsingItemFor(careProperty.GetPropertyName()))
             {
-                careProperty.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(careProperty.GetPropertyName()));
+                careProperty.UpdateValue(m_currentItemTarget.itemOrigin.GetCareFufillmentAmount(careProperty.GetPropertyName()));
             }
             else { careProperty.UpdateValue(careProperty.GetCurrenntIncrement()); }
         }
@@ -326,7 +340,16 @@ public class Dog : MonoBehaviour
     {
         if (m_usingItem)
         {
-            return m_currentItemTarget.FufillsCareValue(value);
+            return m_currentItemTarget.itemOrigin.FufillsCareValue(value);
+        }
+        return false;
+    }
+
+    public bool UsingItemFor(DogPersonalityValue value)
+    {
+        if (m_usingItem)
+        {
+            return m_currentItemTarget.itemOrigin.FufillsPersonalityValue(value);
         }
         return false;
     }
@@ -336,32 +359,32 @@ public class Dog : MonoBehaviour
         return m_waiting;
     }
 
-    public Item FindItem(ItemType type)
+    public ItemInstance FindItem(ItemType type)
     {
         m_prospectItemTarget = null;
         int nodeDistanceToBowl = 1000;
 
-        foreach (Item item in controllerScript.GetActiveObjects(type))
-        {
-            if ((item.GetUser() == gameObject) && item.GetUsable())
-            {
-                m_prospectItemTarget = item;
-                break;
-            }
-            else if ((item.GetUser() == null) && item.GetUsable())
-            {
-                navigationScript.FindPathTo(item.GetObject());
-                int dist = navigationScript.GetFoundPathLength();
-                if (dist < nodeDistanceToBowl)
-                {
-                    m_prospectItemTarget = item;
-                    nodeDistanceToBowl = dist;
-                }
-            }
-        }
+        //foreach (ItemInstance item in controllerScript.GetActiveObjects(type))
+        //{
+        //    if ((item.GetUser() == gameObject) && item.GetUsable())
+        //    {
+        //        m_prospectItemTarget = item;
+        //        break;
+        //    }
+        //    else if ((item.GetUser() == null) && item.GetUsable())
+        //    {
+        //        navigationScript.FindPathTo(item.GetObject());
+        //        int dist = navigationScript.GetFoundPathLength();
+        //        if (dist < nodeDistanceToBowl)
+        //        {
+        //            m_prospectItemTarget = item;
+        //            nodeDistanceToBowl = dist;
+        //        }
+        //    }
+        //}
 
-        if (m_prospectItemTarget != null) navigationScript.FindPathTo(m_prospectItemTarget.GetObject());
-        return m_prospectItemTarget;
+        //if (m_prospectItemTarget != null) navigationScript.FindPathTo(m_prospectItemTarget.GetObject());
+        return m_prospectItemTarget.instance;
     }
 
     public bool AttemptToUseItem(ItemType type)
@@ -381,9 +404,9 @@ public class Dog : MonoBehaviour
 
         if (m_currentItemTarget != null)
         {
-            if (navigationScript.FollowPathTo(m_currentItemTarget.GetObject()))
+            if (navigationScript.FollowPathTo(m_currentItemTarget.instance.GetObject()))
             {
-                m_currentItemTarget.StartUse(gameObject);
+                m_currentItemTarget.instance.StartUse(gameObject);
                 return true;
             }
         }
@@ -395,8 +418,8 @@ public class Dog : MonoBehaviour
     {
         if (m_currentItemTarget != null)
         {
-            transform.position = m_currentItemTarget.GetUsePosition();
-            transform.localRotation.SetLookRotation(m_currentItemTarget.GetUseRotation());
+            transform.position = m_currentItemTarget.itemOrigin.GetUsePosition();
+            transform.localRotation.SetLookRotation(m_currentItemTarget.itemOrigin.GetUseRotation());
 
             m_usingItem = true;
             yield return new WaitForSeconds(useTime);
@@ -426,7 +449,7 @@ public class Dog : MonoBehaviour
         {
 
             m_usingItem = false;
-            m_currentItemTarget.EndUse();
+            m_currentItemTarget.instance.EndUse();
             m_currentItemTarget = null;
         }
         else

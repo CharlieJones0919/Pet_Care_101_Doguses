@@ -4,6 +4,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ItemInstance : MonoBehaviour
+{
+    private ItemType m_type;
+    private GameObject m_instance;
+    private bool m_singleUse;
+    private Vector3 m_inactivePos;
+    private GameObject m_user;
+
+    public ItemInstance(ItemType itemType, GameObject objectBase, bool isSingleUse, GameObject parentTransform, Vector3 inactivePos)
+    {
+        m_type = itemType;
+        m_instance = Instantiate(objectBase, inactivePos, Quaternion.identity);
+        m_instance.transform.SetParent(parentTransform.transform);
+
+        m_singleUse = isSingleUse;
+        m_inactivePos = inactivePos;
+        m_user = null;
+    }
+
+    public void Activate(Vector3 activePos)
+    {
+        m_instance.SetActive(true);
+        m_instance.transform.position = activePos;
+    }
+
+    public void Deactivate()
+    {
+        m_instance.SetActive(false);
+        m_instance.transform.position = m_inactivePos;
+    }
+
+    public GameObject GetObject() { return m_instance; }
+    public Vector3 GetPosition() { return m_instance.transform.position; }
+    public void StartUse(GameObject user) { m_user = user; }
+    public void EndUse() { m_user = null; if (m_singleUse) { Deactivate(); } }
+    public GameObject GetUser() { return m_user; }
+    public bool Usable() { return ((m_user == null) && m_instance.activeSelf); }
+}
+
 public class Item : MonoBehaviour, ISerializationCallbackReceiver
 {
     [SerializeField] private List<DogCareValue> careFufills = new List<DogCareValue>();
@@ -11,7 +50,12 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     [SerializeField] private List<DogPersonalityValue> personalityFufills = new List<DogPersonalityValue>();
     [SerializeField] private List<float> personalityFufillmentAmounts = new List<float>();
 
-    [SerializeField] private GameObject m_object;
+    [SerializeField] private ItemType m_objectType;
+    [SerializeField] private GameObject m_baseObject;
+    [SerializeField] private GameObject m_instanceParent;
+    [SerializeField] private Vector3 m_instancesInactivePos;
+    private List<ItemInstance> m_instancePool = new List<ItemInstance>();
+
     [SerializeField] private StoreCatergory m_storeCatergory;
     [SerializeField] private Vector3 m_activeSpawnPos;
 
@@ -23,41 +67,69 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     private Dictionary<DogCareValue, float> m_careFufillments = new Dictionary<DogCareValue, float>();
     private Dictionary<DogPersonalityValue, float> m_personalityFufillments = new Dictionary<DogPersonalityValue, float>();
 
-    [SerializeField] private GameObject m_user;
-    [SerializeField] private bool m_usable;
     [SerializeField] private bool m_singleUse;
-
     [SerializeField] private Vector3 m_relUsePos;
     [SerializeField] private Vector3 m_relUseRot;
 
-    public Item(StoreCatergory catergory, string name, Sprite sprite, double price, string description, GameObject objectRef, GameObject objectParent, Vector3 spawnPos, Dictionary<DogCareValue, float> cFufillments, Dictionary<DogPersonalityValue, float> pFufillments, Vector3 usePos, Vector3 useRot, bool isSingleUse)
+
+    public void InstantiatePool(uint numInitialInstances)
     {
-        m_storeCatergory = catergory;
-
-        m_name = name;
-        m_sprite = sprite;
-        m_price = price;
-        m_description = description;
-
-        m_object = Instantiate(objectRef, new Vector3(0, -50, 0), Quaternion.identity);
-        m_object.SetActive(false);
-        m_object.transform.parent = objectParent.transform;
-        m_object.transform.name = "[ " + name + " ]";
-        m_activeSpawnPos = spawnPos;
-
-        foreach (KeyValuePair<DogCareValue, float> val in cFufillments) { m_careFufillments.Add(val.Key, val.Value); }
-        foreach (KeyValuePair<DogPersonalityValue, float> val in pFufillments) { m_personalityFufillments.Add(val.Key, val.Value); }
-
-        m_relUsePos = usePos;
-        m_relUseRot = useRot;
-
-        m_user = null;
-        m_usable = false;
-        m_singleUse = isSingleUse;
+        for (uint i = 0; i < numInitialInstances; i++)
+        {
+            m_instancePool.Add(new ItemInstance(m_objectType, m_baseObject, m_singleUse, m_instanceParent, m_instancesInactivePos));
+        }
     }
 
+    public List<ItemInstance> GetInstances()
+    {
+        return m_instancePool;
+    }
+
+    public List<ItemInstance> GetAvailableInstances()
+    {
+        List<ItemInstance> availableInstances = new List<ItemInstance>();
+
+        foreach (ItemInstance instance in m_instancePool)
+        {
+            if (instance.Usable()) { availableInstances.Add(instance); }
+        }
+
+        if (availableInstances.Count > 0) { return availableInstances; }
+        else
+        {
+            InstantiatePool(1);
+            return GetAvailableInstances(); // Incorrect if called by dog not store.
+        }
+    }
+
+    public ItemInstance GetClosestActiveInstanceTo(Vector3 point)
+    {
+        List<ItemInstance> availableInstances = GetAvailableInstances();
+        ItemInstance closestInstanceSoFar = null;
+        float closestDistanceSoFar = 0.0f;
+
+        foreach (ItemInstance instance in availableInstances)
+        {
+            float thisDist = Vector3.Distance(instance.GetPosition(), point);
+
+            if (instance == availableInstances[0])
+            {
+                closestInstanceSoFar = instance;
+                closestDistanceSoFar = thisDist;
+            }
+            else if (thisDist < closestDistanceSoFar)
+            {
+                closestInstanceSoFar = instance;
+                closestDistanceSoFar = thisDist;
+            }
+        }
+
+        return closestInstanceSoFar;
+    }
+
+    public ItemType GetObjectType() { return m_objectType; }
+    public bool IsTangible() { return (m_baseObject != null); }
     public StoreCatergory GetCatergory() { return m_storeCatergory; }
-    public GameObject GetObject() { return m_object; }
 
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }
@@ -65,7 +137,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     public double GetPrice() { return m_price; }
     public string GetDescription() { return m_description; }
 
-    public Vector3 GetPosition() { return m_object.transform.position; }
+    public bool IsSingleUse() { return m_singleUse; }
     public Vector3 GetUsePosition() { return m_relUsePos; }
     public Vector3 GetUseRotation() { return m_relUseRot; }
 
@@ -106,11 +178,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         Debug.LogWarning("The following item does not fufill the personality value of " + type.ToString() + ": " + m_name);
         return 0.0f;
     }
-
-    public void StartUse(GameObject user) { m_user = user; }
-    public void EndUse() { m_user = null; if (m_singleUse) m_usable = false; }
-    public GameObject GetUser() { return m_user; }
-    public bool GetUsable() { return m_usable; }
 
     public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()

@@ -35,11 +35,11 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        if ((doggo.Hungry() || !doggo.Full()) && (doggo.FindItem(ItemType.BOWL) != null))
+        if ((doggo.Hungry() || !doggo.Full()) && (doggo.FindItem(ItemType.SUSTINANCE) != null))
         {
             if (!doggo.UsingItemFor(DogCareValue.Hunger))
             {
-                if (doggo.AttemptToUseItem(ItemType.BOWL))
+                if (doggo.AttemptToUseItem(ItemType.SUSTINANCE))
                 {
                     doggo.StartCoroutine(doggo.UseItem(5.0f));
                     return null;

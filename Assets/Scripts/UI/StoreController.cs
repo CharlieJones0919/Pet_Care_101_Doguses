@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,14 @@ public enum StoreCatergory
    FOOD = 0, LEADS = 1, FURNITURE = 2, TREATS = 3, TOYS = 4, HYGIENE = 5
 };
 
+public enum ItemType { SUSTINANCE, BED, TOY, OTHER };
+
 public class StoreController : MonoBehaviour
 {
+    [SerializeField] private DogController controller;
+    
     [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
-    [SerializeField] private Object[] itemPrefabs;
+    [SerializeField] private UnityEngine.Object[] itemPrefabs;
 
     private Dictionary<StoreCatergory, StoreSection> storeSections = new Dictionary<StoreCatergory, StoreSection>();
     private StoreCatergory currentSection;
@@ -34,13 +39,13 @@ public class StoreController : MonoBehaviour
     [SerializeField] private Text focusItemDesc;
     [SerializeField] private Button purchaseButton;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        itemSlots= itemSlotsParent.GetComponentsInChildren<ItemSlot>();               
+        itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
 
         int numStoreCatergories = StoreCatergory.GetNames(typeof(StoreCatergory)).Length;
+        int numItemTypes = ItemType.GetNames(typeof(ItemType)).Length;
 
         float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
         float requiredContentSpace = (tabWidth * (numStoreCatergories - 1)) - (3 * tabWidth);
@@ -66,6 +71,12 @@ public class StoreController : MonoBehaviour
             foreach (Item item in itemPrefabs)
             {
                 if (item.GetCatergory() == tabCat) { catergoryItems.Add(item); }
+
+                if ((item.GetObjectType() != ItemType.OTHER) && item.IsTangible())
+                {
+                    item.InstantiatePool(5);
+                    controller.AddToItemPools(item.GetObjectType(), item);
+                }
             }
 
             StoreSection tabSection = currentTab.GetComponent<StoreSection>();
@@ -147,60 +158,3 @@ public class StoreController : MonoBehaviour
         }
     }
 }
-
-public enum ItemType { BOWL, BED };
-
-public class ItemPool
-{
-    public ItemType type;
-    private GameObject prefabRef;
-    private GameObject destinationRef;
-    private List<Vector3> allowedPositions;
-    public List<Item> itemList;
-
-    //    public ItemPool(ItemType iType, GameObject prefab, GameObject parentObj, List<Vector3> spawnPositions)
-    //    {
-    //        type = iType;
-    //        prefabRef = prefab;
-    //        destinationRef = new GameObject(type.ToString() + " OBJECTS");
-    //        destinationRef.transform.parent = parentObj.transform;
-    //        allowedPositions = spawnPositions;
-    //        itemList = new List<Item>();
-    //    }
-
-    //    public void InstantiateNewToList()
-    //    {
-    //        DogCareValue propertySubject = DogCareValue.NONE;
-    //        Vector3 foundFreePos = Vector3.zero;
-    //        bool singleUse = false;
-    //        bool centrePref = false;
-
-    //        foreach (Vector3 position in allowedPositions)
-    //        {
-    //            foundFreePos = position;
-
-    //            switch (type)
-    //            {
-    //                case (ItemType.BOWL):
-    //                    propertySubject = DogCareValue.Hunger;
-    //                    singleUse = true;
-    //                    centrePref = false;
-    //                    break;
-    //                case (ItemType.BED):
-    //                    propertySubject = DogCareValue.Rest;
-    //                    centrePref = true;
-    //                    break;
-    //            }
-
-    //            itemList.Add(new Item(prefabRef, destinationRef, foundFreePos, "GENERIC " + type.ToString(), 1.00f, "Desc.", 0.05f, 0.015f, propertySubject, singleUse, centrePref));
-    //            break;
-    //        }
-
-    //        if ((propertySubject != DogCareValue.NONE))
-    //        {
-    //            allowedPositions.Remove(foundFreePos);
-    //            return;
-    //        }
-    //        Debug.Log("Maximum Number of " + type.ToString() + "'s Already Placed");
-    //    }
-};

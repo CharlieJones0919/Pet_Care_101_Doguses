@@ -75,48 +75,34 @@ public struct BodyComponent
 public class DogController : MonoBehaviour
 {
     public GameTime localTime;
-    [SerializeField] private GameObject bowlPrefab;
-    [SerializeField] private GameObject bedPrefab;
     private List<GameObject> objectsForDeletion = new List<GameObject>();
 
-    private List<ItemPool> itemPool = new List<ItemPool>();
+    private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
 
-    // Start is called before the first frame update
-    //public void Start()
-    //{
-    //        ////////////////////////////// Object Pool Testing //////////////////////////////
-    //        float yHeight = bowlPrefab.transform.localScale.y / 2.0f;
-
-    //        List<Vector3> tempBowlPositions = new List<Vector3>();
-    //        tempBowlPositions.Add(new Vector3(-20.0f, yHeight, 20.0f));
-    //        tempBowlPositions.Add(new Vector3(-5.0f, yHeight, -10.0f));
-
-    //        yHeight = bedPrefab.transform.localScale.y / 2.0f;
-    //        List<Vector3> tempBedPositions = new List<Vector3>();
-    //        tempBedPositions.Add(new Vector3(20.0f, yHeight, 10.0f));
-    //        tempBedPositions.Add(new Vector3(-20.0f, yHeight, 5.0f));
-
-    //        itemPool.Add(new ItemPool(ItemType.BOWL, bowlPrefab, gameObject, tempBowlPositions));
-    //        itemPool.Add(new ItemPool(ItemType.BED, bedPrefab, gameObject, tempBedPositions));
-
-    //        foreach (ItemPool pool in itemPool)
-    //        {
-    //            pool.InstantiateNewToList();
-    //            pool.InstantiateNewToList();
-    //        }
-    //    }
-
-    public List<Item> GetActiveObjects(ItemType type)
+    public void AddToItemPools(ItemType itemGroup, Item item)
     {
-        foreach (ItemPool pool in itemPool)
+        if (!itemPools.ContainsKey(itemGroup))
         {
-            if (pool.type == type)
+            itemPools.Add(itemGroup, new List<Item>());
+        }
+        itemPools[itemGroup].Add(item);
+    }
+
+    public bool GetClosestActiveItem(ItemType type, ItemReference returnDest)
+    {
+        returnDest.SetItemRef();
+
+        foreach (Item item in itemPools[type])
+        {
+            if (item.GetClosestActiveInstanceTo())
+
+            if (pool.Key == type)
             {
-                return pool.itemList;
+                return pool.Value;
             }
         }
-        Debug.Log("No Objects of that Type Available");
-        return null;
+        //Debug.Log("No Objects of that Type Available");
+        //return null;
     }
 }
 

@@ -4,10 +4,12 @@ using System.Data;
 using System.Linq;
 using UnityEngine;
 
+public class DogValue { };
+
 public enum DogCareValue
 {
    NONE, Hunger, Attention, Rest, Hygiene, Health, Happiness, Bond
-}
+} 
 
 public enum DogPersonalityValue
 {
@@ -90,6 +92,8 @@ public struct ModelOrientation
 
 public class DogGeneration : MonoBehaviour
 {
+    public List<Dog> currentDogs;
+
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>();
 
@@ -103,11 +107,10 @@ public class DogGeneration : MonoBehaviour
     private Dictionary<string, float> modelScalers = new Dictionary<string, float>();
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();
 
-    public List<GameObject> currentDogs;
-
-    [SerializeField] private GameObject groundObject;
     [SerializeField] private DogController dogController;
     [SerializeField] private DataDisplay dogUIOutputScript;
+    [SerializeField] private GameObject groundObject;
+    [SerializeField] private GameObject randomPointStorage;
 
     private string breedDataFileDir = "/Scripts/Dogs/ReferenceFiles/BreedData.txt";
     private DataTable breedData = new DataTable();
@@ -285,11 +288,10 @@ public class DogGeneration : MonoBehaviour
         newDog.transform.parent = transform.GetChild(0);
         newDog.name = "Unnamed_" + breed;
 
-        currentDogs.Add(newDog);
-
         Dog dogScript = newDog.GetComponent<Dog>();
         dogScript.controllerScript = dogController;
         dogScript.UIOutputScript = dogUIOutputScript;
+        dogScript.navigationScript.randomPointStorage = randomPointStorage;
 
         dogScript.m_breed = breed;
         dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));
@@ -307,6 +309,7 @@ public class DogGeneration : MonoBehaviour
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;
 
+        currentDogs.Add(dogScript);
         return newDog;
     }
 
