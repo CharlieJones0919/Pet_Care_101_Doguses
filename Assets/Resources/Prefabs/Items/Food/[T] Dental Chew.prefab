@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3577084218700698998
+--- !u!1 &490755974261759940
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,63 +8,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3577084218700698999}
-  - component: {fileID: 3577084218700698996}
+  - component: {fileID: 490755974261759941}
+  - component: {fileID: 490755974261759942}
   m_Layer: 0
-  m_Name: Brush
+  m_Name: '[T] Dental Chew'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3577084218700698999
+--- !u!4 &490755974261759941
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3577084218700698998}
+  m_GameObject: {fileID: 490755974261759940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -12.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3577084218700698996
+--- !u!114 &490755974261759942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3577084218700698998}
+  m_GameObject: {fileID: 490755974261759940}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultNumToInstantiate: 1
-  careFufills: 040000000300000005000000020000000700000006000000
+  defaultNumToInstantiate: 5
+  useTime: 25
+  careFufills: 01000000060000000500000002000000
   careFufillmentAmounts:
-  - 2
   - 0.05
-  - 2
-  - 3
   - 5
-  - 5
-  personalityFufills: 010000000300000002000000
+  - 0.25
+  - 2.5
+  personalityFufills: 03000000
   personalityFufillmentAmounts:
-  - 1.25
-  - 2.5
-  - 2.5
-  m_objectPrefab: {fileID: 6987228530398497235, guid: e2f26bfc405547240b218b8ee1187a93,
+  - 1.15
+  m_objectPrefab: {fileID: 801318375099022007, guid: 528c03e0310bfee49bf0beaeec83b2b3,
     type: 3}
-  m_instancesInactivePos: {x: 0, y: -15, z: 0}
-  m_itemType: 4
-  m_name: Brush
-  m_sprite: {fileID: 21300000, guid: 21fe9d71101d7af49850d42189bb8f50, type: 3}
+  m_instancesInactivePos: {x: 0, y: -12.5, z: 0}
+  m_itemType: 0
+  m_name: '[T] Dental Chew'
+  m_sprite: {fileID: 21300000, guid: 1d19be21a03721a49a263c007af8dea4, type: 3}
   m_price: 3
   m_description: S
-  m_singleUse: 0
+  m_singleUse: 1
   m_relUsePos: {x: 0, y: 0, z: 0}
   m_relUseRot: {x: 0, y: 0, z: 0}

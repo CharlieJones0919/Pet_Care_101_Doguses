@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class StoreSection : MonoBehaviour
 {
-    [SerializeField] private StoreCatergory sectionCatergory;
+    [SerializeField] private ItemType sectionCatergory;
     [SerializeField] private List<Item> sectionItems;
     [SerializeField] private int extraSectionPages = 0;
     [SerializeField] private int numItems = 0;
 
-    public void SetSectionValues(StoreCatergory catergory, List<Item> items)
+    public void SetSectionValues(ItemType catergory, List<Item> items)
     {
         sectionCatergory = catergory;
         sectionItems = items;
@@ -18,7 +18,7 @@ public class StoreSection : MonoBehaviour
         numItems = sectionItems.Count;
     }
 
-    public StoreCatergory GetCatergory() { return sectionCatergory; }
+    public ItemType GetCatergory() { return sectionCatergory; }
 
     public bool HasMultiplePages()
     {

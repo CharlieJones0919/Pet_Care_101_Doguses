@@ -4,8 +4,6 @@ using System.Data;
 using System.Linq;
 using UnityEngine;
 
-public class DogValue { };
-
 public enum DogCareValue
 {
    NONE, Hunger, Attention, Rest, Hygiene, Health, Happiness, Bond
@@ -68,30 +66,100 @@ public enum DogDataField
     Tail_Orientation
 }
 
-public struct ModelOrientation
+public enum BodyPart
 {
-    public DogDataField m_type;
-    public string m_description;
-    public Vector3 m_position;
-    public Vector3 m_rotation;
-    public bool m_usePosition;
+    Neck, Head, Eye0, Eye1,
+    Snout,
+    Ear0, Ear1,
+    Tail,
 
-    public Vector3 m_mirrorPos;
-    public Vector3 m_mirrorRot;
+    Shoulder0, Shoulder1, Shoulder2, Shoulder3,
+    UpperLeg0, UpperLeg1, UpperLeg2, UpperLeg3,
 
-    public ModelOrientation(DogDataField type, string description, Vector3 position, Vector3 rotation, bool usePosition = true)
+    Knee0, Knee1, Knee2, Knee3,
+
+    LowerLeg0, LowerLeg1, LowerLeg2, LowerLeg3,
+    Ankle0, Ankle1, Ankle2, Ankle3,
+    Foot0, Foot1, Foot2, Foot3,
+
+    Chest, Rear, Waist
+}
+
+public struct BodyComponent
+{
+    private BodyPart m_part;
+    public GameObject m_component;
+    private GameObject m_parent;
+    private List<DogDataField> m_data;
+
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField data)
     {
-        m_type = type; m_description = description; m_position = position; m_rotation = rotation; m_usePosition = usePosition;
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+        m_data.Add(data);
+    }
 
-        m_mirrorPos = position;
-        m_mirrorPos.x = -m_mirrorPos.x; 
-        m_mirrorRot = -rotation;
-        m_mirrorRot.x = rotation.x;
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField[] dataList)
+    {
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+        foreach (DogDataField field in dataList) { m_data.Add(field); };
+    }
+
+    public BodyComponent(BodyPart type, GameObject component, GameObject parent)
+    {
+        m_part = type;
+        m_component = component;
+        m_parent = parent;
+        m_data = new List<DogDataField>();
+    }
+
+    public void SetData(DogDataField data) { m_data.Add(data); }
+    public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
+
+    public BodyPart GetPartType() { return m_part; }
+    public GameObject GetParent() { return m_parent.gameObject; }
+    public List<DogDataField> GetDataList() { return m_data; }
+
+    public bool DefinesDataField(DogDataField field) { return m_data.Contains(field); }
+    public bool HasFieldContaining(string str)
+    {
+        foreach (DogDataField field in m_data)
+        {
+            if (field.ToString().Contains(str)) { return true; }
+        }
+        return false;
     }
 }
 
 public class DogGeneration : MonoBehaviour
 {
+    private struct ModelOrientation
+    {
+        public DogDataField m_type;
+        public string m_description;
+        public Vector3 m_position;
+        public Vector3 m_rotation;
+        public bool m_usePosition;
+
+        public Vector3 m_mirrorPos;
+        public Vector3 m_mirrorRot;
+
+        public ModelOrientation(DogDataField type, string description, Vector3 position, Vector3 rotation, bool usePosition = true)
+        {
+            m_type = type; m_description = description; m_position = position; m_rotation = rotation; m_usePosition = usePosition;
+
+            m_mirrorPos = position;
+            m_mirrorPos.x = -m_mirrorPos.x;
+            m_mirrorRot = -rotation;
+            m_mirrorRot.x = rotation.x;
+        }
+    }
+
     public List<Dog> currentDogs;
 
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();
@@ -111,8 +179,9 @@ public class DogGeneration : MonoBehaviour
     [SerializeField] private DataDisplay dogUIOutputScript;
     [SerializeField] private GameObject groundObject;
     [SerializeField] private GameObject randomPointStorage;
+    [SerializeField] private GameObject defaultNullObject;
 
-    private string breedDataFileDir = "/Scripts/Dogs/ReferenceFiles/BreedData.txt";
+    [SerializeField] private string breedDataFileDir = "/Scripts/ReferenceFiles/BreedData.txt";
     private DataTable breedData = new DataTable();
     private int numDataFields = 0;
     private int dogBreedsDefined = 0;
@@ -292,6 +361,7 @@ public class DogGeneration : MonoBehaviour
         dogScript.controllerScript = dogController;
         dogScript.UIOutputScript = dogUIOutputScript;
         dogScript.navigationScript.randomPointStorage = randomPointStorage;
+        dogScript.defaultNULL = defaultNullObject;
 
         dogScript.m_breed = breed;
         dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));

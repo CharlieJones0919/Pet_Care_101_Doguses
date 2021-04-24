@@ -2,75 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BodyPart
-{
-    Neck, Head, Eye0, Eye1,
-    Snout,
-    Ear0, Ear1,
-    Tail,
-
-    Shoulder0, Shoulder1, Shoulder2, Shoulder3,
-    UpperLeg0, UpperLeg1, UpperLeg2, UpperLeg3,
-
-    Knee0, Knee1, Knee2, Knee3,
-
-    LowerLeg0, LowerLeg1, LowerLeg2, LowerLeg3,
-    Ankle0, Ankle1, Ankle2, Ankle3,
-    Foot0, Foot1, Foot2, Foot3,
-
-    Chest, Rear, Waist
-}
-
-public struct BodyComponent
-{
-    private BodyPart m_part;
-    public GameObject m_component;
-    private GameObject m_parent;
-    private List<DogDataField> m_data;
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField data)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-        m_data.Add(data);
-    }
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField[] dataList)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-        foreach (DogDataField field in dataList) { m_data.Add(field); };
-    }
-
-    public BodyComponent(BodyPart type, GameObject component, GameObject parent)
-    {
-        m_part = type;
-        m_component = component;
-        m_parent = parent;
-        m_data = new List<DogDataField>();
-    }
-
-    public void SetData(DogDataField data) { m_data.Add(data); }
-    public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
-
-    public BodyPart GetPartType() { return m_part; }
-    public GameObject GetParent() { return m_parent.gameObject; }
-    public List<DogDataField> GetDataList() { return m_data; }
-
-    public bool DefinesDataField(DogDataField field) { return m_data.Contains(field); }
-    public bool HasFieldContaining(string str)
-    {
-        foreach (DogDataField field in m_data)
-        {
-            if (field.ToString().Contains(str)) { return true; }
-        }
-        return false;
-    }
-}
 
 public class DogController : MonoBehaviour
 {
@@ -88,21 +19,14 @@ public class DogController : MonoBehaviour
         itemPools[itemGroup].Add(item);
     }
 
-    public bool GetClosestActiveItem(ItemType type, ItemReference returnDest)
+    public bool GetClosestActiveItemFor(ItemType requiredType, Dog attemptingDog)
     {
-        returnDest.SetItemRef();
-
-        foreach (Item item in itemPools[type])
+        foreach (Item item in itemPools[requiredType])
         {
-            if (item.GetClosestActiveInstanceTo())
-
-            if (pool.Key == type)
-            {
-                return pool.Value;
-            }
+            if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
         }
-        //Debug.Log("No Objects of that Type Available");
-        //return null;
+        Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name + "." );
+        return false;
     }
 }
 

@@ -5,20 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class ItemReference
-{
-    public ItemType type;
-    public Item itemOrigin;
-    public ItemInstance instance;
-
-    public void SetItemRef(ItemType itemGroup, Item item, ItemInstance obj)
-    {
-        type = itemGroup;
-        itemOrigin = item;
-        instance = obj;
-    }
-}
-
 /** \class Dog
 *  \brief This class contains the implementations of functions (or behaviour actions) that can be employed by the dog's FSM states, and the individual dog's personality and care state values.
 */
@@ -27,6 +13,7 @@ public class Dog : MonoBehaviour
     public DogController controllerScript;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
     public DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
     public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
+    public GameObject defaultNULL;
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
@@ -43,12 +30,13 @@ public class Dog : MonoBehaviour
     public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
     public List<Rule> m_rules = new List<Rule>();
 
-    private ItemReference m_currentItemTarget = null;  //!< An item on the map the dog is currently using or travelling towards.
-    private ItemReference m_prospectItemTarget = null; //!< An item on the map the dog could use or travel towards.
+    private Item m_currentItemTarget;
+    [SerializeField] private GameObject m_currentObjectTarget;  //!< An item on the map the dog is currently using or travelling towards.   
+
+
     [SerializeField] private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     [SerializeField] private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
-
-    //  public GameObject currentObject;
+    private Vector3 positionBeforeUsingItem;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
@@ -106,6 +94,8 @@ public class Dog : MonoBehaviour
         }
         spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
         transform.position = spawnPoint;
+        m_currentObjectTarget = defaultNULL;
+
 
         //  navigationScript.requiredSpace = m_dimensions.size;
 
@@ -143,7 +133,6 @@ public class Dog : MonoBehaviour
     private void Update()
     {
         UpdateCareValues();
-        //  currentObject = m_currentItemTarget.GetObject();
 
         int currentDay = controllerScript.localTime.GetGameTimeDays();
         if (lastDayUpdated != currentDay)
@@ -171,7 +160,7 @@ public class Dog : MonoBehaviour
     {
         Debug.Log("Detected collision with: " + collision.gameObject.name);
 
-        if (collision.gameObject == m_currentItemTarget.instance)
+        if (collision.gameObject == m_currentObjectTarget)
         {
             navigationScript.SetTargetAsFound();
         }
@@ -181,7 +170,7 @@ public class Dog : MonoBehaviour
     {
         Debug.Log("Detected collision with: " + collision.gameObject.name);
 
-        if (collision.gameObject == m_currentItemTarget.instance)
+        if (collision.gameObject == m_currentObjectTarget)
         {
             navigationScript.SetTargetAsFound();
         }
@@ -221,10 +210,10 @@ public class Dog : MonoBehaviour
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
 
-            if (Physics.Raycast(raycast, out raycastHit))
+            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
             {
                 Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
-                if (raycastHit.collider == m_collider) return true;
+                if (raycastHit.collider == m_collider) { return true; }
             }
         }
         return false;
@@ -253,7 +242,7 @@ public class Dog : MonoBehaviour
         {
             if (UsingItemFor(careProperty.GetPropertyName()))
             {
-                careProperty.UpdateValue(m_currentItemTarget.itemOrigin.GetCareFufillmentAmount(careProperty.GetPropertyName()));
+                careProperty.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(careProperty.GetPropertyName()));
             }
             else { careProperty.UpdateValue(careProperty.GetCurrenntIncrement()); }
         }
@@ -340,7 +329,7 @@ public class Dog : MonoBehaviour
     {
         if (m_usingItem)
         {
-            return m_currentItemTarget.itemOrigin.FufillsCareValue(value);
+            return m_currentItemTarget.FufillsCareValue(value);
         }
         return false;
     }
@@ -349,7 +338,7 @@ public class Dog : MonoBehaviour
     {
         if (m_usingItem)
         {
-            return m_currentItemTarget.itemOrigin.FufillsPersonalityValue(value);
+            return m_currentItemTarget.FufillsPersonalityValue(value);
         }
         return false;
     }
@@ -359,70 +348,56 @@ public class Dog : MonoBehaviour
         return m_waiting;
     }
 
-    public ItemInstance FindItem(ItemType type)
+    public void SetCurrentTargetItem(Item newItem, GameObject itemInstance)
     {
-        m_prospectItemTarget = null;
-        int nodeDistanceToBowl = 1000;
-
-        //foreach (ItemInstance item in controllerScript.GetActiveObjects(type))
-        //{
-        //    if ((item.GetUser() == gameObject) && item.GetUsable())
-        //    {
-        //        m_prospectItemTarget = item;
-        //        break;
-        //    }
-        //    else if ((item.GetUser() == null) && item.GetUsable())
-        //    {
-        //        navigationScript.FindPathTo(item.GetObject());
-        //        int dist = navigationScript.GetFoundPathLength();
-        //        if (dist < nodeDistanceToBowl)
-        //        {
-        //            m_prospectItemTarget = item;
-        //            nodeDistanceToBowl = dist;
-        //        }
-        //    }
-        //}
-
-        //if (m_prospectItemTarget != null) navigationScript.FindPathTo(m_prospectItemTarget.GetObject());
-        return m_prospectItemTarget.instance;
+        m_currentItemTarget = newItem;
+        m_currentObjectTarget = itemInstance;
     }
 
-    public bool AttemptToUseItem(ItemType type)
+    public bool ItemOfTypeFound(ItemType type)
     {
-        if (m_currentItemTarget == null)
+        if (m_currentObjectTarget != defaultNULL)
         {
-            if (FindItem(type) != null)
-            {
-                m_currentItemTarget = m_prospectItemTarget;
-            }
-            else
-            {
-                Debug.LogWarning("Can't find required item: " + type);
-                return false;
-            }
+            if (m_currentItemTarget.GetItemType() == type) { return true; }
         }
 
-        if (m_currentItemTarget != null)
+        if (controllerScript.GetClosestActiveItemFor(type, this))
         {
-            if (navigationScript.FollowPathTo(m_currentItemTarget.instance.GetObject()))
+            if (m_currentObjectTarget != defaultNULL)
             {
-                m_currentItemTarget.instance.StartUse(gameObject);
+                navigationScript.FindPathTo(m_currentObjectTarget);
                 return true;
             }
+        }
+        return false;
+    }
+
+    public bool LocateItemFor(ItemType type)
+    {
+        if (m_currentObjectTarget == defaultNULL)
+        {
+            if (!ItemOfTypeFound(type)) { return false; }
+        }
+
+        if (navigationScript.AttemptToReach(m_currentObjectTarget))
+        {
+            positionBeforeUsingItem = transform.position;
+            m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget);
+            return true;
         }
 
         return false;
     }
 
-    public IEnumerator UseItem(float useTime)
+    public IEnumerator UseItem()
     {
-        if (m_currentItemTarget != null)
+        if (m_currentObjectTarget != defaultNULL)
         {
-            transform.position = m_currentItemTarget.itemOrigin.GetUsePosition();
-            transform.localRotation.SetLookRotation(m_currentItemTarget.itemOrigin.GetUseRotation());
+            transform.position = m_currentItemTarget.GetUsePosition();
+            transform.localRotation.SetLookRotation(m_currentItemTarget.GetUseRotation());
 
             m_usingItem = true;
-            yield return new WaitForSeconds(useTime);
+            yield return new WaitForSeconds(m_currentItemTarget.GetUseTime());
             EndItemUse();
         }
         else
@@ -433,7 +408,7 @@ public class Dog : MonoBehaviour
 
     public void Wander()
     {
-        navigationScript.FollowPathToRandomPoint();
+         navigationScript.FollowPathToRandomPoint();
     }
 
     public IEnumerator Pause(float waitTime)
@@ -445,12 +420,13 @@ public class Dog : MonoBehaviour
 
     public void EndItemUse()
     {
-        if (m_currentItemTarget != null)
+        if (m_currentObjectTarget != defaultNULL)
         {
-
             m_usingItem = false;
-            m_currentItemTarget.instance.EndUse();
+            m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
             m_currentItemTarget = null;
+            m_currentObjectTarget = defaultNULL;
+            transform.position = positionBeforeUsingItem;
         }
         else
         {

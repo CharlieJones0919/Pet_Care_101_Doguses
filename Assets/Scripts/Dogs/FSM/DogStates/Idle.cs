@@ -28,11 +28,11 @@ public class Idle : State
 
     public override Type StateUpdate()
     {
-        if (doggo.Hungry() && (doggo.FindItem(ItemType.SUSTINANCE) != null))
+        if (doggo.Hungry() && doggo.ItemOfTypeFound(ItemType.FOOD))
         {
             return typeof(Hungry);
         }
-        else if (doggo.Tired() && (doggo.FindItem(ItemType.BED) != null))
+        else if (doggo.Tired() && doggo.ItemOfTypeFound(ItemType.BED))
         {
             return typeof(Tired);
         }

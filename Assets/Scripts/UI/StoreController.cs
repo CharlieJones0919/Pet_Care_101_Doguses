@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum StoreCatergory
+public enum ItemType
 {
-   FOOD = 0, LEADS = 1, FURNITURE = 2, TREATS = 3, TOYS = 4, HYGIENE = 5
+   FOOD = 0, WALKIES = 1, BED = 2, TOYS = 3, HYGIENE = 4
 };
-
-public enum ItemType { SUSTINANCE, BED, TOY, OTHER };
 
 public class StoreController : MonoBehaviour
 {
@@ -18,9 +16,10 @@ public class StoreController : MonoBehaviour
     [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
     [SerializeField] private UnityEngine.Object[] itemPrefabs;
 
-    private Dictionary<StoreCatergory, StoreSection> storeSections = new Dictionary<StoreCatergory, StoreSection>();
-    private StoreCatergory currentSection;
+    private Dictionary<ItemType, StoreSection> storeSections = new Dictionary<ItemType, StoreSection>();
+    private ItemType currentSection;
     [SerializeField] private int currentSectionPage = 0;
+    private Item focusItem;
 
     [SerializeField] private GameObject baseTab;
     [SerializeField] private RectTransform tabContentSpace;
@@ -39,13 +38,14 @@ public class StoreController : MonoBehaviour
     [SerializeField] private Text focusItemDesc;
     [SerializeField] private Button purchaseButton;
 
+    [SerializeField] private GameObject nullObject;
+
     private void Start()
     {
         itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
 
-        int numStoreCatergories = StoreCatergory.GetNames(typeof(StoreCatergory)).Length;
-        int numItemTypes = ItemType.GetNames(typeof(ItemType)).Length;
+        int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length;
 
         float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
         float requiredContentSpace = (tabWidth * (numStoreCatergories - 1)) - (3 * tabWidth);
@@ -53,11 +53,11 @@ public class StoreController : MonoBehaviour
 
         for (int i = 0; i < numStoreCatergories; i++)
         {
-            StoreCatergory tabCat = (StoreCatergory)i;
+            ItemType tabCat = (ItemType)i;
 
             GameObject currentTab;
 
-            if (tabCat == (StoreCatergory)0) { currentTab = baseTab; }
+            if (tabCat == (ItemType)0) { currentTab = baseTab; }
             else
             {
                 currentTab = Instantiate(baseTab, baseTab.transform.position, Quaternion.identity).gameObject;
@@ -70,13 +70,7 @@ public class StoreController : MonoBehaviour
             List<Item> catergoryItems = new List<Item>();
             foreach (Item item in itemPrefabs)
             {
-                if (item.GetCatergory() == tabCat) { catergoryItems.Add(item); }
-
-                if ((item.GetObjectType() != ItemType.OTHER) && item.IsTangible())
-                {
-                    item.InstantiatePool(5);
-                    controller.AddToItemPools(item.GetObjectType(), item);
-                }
+                if (item.GetItemType() == tabCat) { catergoryItems.Add(item); }
             }
 
             StoreSection tabSection = currentTab.GetComponent<StoreSection>();
@@ -86,15 +80,31 @@ public class StoreController : MonoBehaviour
             if (catergoryItems.Count == 0) { Debug.LogWarning("No definition or items found for store catergory: " + tabCat.ToString()); }
         }
 
-        SectionSelected(storeSections[(StoreCatergory)0]);
+        foreach (ItemType catergory in (ItemType[])ItemType.GetValues(typeof(ItemType)))
+        {
+            foreach (Item item in storeSections[catergory].GetItems())
+            {
+                item.SetNULLObjectRef(nullObject);
+                item.SetInstanceParent(nullObject);
+                item.InstantiatePool();
+                controller.AddToItemPools(catergory, item);
+            }
+        }
+
+        SectionSelected(storeSections[(ItemType)0]);
         gameObject.SetActive(false);
+    }
+
+    public void PurchaseAttempt()
+    {
+        focusItem.ActivateAvailableInstanceTo(new Vector3(0, 0, 0));
     }
 
     public void SetFocusItem(ItemSlot focusSlot)
     {
         if (focusSlot.IsSet())
         {
-            Item focusItem = focusSlot.GetItem();
+            focusItem = focusSlot.GetItem();
             focusItemName.text = focusItem.GetName();
             focusItemImage.sprite = focusItem.GetSprite();
             focusItemPrice.text = string.Format("{0:F2}", focusItem.GetPrice());

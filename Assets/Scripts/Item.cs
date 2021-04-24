@@ -1,135 +1,228 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
-public class ItemInstance : MonoBehaviour
-{
-    private ItemType m_type;
-    private GameObject m_instance;
-    private bool m_singleUse;
-    private Vector3 m_inactivePos;
-    private GameObject m_user;
-
-    public ItemInstance(ItemType itemType, GameObject objectBase, bool isSingleUse, GameObject parentTransform, Vector3 inactivePos)
-    {
-        m_type = itemType;
-        m_instance = Instantiate(objectBase, inactivePos, Quaternion.identity);
-        m_instance.transform.SetParent(parentTransform.transform);
-
-        m_singleUse = isSingleUse;
-        m_inactivePos = inactivePos;
-        m_user = null;
-    }
-
-    public void Activate(Vector3 activePos)
-    {
-        m_instance.SetActive(true);
-        m_instance.transform.position = activePos;
-    }
-
-    public void Deactivate()
-    {
-        m_instance.SetActive(false);
-        m_instance.transform.position = m_inactivePos;
-    }
-
-    public GameObject GetObject() { return m_instance; }
-    public Vector3 GetPosition() { return m_instance.transform.position; }
-    public void StartUse(GameObject user) { m_user = user; }
-    public void EndUse() { m_user = null; if (m_singleUse) { Deactivate(); } }
-    public GameObject GetUser() { return m_user; }
-    public bool Usable() { return ((m_user == null) && m_instance.activeSelf); }
-}
 
 public class Item : MonoBehaviour, ISerializationCallbackReceiver
 {
+    [SerializeField] private uint defaultNumToInstantiate = 0;
+    [SerializeField] private float useTime = 0;
+
     [SerializeField] private List<DogCareValue> careFufills = new List<DogCareValue>();
     [SerializeField] private List<float> careFufillmentAmounts = new List<float>();
     [SerializeField] private List<DogPersonalityValue> personalityFufills = new List<DogPersonalityValue>();
     [SerializeField] private List<float> personalityFufillmentAmounts = new List<float>();
 
-    [SerializeField] private ItemType m_objectType;
-    [SerializeField] private GameObject m_baseObject;
-    [SerializeField] private GameObject m_instanceParent;
+    private Dictionary<DogCareValue, float> m_careFufillments = new Dictionary<DogCareValue, float>();
+    private Dictionary<DogPersonalityValue, float> m_personalityFufillments = new Dictionary<DogPersonalityValue, float>();
+
+    private GameObject m_defaultNullObject;
+    [SerializeField] private GameObject m_objectPrefab;
+    private GameObject m_instanceParent;
     [SerializeField] private Vector3 m_instancesInactivePos;
+
     private List<ItemInstance> m_instancePool = new List<ItemInstance>();
+    private List<ItemInstance> m_availablePoolInstances = new List<ItemInstance>();
+    private int numberOfPoolInstances = 0;
+    private int numberOfAvailableInstances = 0;
 
-    [SerializeField] private StoreCatergory m_storeCatergory;
-    [SerializeField] private Vector3 m_activeSpawnPos;
-
+    [SerializeField] private ItemType m_itemType;
     [SerializeField] private string m_name = null;
     [SerializeField] private Sprite m_sprite;
     [SerializeField] private double m_price;
     [SerializeField] private string m_description;
 
-    private Dictionary<DogCareValue, float> m_careFufillments = new Dictionary<DogCareValue, float>();
-    private Dictionary<DogPersonalityValue, float> m_personalityFufillments = new Dictionary<DogPersonalityValue, float>();
-
     [SerializeField] private bool m_singleUse;
     [SerializeField] private Vector3 m_relUsePos;
     [SerializeField] private Vector3 m_relUseRot;
 
-
-    public void InstantiatePool(uint numInitialInstances)
+    private class ItemInstance
     {
-        for (uint i = 0; i < numInitialInstances; i++)
+        private ItemType m_type;
+        private GameObject m_instance;
+        private Vector3 m_inactivePos;
+        private GameObject m_nullUser;
+        private GameObject m_user;
+
+        public ItemInstance(ItemType itemType, GameObject objectBase, GameObject parentTransform, Vector3 inactivePos, GameObject nullObj)
         {
-            m_instancePool.Add(new ItemInstance(m_objectType, m_baseObject, m_singleUse, m_instanceParent, m_instancesInactivePos));
+            m_type = itemType;
+            m_instance = Instantiate(objectBase, inactivePos, Quaternion.identity);
+            m_instance.transform.SetParent(parentTransform.transform);
+
+            m_inactivePos = inactivePos;
+            m_nullUser = nullObj;
+            m_user = m_nullUser;
         }
+
+        public void Activate(Vector3 activePos)
+        {
+            m_instance.SetActive(true);
+            m_instance.transform.position = activePos;
+        }
+
+        public void Deactivate()
+        {
+            if (CurrentlyActive())
+            {
+                m_instance.SetActive(false);
+                m_user = m_nullUser;
+                m_instance.transform.position = m_inactivePos;
+            }
+        }
+
+        public void EndUse() { if (CurrentlyActive()) { m_user = m_nullUser; } }
+
+        public GameObject GetObject() { return m_instance; }
+        public bool IsObject(GameObject thisObject) { return (m_instance == thisObject); }
+        public Vector3 GetPosition() { return m_instance.transform.position; }
+        public bool CurrentlyActive() { return m_instance.activeSelf; }
+
+        public void SetUser(GameObject user) { m_user = user; }
+        public bool UserIs(GameObject thisUser) { return (m_user == thisUser); }
+        public GameObject GetUser() { return m_user; }
+        public bool Usable() { return ((m_user == m_nullUser) && m_instance.activeSelf); }
     }
 
-    public List<ItemInstance> GetInstances()
+    public void InstantiatePool(uint numInitialInstances = 0)
     {
-        return m_instancePool;
+        uint numToCreate;
+        if (numInitialInstances == 0) { numToCreate = defaultNumToInstantiate; }
+        else { numToCreate = numInitialInstances; }
+
+        for (uint i = 0; i < numToCreate; i++)
+        {
+            m_instancePool.Add(new ItemInstance(m_itemType, m_objectPrefab, m_instanceParent, m_instancesInactivePos, m_defaultNullObject));
+        }
+        numberOfPoolInstances = m_instancePool.Count;
     }
 
-    public List<ItemInstance> GetAvailableInstances()
-    {
-        List<ItemInstance> availableInstances = new List<ItemInstance>();
+    public void SetInstanceParent(GameObject parent) { m_instanceParent = parent; }
+    public void SetNULLObjectRef(GameObject nullObj) { m_defaultNullObject = nullObj; }
 
+    private ItemInstance AddNewToPool()
+    {
+        ItemInstance newInstance = new ItemInstance(m_itemType, m_objectPrefab, m_instanceParent, m_instancesInactivePos, m_defaultNullObject);
+        m_instancePool.Add(newInstance);
+        numberOfPoolInstances = m_instancePool.Count;
+        return m_instancePool[m_instancePool.Count - 1];
+    }
+
+    public void ActivateAvailableInstanceTo(Vector3 spawnPos)
+    {
         foreach (ItemInstance instance in m_instancePool)
         {
-            if (instance.Usable()) { availableInstances.Add(instance); }
+            if (!instance.CurrentlyActive())
+            {
+                instance.Activate(spawnPos);
+                m_availablePoolInstances.Add(instance); numberOfAvailableInstances++;
+                return;
+            }
         }
 
-        if (availableInstances.Count > 0) { return availableInstances; }
-        else
-        {
-            InstantiatePool(1);
-            return GetAvailableInstances(); // Incorrect if called by dog not store.
-        }
+        AddNewToPool().Activate(spawnPos);
+        m_availablePoolInstances.Add(m_instancePool[m_instancePool.Count - 1]); numberOfAvailableInstances++;
     }
 
-    public ItemInstance GetClosestActiveInstanceTo(Vector3 point)
+    public void DeactivateInstance(GameObject instanceToDeactivate)
     {
-        List<ItemInstance> availableInstances = GetAvailableInstances();
+        foreach (ItemInstance instance in m_instancePool)
+        {
+            if (instance.IsObject(instanceToDeactivate) && instance.CurrentlyActive())
+            {
+                instance.Deactivate();
+
+                m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
+                return;
+            }
+        }
+        Debug.LogWarning("This object could not be found in this item's instance pool to deactivate: " + instanceToDeactivate);
+    }
+
+    public bool TryGetAvailableInstance(Dog attemptingUser)
+    {
+        if (numberOfAvailableInstances == 0) { return false; }
+
+        foreach (ItemInstance instance in m_availablePoolInstances)
+        {
+            if (instance.Usable() || instance.UserIs(attemptingUser.gameObject))
+            {
+                attemptingUser.SetCurrentTargetItem(this, instance.GetObject());
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public bool TryGetClosestAvailableInstance(Dog attemptingUser)
+    {
+        if (numberOfAvailableInstances == 0) { return false; }
+
+        Vector3 userPosition = attemptingUser.gameObject.transform.position;
         ItemInstance closestInstanceSoFar = null;
         float closestDistanceSoFar = 0.0f;
 
-        foreach (ItemInstance instance in availableInstances)
+        foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            float thisDist = Vector3.Distance(instance.GetPosition(), point);
-
-            if (instance == availableInstances[0])
+            if (instance.Usable() || instance.UserIs(attemptingUser.gameObject))
             {
-                closestInstanceSoFar = instance;
-                closestDistanceSoFar = thisDist;
-            }
-            else if (thisDist < closestDistanceSoFar)
-            {
-                closestInstanceSoFar = instance;
-                closestDistanceSoFar = thisDist;
+                float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
+                if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
+                {
+                    closestInstanceSoFar = instance;
+                    closestDistanceSoFar = thisDist;
+                }
             }
         }
 
-        return closestInstanceSoFar;
+        if (closestInstanceSoFar != null)
+        {
+            attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.GetObject());
+            return true;
+        }
+
+        return false;
     }
 
-    public ItemType GetObjectType() { return m_objectType; }
-    public bool IsTangible() { return (m_baseObject != null); }
-    public StoreCatergory GetCatergory() { return m_storeCatergory; }
+    public bool UseItemInstance(GameObject attemptingUser, GameObject requestedInstance)
+    {
+        foreach (ItemInstance instance in m_availablePoolInstances)
+        {
+            if (instance.Usable() && instance.IsObject(requestedInstance))
+            {
+                instance.SetUser(attemptingUser);
+                m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public float GetUseTime()
+    {
+        return useTime;
+    }
+
+    public void StopUsingItemInstance(GameObject requestedInstance)
+    {
+        foreach (ItemInstance instance in m_instancePool)
+        {
+            if (instance.IsObject(requestedInstance))
+            {
+                switch (IsSingleUse())
+                {
+                    case (false):
+                        instance.EndUse();
+                        m_availablePoolInstances.Add(instance); numberOfAvailableInstances++;
+                        break;
+                    case (true):
+                        instance.Deactivate();
+                        break;
+                }
+            }
+        }
+    }
+
+    public ItemType GetItemType() { return m_itemType; }
 
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }

@@ -43,19 +43,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fufills: 0400000005000000
-  fufillmentAmounts:
-  - 2
-  - 1
-  m_object: {fileID: 0}
-  m_storeCatergory: 5
-  m_activeSpawnPos: {x: 0, y: 0, z: 0}
+  defaultNumToInstantiate: 1
+  careFufills: 04000000030000000500000006000000
+  careFufillmentAmounts:
+  - 5
+  - -3
+  - 1.75
+  - -2.5
+  personalityFufills: 01000000
+  personalityFufillmentAmounts:
+  - 1.1
+  m_objectPrefab: {fileID: 6987228530398497235, guid: e2f26bfc405547240b218b8ee1187a93,
+    type: 3}
+  m_instancesInactivePos: {x: 0, y: -15, z: 0}
+  m_itemType: 4
   m_name: Standard Shower
   m_sprite: {fileID: 21300000, guid: 8421e303b61637b42ad2b3566351cf18, type: 3}
   m_price: 75
   m_description: S
-  m_user: {fileID: 0}
-  m_usable: 0
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0, z: 0}
   m_relUseRot: {x: 0, y: 0, z: 0}

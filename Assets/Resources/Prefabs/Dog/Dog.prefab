@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 9089536525100727226}
   - component: {fileID: 9089536525100727225}
   - component: {fileID: 243922474303207471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dog
   m_TagString: Dog
   m_Icon: {fileID: 0}
@@ -222,10 +222,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundPlane: {fileID: 0}
-  requiredSpace: {x: 0, y: 0, z: 0}
+  requiredNodeSpace: {x: 2, y: 1, z: 2}
+  randomPointStorage: {fileID: 0}
   m_moveSpeed: 3
   m_rotationSpeed: 2.5
-  m_foundTarget: 0
+  m_foundDistance: 1
+  m_randomNodeFound: 0
+  m_randomPoint: {fileID: 0}
 --- !u!114 &9089536525100727225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,10 +244,12 @@ MonoBehaviour:
   controllerScript: {fileID: 0}
   UIOutputScript: {fileID: 0}
   navigationScript: {fileID: 9089536525100727226}
+  defaultNULL: {fileID: 0}
   m_name: 
   m_breed: 0
   m_age: 0
   m_collider: {fileID: 0}
+  m_currentObjectTarget: {fileID: 0}
   m_usingItem: 0
   m_waiting: 1
 --- !u!114 &243922474303207471

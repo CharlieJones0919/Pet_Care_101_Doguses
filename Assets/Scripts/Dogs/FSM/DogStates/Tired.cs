@@ -24,7 +24,7 @@ public class Tired : State
     {
         Debug.Log("Exiting Tired State");
 
-        if (!doggo.UsingItemFor(DogCareValue.NONE))
+        if (!doggo.UsingItemFor(DogCareValue.NONE) && !doggo.UsingItemFor(DogPersonalityValue.NONE))
         {
             doggo.EndItemUse();
             doggo.StopAllCoroutines();
@@ -35,17 +35,17 @@ public class Tired : State
 
     public override Type StateUpdate()
     {
-        if (!doggo.Tired() && doggo.Hungry() && (doggo.FindItem(ItemType.SUSTINANCE) != null))
+        if (!doggo.Tired() && doggo.Hungry() && doggo.ItemOfTypeFound(ItemType.FOOD))
         {
             return typeof(Hungry);
         }
-        else if ((doggo.Tired() || !doggo.Rested()) && (doggo.FindItem(ItemType.BED) != null))
+        else if ((doggo.Tired() || !doggo.Rested()) && doggo.ItemOfTypeFound(ItemType.BED))
         {
             if (!doggo.UsingItemFor(DogCareValue.Rest))
             {
-                if (doggo.AttemptToUseItem(ItemType.BED))
+                if (doggo.LocateItemFor(ItemType.BED))
                 {
-                    doggo.StartCoroutine(doggo.UseItem(20.0f));
+                    doggo.StartCoroutine(doggo.UseItem());
                     return null;
                 }
             }
@@ -54,7 +54,7 @@ public class Tired : State
                 return null;
             }
         }
-        else if (doggo.Rested() || (doggo.FindItem(ItemType.BED) == null))
+        else if (doggo.Rested())
         {
             return typeof(Idle);
         }

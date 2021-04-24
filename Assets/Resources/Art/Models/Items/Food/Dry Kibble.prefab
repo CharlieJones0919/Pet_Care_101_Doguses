@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 4331856715930568412}
   - component: {fileID: 7181725880152981266}
   m_Layer: 9
-  m_Name: FoodBowl
+  m_Name: Dry Kibble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8451974279864578190
 Transform:
   m_ObjectHideFlags: 0

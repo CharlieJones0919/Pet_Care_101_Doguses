@@ -200,6 +200,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15688750}
   m_CullTransparentMesh: 0
+--- !u!1 &20102056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 20102057}
+  m_Layer: 0
+  m_Name: NULLOBJECT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &20102057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20102056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1958195943}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &33081981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3502,7 +3532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: {x: 0, y: 0}
   gridNodes: {x: 0, y: 0}
-  nodeSize: 1.5
+  nodeSize: 2
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -4304,13 +4334,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5248,24 +5278,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1887629726}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1587905961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587905959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080578e0008a9754cb3755dc5b9ae134, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundPlane: {fileID: 1238925872}
-  requiredSpace: {x: 0, y: 0, z: 0}
-  randomPointStorage: {fileID: 1697991418}
-  m_moveSpeed: 2.75
-  m_rotationSpeed: 2.5
-  m_foundTarget: 0
 --- !u!1 &1595712115
 GameObject:
   m_ObjectHideFlags: 0
@@ -5425,36 +5437,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1648798139
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1648798140}
-  m_Layer: 0
-  m_Name: ActiveItems
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1648798140
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648798139}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1958195943}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1677332604
 GameObject:
   m_ObjectHideFlags: 0
@@ -6091,13 +6073,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6510,6 +6492,11 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 1958195944}
+    - target: {fileID: 4190955130967510240, guid: 2c2742e3768d1b348a30ce7e056350e5,
+        type: 3}
+      propertyPath: nullObject
+      value: 
+      objectReference: {fileID: 20102056}
     - target: {fileID: 4190955130967510243, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6836,7 +6823,7 @@ Transform:
   m_Children:
   - {fileID: 416121978}
   - {fileID: 1697991419}
-  - {fileID: 1648798140}
+  - {fileID: 20102057}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6888,6 +6875,8 @@ MonoBehaviour:
   dogUIOutputScript: {fileID: 1793242820}
   groundObject: {fileID: 1238925872}
   randomPointStorage: {fileID: 1697991418}
+  defaultNullObject: {fileID: 20102056}
+  breedDataFileDir: /Scripts/ReferenceFiles/BreedData.txt
 --- !u!114 &1958195946
 MonoBehaviour:
   m_ObjectHideFlags: 0

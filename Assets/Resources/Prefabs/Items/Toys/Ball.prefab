@@ -43,19 +43,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  careFufills: 
-  careFufillmentAmounts: []
-  personalityFufills: 
-  personalityFufillmentAmounts: []
-  m_object: {fileID: 0}
-  m_storeCatergory: 4
-  m_activeSpawnPos: {x: 0, y: 0, z: 0}
+  defaultNumToInstantiate: 5
+  careFufills: 06000000020000000700000003000000
+  careFufillmentAmounts:
+  - 3.5
+  - 2.5
+  - 1
+  - -2.5
+  personalityFufills: 03000000
+  personalityFufillmentAmounts:
+  - 2
+  m_objectPrefab: {fileID: 5752050639008929189, guid: 9991636b9f9498943b8836dcd77e1018,
+    type: 3}
+  m_instancesInactivePos: {x: 0, y: -17.5, z: 0}
+  m_itemType: 3
   m_name: Ball
   m_sprite: {fileID: 21300000, guid: 6bc35b174d63b364badda9d08a20a96a, type: 3}
   m_price: 3
   m_description: S
-  m_user: {fileID: 0}
-  m_usable: 0
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0, z: 0}
   m_relUseRot: {x: 0, y: 0, z: 0}
