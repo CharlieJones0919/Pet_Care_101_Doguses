@@ -15,6 +15,8 @@ public class Dog : MonoBehaviour
     public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
     public GameObject defaultNULL;
 
+  //  public Animator m_animationCTRL;
+
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
@@ -92,7 +94,8 @@ public class Dog : MonoBehaviour
         {
             spawnPoint = navigationScript.GetRandomPointInWorld();
         }
-        spawnPoint.y = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        spawnPoint.y += navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+
         transform.position = spawnPoint;
         m_currentObjectTarget = defaultNULL;
 
@@ -153,26 +156,6 @@ public class Dog : MonoBehaviour
             }
 
             UIOutputScript.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("Detected collision with: " + collision.gameObject.name);
-
-        if (collision.gameObject == m_currentObjectTarget)
-        {
-            navigationScript.SetTargetAsFound();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Detected collision with: " + collision.gameObject.name);
-
-        if (collision.gameObject == m_currentObjectTarget)
-        {
-            navigationScript.SetTargetAsFound();
         }
     }
 
@@ -385,7 +368,7 @@ public class Dog : MonoBehaviour
             m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget);
             return true;
         }
-
+      //  m_animationCTRL.SetBool("Moving", true);
         return false;
     }
 
@@ -396,6 +379,7 @@ public class Dog : MonoBehaviour
             transform.position = m_currentItemTarget.GetUsePosition();
             transform.localRotation.SetLookRotation(m_currentItemTarget.GetUseRotation());
 
+      //      m_animationCTRL.SetBool("Moving", false);
             m_usingItem = true;
             yield return new WaitForSeconds(m_currentItemTarget.GetUseTime());
             EndItemUse();
@@ -408,11 +392,13 @@ public class Dog : MonoBehaviour
 
     public void Wander()
     {
-         navigationScript.FollowPathToRandomPoint();
+    //    m_animationCTRL.SetBool("Moving", true);
+        navigationScript.FollowPathToRandomPoint();
     }
 
     public IEnumerator Pause(float waitTime)
     {
+      //  m_animationCTRL.SetBool("Moving", false);
         m_waiting = true;
         yield return new WaitForSeconds(waitTime);
         StopWaiting();

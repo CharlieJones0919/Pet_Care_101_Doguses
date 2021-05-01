@@ -18,7 +18,6 @@ public class Pathfinding : MonoBehaviour
     [SerializeField] private float m_moveSpeed = 2.75f;        //!< Speed of movement.
     [SerializeField] private float m_rotationSpeed = 2.5f;     //!< Speed of rotation.
     private Vector2 requiredSpace;
-   // private float m_foundDistance = 2;     //!< Distance the dog object must be to a node for it to be considered "found" and removed from the path list.
 
     private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
     [SerializeField] private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
@@ -201,9 +200,9 @@ public class Pathfinding : MonoBehaviour
         else transform.rotation = targetPosition;
     }
 
-    public void SetTargetAsFound()
+    public void SetMovementSpeed(float speed)
     {
-        //m_foundTarget = true;
+        m_moveSpeed = speed;
     }
 
     /** \fn DogLookAt

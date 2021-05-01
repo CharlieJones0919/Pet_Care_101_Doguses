@@ -46,6 +46,7 @@ public class Tired : State
                 if (doggo.LocateItemFor(ItemType.BED))
                 {
                     doggo.StartCoroutine(doggo.UseItem());
+               //     doggo.m_animationCTRL.SetBool("GoingToSleep", true);
                     return null;
                 }
             }

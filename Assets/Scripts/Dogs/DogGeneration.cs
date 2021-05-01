@@ -523,7 +523,7 @@ public class DogGeneration : MonoBehaviour
                     for (int i = 0; i < component.m_component.transform.childCount; i++)
                     {
                         GameObject child = component.m_component.transform.GetChild(i).gameObject;
-                        if (child.tag == "Joint")
+                   //     if (child.tag == "Joint")
                         {
                             children.Add(child, child.transform.localScale);
                         }
@@ -533,7 +533,7 @@ public class DogGeneration : MonoBehaviour
 
                     foreach (KeyValuePair<GameObject, Vector3> child in children)
                     {
-                        child.Key.transform.localScale = child.Value - newScale; 
+                        child.Key.transform.localScale = child.Value; 
                     }
                     return;
                 }
