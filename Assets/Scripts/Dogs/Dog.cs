@@ -94,7 +94,8 @@ public class Dog : MonoBehaviour
         {
             spawnPoint = navigationScript.GetRandomPointInWorld();
         }
-        spawnPoint.y += navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        float ground2FootDiff = navigationScript.groundPlane.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        spawnPoint.y = transform.position.y + ground2FootDiff;
 
         transform.position = spawnPoint;
         m_currentObjectTarget = defaultNULL;
