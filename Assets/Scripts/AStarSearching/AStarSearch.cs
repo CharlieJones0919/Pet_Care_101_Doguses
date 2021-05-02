@@ -1,7 +1,6 @@
 ﻿/** \file AStarSearch.cs
 *  \brief An implementation of A* searching.
 */
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -37,7 +36,6 @@ public class AStarSearch : MonoBehaviour
     {
         // Set grid size to the ground plane's world scale. (This script should be attached to the ground plane).
         gridSize = new Vector3(((transform.localScale.x * 10.0f) - 5.0f), ((transform.localScale.z * 10.0f) - 5.0f));
-
         // Calculate and set how many nodes high and wide the ground plane (and subsequent grid map) should be divided into.
         gridNodes = new Vector2(Mathf.RoundToInt(gridSize.x / nodeSize), Mathf.RoundToInt(gridSize.y / nodeSize));
 
@@ -66,7 +64,7 @@ public class AStarSearch : MonoBehaviour
                 Vector3 nodePos = gridBottomLeft + Vector3.right * (i * nodeSize + (nodeSize / 2)) + Vector3.forward * (j * nodeSize + (nodeSize / 2));
 
                 // Set whether or not the node is traverable: if it doesn't contain any objects in the obstacle layer.
-                bool traversable = !(Physics.CheckBox(nodePos, new Vector3(nodeSize, nodeSize, nodeSize), Quaternion.identity,  obstacleLayerMask));
+                bool traversable = !(Physics.CheckSphere(nodePos, nodeSize, obstacleLayerMask));
 
                 // Add the node to grid map with its newly found data AS a node.
                 grid[i, j] = new ASNode(nodePos, traversable, i, j);
@@ -96,11 +94,11 @@ public class AStarSearch : MonoBehaviour
     *  \brief Constrains a world space co-ordinate to a node position to find an object's position in the context of the grid map and returns which node it's closest to being in. 
     *  \param gridPosition The world space position which needs constraining to identify which node it's in.
     */
-    public ASNode NodePositionInGrid(Vector2 gridPosition)
+    public ASNode NodePositionInGrid(Vector3 gridPosition)
     {
         // Constrain the object's world position into the closest node's position.
         float pX = Mathf.Clamp01((gridPosition.x - ((gridSize.x / gridNodes.x) / 2) + (gridSize.x / 2)) / gridSize.x);
-        float pY = Mathf.Clamp01((gridPosition.y - ((gridSize.y / gridNodes.y) / 2) + (gridSize.y / 2)) / gridSize.y);
+        float pY = Mathf.Clamp01((gridPosition.z - ((gridSize.y / gridNodes.y) / 2) + (gridSize.y / 2)) / gridSize.y);
 
         // Get the identified encapsulating node's X & Y axis positions.
         int nX = (int)Mathf.Clamp(Mathf.RoundToInt(gridNodes.x * pX), 0, gridNodes.x - 1);

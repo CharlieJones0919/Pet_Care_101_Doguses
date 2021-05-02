@@ -47,13 +47,13 @@ MonoBehaviour:
   useTime: 300
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
-  - 1
-  - -5
-  - -7.5
+  - 0.01
+  - -0.05
+  - -0.075
   personalityFufills: 0200000005000000
   personalityFufillmentAmounts:
-  - -1.15
-  - -1.05
+  - -0.00115
+  - -0.00105
   m_objectPrefab: {fileID: 6292049011481810776, guid: c5fa6c2235488bf4e8fdb578da5f0450,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -10, z: 0}

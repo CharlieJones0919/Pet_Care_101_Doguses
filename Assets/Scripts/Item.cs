@@ -45,7 +45,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public ItemInstance(ItemType itemType, GameObject objectBase, GameObject parentTransform, Vector3 inactivePos, GameObject nullObj)
         {
             m_type = itemType;
-            m_instance = Instantiate(objectBase, inactivePos, Quaternion.identity);
+            m_instance = Instantiate(objectBase, inactivePos, objectBase.transform.rotation);
             m_instance.transform.SetParent(parentTransform.transform);
 
             m_inactivePos = inactivePos;
@@ -56,7 +56,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public void Activate(Vector3 activePos)
         {
             m_instance.SetActive(true);
-            m_instance.transform.position = activePos;
+            m_instance.transform.localPosition = activePos;
         }
 
         public void Deactivate()

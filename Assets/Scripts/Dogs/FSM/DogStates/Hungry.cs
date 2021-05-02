@@ -16,18 +16,18 @@ public class Hungry : State
 
     public override Type StateEnter()
     {
-        Debug.Log("Entering Hungry State");
+        Debug.Log(doggo.name + ": Entering Hungry State");
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log("Exiting Hungry State");
+        Debug.Log(doggo.name + ": Exiting Hungry State");
 
-        if (!doggo.UsingItemFor(DogCareValue.NONE) && !doggo.UsingItemFor(DogPersonalityValue.NONE))
+        if (doggo.UsingItemFor(DogCareValue.Hunger))
         {
             doggo.EndItemUse();
-            doggo.StopAllCoroutines();
+            doggo.StopCoroutine(doggo.UseItem());
         } 
 
         return null;

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class DogController : MonoBehaviour
 {
     public GameTime localTime;
-    private List<GameObject> objectsForDeletion = new List<GameObject>();
+    public TipPopUp tipPopUp;
+
+   // private List<GameObject> objectsForDeletion = new List<GameObject>();
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
 

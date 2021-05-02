@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed4e10982c556ed4ea27d98a8970bab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dog: {fileID: 9089536525100727225}
 --- !u!1 &6774197112259499260
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,14 +256,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080578e0008a9754cb3755dc5b9ae134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundPlane: {fileID: 0}
-  randomPointStorage: {fileID: 0}
-  m_walkSpeed: 1.5
-  m_runSpeed: 3
+  m_aStarSearch: {fileID: 0}
+  m_randomPointStorage: {fileID: 0}
+  m_randomPoint: {fileID: 0}
+  m_walkSpeed: 2.5
+  m_runSpeed: 5
   m_currentSpeed: 0
   m_RB: {fileID: 7821002846244337834}
+  m_collider: {fileID: 9089536525100727229}
   m_randomNodeFound: 0
-  m_randomPoint: {fileID: 0}
 --- !u!114 &9089536525100727225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +289,8 @@ MonoBehaviour:
   m_RB: {fileID: 7821002846244337834}
   m_currentObjectTarget: {fileID: 0}
   m_usingItem: 0
-  m_waiting: 1
+  m_waiting: 0
+  m_needsToFinishAnim: 0
 --- !u!114 &243922474303207471
 MonoBehaviour:
   m_ObjectHideFlags: 0

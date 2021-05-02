@@ -16,22 +16,19 @@ public class Tired : State
 
     public override Type StateEnter()
     {
-        Debug.Log("Entering Tired State");
+        Debug.Log(doggo.name + ": Entering: Tired State");
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log("Exiting Tired State");
+        Debug.Log(doggo.name + ": Exiting Tired State");
 
-        if (!doggo.UsingItemFor(DogCareValue.NONE) && !doggo.UsingItemFor(DogPersonalityValue.NONE))
+        if (doggo.UsingItemFor(DogCareValue.Rest))
         {
-            if (doggo.UsingItemFor(DogCareValue.Rest))
-            {         
-                doggo.m_animationCTRL.SetTrigger("WakingUp");
-                doggo.EndItemUse();
-            }
-            doggo.StopAllCoroutines();
+            doggo.m_animationCTRL.SetTrigger("WakingUp");
+            doggo.EndItemUse();
+            doggo.StopCoroutine(doggo.UseItem());
         }
 
         return null;
@@ -39,9 +36,9 @@ public class Tired : State
 
     public override Type StateUpdate()
     {
-        if ((!doggo.Tired() && doggo.Hungry()) && doggo.ItemOfTypeFound(ItemType.FOOD))
+        if (((!doggo.Tired() && (doggo.Starving() || doggo.Hungry()) && doggo.ItemOfTypeFound(ItemType.FOOD))) || doggo.Rejuvinated())
         {
-            return typeof(Hungry);
+            return typeof(Pause);
         }
         else if ((doggo.Tired() || !doggo.Rested()) && doggo.ItemOfTypeFound(ItemType.BED))
         {
@@ -54,14 +51,6 @@ public class Tired : State
                     return null;
                 }
             }
-            else
-            {
-                return null;
-            }
-        }
-        else if (doggo.Rested())
-        {
-            return typeof(Pause);
         }
 
         return null;

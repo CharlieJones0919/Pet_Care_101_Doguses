@@ -9,38 +9,32 @@ using UnityEngine;
 */
 public class Pathfinding : MonoBehaviour
 {
-    public GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
-    public GameObject randomPointStorage;
-    private Vector3 groundWorldScale;
+    public AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
+    private Vector3 m_groundWorldScale;
 
-    private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
-    private Vector3 randomPosMin;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
-    private Vector3 randomPosMax;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
-
+    public GameObject m_randomPointStorage;
+    [SerializeField] private GameObject m_randomPoint;                   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
+ 
     [SerializeField] private float m_walkSpeed;      
     [SerializeField] private float m_runSpeed;        
     [SerializeField] private float m_currentSpeed;
-    [SerializeField] private Rigidbody m_RB;
 
-    private Collider requiredSpace;
+    [SerializeField] private Rigidbody m_RB;
+    [SerializeField] private Collider m_collider;
 
     private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
     [SerializeField] private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
-    [SerializeField] private GameObject m_randomPoint;                   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
-
+ 
     /** \fn Start
     *  \brief Instantiate variable values when application starts.
     */
     private void Start()
     {
-        m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
         m_randomPoint = new GameObject(name + "_RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
-        m_randomPoint.transform.parent = randomPointStorage.transform;
-
-        requiredSpace = GetComponent<Collider>();
+        m_randomPoint.transform.parent = m_randomPointStorage.transform;
 
         //Set random position range.
-        groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
+        m_groundWorldScale = (m_aStarSearch.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
         m_currentSpeed = m_walkSpeed;
     }
 
@@ -82,10 +76,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    public int GetFoundPathLength()
-    {
-        return m_foundPath.Count;
-    }
+    public int GetFoundPathLength() {  return m_foundPath.Count;  }
 
     /** \fn FollowPathTo
      *  \brief Moves this GameObject along a found A* path to a specified point.
@@ -96,7 +87,7 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            if (requiredSpace.bounds.Contains(point.transform.position))
+            if (m_collider.bounds.Contains(point.transform.position))
             {
                 DogLookAt(point.transform.position, true);
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
@@ -110,7 +101,7 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }
-            else if (!(requiredSpace.bounds.Contains(m_foundPath[0]))) 
+            else if (!(m_collider.bounds.Contains(m_foundPath[0]))) 
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
@@ -127,7 +118,7 @@ public class Pathfinding : MonoBehaviour
         return false;
     }
 
-    private void OnTriggerStay(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.layer == m_aStarSearch.obstacleLayerMask) {   m_foundPath.Clear();  };
     }
@@ -151,15 +142,15 @@ public class Pathfinding : MonoBehaviour
     /** \fn GenerateRandomPointInWorld
      *  \brief Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.
      */
-    private IEnumerator GenerateRandomPointInWorld(float atDistance = 0)
+    private IEnumerator GenerateRandomPointInWorld()
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
-        ASNode randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-groundWorldScale.x, groundWorldScale.x), Random.Range(-groundWorldScale.z, groundWorldScale.z))); //Locate a random node on the grid.
+        ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_groundWorldScale.x, m_groundWorldScale.x), 0, Random.Range(-m_groundWorldScale.z, m_groundWorldScale.z))); //Locate a random node on the grid.
 
         //If the located node isn't traversable find a new one.
         while (!randomNode.m_traversable)
         {
-            randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-groundWorldScale.x, groundWorldScale.x), Random.Range(-groundWorldScale.z, groundWorldScale.z)));
+            randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_groundWorldScale.x, m_groundWorldScale.x), 0, Random.Range(-m_groundWorldScale.z, m_groundWorldScale.z)));
             yield return new WaitForEndOfFrame();
         }
 

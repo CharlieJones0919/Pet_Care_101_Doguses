@@ -16,23 +16,23 @@ public class Idle : State
 
     public override Type StateEnter()
     {
-        Debug.Log("Entering Idle State");
+        Debug.Log(doggo.name + ": Entering Idle State");
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log("Exiting Idle State");
+        Debug.Log(doggo.name + ": Exiting Idle State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        if (doggo.Hungry() && doggo.ItemOfTypeFound(ItemType.FOOD))
+        if ((doggo.Hungry() || doggo.Starving()) && doggo.ItemOfTypeFound(ItemType.FOOD))
         {
             return typeof(Hungry);
         }
-        else if (doggo.Tired() && doggo.ItemOfTypeFound(ItemType.BED))
+        else if ((doggo.Tired() || doggo.Exhausted()) && doggo.ItemOfTypeFound(ItemType.BED))
         {
             return typeof(Tired);
         }

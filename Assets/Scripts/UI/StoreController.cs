@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +10,8 @@ public enum ItemType
 public class StoreController : MonoBehaviour
 {
     [SerializeField] private DogController controller;
+    [SerializeField] private AStarSearch worldFloor;
+    [SerializeField] private List<Vector3> perminantItemPositions = new List<Vector3>();
     
     [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
     [SerializeField] private UnityEngine.Object[] itemPrefabs;
@@ -85,19 +85,53 @@ public class StoreController : MonoBehaviour
             foreach (Item item in storeSections[catergory].GetItems())
             {
                 item.SetNULLObjectRef(nullObject);
-                item.SetInstanceParent(nullObject);
+                item.SetInstanceParent(worldFloor.gameObject);
                 item.InstantiatePool();
                 controller.AddToItemPools(catergory, item);
             }
         }
 
+        float floorStartX = (-worldFloor.transform.localScale.x / 2.0f) + 0.5f;
+        float floorStartZ = (worldFloor.transform.localScale.z / 2.0f) - 0.5f;
+        float floorEndX = (worldFloor.transform.localScale.x / 2.0f) - 0.5f;
+        float floorEndZ = worldFloor.transform.position.z + 0.5f;
+        int numPossiblePositions = 1;
+
+        float posX = floorStartX;
+        float posZ = floorStartZ;
+
+        for (int i = 0; i < numPossiblePositions; i++)
+        {
+            numPossiblePositions++;
+
+            if ((posX <= floorEndX))
+            {
+                perminantItemPositions.Add(new Vector3(posX, 0, posZ));
+                posX += 1.0f;
+            }
+            else if (posZ > floorEndZ)
+            {
+                posZ -= 1.0f;
+                posX = floorStartX;
+            }
+            else { break; }
+        }
+     
         SectionSelected(storeSections[(ItemType)0]);
         gameObject.SetActive(false);
     }
 
     public void PurchaseAttempt()
     {
-        focusItem.ActivateAvailableInstanceTo(new Vector3(0, 0, 0));
+        if (!focusItem.IsSingleUse())
+        {
+            if (perminantItemPositions.Count > 0)
+            {
+                focusItem.ActivateAvailableInstanceTo(perminantItemPositions[0]);
+                perminantItemPositions.Remove(perminantItemPositions[0]);
+            }
+            else { controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore items."); }
+        }
     }
 
     public void SetFocusItem(ItemSlot focusSlot)

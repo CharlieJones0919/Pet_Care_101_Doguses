@@ -269,8 +269,8 @@ public class DogGeneration : MonoBehaviour
         string[] attentionState = { "Lonely", "Loved", "Overcrowded" };
         Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 95), new Vector2(95, 100) };
 
-        string[] restState = { "Exhausted", "Tired", "Rested" };
-        Vector2[] restStateRanges = { new Vector2(0, 15), new Vector2(15, 50), new Vector2(50, 100) };
+        string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated"};
+        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(20, 50), new Vector2(50, 90), new Vector2(90, 100) };
 
         string[] hygieneState = { "Filthy", "Dirty", "Clean" };
         Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(20, 60), new Vector2(60, 100) };
@@ -313,7 +313,6 @@ public class DogGeneration : MonoBehaviour
         AddStatesToProperty(DogPersonalityValue.Intelligence, intelligenceStates, intelligenceStateRanges);
         AddStatesToProperty(DogPersonalityValue.Energy, energyStates, energyStateRanges);
         AddStatesToProperty(DogPersonalityValue.Bond, bondStates, bondStateRanges);
-
     }
 
     private void AddStatesToProperty(DogCareValue property, string[] names, Vector2[] ranges)
@@ -354,14 +353,13 @@ public class DogGeneration : MonoBehaviour
     public GameObject GenerateDog(DogBreed breed)
     {
         GameObject newDog = Instantiate(dogPrefabBase, Vector3.zero, Quaternion.identity);
-        newDog.GetComponent<Pathfinding>().groundPlane = groundObject;
         newDog.transform.parent = transform.GetChild(0);
         newDog.name = "Unnamed_" + breed;
 
         Dog dogScript = newDog.GetComponent<Dog>();
         dogScript.controllerScript = dogController;
         dogScript.UIOutputScript = dogUIOutputScript;
-        dogScript.navigationScript.randomPointStorage = randomPointStorage;
+        dogScript.navigationScript.m_randomPointStorage = randomPointStorage;
         dogScript.defaultNULL = defaultNullObject;
 
         dogScript.m_breed = breed;
