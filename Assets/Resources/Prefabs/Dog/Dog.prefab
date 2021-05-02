@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 888370117648677940}
   - component: {fileID: 2835374070192070639}
   - component: {fileID: 8043749092345873970}
+  - component: {fileID: 5837288172753378154}
+  - component: {fileID: 6620723048604304026}
   m_Layer: 0
   m_Name: Waist
   m_TagString: Joint
@@ -81,6 +83,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &5837288172753378154
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870346413559420192}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e7ca6c5c441746c4f8e957588e1daf0b, type: 2}
+  m_CullingMode: 2
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6620723048604304026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870346413559420192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4e10982c556ed4ea27d98a8970bab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6774197112259499260
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +207,7 @@ GameObject:
   - component: {fileID: 9089536525100727226}
   - component: {fileID: 9089536525100727225}
   - component: {fileID: 243922474303207471}
+  - component: {fileID: 7821002846244337834}
   m_Layer: 8
   m_Name: Dog
   m_TagString: Dog
@@ -204,7 +238,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9089536525100727228}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.75, y: 4.65, z: 4.28}
@@ -223,8 +257,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundPlane: {fileID: 0}
   randomPointStorage: {fileID: 0}
-  m_moveSpeed: 3
-  m_rotationSpeed: 2.5
+  m_walkSpeed: 1.5
+  m_runSpeed: 3
+  m_currentSpeed: 0
+  m_RB: {fileID: 7821002846244337834}
   m_randomNodeFound: 0
   m_randomPoint: {fileID: 0}
 --- !u!114 &9089536525100727225
@@ -246,7 +282,9 @@ MonoBehaviour:
   m_name: 
   m_breed: 0
   m_age: 0
-  m_collider: {fileID: 0}
+  m_collider: {fileID: 9089536525100727229}
+  m_animationCTRL: {fileID: 5837288172753378154}
+  m_RB: {fileID: 7821002846244337834}
   m_currentObjectTarget: {fileID: 0}
   m_usingItem: 0
   m_waiting: 1
@@ -262,6 +300,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbbc9cc1e69688542b736c6122514d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &7821002846244337834
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9089536525100727228}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &82734026992289423
 PrefabInstance:
   m_ObjectHideFlags: 0

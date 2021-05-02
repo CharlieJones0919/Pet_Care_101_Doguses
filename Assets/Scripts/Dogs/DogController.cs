@@ -25,57 +25,72 @@ public class DogController : MonoBehaviour
         {
             if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
         }
-        Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name + "." );
+        //Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
         return false;
     }
 }
 
 public class CareProperty
 {
-    private DogCareValue m_name;
-    private float m_value = 50;
-    private float m_increment = 0;
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
+    private string m_currentState;
+    private float m_value = 50;
+    private float m_decrement;
 
-    public CareProperty(DogCareValue prop, Dictionary<string, Vector2> states, float defaultInc)
+    public CareProperty(Dictionary<string, Vector2> states, float defaultDec)
     {
-        m_name = prop;
         m_states = states;
-        m_increment = defaultInc;
+        m_decrement = defaultDec;
+        UpdateValue(0.0f);
     }
 
-    public DogCareValue GetPropertyName() { return m_name; }
     public float GetValue() { return m_value; }
-    public float GetCurrenntIncrement() { return m_increment; }
-    public Vector2 GetStateRange(string state)
-    {
-        if (m_states.ContainsKey(state)) { return m_states[state]; }
-        else { Debug.Log("The state " + "'" + state + "'" + " is not defined in " + m_name.ToString() + "."); return Vector2.zero; }
-    }
+    public float GetUsualDecrement() { return m_decrement; }
+    public string GetState() { return m_currentState; }
+    public bool IsState(string state) { return (m_currentState == state); }
 
-    public void UpdateValue(float increment) { m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f); }
+    public void UpdateValue(float increment)
+    {
+        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
+
+        foreach (KeyValuePair<string, Vector2> state in m_states)
+        {
+            if ((m_value > state.Value.x) && (m_value < state.Value.y))
+            {
+                m_currentState = state.Key;
+                return;
+            }
+        }
+    }
 }
 
 public class PersonalityProperty
 {
-    private DogPersonalityValue m_name;
-    private float m_value = 2.5f;
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
+    private string m_currentState;
+    private float m_value;
 
-    public PersonalityProperty(DogPersonalityValue prop, Dictionary<string, Vector2> states, float value)
+    public PersonalityProperty(Dictionary<string, Vector2> states, float value)
     {
-        m_name = prop;
         m_states = states;
-        m_value = value;
+        UpdateValue(value);
     }
 
-    public DogPersonalityValue GetPropertyName() { return m_name; }
     public float GetValue() { return m_value; }
-    public Vector2 GetStateRange(string state)
-    {
-        if (m_states.ContainsKey(state)) { return m_states[state]; }
-        else { Debug.Log("The state " + "'" + state + "'" + " is not defined in " + m_name.ToString() + ".");  return Vector2.zero;  }
-    }
+    public string GetState() { return m_currentState; }
+    public bool IsState(string state) { return (m_currentState == state); }
 
-    public void SetValue(float newVal) { m_value = Mathf.Clamp(newVal, 0.0f, 5.0f); }
+    public void UpdateValue(float increment)
+    {
+        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
+
+        foreach (KeyValuePair<string, Vector2> state in m_states)
+        {
+            if ((m_value > state.Value.x) && (m_value < state.Value.y))
+            {
+                m_currentState = state.Key;
+                return;
+            }
+        }
+    }
 }

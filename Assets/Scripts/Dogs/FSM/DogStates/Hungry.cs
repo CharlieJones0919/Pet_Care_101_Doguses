@@ -35,7 +35,7 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        if ((doggo.Hungry() || !doggo.Full()) && doggo.ItemOfTypeFound(ItemType.FOOD))
+        if ((doggo.Hungry() || !doggo.Fed()) && doggo.ItemOfTypeFound(ItemType.FOOD))
         {
             if (!doggo.UsingItemFor(DogCareValue.Hunger))
             {
@@ -46,7 +46,7 @@ public class Hungry : State
                 }
             }
         }
-        else if (doggo.Full() && doggo.Tired())
+        else if (doggo.Fed() && doggo.Tired())
         {
             return typeof(Tired);
         }

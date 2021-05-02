@@ -6,12 +6,12 @@ using UnityEngine;
 
 public enum DogCareValue
 {
-   NONE, Hunger, Attention, Rest, Hygiene, Health, Happiness, Bond
+   NONE, Hunger, Attention, Rest, Hygiene, Health, Happiness
 } 
 
 public enum DogPersonalityValue
 {
-   NONE, Obedience, Tolerance, Affection, Intelligence, Energy
+   NONE, Obedience, Tolerance, Affection, Intelligence, Energy, Bond
 }
 
 public enum DogBreed
@@ -263,34 +263,30 @@ public class DogGeneration : MonoBehaviour
     private void DefineDogPropStates()
     {
         //////////////////// Care Value States ////////////////////
-        string[] hungerStateNames = { "Starving", "Fed", "Overfed" };
-        Vector2[] hungerStateRanges = { new Vector2(0, 20), new Vector2(20, 85), new Vector2(85, 100) };
+        string[] hungerState = { "Starving", "Hungry", "Fed", "Overfed" };
+        Vector2[] hungerStateRanges = { new Vector2(0, 15), new Vector2(15, 45), new Vector2(45, 90), new Vector2(90, 100) };
 
-        string[] attentionStateNames = { "Lonely", "Loved", "Overcrowded" };
+        string[] attentionState = { "Lonely", "Loved", "Overcrowded" };
         Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 95), new Vector2(95, 100) };
 
-        string[] restStateNames = { "Exhausted", "Tired", "Rested" };
+        string[] restState = { "Exhausted", "Tired", "Rested" };
         Vector2[] restStateRanges = { new Vector2(0, 15), new Vector2(15, 50), new Vector2(50, 100) };
 
-        string[] hygieneStateNames = { "Filthy", "Dirty", "Clean" };
+        string[] hygieneState = { "Filthy", "Dirty", "Clean" };
         Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(20, 60), new Vector2(60, 100) };
 
-        string[] healthStateNames = { "Dying", "Sick", "Good" };
+        string[] healthState = { "Dying", "Sick", "Healthy" };
         Vector2[] healthStateRanges = { new Vector2(0, 10), new Vector2(10, 35), new Vector2(35, 100) };
 
-        string[] happinessStateNames = { "Distressed", "Upset", "Happy" };
-        Vector2[] happinessStateRanges = { new Vector2(0, 15), new Vector2(15, 40), new Vector2(40, 100) };
+        string[] happinessState = { "Distressed", "Upset", "Happy" };
+        Vector2[] happinessStateRanges = { new Vector2(0, 20), new Vector2(20, 40), new Vector2(40, 100) };
 
-        string[] bondStateNames = { "Wary", "Friendly" };
-        Vector2[] bondStateRanges = { new Vector2(0, 50), new Vector2(50, 100) };
-
-        AddStatesToProperty(DogCareValue.Hunger, hungerStateNames, hungerStateRanges);
-        AddStatesToProperty(DogCareValue.Attention, attentionStateNames, attentionStateRanges);
-        AddStatesToProperty(DogCareValue.Rest, restStateNames, restStateRanges);
-        AddStatesToProperty(DogCareValue.Hygiene, hygieneStateNames, hygieneStateRanges);
-        AddStatesToProperty(DogCareValue.Health, healthStateNames, healthStateRanges);
-        AddStatesToProperty(DogCareValue.Happiness, happinessStateNames, happinessStateRanges);
-        AddStatesToProperty(DogCareValue.Bond, bondStateNames, bondStateRanges);
+        AddStatesToProperty(DogCareValue.Hunger, hungerState, hungerStateRanges);
+        AddStatesToProperty(DogCareValue.Attention, attentionState, attentionStateRanges);
+        AddStatesToProperty(DogCareValue.Rest, restState, restStateRanges);
+        AddStatesToProperty(DogCareValue.Hygiene, hygieneState, hygieneStateRanges);
+        AddStatesToProperty(DogCareValue.Health, healthState, healthStateRanges);
+        AddStatesToProperty(DogCareValue.Happiness, happinessState, happinessStateRanges);
 
         //////////////////// Personality Value States ////////////////////
         string[] obedienceStateNames = { "Bad", "Average", "Good" };
@@ -308,11 +304,16 @@ public class DogGeneration : MonoBehaviour
         string[] energyStates = { "Sleepy", "Normal", "Hyper" };
         Vector2[] energyStateRanges = { new Vector2(0.0f, 2.25f), new Vector2(2.25f, 4.25f), new Vector2(4.25f, 5.0f) };
 
+        string[] bondStates = { "Wary", "Friendly" };
+        Vector2[] bondStateRanges = { new Vector2(0, 50), new Vector2(50, 100) };
+
         AddStatesToProperty(DogPersonalityValue.Obedience, obedienceStateNames, obedienceStateRanges);
         AddStatesToProperty(DogPersonalityValue.Affection, affectionStates, affectionStateRanges);
         AddStatesToProperty(DogPersonalityValue.Tolerance, toleranceStates, toleranceStateRanges);
         AddStatesToProperty(DogPersonalityValue.Intelligence, intelligenceStates, intelligenceStateRanges);
         AddStatesToProperty(DogPersonalityValue.Energy, energyStates, energyStateRanges);
+        AddStatesToProperty(DogPersonalityValue.Bond, bondStates, bondStateRanges);
+
     }
 
     private void AddStatesToProperty(DogCareValue property, string[] names, Vector2[] ranges)
@@ -373,8 +374,9 @@ public class DogGeneration : MonoBehaviour
         Bounds bounds = renderers[0].bounds;
         bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
         for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
-        bounds.size += new Vector3(0.0f, 0.0f, 0.25f);
-        bounds.center += new Vector3(0.0f, 0.0f, 0.25f);
+        bounds.size += new Vector3(0.0f, -0.15f, 0.25f);
+        bounds.center += new Vector3(0.0f, -0.25f, 0.25f);
+        bounds.size += new Vector3(0.25f, 0,0);
 
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;
@@ -387,25 +389,29 @@ public class DogGeneration : MonoBehaviour
     {
         foreach (DogCareValue careValue in (DogCareValue[])DogCareValue.GetValues(typeof(DogCareValue)))
         {
-            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(new CareProperty(careValue, careValueStates[careValue], -0.01f));
+            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(careValue, new CareProperty(careValueStates[careValue], -1 / 72f));
         }
 
         foreach (DogPersonalityValue personalityValue in (DogPersonalityValue[])DogPersonalityValue.GetValues(typeof(DogPersonalityValue)))
         {
-            if (personalityValue != DogPersonalityValue.NONE)
+            if ((personalityValue != DogPersonalityValue.NONE) && (personalityValue != DogPersonalityValue.Bond))
             {
                 if (Enum.IsDefined(typeof(DogDataField), personalityValue.ToString()))
                 {
-                    float breedValueFloat = 2.5f;
+                    float breedValueFloat;
                     string breedPersonalityValue = GetBreedValue(dog.m_breed, (DogDataField)Enum.Parse(typeof(DogDataField), personalityValue.ToString()));
 
                     if (float.TryParse(breedPersonalityValue, out breedValueFloat))
                     {
-                        dog.m_personalityValues.Add(new PersonalityProperty(personalityValue, personalityValueStates[personalityValue], breedValueFloat));
+                        dog.m_personalityValues.Add(personalityValue, new PersonalityProperty(personalityValueStates[personalityValue], breedValueFloat));
                     }
                     else Debug.LogWarning("The dog breed data file did not contain a valid float value for the personality value: " + personalityValue);
                 }
                 else Debug.LogWarning(personalityValue + " is not defined as a data field in the dog data file.");
+            }
+            else if (personalityValue == DogPersonalityValue.Bond)
+            {
+                dog.m_personalityValues.Add(personalityValue, new PersonalityProperty(personalityValueStates[personalityValue], 1.0f));
             }
         }
     }

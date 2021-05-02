@@ -41,6 +41,7 @@ public class FiniteStateMachine : MonoBehaviour
         if (CurrentState == null)
         {
             CurrentState = states.Values.First();
+            SwitchToState(currentState.GetType());
         }
         else //If the CurrentState has been set, get what it has returned from its latest update.
         {

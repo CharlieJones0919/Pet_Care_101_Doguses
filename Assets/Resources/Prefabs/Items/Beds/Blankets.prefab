@@ -47,9 +47,9 @@ MonoBehaviour:
   useTime: 300
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
-  - 0.01
-  - -0.05
-  - -0.075
+  - 1
+  - -5
+  - -7.5
   personalityFufills: 0200000005000000
   personalityFufillmentAmounts:
   - -1.15

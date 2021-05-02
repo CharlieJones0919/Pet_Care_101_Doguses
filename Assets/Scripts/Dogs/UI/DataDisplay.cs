@@ -9,8 +9,8 @@ public class DataDisplay : MonoBehaviour
     [SerializeField] private Dog focusedDog;
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
-    public Dictionary<string, Slider> careValueDisplayUI = new Dictionary<string, Slider>();
-    public Dictionary<string, Slider> personalityValueDisplayUI = new Dictionary<string, Slider>();
+    public Dictionary<DogCareValue, Slider> careValueDisplayUI = new Dictionary<DogCareValue, Slider>();
+    public Dictionary<DogPersonalityValue, Slider> personalityValueDisplayUI = new Dictionary<DogPersonalityValue, Slider>();
 
     private void Start()
     {
@@ -49,16 +49,9 @@ public class DataDisplay : MonoBehaviour
                 }
             }
 
-            foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
+            foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)
             {
-                foreach (PersonalityProperty propValue in focusedDog.m_personalityValues)
-                {
-                    if (sliderValue.Key == propValue.GetPropertyName().ToString())
-                    {
-                        sliderValue.Value.value = propValue.GetValue();
-                        break;
-                    }
-                }
+                sliderValue.Value.value = focusedDog.m_personalityValues[sliderValue.Key].GetValue();
             }
         }
     }
@@ -72,12 +65,12 @@ public class DataDisplay : MonoBehaviour
             textElement.Value.text = "UNKNOWN - " + textElement.Key;
         }
 
-        foreach (KeyValuePair<string, Slider> sliderValue in personalityValueDisplayUI)
+        foreach (KeyValuePair<DogCareValue, Slider> sliderValue in careValueDisplayUI)
         {
             sliderValue.Value.value = 0;
         }
 
-        foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
+        foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)
         {
             sliderValue.Value.value = 0;
         }
@@ -87,16 +80,14 @@ public class DataDisplay : MonoBehaviour
     {
         if (focusedDog != null)
         {
-            foreach (KeyValuePair<string, Slider> sliderValue in careValueDisplayUI)
+            foreach (KeyValuePair<DogCareValue, Slider> sliderValue in careValueDisplayUI)
             {
-                foreach (CareProperty propValue in focusedDog.m_careValues)
-                {
-                    if (sliderValue.Key == propValue.GetPropertyName().ToString())
-                    {
-                        sliderValue.Value.value = propValue.GetValue();
-                        break;
-                    }
-                }
+                sliderValue.Value.value = focusedDog.m_careValues[sliderValue.Key].GetValue();
+            }
+
+            foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)
+            {
+                sliderValue.Value.value = focusedDog.m_personalityValues[sliderValue.Key].GetValue();
             }
         }
     }

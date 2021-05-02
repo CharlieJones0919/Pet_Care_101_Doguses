@@ -15,18 +15,19 @@ public class Dog : MonoBehaviour
     public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
     public GameObject defaultNULL;
 
-  //  public Animator m_animationCTRL;
-
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
     public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
+
     public BoxCollider m_collider;
+    public Animator m_animationCTRL;
+    [SerializeField] private Rigidbody m_RB;
 
     private int lastDayUpdated = 0;
 
-    public List<CareProperty> m_careValues = new List<CareProperty>();          //!< A list of the dog's current care value properties so they can be easily iterated through.
-    public List<PersonalityProperty> m_personalityValues = new List<PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
+    public Dictionary<DogCareValue, CareProperty> m_careValues = new Dictionary<DogCareValue, CareProperty>(); //!< A list of the dog's current care value properties so they can be easily iterated through.
+    public Dictionary<DogPersonalityValue, PersonalityProperty> m_personalityValues = new Dictionary<DogPersonalityValue, PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
 
     // Will be used to store definitions for the dog's different "facts" and rules based on them.
     public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
@@ -35,10 +36,10 @@ public class Dog : MonoBehaviour
     private Item m_currentItemTarget;
     [SerializeField] private GameObject m_currentObjectTarget;  //!< An item on the map the dog is currently using or travelling towards.   
 
-
-    [SerializeField] private bool m_usingItem = false;         //!< Whether the dog is currently using an item.
-    [SerializeField] private bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
+   public bool m_usingItem = false;         //!< Whether the dog is currently using an item.
+public bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
     private Vector3 positionBeforeUsingItem;
+    private Quaternion rotationBeforeUsingItem;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
@@ -82,6 +83,8 @@ public class Dog : MonoBehaviour
         //newStates.Add(typeof(Bite), new Bite(this));
 
         //newStates.Add(typeof(Die), new Die(this));
+
+        
 
         GetComponent<FiniteStateMachine>().SetStates(newStates); //Add defined states to FSM.
         GetExistingBodyParts();
@@ -127,7 +130,6 @@ public class Dog : MonoBehaviour
 
         ///////// Behaviour Trees /////
         //swp_pause = new BTAction(SwapToSearch);
-
     }
 
 
@@ -158,6 +160,8 @@ public class Dog : MonoBehaviour
 
             UIOutputScript.gameObject.SetActive(true);
         }
+
+        m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
     }
 
     private void GetExistingBodyParts()
@@ -220,93 +224,66 @@ public class Dog : MonoBehaviour
     }
 #endif
 
-    public void UpdateCareValues()
+    private void OnTriggerEnter(Collider collision)
     {
-        foreach (CareProperty careProperty in m_careValues)
+        if (collision.gameObject.layer == 8) { StartCoroutine(Pause(5)); };
+    }
+
+    private void UpdateCareValues()
+    {
+        foreach (KeyValuePair<DogCareValue, CareProperty> prop in m_careValues)
         {
-            if (UsingItemFor(careProperty.GetPropertyName()))
+            if (UsingItemFor(prop.Key))
             {
-                careProperty.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(careProperty.GetPropertyName()));
+                prop.Value.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(prop.Key));
             }
-            else { careProperty.UpdateValue(careProperty.GetCurrenntIncrement()); }
+            else { prop.Value.UpdateValue(prop.Value.GetUsualDecrement()); }
         }
     }
 
-    public void UpdatePersonalityValues()
+    private void UpdatePersonalityValues()
     {
-        foreach (PersonalityProperty personalityProperty in m_personalityValues)
+        foreach (KeyValuePair<DogPersonalityValue, PersonalityProperty> prop in m_personalityValues)
         {
-            personalityProperty.SetValue(personalityProperty.GetValue() - 0.15f);
+            if (UsingItemFor(prop.Key))
+            {
+                prop.Value.UpdateValue(m_currentItemTarget.GetPersonalityFufillmentAmount(prop.Key));
+                break;
+            }
         }
     }
 
     /** \fn Hungry
 *  \brief A placeholder function for a rule of if the dog value qualifies as being in this state. Is currently based on an arbitrary value but will be replaced with a definition generated by a FIS.
 *  */
-    public bool Hungry()
-    {
-        foreach (CareProperty careProperty in m_careValues)
-        {
-            if (careProperty.GetPropertyName() == DogCareValue.Hunger)
-            {
-                if (careProperty.GetValue() <= 25.0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    public bool Starving() { return m_careValues[DogCareValue.Hunger].IsState("Starving"); }
+    public bool Hungry() {  return m_careValues[DogCareValue.Hunger].IsState("Hungry"); }
+    public bool Fed() {     return m_careValues[DogCareValue.Hunger].IsState("Fed"); }
+    public bool Overfed() { return m_careValues[DogCareValue.Hunger].IsState("Overfed"); }
 
-    /** \fn Full
-*  \brief A placeholder function for a rule of if the dog value qualifies as being in this state. Is currently based on an arbitrary value but will be replaced with a definition generated by a FIS.
-*  */
-    public bool Full()
-    {
-        foreach (CareProperty careProperty in m_careValues)
-        {
-            if (careProperty.GetPropertyName() == DogCareValue.Hunger)
-            {
-                if (careProperty.GetValue() >= 50.0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    public bool Lonely() { return m_careValues[DogCareValue.Attention].IsState("Lonely"); }
+    public bool Loved() { return m_careValues[DogCareValue.Attention].IsState("Loved"); }
+    public bool Overcrowded() { return m_careValues[DogCareValue.Attention].IsState("Overcrowded"); }
 
-    /** \fn Tired
-    *  \brief A placeholder function for a rule of if the dog value qualifies as being in this state. Is currently based on an arbitrary value but will be replaced with a definition generated by a FIS.
-    *  */
-    public bool Tired()
-    {
-        foreach (CareProperty careProperty in m_careValues)
-        {
-            if (careProperty.GetPropertyName() == DogCareValue.Rest)
-            {
-                if (careProperty.GetValue() <= 30.0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    public bool Exhausted() { return m_careValues[DogCareValue.Rest].IsState("Exhausted"); }
+    public bool Tired() { return m_careValues[DogCareValue.Rest].IsState("Tired"); }
+    public bool Rested() { return m_careValues[DogCareValue.Rest].IsState("Rested"); }
 
-    public bool Rested()
+    public bool Filthy() { return m_careValues[DogCareValue.Hygiene].IsState("Filthy"); }
+    public bool Dirty() { return m_careValues[DogCareValue.Hygiene].IsState("Dirty"); }
+    public bool Clean() { return m_careValues[DogCareValue.Hygiene].IsState("Clean"); }
+
+    public bool Dying() { return m_careValues[DogCareValue.Health].IsState("Dying"); }
+    public bool Sick() { return m_careValues[DogCareValue.Health].IsState("Sick"); }
+    public bool Healthy() { return m_careValues[DogCareValue.Health].IsState("Healthy"); }
+
+    public bool Distressed() { return m_careValues[DogCareValue.Happiness].IsState("Distressed"); }
+    public bool Upset() { return m_careValues[DogCareValue.Happiness].IsState("Upset"); }
+    public bool Happy() { return m_careValues[DogCareValue.Happiness].IsState("Happy"); }
+
+    public string GetPersonalityState(DogPersonalityValue forProperty)
     {
-        foreach (CareProperty careProperty in m_careValues)
-        {
-            if (careProperty.GetPropertyName() == DogCareValue.Rest)
-            {
-                if (careProperty.GetValue() >= 75.0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return m_personalityValues[forProperty].GetState();
     }
 
     public bool UsingItemFor(DogCareValue value)
@@ -325,11 +302,6 @@ public class Dog : MonoBehaviour
             return m_currentItemTarget.FufillsPersonalityValue(value);
         }
         return false;
-    }
-
-    public bool Waiting()
-    {
-        return m_waiting;
     }
 
     public void SetCurrentTargetItem(Item newItem, GameObject itemInstance)
@@ -363,13 +335,19 @@ public class Dog : MonoBehaviour
             if (!ItemOfTypeFound(type)) { return false; }
         }
 
-        if (navigationScript.AttemptToReach(m_currentObjectTarget))
+        if (!m_waiting)
         {
-            positionBeforeUsingItem = transform.position;
-            m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget);
-            return true;
+            if (navigationScript.AttemptToReach(m_currentObjectTarget))
+            {
+                if (m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget))
+                {
+                    positionBeforeUsingItem = transform.position;
+                    rotationBeforeUsingItem = transform.rotation;
+                    return true;
+                }
+                else  { m_currentObjectTarget = defaultNULL;  }
+            }
         }
-      //  m_animationCTRL.SetBool("Moving", true);
         return false;
     }
 
@@ -377,10 +355,11 @@ public class Dog : MonoBehaviour
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            transform.position = m_currentItemTarget.GetUsePosition();
+            Vector3 usePosition = m_currentItemTarget.GetUsePosition();
+            usePosition.y = transform.position.y;
+            transform.position = usePosition;
             transform.localRotation.SetLookRotation(m_currentItemTarget.GetUseRotation());
 
-      //      m_animationCTRL.SetBool("Moving", false);
             m_usingItem = true;
             yield return new WaitForSeconds(m_currentItemTarget.GetUseTime());
             EndItemUse();
@@ -393,14 +372,13 @@ public class Dog : MonoBehaviour
 
     public void Wander()
     {
-    //    m_animationCTRL.SetBool("Moving", true);
         navigationScript.FollowPathToRandomPoint();
     }
 
     public IEnumerator Pause(float waitTime)
     {
-      //  m_animationCTRL.SetBool("Moving", false);
         m_waiting = true;
+        m_RB.velocity = Vector3.zero;
         yield return new WaitForSeconds(waitTime);
         StopWaiting();
     }
@@ -413,7 +391,6 @@ public class Dog : MonoBehaviour
             m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
             m_currentItemTarget = null;
             m_currentObjectTarget = defaultNULL;
-            transform.position = positionBeforeUsingItem;
         }
         else
         {
@@ -424,6 +401,15 @@ public class Dog : MonoBehaviour
     public void StopWaiting()
     {
         m_waiting = false;
+    }
+
+    public void SetBackToPreviousOrientation()
+    {
+        if (!m_usingItem)
+        {
+            transform.position = positionBeforeUsingItem;
+            transform.rotation = rotationBeforeUsingItem;
+        }
     }
 
     public void Spooked() { }

@@ -197,6 +197,18 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         return false;
     }
 
+    public bool IsUsable(GameObject attemptingUser, GameObject requestedInstance)
+    {
+        foreach (ItemInstance instance in m_availablePoolInstances)
+        {
+            if (instance.Usable() && instance.IsObject(requestedInstance))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public float GetUseTime()
     {
         return useTime;

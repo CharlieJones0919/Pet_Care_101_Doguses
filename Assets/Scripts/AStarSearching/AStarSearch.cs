@@ -15,8 +15,8 @@ public class AStarSearch : MonoBehaviour
     private ASNode[,] grid;       //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
     public Vector2 gridSize;      //!< Size of the grid on the X & Y axes.
     public Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
-    public float nodeSize = 2;    //!< Translation of physical world scale to node size.
-    [SerializeField] private LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
+    public float nodeSize;    //!< Translation of physical world scale to node size.
+    public LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
 
     // Node Set Data
     private Heap<ASNode> openSet;        //!< A heap class instance for nodes that should be looked at for traversal next to be stored in.
@@ -36,7 +36,8 @@ public class AStarSearch : MonoBehaviour
     private void Start()
     {
         // Set grid size to the ground plane's world scale. (This script should be attached to the ground plane).
-        gridSize = new Vector3(transform.localScale.x * 10.0f, transform.localScale.z * 10.0f);       
+        gridSize = new Vector3(((transform.localScale.x * 10.0f) - 5.0f), ((transform.localScale.z * 10.0f) - 5.0f));
+
         // Calculate and set how many nodes high and wide the ground plane (and subsequent grid map) should be divided into.
         gridNodes = new Vector2(Mathf.RoundToInt(gridSize.x / nodeSize), Mathf.RoundToInt(gridSize.y / nodeSize));
 
@@ -65,7 +66,7 @@ public class AStarSearch : MonoBehaviour
                 Vector3 nodePos = gridBottomLeft + Vector3.right * (i * nodeSize + (nodeSize / 2)) + Vector3.forward * (j * nodeSize + (nodeSize / 2));
 
                 // Set whether or not the node is traverable: if it doesn't contain any objects in the obstacle layer.
-                bool traversable = !(Physics.CheckBox(nodePos, new Vector3(nodeSize, nodeSize, nodeSize) / 2, Quaternion.identity,  obstacleLayerMask));
+                bool traversable = !(Physics.CheckBox(nodePos, new Vector3(nodeSize, nodeSize, nodeSize), Quaternion.identity,  obstacleLayerMask));
 
                 // Add the node to grid map with its newly found data AS a node.
                 grid[i, j] = new ASNode(nodePos, traversable, i, j);
@@ -78,11 +79,11 @@ public class AStarSearch : MonoBehaviour
     *  \param startObject The object to find a path FROM.
     *  \param goalObject The object to find a path TO.
     */
-    public List<ASNode> RequestPath(GameObject startObject, GameObject goalObject)
+    public List<ASNode> RequestPath(Vector3 startPoint, Vector3 goalPoint)
     {
         // Set each object's node positions from their GameObject world positions. 
-        rootNodePos = startObject.transform.position;
-        goalNodePos = goalObject.transform.position;
+        rootNodePos = startPoint;
+        goalNodePos = goalPoint;
 
         // Re-construct the grid. For use in the case of moving start points, goals, or obstacles.
         CreateGrid();
@@ -250,8 +251,8 @@ public class AStarSearch : MonoBehaviour
         return Heuristic.GetDistanceEuclidean(nodeA, nodeB); 
     }
 
-    public bool IsTraversable(Vector3 pos, Transform objectDims)
+    public bool IsTraversableFor(Vector3 point, Vector3 travellerSize)
     {
-        return !(Physics.CheckBox(pos, objectDims.position, objectDims.rotation, obstacleLayerMask));
+        return (!(Physics.CheckBox(point, travellerSize, Quaternion.identity, obstacleLayerMask)));
     }
 }

@@ -11,13 +11,18 @@ public class Pathfinding : MonoBehaviour
 {
     public GameObject groundPlane;    //!< A reference to the ground plane object to retrieve the A* script from.
     public GameObject randomPointStorage;
+    private Vector3 groundWorldScale;
 
     private AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
-    private Vector2 randomPosRange;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
+    private Vector3 randomPosMin;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
+    private Vector3 randomPosMax;                     //!< The range random positions on the grid can be generated within based on the groundPlane's size.
 
-    [SerializeField] private float m_moveSpeed = 2.75f;        //!< Speed of movement.
-    [SerializeField] private float m_rotationSpeed = 2.5f;     //!< Speed of rotation.
-    private Vector2 requiredSpace;
+    [SerializeField] private float m_walkSpeed;      
+    [SerializeField] private float m_runSpeed;        
+    [SerializeField] private float m_currentSpeed;
+    [SerializeField] private Rigidbody m_RB;
+
+    private Collider requiredSpace;
 
     private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
     [SerializeField] private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
@@ -29,26 +34,20 @@ public class Pathfinding : MonoBehaviour
     private void Start()
     {
         m_aStarSearch = groundPlane.GetComponent<AStarSearch>(); //Get A* script from ground plane.
-        m_randomPoint = new GameObject("RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
+        m_randomPoint = new GameObject(name + "_RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
         m_randomPoint.transform.parent = randomPointStorage.transform;
 
-        requiredSpace = GetComponent<Collider>().bounds.max;
+        requiredSpace = GetComponent<Collider>();
 
         //Set random position range.
-        Vector3 groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
-        float randX = groundWorldScale.x - requiredSpace.x; //Subtract object scale from the edge to leave room to turn.
-        float randZ = groundWorldScale.z - requiredSpace.y;
-        randomPosRange = new Vector2(randX, randZ);
+        groundWorldScale = (groundPlane.transform.localScale / 2.0f) * 10.0f; //Possible positions are from the centre add the ground's half extents, so half the scale.
+        m_currentSpeed = m_walkSpeed;
     }
 
-    public void SetMoveSpeed(float newSpeed)
+    public void SetRunning(bool isRunning)
     {
-        m_moveSpeed = newSpeed;
-    }
-
-    public void SetRotationSpeed(float newSpeed)
-    {
-        m_rotationSpeed = newSpeed;
+        if (isRunning) m_currentSpeed = m_runSpeed;
+        else m_currentSpeed = m_walkSpeed;
     }
 
     /** \fn FindPathTo
@@ -66,7 +65,7 @@ public class Pathfinding : MonoBehaviour
             ////Where to temporarily store the new A* search.
             AStarSearch tempAStar = m_aStarSearch;
             //Request a path between this object (the dog) and the input object parameter
-            path = tempAStar.RequestPath(gameObject, point);
+            path = tempAStar.RequestPath(transform.position, point.transform.position);
         }
 
         //If path is not null and more than 0.
@@ -97,11 +96,12 @@ public class Pathfinding : MonoBehaviour
         //Find path if the parameter point is set to an existing GameObject.
         if (point != null)
         {
-            if (Vector3.Distance(transform.position, point.transform.position) <= requiredSpace.y)
+            if (requiredSpace.bounds.Contains(point.transform.position))
             {
                 DogLookAt(point.transform.position, true);
                 m_randomNodeFound = false; //Random node needs generating again if applicable.
                 m_foundPath.Clear();
+                m_RB.velocity = Vector3.zero;
                 return true;
             }
             else if (m_foundPath.Count == 0)  //If there are no more positions left in the path or no path was found...
@@ -110,7 +110,7 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }
-            else if (Vector3.Distance(transform.position, m_foundPath[0]) >= requiredSpace.y) //If the first position in the path list is further than the specified "found" distance, continue moving towards that node.
+            else if (!(requiredSpace.bounds.Contains(m_foundPath[0]))) 
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
@@ -125,6 +125,11 @@ public class Pathfinding : MonoBehaviour
 
         Debug.Log("Trying to find path to non-existant GameObject: " + point.name);
         return false;
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.layer == m_aStarSearch.obstacleLayerMask) {   m_foundPath.Clear();  };
     }
 
     /** \fn FollowPathToRandomPoint
@@ -146,20 +151,23 @@ public class Pathfinding : MonoBehaviour
     /** \fn GenerateRandomPointInWorld
      *  \brief Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.
      */
-    private IEnumerator GenerateRandomPointInWorld()
+    private IEnumerator GenerateRandomPointInWorld(float atDistance = 0)
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
-        ASNode randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-randomPosRange.x, randomPosRange.x), Random.Range(-randomPosRange.y, randomPosRange.y))); //Locate a random node on the grid.
+        ASNode randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-groundWorldScale.x, groundWorldScale.x), Random.Range(-groundWorldScale.z, groundWorldScale.z))); //Locate a random node on the grid.
 
         //If the located node isn't traversable find a new one.
         while (!randomNode.m_traversable)
         {
-            randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-randomPosRange.x, randomPosRange.x), Random.Range(-randomPosRange.y, randomPosRange.y)));
+            randomNode = tempAStar.NodePositionInGrid(new Vector2(Random.Range(-groundWorldScale.x, groundWorldScale.x), Random.Range(-groundWorldScale.z, groundWorldScale.z)));
             yield return new WaitForEndOfFrame();
         }
 
-        m_randomNodeFound = true; //A random traversable node has been found.
-        m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
+        if (randomNode.m_traversable)
+        {
+            m_randomNodeFound = true; //A random traversable node has been found.
+            m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
+        }
     }
 
     public Vector3 GetRandomPointInWorld()
@@ -179,7 +187,7 @@ public class Pathfinding : MonoBehaviour
     */
     public void MoveDog()
     {
-        transform.position += transform.forward * m_moveSpeed * Time.deltaTime;
+        m_RB.velocity = (transform.forward * m_currentSpeed);
     }
 
     /** \fn DogLookAt
@@ -196,13 +204,8 @@ public class Pathfinding : MonoBehaviour
         targetPosition.z = 0.0f;
 
         //Rotate dog towards target position.
-        if (!instant) transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_rotationSpeed);
+        if (!instant) transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_currentSpeed);
         else transform.rotation = targetPosition;
-    }
-
-    public void SetMovementSpeed(float speed)
-    {
-        m_moveSpeed = speed;
     }
 
     /** \fn DogLookAt
