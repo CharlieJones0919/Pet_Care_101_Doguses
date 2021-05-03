@@ -23,7 +23,6 @@ public class Idle : State
     public override Type StateExit()
     {
         Debug.Log(doggo.name + ": Exiting Idle State");
-        doggo.ClearCurrentTarget();
         return null;
     }
 
@@ -34,7 +33,7 @@ public class Idle : State
         //    return typeof(Hungry);
         //}
         //else 
-        if (!doggo.Rested() && doggo.FindPathToItem(ItemType.BED))
+        if (doggo.Exhausted() && doggo.FindItemType(ItemType.BED))
         {
             return typeof(Tired);
         }

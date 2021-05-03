@@ -8,10 +8,7 @@ public class DogController : MonoBehaviour
     public GameTime localTime;
     public TipPopUp tipPopUp;
 
-    public List<Vector3> permanentItemPositions = new List<Vector3>();
-    public Dictionary<Vector3, bool> tempItemPositions = new Dictionary<Vector3, bool>();
-
-    // private List<GameObject> objectsForDeletion = new List<GameObject>();
+   // private List<GameObject> objectsForDeletion = new List<GameObject>();
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
 

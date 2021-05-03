@@ -72,10 +72,10 @@ public class AStarSearch : MonoBehaviour
         }
     }
 
-    //public bool IsPositionTraversable(Vector3 worldPos)
-    //{
-    //    return !(Physics.CheckBox(worldPos, new Vector3(nodeSize, nodeSize, nodeSize) * 0.5f, Quaternion.identity, obstacleLayerMask));
-    //}
+    public bool IsPositionTraversable(Vector3 worldPos)
+    {
+        return !(Physics.CheckBox(worldPos, new Vector3(nodeSize, nodeSize, nodeSize) * 0.5f, Quaternion.identity, obstacleLayerMask));
+    }
 
     /** \fn RequestPath
     *  \brief Returns an A* found path between 2 input GameObjects.
@@ -140,8 +140,6 @@ public class AStarSearch : MonoBehaviour
             // If the current node is the goal node, a path has been found and the loop can end.
             if (currentNode == goalNode)
             {
-                UnityEngine.Debug.Log("See here");
-
                 RetracePath(rootNode, goalNode); // Retrace the path.
                 pathFound = true;   // Path is now found.
                 searching = false;  // No longer searching.

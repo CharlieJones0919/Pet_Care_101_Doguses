@@ -52,7 +52,10 @@ public class Tired : State
                         doggo.m_animationCTRL.SetTrigger("GoingToSleep");
                     }
                 }
-                else { doggo.FindPathToItem(ItemType.BED); }
+                else
+                {
+                    doggo.FindItemType(ItemType.BED);
+                }
             }
             else { doggo.UseItem(); }
         }

@@ -320,19 +320,16 @@ public class Dog : MonoBehaviour
         m_currentObjectTarget = itemInstance;
     }
 
-    public bool FindPathToItem(ItemType type)
+    public bool FindItemType(ItemType type)
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            if (m_currentItemTarget.GetItemType() == type)
-            {
-                if (navigation.FindPathTo(m_currentObjectTarget)) { return true; }
-            }
+            if (m_currentItemTarget.GetItemType() == type) { return true; }
         }
 
         if (controller.GetClosestActiveItemFor(type, this))
         {
-             if (navigation.FindPathTo(m_currentObjectTarget)) { return true; }
+            if (navigation.FindPathTo(m_currentObjectTarget)) { return true; }
         }
         return false;
     }
@@ -341,29 +338,14 @@ public class Dog : MonoBehaviour
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            if (FindPathToItem(m_currentItemTarget.GetItemType()))
+            if (navigation.AttemptToReach(m_currentObjectTarget))
             {
-                if (navigation.AttemptToReach(m_currentObjectTarget))
-                {
                     m_timeDeltaStartItemUse = 0;
                     UseItem();
                     return true;
-                }
             }
         }
         return false;
-    }
-
-    public void Wander()
-    {
-        navigation.FollowPathToRandomPoint();
-    }
-
-    public void ClearCurrentTarget()
-    {
-        m_currentItemTarget = null;
-        m_currentObjectTarget = defaultNULL;
-        navigation.ClearPath();
     }
 
     public void UseItem()
@@ -389,6 +371,11 @@ public class Dog : MonoBehaviour
             else { EndItemUse(); }
         }
         else { Debug.LogWarning("No item to use."); }
+    }
+
+    public void Wander()
+    {
+        navigation.FollowPathToRandomPoint();
     }
 
     public IEnumerator Pause(float waitTime = 0.0f)
