@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.84313726, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.84313726, b: 1, a: 0.64705884}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -206,7 +206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   worldFloor: {fileID: 0}
-  perminantItemPositions: []
+  permanantItemPositions: []
+  traversableFloorOffset: 0
   itemPrefabBaseDir: Prefabs/Items
   itemPrefabs: []
   currentSectionPage: 0
