@@ -41,7 +41,7 @@ public class Tired : State
         //{
         //    return typeof(Pause);
         //}
-        if (!doggo.Rejuvinated())
+        if (!doggo.Rested())
         {
             if (!doggo.m_usingItem)
             {
