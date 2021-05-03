@@ -31,8 +31,8 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     [SerializeField] private string m_description;
 
     [SerializeField] private bool m_singleUse;
-    [SerializeField] private Vector3 m_relUsePos;
-    [SerializeField] private Vector3 m_relUseRot;
+    [SerializeField] private Vector2 m_relUsePos;
+    [SerializeField] private Vector2 m_relUseRot;
 
     private class ItemInstance
     {
@@ -79,7 +79,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public void SetUser(GameObject user) { m_user = user; }
         public bool UserIs(GameObject thisUser) { return (m_user == thisUser); }
         public GameObject GetUser() { return m_user; }
-        public bool Usable() { return ((m_user == m_nullUser) && m_instance.activeSelf); }
+        public bool UsableFor(GameObject user) { return (((m_user == m_nullUser) || (m_user == user)) && m_instance.activeSelf); }
     }
 
     public void InstantiatePool(uint numInitialInstances = 0)
@@ -143,7 +143,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.Usable() || instance.UserIs(attemptingUser.gameObject))
+            if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
             {
                 attemptingUser.SetCurrentTargetItem(this, instance.GetObject());
                 return true;
@@ -163,7 +163,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.Usable() || instance.UserIs(attemptingUser.gameObject))
+            if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
             {
                 float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
                 if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
@@ -187,7 +187,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     {
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.Usable() && instance.IsObject(requestedInstance))
+            if (instance.UsableFor(attemptingUser) && instance.IsObject(requestedInstance))
             {
                 instance.SetUser(attemptingUser);
                 m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
@@ -201,7 +201,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     {
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.Usable() && instance.IsObject(requestedInstance))
+            if (instance.UsableFor(attemptingUser) && instance.IsObject(requestedInstance))
             {
                 return true;
             }
@@ -243,8 +243,8 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     public string GetDescription() { return m_description; }
 
     public bool IsSingleUse() { return m_singleUse; }
-    public Vector3 GetUsePosition() { return m_relUsePos; }
-    public Vector3 GetUseRotation() { return m_relUseRot; }
+    public Vector2 GetUsePosOffset() { return m_relUsePos; }
+    public Vector2 GetUseRotation() { return m_relUseRot; }
 
     public List<DogCareValue> GetCareFufillmentList()
     {

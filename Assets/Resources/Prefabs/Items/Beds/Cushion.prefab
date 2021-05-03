@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5674843045412730424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultNumToInstantiate: 1
-  useTime: 100
+  useTime: 1000
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
   - 0.03
@@ -63,5 +63,5 @@ MonoBehaviour:
   m_price: 10
   m_description: Nest beds are...
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0, z: 0}
-  m_relUseRot: {x: 0, y: 0, z: 0}
+  m_relUsePos: {x: 0, y: 0}
+  m_relUseRot: {x: 0, y: 0}

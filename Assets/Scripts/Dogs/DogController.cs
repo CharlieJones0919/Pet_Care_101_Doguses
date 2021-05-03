@@ -35,7 +35,7 @@ public class DogController : MonoBehaviour
 public class CareProperty
 {
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
-    private string m_currentState;
+    private List<string> m_currentStates = new List<string>();
     private float m_value = 50;
     private float m_decrement;
 
@@ -48,19 +48,21 @@ public class CareProperty
 
     public float GetValue() { return m_value; }
     public float GetUsualDecrement() { return m_decrement; }
-    public string GetState() { return m_currentState; }
-    public bool IsState(string state) { return (m_currentState == state); }
+    public bool IsState(string state)
+    {
+        if (m_states.ContainsKey(state)) { return m_currentStates.Contains(state); }
+        else { Debug.Log("No care property has a state defined as " + state); return false; }
+    }
 
     public void UpdateValue(float increment)
     {
         m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
-
+        m_currentStates.Clear();
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
             if ((m_value > state.Value.x) && (m_value < state.Value.y))
             {
-                m_currentState = state.Key;
-                return;
+                m_currentStates.Add(state.Key);           
             }
         }
     }
@@ -80,7 +82,11 @@ public class PersonalityProperty
 
     public float GetValue() { return m_value; }
     public string GetState() { return m_currentState; }
-    public bool IsState(string state) { return (m_currentState == state); }
+    public bool IsState(string state)
+    {
+        if (m_states.ContainsKey(state)) { return (m_currentState == state); }
+        else { Debug.Log("No personality property has a state defined as " + state); return false; }
+    }
 
     public void UpdateValue(float increment)
     {

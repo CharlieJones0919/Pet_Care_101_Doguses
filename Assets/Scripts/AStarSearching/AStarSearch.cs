@@ -35,7 +35,7 @@ public class AStarSearch : MonoBehaviour
     private void Start()
     {
         // Set grid size to the ground plane's world scale. (This script should be attached to the ground plane).
-        gridSize = new Vector3(((transform.localScale.x * 10.0f) - 5.0f), ((transform.localScale.z * 10.0f) - 5.0f));
+        gridSize = new Vector3((transform.localScale.x * 10.0f), (transform.localScale.z * 10.0f));
         // Calculate and set how many nodes high and wide the ground plane (and subsequent grid map) should be divided into.
         gridNodes = new Vector2(Mathf.RoundToInt(gridSize.x / nodeSize), Mathf.RoundToInt(gridSize.y / nodeSize));
 
@@ -64,7 +64,7 @@ public class AStarSearch : MonoBehaviour
                 Vector3 nodePos = gridBottomLeft + Vector3.right * (i * nodeSize + (nodeSize / 2)) + Vector3.forward * (j * nodeSize + (nodeSize / 2));
 
                 // Set whether or not the node is traverable: if it doesn't contain any objects in the obstacle layer.
-                bool traversable = !(Physics.CheckSphere(nodePos, nodeSize, obstacleLayerMask));
+                bool traversable = !(Physics.CheckBox(nodePos, new Vector3(nodeSize, nodeSize, nodeSize) * 0.5f, Quaternion.identity, obstacleLayerMask));
 
                 // Add the node to grid map with its newly found data AS a node.
                 grid[i, j] = new ASNode(nodePos, traversable, i, j);

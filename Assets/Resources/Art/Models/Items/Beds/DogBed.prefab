@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6227998994465272557}
   - component: {fileID: 5112659702950955218}
-  m_Layer: 0
+  - component: {fileID: 3457820187989339500}
+  - component: {fileID: 363037800946103035}
+  m_Layer: 8
   m_Name: NonTraversableSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2294859279711048768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.061}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6292049011481810783}
@@ -42,8 +44,34 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 0.8}
-  m_Center: {x: 0, y: 0, z: -0.05}
+  m_Size: {x: 0.25, y: 5, z: 1}
+  m_Center: {x: -0.5, y: 0, z: 0}
+--- !u!65 &3457820187989339500
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2294859279711048768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 5, z: 1}
+  m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!65 &363037800946103035
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2294859279711048768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.25, y: 5, z: 0.25}
+  m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!1 &6292049011481810776
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +99,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6292049011481810776}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 20, y: 0.125, z: 9.6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 0.25, z: 4}
   m_Children:
   - {fileID: 6227998994465272557}
@@ -136,5 +164,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 5, z: 0.5}
-  m_Center: {x: 0, y: 2, z: 0.6}
+  m_Size: {x: 0.7, y: 5, z: 0.8}
+  m_Center: {x: 0, y: 0, z: 0.075}

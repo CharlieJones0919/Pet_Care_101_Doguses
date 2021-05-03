@@ -24,10 +24,9 @@ public class Hungry : State
     {
         Debug.Log(doggo.name + ": Exiting Hungry State");
 
-        if (doggo.UsingItemFor(DogCareValue.Hunger))
+        if (doggo.m_usingItem)
         {
             doggo.EndItemUse();
-            doggo.StopCoroutine(doggo.UseItem());
         } 
 
         return null;
@@ -35,18 +34,19 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        if ((doggo.Hungry() || !doggo.Fed()) && doggo.ItemOfTypeFound(ItemType.FOOD))
-        {
-            if (!doggo.UsingItemFor(DogCareValue.Hunger))
-            {
-                if (doggo.LocateItemFor(ItemType.FOOD))
-                {
-                    doggo.StartCoroutine(doggo.UseItem());
-                    return null;
-                }
-            }
-        }
-        else if (doggo.Fed() && doggo.Tired())
+        //if ((doggo.Hungry() || !doggo.Fed() ) && doggo.ItemOfTypeFound(ItemType.FOOD))
+        //{
+        //    if (!doggo.TargetItemIsFor(DogCareValue.Hunger))
+        //    {
+        //        if (doggo.LocateItemType(ItemType.FOOD))
+        //        {
+        //            doggo.StartCoroutine(doggo.UseItem());
+        //            return null;
+        //        }
+        //    }
+        //    else { doggo.StartCoroutine(doggo.UseItem()); }
+        //}
+         if (doggo.Tired())
         {
             return typeof(Tired);
         }
@@ -54,7 +54,5 @@ public class Hungry : State
         {
             return typeof(Idle);
         }
-
-        return null;
     }
 }

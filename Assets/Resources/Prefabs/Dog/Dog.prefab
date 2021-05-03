@@ -277,15 +277,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1c208e92dc4b34e853976615913202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerScript: {fileID: 0}
-  UIOutputScript: {fileID: 0}
-  navigationScript: {fileID: 9089536525100727226}
+  controller: {fileID: 0}
+  UIOutput: {fileID: 0}
+  navigation: {fileID: 9089536525100727226}
   defaultNULL: {fileID: 0}
   m_name: 
   m_breed: 0
   m_age: 0
-  m_collider: {fileID: 9089536525100727229}
   m_animationCTRL: {fileID: 5837288172753378154}
+  m_collider: {fileID: 9089536525100727229}
   m_RB: {fileID: 7821002846244337834}
   m_currentObjectTarget: {fileID: 0}
   m_usingItem: 0

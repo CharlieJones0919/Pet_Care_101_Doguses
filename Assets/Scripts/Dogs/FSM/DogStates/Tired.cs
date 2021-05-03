@@ -24,11 +24,10 @@ public class Tired : State
     {
         Debug.Log(doggo.name + ": Exiting Tired State");
 
-        if (doggo.UsingItemFor(DogCareValue.Rest))
+        if (doggo.m_usingItem)
         {
             doggo.m_animationCTRL.SetTrigger("WakingUp");
             doggo.EndItemUse();
-            doggo.StopCoroutine(doggo.UseItem());
         }
 
         return null;
@@ -36,22 +35,31 @@ public class Tired : State
 
     public override Type StateUpdate()
     {
-        if (((!doggo.Tired() && (doggo.Starving() || doggo.Hungry()) && doggo.ItemOfTypeFound(ItemType.FOOD))) || doggo.Rejuvinated())
+        //if (((!doggo.Tired() && doggo.Hungry()) && doggo.ItemOfTypeFound(ItemType.FOOD))
+        //    || ((!doggo.Exhausted() && doggo.Starving()) && doggo.ItemOfTypeFound(ItemType.FOOD))
+        //    || doggo.Rejuvinated())
+        //{
+        //    return typeof(Pause);
+        //}
+        if (!doggo.Rejuvinated())
         {
-            return typeof(Pause);
-        }
-        else if ((doggo.Tired() || !doggo.Rested()) && doggo.ItemOfTypeFound(ItemType.BED))
-        {
-            if (!doggo.UsingItemFor(DogCareValue.Rest))
+            if (!doggo.m_usingItem)
             {
-                if (doggo.LocateItemFor(ItemType.BED))
+                if (doggo.TargetItemIsFor(DogCareValue.Rest))
                 {
-                    doggo.StartCoroutine(doggo.UseItem());
-                    doggo.m_animationCTRL.SetTrigger("GoingToSleep");
-                    return null;
+                    if (doggo.ReachedTarget())
+                    {
+                        doggo.m_animationCTRL.SetTrigger("GoingToSleep");
+                    }
+                }
+                else
+                {
+                    doggo.FindItemType(ItemType.BED);
                 }
             }
+            else { doggo.UseItem(); }
         }
+        else { return typeof(Pause); }
 
         return null;
     }

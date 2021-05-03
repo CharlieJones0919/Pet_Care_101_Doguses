@@ -9,18 +9,20 @@ using UnityEngine;
 */
 public class Dog : MonoBehaviour
 {
-    public DogController controllerScript;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
-    public DataDisplay UIOutputScript;     //!< Script from the infoPanelObject.
-    public Pathfinding navigationScript;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
-    public GameObject defaultNULL;
+    [SerializeField] private DogController controller;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
+    [SerializeField] private DataDisplay UIOutput;     //!< Script from the infoPanelObject.
+    [SerializeField] private Pathfinding navigation;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
+    [SerializeField] private GameObject defaultNULL;
+
+    public void SetGlobalScripts(DogController ctrl, DataDisplay UI, AStarSearch aStar, GameObject randStore, GameObject NULL) { controller = ctrl; UIOutput = UI; navigation.m_aStarSearch = aStar; navigation.m_randomPointStorage = randStore; defaultNULL = NULL;  }
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
     public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
     public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
 
-    public BoxCollider m_collider;
     public Animator m_animationCTRL;
+    public BoxCollider m_collider;
     [SerializeField] private Rigidbody m_RB;
 
     private int lastDayUpdated = 0;
@@ -34,6 +36,7 @@ public class Dog : MonoBehaviour
 
     private Item m_currentItemTarget;
     [SerializeField] private GameObject m_currentObjectTarget;  //!< An item on the map the dog is currently using or travelling towards.   
+    [SerializeField] private float m_timeDeltaStartItemUse = 0;
 
     public bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     public bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
@@ -60,15 +63,17 @@ public class Dog : MonoBehaviour
         //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
 
-        newStates.Add(typeof(Pause), new Pause(this));
+
+
         newStates.Add(typeof(Idle), new Idle(this));    //When finished this will be the default starting state. (Wandering until current care values need attending to).
+        newStates.Add(typeof(Pause), new Pause(this));
         newStates.Add(typeof(Hungry), new Hungry(this));
         newStates.Add(typeof(Tired), new Tired(this));
 
         //newStates.Add(typeof(Distressed), new Distressed(this));
         //newStates.Add(typeof(Happy), new Happy(this));
 
-        //newStates.Add(typeof(Angery), new Angery(this));
+        //newStates.Add(typeof(Angry), new Angry(this));
         //newStates.Add(typeof(Scared), new Scared(this));
         //newStates.Add(typeof(Excited), new Excited(this));
 
@@ -93,9 +98,9 @@ public class Dog : MonoBehaviour
         Vector3 spawnPoint = Vector3.zero;
         while (spawnPoint == Vector3.zero)
         {
-            spawnPoint = navigationScript.GetRandomPointInWorld();
+            spawnPoint = navigation.GetRandomPointInWorld();
         }
-        float ground2FootDiff = navigationScript.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        float ground2FootDiff = navigation.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
         spawnPoint.y = transform.position.y + ground2FootDiff;
 
         transform.position = spawnPoint;
@@ -138,7 +143,7 @@ public class Dog : MonoBehaviour
     {
         UpdateCareValues();
 
-        int currentDay = controllerScript.localTime.GetGameTimeDays();
+        int currentDay = controller.localTime.GetGameTimeDays();
         if (lastDayUpdated != currentDay)
         {
             for (int day = lastDayUpdated; lastDayUpdated < currentDay; lastDayUpdated--)
@@ -149,14 +154,14 @@ public class Dog : MonoBehaviour
 
         if (InFocus())
         {
-            UIOutputScript.gameObject.SetActive(false);
+            UIOutput.gameObject.SetActive(false);
 
-            if (UIOutputScript.GetFocusDog() != gameObject)
+            if (UIOutput.GetFocusDog() != gameObject)
             {
-                UIOutputScript.SetFocusDog(this);
+                UIOutput.SetFocusDog(this);
             }
 
-            UIOutputScript.gameObject.SetActive(true);
+            UIOutput.gameObject.SetActive(true);
         }
 
         m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
@@ -222,16 +227,16 @@ public class Dog : MonoBehaviour
     }
 #endif
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.layer == 8) { StartCoroutine(Pause(5)); };
-    }
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    if (collision.gameObject.layer == 8) { StartCoroutine(Pause(5)); };
+    //}
 
     private void UpdateCareValues()
     {
         foreach (KeyValuePair<DogCareValue, CareProperty> prop in m_careValues)
         {
-            if (UsingItemFor(prop.Key))
+            if (m_usingItem && TargetItemIsFor(prop.Key))
             {
                 prop.Value.UpdateValue(m_currentItemTarget.GetCareFufillmentAmount(prop.Key));
             }
@@ -243,10 +248,9 @@ public class Dog : MonoBehaviour
     {
         foreach (KeyValuePair<DogPersonalityValue, PersonalityProperty> prop in m_personalityValues)
         {
-            if (UsingItemFor(prop.Key))
+            if (m_usingItem && TargetItemIsFor(prop.Key))
             {
                 prop.Value.UpdateValue(m_currentItemTarget.GetPersonalityFufillmentAmount(prop.Key));
-                break;
             }
         }
     }
@@ -285,23 +289,30 @@ public class Dog : MonoBehaviour
         return m_personalityValues[forProperty].GetState();
     }
 
-    public bool UsingItemFor(DogCareValue value)
+    public bool HasTarget()
     {
-        if (m_usingItem)
+        return (m_currentObjectTarget != defaultNULL);
+    }
+
+    public bool TargetItemIsFor(DogCareValue value)
+    {
+        if (m_currentObjectTarget != defaultNULL)
         {
             return m_currentItemTarget.FufillsCareValue(value);
         }
         return false;
     }
 
-    public bool UsingItemFor(DogPersonalityValue value)
+    public bool TargetItemIsFor(DogPersonalityValue value)
     {
-        if (m_usingItem)
+        if (m_currentObjectTarget != defaultNULL)
         {
             return m_currentItemTarget.FufillsPersonalityValue(value);
         }
         return false;
     }
+
+
 
     public void SetCurrentTargetItem(Item newItem, GameObject itemInstance)
     {
@@ -309,63 +320,62 @@ public class Dog : MonoBehaviour
         m_currentObjectTarget = itemInstance;
     }
 
-    public bool ItemOfTypeFound(ItemType type)
+    public bool FindItemType(ItemType type)
     {
         if (m_currentObjectTarget != defaultNULL)
         {
             if (m_currentItemTarget.GetItemType() == type) { return true; }
         }
 
-        if (controllerScript.GetClosestActiveItemFor(type, this))
+        if (controller.GetClosestActiveItemFor(type, this))
         {
-            if (m_currentObjectTarget != defaultNULL)
-            {
-                navigationScript.FindPathTo(m_currentObjectTarget);
-                return true;
-            }
+            if (navigation.FindPathTo(m_currentObjectTarget)) { return true; }
         }
         return false;
     }
 
-    public bool LocateItemFor(ItemType type)
-    {
-        if (m_currentObjectTarget == defaultNULL)
-        {
-            if (!ItemOfTypeFound(type)) { return false; }
-        }
-
-        if (navigationScript.AttemptToReach(m_currentObjectTarget) == true)
-        {
-            if (m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget) == true)
-            {
-                return true;
-            }
-            else { m_currentObjectTarget = defaultNULL; }
-        } 
-        return false;
-    }
-
-    public IEnumerator UseItem()
+    public bool ReachedTarget()
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            Vector3 usePosition = m_currentItemTarget.GetUsePosition();
-            usePosition.y = transform.position.y;
-            transform.position = usePosition;
+            if (navigation.AttemptToReach(m_currentObjectTarget))
+            {
+                    m_timeDeltaStartItemUse = 0;
+                    UseItem();
+                    return true;
+            }
+        }
+        return false;
+    }
 
-            m_usingItem = true;
-            yield return new WaitForSeconds(m_currentItemTarget.GetUseTime());
-            EndItemUse();
-        }
-        else
+    public void UseItem()
+    {
+        if (m_currentObjectTarget != defaultNULL)
         {
-            Debug.LogWarning("No item to use.");
+            if (!m_usingItem)
+            {
+                m_usingItem = true;
+
+                Vector3 usePosition = m_currentItemTarget.transform.localPosition;
+                Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
+                usePosition.x += usePosOffset.x;
+                usePosition.y = transform.position.y;
+                usePosition.z += usePosOffset.y;
+                transform.Translate(usePosition, Space.World);
+            }
+
+            if (m_timeDeltaStartItemUse < m_currentItemTarget.GetUseTime())
+            {
+                m_timeDeltaStartItemUse += Time.deltaTime;
+            }
+            else { EndItemUse(); }
         }
+        else { Debug.LogWarning("No item to use."); }
     }
 
     public void Wander()
     {
-        navigationScript.FollowPathToRandomPoint();
+        navigation.FollowPathToRandomPoint();
     }
 
     public IEnumerator Pause(float waitTime = 0.0f)
@@ -373,27 +383,18 @@ public class Dog : MonoBehaviour
         m_waiting = true;
         m_RB.velocity = Vector3.zero;
         yield return new WaitForSeconds(waitTime);
-        StopWaiting();
+        m_waiting = false;
     }
 
     public void EndItemUse()
     {
-        if (m_currentObjectTarget != defaultNULL)
-        {
-            m_usingItem = false;
-            m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
-            m_currentItemTarget = null;
-            m_currentObjectTarget = defaultNULL;
-        }
-        else
-        {
-            Debug.LogWarning("No item to end use of.");
-        }
-    }
+        controller.tipPopUp.DisplayTipMessage("ITEM USE ENDED.");
 
-    public void StopWaiting()
-    {
-        m_waiting = false;
+        m_usingItem = false;
+        m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
+        m_timeDeltaStartItemUse = 0;
+        m_currentItemTarget = null;
+        m_currentObjectTarget = defaultNULL;
     }
 
     public void Spooked() { }

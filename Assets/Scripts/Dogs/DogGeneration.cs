@@ -177,7 +177,7 @@ public class DogGeneration : MonoBehaviour
 
     [SerializeField] private DogController dogController;
     [SerializeField] private DataDisplay dogUIOutputScript;
-    [SerializeField] private GameObject groundObject;
+    [SerializeField] private AStarSearch groundAStar;
     [SerializeField] private GameObject randomPointStorage;
     [SerializeField] private GameObject defaultNullObject;
 
@@ -264,22 +264,22 @@ public class DogGeneration : MonoBehaviour
     {
         //////////////////// Care Value States ////////////////////
         string[] hungerState = { "Starving", "Hungry", "Fed", "Overfed" };
-        Vector2[] hungerStateRanges = { new Vector2(0, 15), new Vector2(15, 45), new Vector2(45, 90), new Vector2(90, 100) };
+        Vector2[] hungerStateRanges = { new Vector2(0, 15), new Vector2(0, 45), new Vector2(45, 100), new Vector2(90, 100) };
 
         string[] attentionState = { "Lonely", "Loved", "Overcrowded" };
-        Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 95), new Vector2(95, 100) };
+        Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 90), new Vector2(90, 100) };
 
         string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated"};
-        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(20, 50), new Vector2(50, 90), new Vector2(90, 100) };
+        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100), new Vector2(100, 100) };
 
         string[] hygieneState = { "Filthy", "Dirty", "Clean" };
-        Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(20, 60), new Vector2(60, 100) };
+        Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(0, 75), new Vector2(75, 100) };
 
         string[] healthState = { "Dying", "Sick", "Healthy" };
-        Vector2[] healthStateRanges = { new Vector2(0, 10), new Vector2(10, 35), new Vector2(35, 100) };
+        Vector2[] healthStateRanges = { new Vector2(0, 10), new Vector2(0, 30), new Vector2(30, 100) };
 
         string[] happinessState = { "Distressed", "Upset", "Happy" };
-        Vector2[] happinessStateRanges = { new Vector2(0, 20), new Vector2(20, 40), new Vector2(40, 100) };
+        Vector2[] happinessStateRanges = { new Vector2(0, 20), new Vector2(0, 40), new Vector2(40, 100) };
 
         AddStatesToProperty(DogCareValue.Hunger, hungerState, hungerStateRanges);
         AddStatesToProperty(DogCareValue.Attention, attentionState, attentionStateRanges);
@@ -334,7 +334,7 @@ public class DogGeneration : MonoBehaviour
     public void GenerateAllDogsLineUp()
     {
         float dogSpace = 3;
-        Vector3 posOffset = groundObject.transform.position;
+        Vector3 posOffset = groundAStar.transform.position;
         posOffset.y = dogSpace;
 
         foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
@@ -357,11 +357,7 @@ public class DogGeneration : MonoBehaviour
         newDog.name = "Unnamed_" + breed;
 
         Dog dogScript = newDog.GetComponent<Dog>();
-        dogScript.controllerScript = dogController;
-        dogScript.UIOutputScript = dogUIOutputScript;
-        dogScript.navigationScript.m_randomPointStorage = randomPointStorage;
-        dogScript.defaultNULL = defaultNullObject;
-
+        dogScript.SetGlobalScripts(dogController, dogUIOutputScript, groundAStar, randomPointStorage, defaultNullObject);
         dogScript.m_breed = breed;
         dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));
 
@@ -372,9 +368,8 @@ public class DogGeneration : MonoBehaviour
         Bounds bounds = renderers[0].bounds;
         bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
         for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
-        bounds.size += new Vector3(0.0f, -0.15f, 0.25f);
-        bounds.center += new Vector3(0.0f, -0.25f, 0.25f);
-        bounds.size += new Vector3(0.25f, 0,0);
+        bounds.size += new Vector3(0.5f, 0.25f, 0.5f);
+        bounds.center += new Vector3(0.0f, -0.25f, 0.5f);
 
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;
