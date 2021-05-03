@@ -1,7 +1,6 @@
 ﻿/** \file Pathfinding.cs */
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 /** \class Pathfinding
@@ -31,7 +30,7 @@ public class Pathfinding : MonoBehaviour
     {
         m_randomPoint = new GameObject(name + "_RandomPoint"); //Instantiate a new empty game object in the scene for the random point.
         m_randomPoint.transform.parent = m_randomPointStorage.transform;
-        m_currentSpeed = m_walkSpeed;
+        m_currentSpeed = m_runSpeed;
     }
 
     public void SetRunning(bool isRunning)
@@ -98,7 +97,7 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }
-            else if (!m_collider.bounds.Contains(m_foundPath[0]) && m_aStarSearch.IsPositionTraversable(m_foundPath[0]))
+            else if (!m_collider.bounds.Contains(m_foundPath[0]))
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
@@ -121,6 +120,8 @@ public class Pathfinding : MonoBehaviour
         else { return m_collider.bounds.Contains(target.transform.position + target.transform.localScale); }
     }
 
+    public void ClearPath() { m_foundPath.Clear(); m_randomNodeFound = false; m_RB.velocity = Vector3.zero; }
+
     private void OnTriggerEnter(Collider collision)
     {
      //   if (collision.gameObject.layer == m_aStarSearch.obstacleLayerMask) {   m_foundPath.Clear();  };
@@ -133,32 +134,26 @@ public class Pathfinding : MonoBehaviour
     {
         if (m_randomNodeFound)  //If a random point has already been found, follow the path to it.
         {
-            StopCoroutine(GenerateRandomPointInWorld());
             AttemptToReach(m_randomPoint);
         }
         else  //If a random node hasn't been found yet, generate a new random position and set the randomPoint to it.
         {
-            StartCoroutine(GenerateRandomPointInWorld());
+            GenerateRandomPointInWorld();
         }
     }
 
     /** \fn GenerateRandomPointInWorld
      *  \brief Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.
      */
-    private IEnumerator GenerateRandomPointInWorld()
+    private void GenerateRandomPointInWorld()
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
         tempAStar.CreateGrid();
         ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y))); //Locate a random node on the grid.
-    
+
         //If the located node isn't traversable find a new one.
-        if (!randomNode.m_traversable)
-        {
-            //randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y)));      
-             yield return new WaitForEndOfFrame();
-        }
-        else
-        {
+        if (randomNode.m_traversable)
+        {  
             m_randomNodeFound = true; //A random traversable node has been found.
             m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
         }
@@ -168,12 +163,13 @@ public class Pathfinding : MonoBehaviour
     {
         if (m_randomNodeFound)  //If a random point has already been found, return it.
         {
-            StopCoroutine(GenerateRandomPointInWorld());
             return m_randomPoint.transform.position;
         }
-
-        StartCoroutine(GenerateRandomPointInWorld());
-        return new Vector3(0, 0, 0);
+        else
+        {
+            GenerateRandomPointInWorld();
+            return new Vector3(0, 0, 0);
+        }
     }
 
     /** \fn MoveDog
@@ -210,8 +206,8 @@ public class Pathfinding : MonoBehaviour
 #if UNITY_EDITOR
         foreach (Vector3 node in m_foundPath)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawCube(node, new Vector3(3.0f * 0.25f, 0.1f, 3.0f * 0.25f));
+            Gizmos.color = Color.black;
+            Gizmos.DrawCube(node, new Vector3(1.5f, 0.1f, 1.5f));
         }
 #endif
     }

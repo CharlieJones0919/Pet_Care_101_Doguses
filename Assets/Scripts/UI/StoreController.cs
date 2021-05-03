@@ -11,7 +11,6 @@ public class StoreController : MonoBehaviour
 {
     [SerializeField] private DogController controller;
     [SerializeField] private AStarSearch worldFloor;
-    [SerializeField] private List<Vector3> permanantItemPositions = new List<Vector3>();
     [SerializeField] private float traversableFloorOffset;
 
     [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
@@ -96,18 +95,20 @@ public class StoreController : MonoBehaviour
         float floorStartZ = (worldFloor.transform.localScale.z / 2.0f) - traversableFloorOffset;
         float floorEndX = (worldFloor.transform.localScale.x / 2.0f) - traversableFloorOffset;
         float floorEndZ = worldFloor.transform.position.z + traversableFloorOffset;
-        int numPossiblePositions = 1;
+        int allowedFloorItems = 1;
 
         float posX = floorStartX;
         float posZ = floorStartZ;
 
-        for (int i = 0; i < numPossiblePositions; i++)
+        for (int i = 0; i < allowedFloorItems; i++)
         {
-            numPossiblePositions++;
+            allowedFloorItems++;
 
             if ((posX <= floorEndX))
             {
-                permanantItemPositions.Add(new Vector3(posX, 0, posZ));
+                controller.permanentItemPositions.Add(new Vector3(posX, 0, posZ));
+                if (posZ > 3) { controller.tempItemPositions.Add(new Vector3(posX, 0, -posZ), false); }
+
                 posX += 1.0f;
             }
             else if (posZ > floorEndZ)
@@ -126,13 +127,27 @@ public class StoreController : MonoBehaviour
     {
         if (!focusItem.IsSingleUse())
         {
-            if (permanantItemPositions.Count > 0)
+            if (controller.permanentItemPositions.Count > 0)
             {
-                focusItem.ActivateAvailableInstanceTo(permanantItemPositions[0]);
-                permanantItemPositions.Remove(permanantItemPositions[0]);
+                focusItem.ActivateAvailableInstanceTo(controller.permanentItemPositions[0]);
+                controller.permanentItemPositions.Remove(controller.permanentItemPositions[0]);
+                return;
             }
-            else { controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore items."); }
+            controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore permanent items.");
         }
+        else
+        {
+            foreach (KeyValuePair<Vector3, bool> position in controller.tempItemPositions)
+            {
+                if (!position.Value)
+                {
+                    focusItem.ActivateAvailableInstanceTo(position.Key);
+                    controller.tempItemPositions[position.Key] = true;
+                    return;
+                }
+            }
+            controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore temporary items.");
+        }     
     }
 
     public void SetFocusItem(ItemSlot focusSlot)

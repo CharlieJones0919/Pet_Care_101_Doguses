@@ -163,7 +163,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
+            if (instance.UsableFor(attemptingUser.gameObject))
             {
                 float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
                 if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
@@ -179,7 +179,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.GetObject());
             return true;
         }
-
         return false;
     }
 
@@ -235,7 +234,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     }
 
     public ItemType GetItemType() { return m_itemType; }
-
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }
     public void SetSprite(Sprite sprite) { m_sprite = sprite; }
