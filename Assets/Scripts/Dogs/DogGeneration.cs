@@ -368,8 +368,8 @@ public class DogGeneration : MonoBehaviour
         Bounds bounds = renderers[0].bounds;
         bounds.center = dogScript.m_body[BodyPart.Waist].m_component.transform.position;
         for (int i = 1, ni = renderers.Length; i < ni; i++) { bounds.Encapsulate(renderers[i].bounds); }
-        bounds.size += new Vector3(0.5f, 0.25f, 0.5f);
-        bounds.center += new Vector3(0.0f, -0.25f, 0.5f);
+        bounds.size += new Vector3(0.5f, 0.25f, 1.0f);
+        bounds.center += new Vector3(0.0f, -0.25f, 1.0f);
 
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;

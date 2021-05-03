@@ -95,15 +95,9 @@ public class Dog : MonoBehaviour
 
     void Start()
     {
-        Vector3 spawnPoint = Vector3.zero;
-        while (spawnPoint == Vector3.zero)
-        {
-            spawnPoint = navigation.GetRandomPointInWorld();
-        }
+        while (!navigation.GenerateRandomPointInWorld(gameObject));
         float ground2FootDiff = navigation.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
-        spawnPoint.y = transform.position.y + ground2FootDiff;
-
-        transform.position = spawnPoint;
+        transform.position += new Vector3(0,ground2FootDiff,0);
         m_currentObjectTarget = defaultNULL;
 
 
@@ -324,12 +318,16 @@ public class Dog : MonoBehaviour
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            if (m_currentItemTarget.GetItemType() == type) { return true; }
-        }
 
-        if (controller.GetClosestActiveItemFor(type, this))
+            if ((m_currentItemTarget.GetItemType() == type) && m_currentItemTarget.IsUsable(gameObject, m_currentObjectTarget))
+            {
+                return true;
+            }
+            else { ClearCurrentTarget(); }
+        }
+        else if (controller.GetClosestActiveItemFor(type, this))
         {
-            if (navigation.FindPathTo(m_currentObjectTarget)) { return true; }
+            return true;
         }
         return false;
     }
@@ -338,12 +336,16 @@ public class Dog : MonoBehaviour
     {
         if (m_currentObjectTarget != defaultNULL)
         {
-            if (navigation.AttemptToReach(m_currentObjectTarget))
+            if (navigation.IsSetToObject(m_currentObjectTarget))
             {
+                if (navigation.AttemptToReachTarget())
+                {
                     m_timeDeltaStartItemUse = 0;
                     UseItem();
                     return true;
+                }
             }
+            else { navigation.SetTarget(m_currentObjectTarget); }
         }
         return false;
     }
@@ -375,7 +377,11 @@ public class Dog : MonoBehaviour
 
     public void Wander()
     {
-        navigation.FollowPathToRandomPoint();
+        if (navigation.IsSetToRandom())
+        {
+            navigation.AttemptToReachTarget();
+        }
+        else { navigation.SetTargetToRandom(); }
     }
 
     public IEnumerator Pause(float waitTime = 0.0f)
@@ -393,8 +399,15 @@ public class Dog : MonoBehaviour
         m_usingItem = false;
         m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
         m_timeDeltaStartItemUse = 0;
+
+        ClearCurrentTarget();
+    }
+
+    public void ClearCurrentTarget()
+    {
         m_currentItemTarget = null;
         m_currentObjectTarget = defaultNULL;
+        navigation.ClearPath();
     }
 
     public void Spooked() { }

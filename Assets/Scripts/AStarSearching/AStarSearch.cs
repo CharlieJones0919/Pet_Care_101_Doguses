@@ -249,8 +249,8 @@ public class AStarSearch : MonoBehaviour
         return Heuristic.GetDistanceEuclidean(nodeA, nodeB); 
     }
 
-    public bool IsTraversableFor(Vector3 point, Vector3 travellerSize)
+    public bool IsTraversable(Vector3 point)
     {
-        return (!(Physics.CheckBox(point, travellerSize, Quaternion.identity, obstacleLayerMask)));
+        return !(Physics.CheckBox(point, new Vector3(nodeSize, nodeSize, nodeSize), Quaternion.identity, obstacleLayerMask));
     }
 }

@@ -41,7 +41,7 @@ public class Tired : State
         //{
         //    return typeof(Pause);
         //}
-        if (!doggo.Rested())
+        if (!doggo.Rested() && doggo.FindItemType(ItemType.BED))
         {
             if (!doggo.m_usingItem)
             {
@@ -51,10 +51,6 @@ public class Tired : State
                     {
                         doggo.m_animationCTRL.SetTrigger("GoingToSleep");
                     }
-                }
-                else
-                {
-                    doggo.FindItemType(ItemType.BED);
                 }
             }
             else { doggo.UseItem(); }
