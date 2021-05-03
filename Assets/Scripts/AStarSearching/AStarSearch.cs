@@ -72,6 +72,11 @@ public class AStarSearch : MonoBehaviour
         }
     }
 
+    public bool IsPositionTraversable(Vector3 worldPos)
+    {
+        return !(Physics.CheckBox(worldPos, new Vector3(nodeSize, nodeSize, nodeSize) * 0.5f, Quaternion.identity, obstacleLayerMask));
+    }
+
     /** \fn RequestPath
     *  \brief Returns an A* found path between 2 input GameObjects.
     *  \param startObject The object to find a path FROM.
