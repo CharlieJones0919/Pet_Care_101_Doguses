@@ -98,7 +98,7 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }
-            else if (!m_collider.bounds.Contains(m_foundPath[0]) && m_aStarSearch.IsPositionTraversable(m_foundPath[0]))
+            else if (!(m_collider.bounds.Contains(m_foundPath[0]))) 
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
@@ -148,16 +148,16 @@ public class Pathfinding : MonoBehaviour
     private IEnumerator GenerateRandomPointInWorld()
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
-        tempAStar.CreateGrid();
         ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y))); //Locate a random node on the grid.
-    
+
         //If the located node isn't traversable find a new one.
-        if (!randomNode.m_traversable)
+        while (!randomNode.m_traversable)
         {
-            //randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y)));      
-             yield return new WaitForEndOfFrame();
+            randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y)));
+            yield return new WaitForEndOfFrame();
         }
-        else
+
+        if (randomNode.m_traversable)
         {
             m_randomNodeFound = true; //A random traversable node has been found.
             m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
