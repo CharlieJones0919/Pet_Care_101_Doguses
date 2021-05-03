@@ -98,7 +98,11 @@ public class Pathfinding : MonoBehaviour
                 FindPathTo(point); //If the dog  isn't within range of the specified GameObject, find a new path to it.    
                 return false;
             }
+<<<<<<< HEAD
             else if (!(m_collider.bounds.Contains(m_foundPath[0]))) 
+=======
+            else if (!m_collider.bounds.Contains(m_foundPath[0]) && m_aStarSearch.IsPositionTraversable(m_foundPath[0]))
+>>>>>>> parent of 041f908 (Broke Pathfinding.)
             {
                 DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
                 MoveDog();   //Move forwards towards the position.
@@ -149,8 +153,9 @@ public class Pathfinding : MonoBehaviour
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
         ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y))); //Locate a random node on the grid.
-
+    
         //If the located node isn't traversable find a new one.
+<<<<<<< HEAD
         while (!randomNode.m_traversable)
         {
             randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y)));
@@ -158,6 +163,14 @@ public class Pathfinding : MonoBehaviour
         }
 
         if (randomNode.m_traversable)
+=======
+        if (!randomNode.m_traversable)
+        {
+            //randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y)));      
+             yield return new WaitForEndOfFrame();
+        }
+        else
+>>>>>>> parent of 041f908 (Broke Pathfinding.)
         {
             m_randomNodeFound = true; //A random traversable node has been found.
             m_randomPoint.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.
