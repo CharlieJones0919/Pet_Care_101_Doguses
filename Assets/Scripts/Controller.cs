@@ -106,7 +106,7 @@ public class CareProperty
 {
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
     private List<string> m_currentStates = new List<string>();
-    private float m_value = 100;
+    private float m_value = 75;
     private float m_decrement;
 
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)
@@ -126,12 +126,12 @@ public class CareProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + (increment * Time.timeScale), 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
 
         m_currentStates.Clear();
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
-            if ((m_value > state.Value.x) && (m_value < state.Value.y))
+            if ((m_value >= state.Value.x) && (m_value <= state.Value.y))
             {
                 m_currentStates.Add(state.Key);           
             }
@@ -161,11 +161,11 @@ public class PersonalityProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + ((increment) * Time.timeScale), 0.0f, 5.0f);
+        m_value = Mathf.Clamp(m_value + increment, 0.0f, 5.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
-            if ((m_value > state.Value.x) && (m_value < state.Value.y))
+            if ((m_value >= state.Value.x) && (m_value <= state.Value.y))
             {
                 m_currentState = state.Key;
                 break;

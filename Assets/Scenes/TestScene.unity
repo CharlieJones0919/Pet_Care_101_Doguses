@@ -8541,7 +8541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCareDecrement: -0.0036
+  defaultCareDecrement: -0.01
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   snoutMdls:

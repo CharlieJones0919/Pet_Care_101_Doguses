@@ -4,7 +4,6 @@ using UnityEngine;
 public class Item : MonoBehaviour, ISerializationCallbackReceiver
 {
     [SerializeField] private uint defaultNumToInstantiate = 0;
-    [SerializeField] private float useTime = 0;
 
     [SerializeField] private List<DogCareValue> careFufills = new List<DogCareValue>();
     [SerializeField] private List<float> careFufillmentAmounts = new List<float>();
@@ -274,7 +273,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     public double GetPrice() { return m_price; }
     public string GetDescription() { return m_description; }
 
-    public float GetUseTime() { return useTime; }
     public bool IsSingleUse() { return m_singleUse; }
     public Vector2 GetUsePosOffset() { return m_relUsePos; }
     public bool NeedsUseOffset() { return m_needsUseOffset; }

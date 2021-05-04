@@ -31,16 +31,19 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
+        if (!doggo.Overfed())
         {
             if (!doggo.m_usingItem)
             {
-                if (doggo.ReachedTarget())
+                if (doggo.FindItemType(ItemType.FOOD))
                 {
-                    doggo.m_animationCTRL.SetTrigger("Eating");
+                    if (doggo.ReachedTarget())
+                    {
+                        doggo.UseItem();
+                        doggo.m_animationCTRL.SetTrigger("Eating");
+                    }
                 }
             }
-            else { doggo.UseItem(); doggo.m_animationCTRL.SetTrigger("Eating"); }
         }
         else 
         {

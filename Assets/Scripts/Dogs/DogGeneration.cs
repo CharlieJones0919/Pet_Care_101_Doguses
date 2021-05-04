@@ -264,22 +264,22 @@ public class DogGeneration : MonoBehaviour
     {
         //////////////////// Care Value States ////////////////////
         string[] hungerState = { "Starving", "Hungry", "Fed", "Overfed" };
-        Vector2[] hungerStateRanges = { new Vector2(0, 15), new Vector2(0, 45), new Vector2(45, 100), new Vector2(90, 100) };
+        Vector2[] hungerStateRanges = { new Vector2(0, 15), new Vector2(0, 50), new Vector2(50, 100), new Vector2(100, 100) };
 
         string[] attentionState = { "Lonely", "Loved", "Overcrowded" };
-        Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 90), new Vector2(90, 100) };
+        Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 100), new Vector2(100, 100) };
 
         string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated"};
-        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100), new Vector2(95, 100) };
+        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(20, 100), new Vector2(100, 100), new Vector2(95, 100) };
 
         string[] hygieneState = { "Filthy", "Dirty", "Clean" };
-        Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(0, 75), new Vector2(75, 100) };
+        Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100) };
 
         string[] healthState = { "Dying", "Sick", "Healthy" };
         Vector2[] healthStateRanges = { new Vector2(0, 10), new Vector2(0, 30), new Vector2(30, 100) };
 
         string[] happinessState = { "Distressed", "Upset", "Happy" };
-        Vector2[] happinessStateRanges = { new Vector2(0, 20), new Vector2(0, 40), new Vector2(40, 100) };
+        Vector2[] happinessStateRanges = { new Vector2(0, 20), new Vector2(0, 50), new Vector2(50, 100) };
 
         AddStatesToProperty(DogCareValue.Hunger, hungerState, hungerStateRanges);
         AddStatesToProperty(DogCareValue.Attention, attentionState, attentionStateRanges);

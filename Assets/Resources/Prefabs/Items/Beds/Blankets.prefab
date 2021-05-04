@@ -44,12 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultNumToInstantiate: 1
-  useTime: 1000
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
   - 0.01
-  - -0.005
-  - -0.0075
+  - -0.05
+  - -0.075
   personalityFufills: 0200000005000000
   personalityFufillmentAmounts:
   - -0.00115

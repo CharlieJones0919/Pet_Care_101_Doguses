@@ -24,9 +24,8 @@ public class Playful : State
         if (doggo.m_usingItem)
         {
             doggo.EndItemUse();
-            doggo.StopPlaying();
+           // doggo.StopPlaying();
         }
-
         return null;
     }
 
@@ -36,7 +35,10 @@ public class Playful : State
         {
             if (!doggo.m_usingItem)
             {
-                doggo.ReachedTarget();
+                if (doggo.ReachedTarget())
+                {
+                    doggo.UseItem();
+                }
             }
             else { doggo.UseItem(); doggo.Play(); }
         }

@@ -38,16 +38,20 @@ public class Tired : State
         //{
         //    return typeof(Pause);
         //}
-        if (!doggo.Rejuvinated() && doggo.FindItemType(ItemType.BED))
+        if (!doggo.Rejuvinated())
         {
             if (!doggo.m_usingItem)
             {
-                if (doggo.ReachedTarget())
+                if (doggo.FindItemType(ItemType.BED))
                 {
-                    doggo.m_animationCTRL.SetTrigger("GoingToSleep");
+                    if (doggo.ReachedTarget())
+                    {
+                        doggo.m_animationCTRL.SetTrigger("GoingToSleep");
+                        doggo.UseItem();
+                    }
                 }
+                else { return typeof(Pause); } // Change to be conditional on other facts.
             }
-            else { doggo.UseItem(); }
         }
         else { return typeof(Pause); }
 

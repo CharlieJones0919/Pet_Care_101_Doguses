@@ -37,7 +37,6 @@ public class Dog : MonoBehaviour
 
     private Item m_currentItemTarget;
     [SerializeField] private GameObject m_currentObjectTarget;  //!< An item on the map the dog is currently using or travelling towards.   
-    [SerializeField] private float m_timeDeltaStartItemUse = 0;
 
     public bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     public bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
@@ -301,11 +300,9 @@ public class Dog : MonoBehaviour
             if (navigation.IsSetToObject(m_currentObjectTarget))
             {
                 if (navigation.AttemptToReachTarget())
-                {
+                {  
                     if (m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget))
                     {
-                        m_timeDeltaStartItemUse = 0;
-                        UseItem();
                         return true;
                     }
                 }
@@ -332,13 +329,12 @@ public class Dog : MonoBehaviour
                     usePosition.z += usePosOffset.y;
                     transform.position = usePosition;
                 }
-            }
 
-            if (m_timeDeltaStartItemUse < m_currentItemTarget.GetUseTime())
-            {
-                m_timeDeltaStartItemUse += Time.deltaTime;
+                UpdateCareValues();
+                UpdatePersonalityValues();
+
+                if (m_currentItemTarget.IsSingleUse()) { EndItemUse(); }
             }
-            else { EndItemUse(); }
         }
         else { Debug.LogWarning("No item to use."); }
     }
@@ -354,8 +350,8 @@ public class Dog : MonoBehaviour
 
     public IEnumerator Pause(float waitTime = 0.0f)
     {
-        m_waiting = true;
         m_RB.velocity = Vector3.zero;
+        m_waiting = true;
         yield return new WaitForSeconds(waitTime);
         m_waiting = false;
     }
@@ -363,27 +359,23 @@ public class Dog : MonoBehaviour
     public void EndItemUse()
     {
         m_usingItem = false;
-        m_currentItemTarget.StopUsingItemInstance(m_currentObjectTarget);
-        m_timeDeltaStartItemUse = 0;
-
+        controller.EndItemUse(m_currentItemTarget, m_currentObjectTarget);
         ClearCurrentTarget();
     }
 
     public void Play()
     {
-        if (!m_holdingItem)
+        if (m_currentObjectTarget != defaultNULL)
         {
-            m_currentObjectTarget.transform.position = m_body[BodyPart.Snout].m_component.transform.position;
-            m_currentObjectTarget.transform.parent = m_body[BodyPart.Snout].m_component.transform;
-            navigation.SetRunning(true);
-            m_holdingItem = true;
+            if (!m_holdingItem)
+            {
+                m_currentObjectTarget.transform.position = m_body[BodyPart.Snout].m_component.transform.position;
+                m_currentObjectTarget.transform.parent = m_body[BodyPart.Snout].m_component.transform;
+                navigation.SetRunning(true);
+                m_holdingItem = true;
+            }
         }
-
-        if (navigation.IsSetToRandom())
-        {
-            navigation.AttemptToReachTarget();
-        }
-        else { navigation.SetTargetToRandom(); }
+      // Wander();
     }
 
     public void StopPlaying()

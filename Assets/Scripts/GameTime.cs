@@ -13,7 +13,7 @@ public class GameTime : MonoBehaviour
     [SerializeField] private Controller controller;
     [SerializeField] private DogGeneration dogGenerator;
 
-    [SerializeField] private int timeAdjustment = 72 * 4; // 20 minutes of real time is 1 day in game time.
+    [SerializeField] private int timeAdjustment = 72 * 50; 
     private const int allowance = 80;
     [SerializeField] private static float playerMoney = 0;
 

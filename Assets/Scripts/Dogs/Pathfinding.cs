@@ -10,7 +10,6 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
     public AStarSearch m_aStarSearch;                  //!< Reference to the A* script. (Retrieved from the ground plane).
-
     public GameObject m_randomPointStorage;
     [SerializeField] private GameObject m_randomPoint;                   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
  
