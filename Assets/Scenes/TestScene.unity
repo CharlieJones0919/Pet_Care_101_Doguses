@@ -7482,7 +7482,6 @@ MonoBehaviour:
   controller: {fileID: 1958195944}
   focusedDog: {fileID: 0}
   newDogPanel: {fileID: 8950339}
-  fastForwardButton: {fileID: 2143716806}
 --- !u!1 &1810142300
 GameObject:
   m_ObjectHideFlags: 0
@@ -8541,7 +8540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCareDecrement: -0.00072
+  defaultCareDecrement: -0.0072
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   snoutMdls:

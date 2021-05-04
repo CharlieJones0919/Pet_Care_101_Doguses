@@ -32,7 +32,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     [SerializeField] private bool m_singleUse;
     [SerializeField] private Vector2 m_relUsePos;
-    [SerializeField] private Vector2 m_relUseRot;
+    [SerializeField] private bool m_needsUseOffset;
 
     private class ItemInstance
     {
@@ -259,7 +259,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public bool IsSingleUse() { return m_singleUse; }
     public Vector2 GetUsePosOffset() { return m_relUsePos; }
-    public Vector2 GetUseRotation() { return m_relUseRot; }
+    public bool NeedsUseOffset() { return m_needsUseOffset; }
 
     public List<DogCareValue> GetCareFufillmentList()
     {

@@ -109,7 +109,7 @@ public class Pathfinding : MonoBehaviour
             m_RB.velocity = Vector3.zero;
             return true;
         }
-        else if (((m_foundPath.Count == 1) && !m_reachedTarget))  //If there are no more positions left in the path or no path was found...
+        else if (((m_foundPath.Count == 0) && !m_reachedTarget))  //If there are no more positions left in the path or no path was found...
         {
             m_pathFound = false;         //If the dog  isn't within range of the specified GameObject, find a new path to it.  
             return false;

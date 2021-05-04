@@ -21,12 +21,13 @@ public class Controller : MonoBehaviour
         switch (state)
         {
             case (true):
-                Time.timeScale = 0; Debug.Log("GAME PAUSED");
+                Time.timeScale = 0; 
                 break;
             case (false):
-                Time.timeScale = 1; Debug.Log("GAME PLAYING");
+                Time.timeScale = 1; 
                 break;
         }
+        ffButtonText.text = "x" + Time.timeScale.ToString();
     }
     public void FASTFORWARD()
     {
@@ -43,8 +44,6 @@ public class Controller : MonoBehaviour
                 }
                 break;
         }
-
-        //defaultCol.a = 1;
         ffButtonText.text = "x" + Time.timeScale.ToString();
     }
 
@@ -156,14 +155,14 @@ public class PersonalityProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + (increment * Time.timeScale), 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + ((increment/100) * Time.timeScale), 0.0f, 5.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
             if ((m_value > state.Value.x) && (m_value < state.Value.y))
             {
                 m_currentState = state.Key;
-                return;
+                break;
             }
         }
     }

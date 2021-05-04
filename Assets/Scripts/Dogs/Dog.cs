@@ -216,11 +216,14 @@ public class Dog : MonoBehaviour
 
     private void UpdatePersonalityValues()
     {
-        foreach (KeyValuePair<DogPersonalityValue, PersonalityProperty> prop in m_personalityValues)
+        if (m_usingItem)
         {
-            if (m_usingItem && TargetItemIsFor(prop.Key))
+            foreach (KeyValuePair<DogPersonalityValue, PersonalityProperty> prop in m_personalityValues)
             {
-                prop.Value.UpdateValue(m_currentItemTarget.GetPersonalityFufillmentAmount(prop.Key));
+                if (TargetItemIsFor(prop.Key))
+                {
+                    prop.Value.UpdateValue(m_currentItemTarget.GetPersonalityFufillmentAmount(prop.Key));
+                }
             }
         }
     }
@@ -323,12 +326,15 @@ public class Dog : MonoBehaviour
             {
                 m_usingItem = true;
 
-                Vector3 usePosition = m_currentObjectTarget.transform.position;
-                Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
-                usePosition.x += usePosOffset.x;
-                usePosition.y = transform.position.y;
-                usePosition.z += usePosOffset.y;
-                transform.position = usePosition;
+                if (m_currentItemTarget.NeedsUseOffset())
+                {
+                    Vector3 usePosition = m_currentObjectTarget.transform.position;
+                    Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
+                    usePosition.x += usePosOffset.x;
+                    usePosition.y = transform.position.y;
+                    usePosition.z += usePosOffset.y;
+                    transform.position = usePosition;
+                }
             }
 
             if (m_timeDeltaStartItemUse < m_currentItemTarget.GetUseTime())

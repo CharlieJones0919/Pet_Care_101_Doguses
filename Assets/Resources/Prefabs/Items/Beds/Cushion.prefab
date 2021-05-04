@@ -64,4 +64,4 @@ MonoBehaviour:
   m_description: Nest beds are...
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
-  m_relUseRot: {x: 0, y: 0}
+  m_needsUseOffset: 1

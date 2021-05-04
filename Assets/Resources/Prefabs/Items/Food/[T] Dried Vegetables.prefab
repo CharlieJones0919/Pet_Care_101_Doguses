@@ -44,16 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultNumToInstantiate: 5
-  useTime: 25
+  useTime: 10
   careFufills: 01000000060000000500000002000000
   careFufillmentAmounts:
-  - 0.05
-  - 5
-  - 2
-  - 2.5
+  - 0.005
+  - 0.5
+  - 0.2
+  - 0.25
   personalityFufills: 03000000
   personalityFufillmentAmounts:
-  - 1.5
+  - 0.0015
   m_objectPrefab: {fileID: 801318375099022007, guid: 528c03e0310bfee49bf0beaeec83b2b3,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -12.5, z: 0}
@@ -63,5 +63,5 @@ MonoBehaviour:
   m_price: 3
   m_description: S
   m_singleUse: 1
-  m_relUsePos: {x: 0, y: 0, z: 0}
-  m_relUseRot: {x: 0, y: 0, z: 0}
+  m_relUsePos: {x: 0, y: 2}
+  m_relUseRot: {x: 0, y: 0}

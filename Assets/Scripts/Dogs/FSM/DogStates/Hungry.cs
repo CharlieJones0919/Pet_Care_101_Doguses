@@ -41,7 +41,7 @@ public class Hungry : State
                     doggo.m_animationCTRL.SetTrigger("Eating");
                 }
             }
-            else { doggo.UseItem(); }
+            else { doggo.UseItem(); doggo.m_animationCTRL.SetTrigger("Eating"); }
         }
         else 
         {
