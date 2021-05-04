@@ -160,8 +160,6 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
-    public List<Dog> currentDogs;
-
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>();
 
@@ -175,7 +173,7 @@ public class DogGeneration : MonoBehaviour
     private Dictionary<string, float> modelScalers = new Dictionary<string, float>();
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();
 
-    [SerializeField] private DogController dogController;
+    [SerializeField] private Controller controller;
     [SerializeField] private DataDisplay dogUIOutputScript;
     [SerializeField] private AStarSearch groundAStar;
     [SerializeField] private GameObject randomPointStorage;
@@ -331,33 +329,34 @@ public class DogGeneration : MonoBehaviour
         personalityValueStates.Add(property, states);
     }
 
-    public void GenerateAllDogsLineUp()
-    {
-        float dogSpace = 3;
-        Vector3 posOffset = groundAStar.transform.position;
-        posOffset.y = dogSpace;
+    //public void GenerateAllDogsLineUp()
+    //{
+    //    float dogSpace = 3;
+    //    Vector3 posOffset = groundAStar.transform.position;
+    //    posOffset.y = dogSpace;
 
-        foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
-        {
-            GameObject dog = GenerateDog(dogBreed);        
-            dog.transform.position = posOffset;
-            posOffset.x += dogSpace;
-        }
-    }
+    //    foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
+    //    {
+    //        GameObject dog = GenerateDog(dogBreed).gameObject;        
+    //        dog.transform.position = posOffset;
+    //        posOffset.x += dogSpace;
+    //    }
+    //}
 
     public void GenerateRandomNewDog()
     {
         GenerateDog((DogBreed)UnityEngine.Random.Range(0, dogBreedsDefined));
     }
 
-    public GameObject GenerateDog(DogBreed breed)
+    private void GenerateDog(DogBreed breed)
     {
         GameObject newDog = Instantiate(dogPrefabBase, Vector3.zero, Quaternion.identity);
         newDog.transform.parent = transform.GetChild(0);
         newDog.name = "Unnamed_" + breed;
 
         Dog dogScript = newDog.GetComponent<Dog>();
-        dogScript.SetGlobalScripts(dogController, dogUIOutputScript, groundAStar, randomPointStorage, defaultNullObject);
+
+        dogScript.SetGlobalScripts(controller, dogUIOutputScript, groundAStar, randomPointStorage, defaultNullObject);
         dogScript.m_breed = breed;
         dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));
 
@@ -374,8 +373,7 @@ public class DogGeneration : MonoBehaviour
         dogScript.m_collider.center = bounds.center;
         dogScript.m_collider.size = bounds.size;
 
-        currentDogs.Add(dogScript);
-        return newDog;
+        controller.AddDog(dogScript);
     }
 
     private void DefineDogProperties(Dog dog)

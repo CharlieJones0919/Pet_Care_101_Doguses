@@ -2,10 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class DataDisplay : MonoBehaviour
 {
-    [SerializeField] private GameObject controller;
+    [SerializeField] private Controller controller;
     [SerializeField] private Dog focusedDog;
+    [SerializeField] private GameObject newDogPanel;
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
     public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>();
@@ -77,9 +80,16 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
-    public void SetFocusDog(Dog focus)
+    public void SetFocusDog(Dog focus) { focusedDog = focus; gameObject.SetActive(true); }
+
+    public void ActivateNewDogPanel() { newDogPanel.SetActive(true); }
+
+    public void NewDogAdded()
     {
-        focusedDog = focus;
+        SetFocusDog(controller.GetNewestDog());
+        controller.PAUSE(false);
+        gameObject.SetActive(true);
+        newDogPanel.SetActive(false);
     }
 
     public GameObject GetFocusDog()

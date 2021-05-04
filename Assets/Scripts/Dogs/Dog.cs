@@ -9,12 +9,11 @@ using UnityEngine;
 */
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private DogController controller;     //!< Reference to the game's DogController script to retrieve data required by all dogs. 
-    [SerializeField] private DataDisplay UIOutput;     //!< Script from the infoPanelObject.
+    [SerializeField] private Controller controller;     //!< Reference to the game's Controller script to retrieve data required by all dogs. 
     [SerializeField] private Pathfinding navigation;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
     [SerializeField] private GameObject defaultNULL;
 
-    public void SetGlobalScripts(DogController ctrl, DataDisplay UI, AStarSearch aStar, GameObject randStore, GameObject NULL) { controller = ctrl; UIOutput = UI; navigation.m_aStarSearch = aStar; navigation.m_randomPointStorage = randStore; defaultNULL = NULL;  }
+    public void SetGlobalScripts(Controller ctrl, DataDisplay UI, AStarSearch aStar, GameObject randStore, GameObject NULL) { controller = ctrl; navigation.m_aStarSearch = aStar; navigation.m_randomPointStorage = randStore; defaultNULL = NULL;  }
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
@@ -62,8 +61,6 @@ public class Dog : MonoBehaviour
     {
         //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
-
-
 
         newStates.Add(typeof(Idle), new Idle(this));    //When finished this will be the default starting state. (Wandering until current care values need attending to).
         newStates.Add(typeof(Pause), new Pause(this));
@@ -127,6 +124,9 @@ public class Dog : MonoBehaviour
 
         ///////// Behaviour Trees /////
         //swp_pause = new BTAction(SwapToSearch);
+
+        UpdateCareValues();
+        UpdatePersonalityValues();
     }
 
 
@@ -136,26 +136,16 @@ public class Dog : MonoBehaviour
     private void Update()
     {
         UpdateCareValues();
-
-        int currentDay = controller.localTime.GetGameTimeDays();
-        if (lastDayUpdated != currentDay)
-        {
-            for (int day = lastDayUpdated; lastDayUpdated < currentDay; lastDayUpdated--)
-            {
-                UpdatePersonalityValues();
-            }
-        }
+        UpdatePersonalityValues();
 
         if (InFocus())
         {
-            UIOutput.gameObject.SetActive(false);
+            controller.UIOutput.gameObject.SetActive(false);
 
-            if (UIOutput.GetFocusDog() != gameObject)
+            if (controller.UIOutput.GetFocusDog() != gameObject)
             {
-                UIOutput.SetFocusDog(this);
+                controller.UIOutput.SetFocusDog(this);
             }
-
-            UIOutput.gameObject.SetActive(true);
         }
 
         m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
@@ -305,8 +295,6 @@ public class Dog : MonoBehaviour
         }
         return false;
     }
-
-
 
     public void SetCurrentTargetItem(Item newItem, GameObject itemInstance)
     {

@@ -48,8 +48,8 @@ MonoBehaviour:
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
   - 0.01
-  - -0.05
-  - -0.075
+  - -0.005
+  - -0.0075
   personalityFufills: 0200000005000000
   personalityFufillmentAmounts:
   - -0.00115

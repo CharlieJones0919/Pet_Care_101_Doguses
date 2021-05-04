@@ -3,14 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DogController : MonoBehaviour
+public class Controller : MonoBehaviour
 {
-    public GameTime localTime;
     public TipPopUp tipPopUp;
+    public DataDisplay UIOutput;     //!< Script from the infoPanelObject.
+
+    [SerializeField] private List<Dog> allDogs = new List<Dog>();
+    [SerializeField] private static int dogLimit = 8;
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
     public List<Vector3> permanentItemPositions = new List<Vector3>();
     public Dictionary<Vector3, bool> tempItemPositions = new Dictionary<Vector3, bool>();
+
+    public void PAUSE(bool state)
+    {
+        switch (state)
+        {
+            case (true):
+                Time.timeScale = 0;
+                Debug.Log("GAME PAUSED"); 
+                break;
+            case (false):
+                Time.timeScale = 1;
+                Debug.Log("GAME PLAYING");
+                break;
+        }
+    }
+
+    public void AddDog(Dog newDog)
+    {
+        allDogs.Add(newDog);
+        UIOutput.ActivateNewDogPanel();
+        PAUSE(true);
+    }
 
     public void AddToItemPools(ItemType itemGroup, Item item)
     {
@@ -46,6 +71,12 @@ public class DogController : MonoBehaviour
         }
         item.StopUsingItemInstance(instance);
     }
+
+    public Dog GetNewestDog()
+    {
+        if (allDogs.Count > 0) { return allDogs[allDogs.Count - 1]; }
+        else return null;  
+    }
 }
 
 public class CareProperty
@@ -72,7 +103,8 @@ public class CareProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + (increment * Time.timeScale), 0.0f, 100.0f);
+
         m_currentStates.Clear();
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
@@ -106,7 +138,7 @@ public class PersonalityProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + (increment * Time.timeScale), 0.0f, 100.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {

@@ -9,7 +9,7 @@ public enum ItemType
 
 public class StoreController : MonoBehaviour
 {
-    [SerializeField] private DogController controller;
+    [SerializeField] private Controller controller;
     [SerializeField] private AStarSearch worldFloor;
     [SerializeField] private float traversableFloorOffset;
 
