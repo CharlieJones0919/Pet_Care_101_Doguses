@@ -23,11 +23,14 @@ public class DogController : MonoBehaviour
 
     public bool GetClosestActiveItemFor(ItemType requiredType, Dog attemptingDog)
     {
-        foreach (Item item in itemPools[requiredType])
+        if (itemPools[requiredType].Count > 0)
         {
-            if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
-        }
-        //Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
+            foreach (Item item in itemPools[requiredType])
+            {
+                if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
+            }
+        } 
+        Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
         return false;
     }
 }

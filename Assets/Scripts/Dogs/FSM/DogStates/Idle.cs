@@ -33,10 +33,10 @@ public class Idle : State
         //    return typeof(Hungry);
         //}
         //else 
-        //if (doggo.Tired() && doggo.FindItemType(ItemType.BED))
-        //{
-        //    return typeof(Tired);
-        //}
+        if (doggo.Tired() && doggo.FindItemType(ItemType.BED))
+        {
+            return typeof(Tired);
+        }
 
         doggo.Wander();
         return null;

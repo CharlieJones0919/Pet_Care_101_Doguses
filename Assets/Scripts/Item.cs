@@ -143,7 +143,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
+            if (instance.UsableFor(attemptingUser.gameObject))
             {
                 attemptingUser.SetCurrentTargetItem(this, instance.GetObject());
                 return true;
@@ -155,31 +155,30 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public bool TryGetClosestAvailableInstance(Dog attemptingUser)
     {
-        if (numberOfAvailableInstances == 0) { return false; }
-
-        Vector3 userPosition = attemptingUser.gameObject.transform.position;
-        ItemInstance closestInstanceSoFar = null;
-        float closestDistanceSoFar = 0.0f;
-
-        foreach (ItemInstance instance in m_availablePoolInstances)
+        if (numberOfAvailableInstances != 0)
         {
-            if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
+            Vector3 userPosition = attemptingUser.gameObject.transform.position;
+            ItemInstance closestInstanceSoFar = null;
+            float closestDistanceSoFar = 0.0f;
+
+            foreach (ItemInstance instance in m_availablePoolInstances)
             {
-                float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
-                if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
+                if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
                 {
-                    closestInstanceSoFar = instance;
-                    closestDistanceSoFar = thisDist;
+                    float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
+                    if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
+                    {
+                        closestInstanceSoFar = instance;
+                        closestDistanceSoFar = thisDist;
+                    }
                 }
             }
-        }
 
-        if (closestInstanceSoFar != null)
-        {
-            attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.GetObject());
-            return true;
+            if (closestInstanceSoFar != null)
+            {
+                attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.GetObject());  return true;
+            }
         }
-
         return false;
     }
 

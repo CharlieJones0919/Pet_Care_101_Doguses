@@ -23,6 +23,7 @@ public class Pathfinding : MonoBehaviour
 
     private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
     [SerializeField] private bool m_randomNodeFound = false;             //!< Whether or not a random node has been generated.
+    [SerializeField] private bool m_pathFound = false;
 
     [SerializeField] private GameObject m_currentTarget;
     [SerializeField] private bool m_reachedTarget = false;
@@ -51,10 +52,12 @@ public class Pathfinding : MonoBehaviour
     *  \brief Generates an A* path to a specified point in the world.
     *  \param point The point to find a path to.
     */
-    private bool FindPathTo(GameObject point)
+    private void FindPathTo(GameObject point)
     {
         //Where to store the generated path.
         List<ASNode> path = new List<ASNode>();
+        m_pathFound = false;
+        m_RB.velocity = Vector3.zero;
 
         //Find path if the parameter point is set to a GameObject.
         if (point != null)
@@ -66,7 +69,7 @@ public class Pathfinding : MonoBehaviour
         }
 
         //If path is not null and more than 0.
-        if ((path != null) && (path.Count > 0))
+        if ((path != null) && (path.Count > 0) /*&& (Vector3.Distance(path[path.Count-1].m_worldPos, transform.position) < 1.0f)*/)
         {
             //Clear old m_foundPath.
             m_foundPath.Clear();
@@ -76,17 +79,16 @@ public class Pathfinding : MonoBehaviour
             {
                 m_foundPath.Add(item.m_worldPos);
             }
-            return true;
+            m_pathFound =  true;
         }
-        return false;
     }
 
     public int GetFoundPathLength() {  return m_foundPath.Count;  }
-    public bool IsSetToRandom() { return (m_currentTarget == m_randomPoint); }
-    public bool IsSetToObject(GameObject obj) { return (m_currentTarget == obj); }
+    public bool IsSetToRandom() {return (m_currentTarget == m_randomPoint);  }
+    public bool IsSetToObject(GameObject obj) {  return (m_currentTarget == obj); }
 
-    public void SetTarget(GameObject targ) { m_currentTarget = targ; }
-    public void SetTargetToRandom() { m_currentTarget = m_randomPoint; }
+    public void SetTarget(GameObject targ) { m_currentTarget = targ; FindPathTo(m_currentTarget); }
+    public void SetTargetToRandom() { m_currentTarget = m_randomPoint; FindPathTo(m_currentTarget); }
 
     /** \fn FollowPathTo
      *  \brief Moves this GameObject along a found A* path to a specified point.
@@ -95,24 +97,25 @@ public class Pathfinding : MonoBehaviour
     public bool AttemptToReachTarget()
     {
         if (IsSetToRandom() && !m_randomNodeFound) { if (!GenerateRandomPointInWorld(m_randomPoint)) { return false; } }
+        if (!m_pathFound) { FindPathTo(m_currentTarget); return false; }
+
+        // if (transform.InverseTransformDirection(m_RB.velocity).z == 0.0f) { FindPathTo(m_currentTarget); }
 
         if (m_reachedTarget)
         {
-            Debug.Log("Reached");
             DogLookAt(m_currentTarget.transform.position, true);
-
-            m_randomNodeFound = false; 
-            m_reachedTarget = false;   
+            m_randomNodeFound = false;
+            m_reachedTarget = false;
+            m_pathFound = false;
             m_RB.velocity = Vector3.zero;
-            m_foundPath.Clear();
             return true;
         }
-        else if ((m_foundPath.Count == 0) && !m_reachedTarget)  //If there are no more positions left in the path or no path was found...
+        else if (((m_foundPath.Count == 1) && !m_reachedTarget))  //If there are no more positions left in the path or no path was found...
         {
-            FindPathTo(m_currentTarget);         //If the dog  isn't within range of the specified GameObject, find a new path to it.  
+            m_pathFound = false;         //If the dog  isn't within range of the specified GameObject, find a new path to it.  
             return false;
         }
-        else if (!(m_collider.bounds.Contains(m_foundPath[0])))
+        else if (!m_collider.bounds.Contains(m_foundPath[0]))
         {
             DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
             MoveDog();   //Move forwards towards the position.
@@ -121,12 +124,9 @@ public class Pathfinding : MonoBehaviour
         else  //If within the "found" distance of the node, remove it from the list.
         {
             m_foundPath.Remove(m_foundPath[0]);
-            m_RB.velocity = Vector3.zero;
             return false;
         }
     }
-
-    public void ClearPath() { m_currentTarget = m_randomPoint; m_foundPath.Clear(); m_RB.velocity = Vector3.zero; }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -140,11 +140,9 @@ public class Pathfinding : MonoBehaviour
     public bool GenerateRandomPointInWorld(GameObject recievingObject)
     {
         AStarSearch tempAStar = m_aStarSearch; //A new temporary ground plane grid A* search. 
-        tempAStar.CreateGrid();
-
         ASNode randomNode = tempAStar.NodePositionInGrid(new Vector3(Random.Range(-m_aStarSearch.gridSize.x, m_aStarSearch.gridSize.x), 0.0f, Random.Range(-m_aStarSearch.gridSize.y, m_aStarSearch.gridSize.y))); //Locate a random node on the grid.
 
-        if (randomNode.m_traversable)
+        if (tempAStar.IsTraversable(randomNode.m_worldPos))
         {
             if (recievingObject = m_randomPoint) { m_randomNodeFound = true; }//A random traversable node has been found.}
             recievingObject.transform.position = randomNode.m_worldPos; //Set the random point to the position of the random traversable node.

@@ -45,12 +45,9 @@ public class Tired : State
         {
             if (!doggo.m_usingItem)
             {
-                if (doggo.TargetItemIsFor(DogCareValue.Rest))
+                if (doggo.ReachedTarget())
                 {
-                    if (doggo.ReachedTarget())
-                    {
-                        doggo.m_animationCTRL.SetTrigger("GoingToSleep");
-                    }
+                    doggo.m_animationCTRL.SetTrigger("GoingToSleep");
                 }
             }
             else { doggo.UseItem(); }

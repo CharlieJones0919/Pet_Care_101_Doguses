@@ -316,17 +316,8 @@ public class Dog : MonoBehaviour
 
     public bool FindItemType(ItemType type)
     {
-        if (m_currentObjectTarget != defaultNULL)
-        {
-
-            if ((m_currentItemTarget.GetItemType() == type) && m_currentItemTarget.IsUsable(gameObject, m_currentObjectTarget))
-            {
-                return true;
-            }
-            else { ClearCurrentTarget(); }
-        }
-        else if (controller.GetClosestActiveItemFor(type, this))
-        {
+        if (controller.GetClosestActiveItemFor(type, this))
+        {    
             return true;
         }
         return false;
@@ -358,12 +349,12 @@ public class Dog : MonoBehaviour
             {
                 m_usingItem = true;
 
-                Vector3 usePosition = m_currentItemTarget.transform.localPosition;
+                Vector3 usePosition = m_currentObjectTarget.transform.position;
                 Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
                 usePosition.x += usePosOffset.x;
                 usePosition.y = transform.position.y;
                 usePosition.z += usePosOffset.y;
-                transform.Translate(usePosition, Space.World);
+                transform.position = usePosition;
             }
 
             if (m_timeDeltaStartItemUse < m_currentItemTarget.GetUseTime())
@@ -407,7 +398,8 @@ public class Dog : MonoBehaviour
     {
         m_currentItemTarget = null;
         m_currentObjectTarget = defaultNULL;
-        navigation.ClearPath();
+        navigation.SetTargetToRandom();
+        m_RB.velocity = Vector3.zero;
     }
 
     public void Spooked() { }

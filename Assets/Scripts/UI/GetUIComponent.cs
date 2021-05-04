@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ public class GetUIComponent : MonoBehaviour
                 case ("CareData"):
                     if (Enum.IsDefined(typeof(DogCareValue), transform.tag))
                     {
-                        UIOutputScript.careValueDisplayUI.Add((DogCareValue)Enum.Parse(typeof(DogCareValue), transform.tag), GetComponent<Slider>());
+                        UIOutputScript.careValueDisplayUI.Add((DogCareValue)Enum.Parse(typeof(DogCareValue), transform.tag), new KeyValuePair<Slider, Text>(GetComponent<Slider>(), transform.GetChild(0).GetComponent<Text>()));
                     }
                     else { Debug.Log("Attempting add the following UI component with an invalid care value tag: " + name.ToString() + ", " + transform.tag.ToString()); }
                     break;

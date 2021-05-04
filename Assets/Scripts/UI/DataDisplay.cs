@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +8,7 @@ public class DataDisplay : MonoBehaviour
     [SerializeField] private Dog focusedDog;
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
-    public Dictionary<DogCareValue, Slider> careValueDisplayUI = new Dictionary<DogCareValue, Slider>();
+    public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>();
     public Dictionary<DogPersonalityValue, Slider> personalityValueDisplayUI = new Dictionary<DogPersonalityValue, Slider>();
 
     private void Start()
@@ -59,30 +58,16 @@ public class DataDisplay : MonoBehaviour
     private void OnDisable()
     {
         focusedDog = null;
-
-        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
-        {
-            textElement.Value.text = "UNKNOWN - " + textElement.Key;
-        }
-
-        foreach (KeyValuePair<DogCareValue, Slider> sliderValue in careValueDisplayUI)
-        {
-            sliderValue.Value.value = 0;
-        }
-
-        foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)
-        {
-            sliderValue.Value.value = 0;
-        }
     }
 
     private void FixedUpdate()
     {
         if (focusedDog != null)
         {
-            foreach (KeyValuePair<DogCareValue, Slider> sliderValue in careValueDisplayUI)
+            foreach (KeyValuePair<DogCareValue, KeyValuePair<Slider, Text>> sliderValue in careValueDisplayUI)
             {
-                sliderValue.Value.value = focusedDog.m_careValues[sliderValue.Key].GetValue();
+                sliderValue.Value.Key.value = focusedDog.m_careValues[sliderValue.Key].GetValue();
+                sliderValue.Value.Value.text = string.Format("{0:F2}%", sliderValue.Value.Key.value);
             }
 
             foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)

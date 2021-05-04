@@ -382,7 +382,7 @@ public class DogGeneration : MonoBehaviour
     {
         foreach (DogCareValue careValue in (DogCareValue[])DogCareValue.GetValues(typeof(DogCareValue)))
         {
-            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(careValue, new CareProperty(careValueStates[careValue], -1 / 72f));
+            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(careValue, new CareProperty(careValueStates[careValue], -1 / (72f * 60)));
         }
 
         foreach (DogPersonalityValue personalityValue in (DogPersonalityValue[])DogPersonalityValue.GetValues(typeof(DogPersonalityValue)))
