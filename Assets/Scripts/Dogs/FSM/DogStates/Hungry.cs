@@ -16,14 +16,12 @@ public class Hungry : State
 
     public override Type StateEnter()
     {
-        Debug.Log(doggo.name + ": Entering Hungry State");
+        doggo.currentState = "Hungry State";
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log(doggo.name + ": Exiting Hungry State");
-
         if (doggo.m_usingItem)
         {
             doggo.EndItemUse();
@@ -34,25 +32,22 @@ public class Hungry : State
 
     public override Type StateUpdate()
     {
-        //if ((doggo.Hungry() || !doggo.Fed() ) && doggo.ItemOfTypeFound(ItemType.FOOD))
-        //{
-        //    if (!doggo.TargetItemIsFor(DogCareValue.Hunger))
-        //    {
-        //        if (doggo.LocateItemType(ItemType.FOOD))
-        //        {
-        //            doggo.StartCoroutine(doggo.UseItem());
-        //            return null;
-        //        }
-        //    }
-        //    else { doggo.StartCoroutine(doggo.UseItem()); }
-        //}
-         if (doggo.Tired())
+        if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
         {
-            return typeof(Tired);
+            if (!doggo.m_usingItem)
+            {
+                if (doggo.ReachedTarget())
+                {
+                    doggo.m_animationCTRL.SetTrigger("Eating");
+                }
+            }
+            else { doggo.UseItem(); }
         }
         else 
         {
             return typeof(Idle);
         }
+
+        return null;
     }
 }

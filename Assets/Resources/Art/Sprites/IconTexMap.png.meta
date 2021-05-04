@@ -53,6 +53,15 @@ TextureImporter:
   - first:
       213: -7498124939576778177
     second: HexButton
+  - first:
+      213: -1512316603289589293
+    second: Pause
+  - first:
+      213: 9120642280225007235
+    second: FastForward
+  - first:
+      213: -5474255590297819525
+    second: Play
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -472,6 +481,69 @@ TextureImporter:
       bones: []
       spriteID: f32670f181f41f790800000000000000
       internalID: -7498124939576778177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pause
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 721
+        width: 69
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d9aff8df0c230be0800000000000000
+      internalID: -1512316603289589293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FastForward
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 721
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3866834a4d7039e70800000000000000
+      internalID: 9120642280225007235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 722
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b762a926b898704b0800000000000000
+      internalID: -5474255590297819525
       vertices: []
       indices: 
       edges: []

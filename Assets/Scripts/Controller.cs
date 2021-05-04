@@ -7,6 +7,7 @@ public class Controller : MonoBehaviour
 {
     public TipPopUp tipPopUp;
     public DataDisplay UIOutput;     //!< Script from the infoPanelObject.
+    [SerializeField] private Text ffButtonText;
 
     [SerializeField] private List<Dog> allDogs = new List<Dog>();
     [SerializeField] private static int dogLimit = 8;
@@ -20,14 +21,31 @@ public class Controller : MonoBehaviour
         switch (state)
         {
             case (true):
-                Time.timeScale = 0;
-                Debug.Log("GAME PAUSED"); 
+                Time.timeScale = 0; Debug.Log("GAME PAUSED");
                 break;
             case (false):
-                Time.timeScale = 1;
-                Debug.Log("GAME PLAYING");
+                Time.timeScale = 1; Debug.Log("GAME PLAYING");
                 break;
         }
+    }
+    public void FASTFORWARD()
+    {
+        switch (Time.timeScale)
+        {
+            case (0):
+            case (10):
+                PAUSE(false);
+                break;
+            default:
+                if (Time.timeScale < 10)
+                {
+                    Time.timeScale++;
+                }
+                break;
+        }
+
+        //defaultCol.a = 1;
+        ffButtonText.text = "x" + Time.timeScale.ToString();
     }
 
     public void AddDog(Dog newDog)
@@ -83,7 +101,7 @@ public class CareProperty
 {
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
     private List<string> m_currentStates = new List<string>();
-    private float m_value = 50;
+    private float m_value = 100;
     private float m_decrement;
 
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)

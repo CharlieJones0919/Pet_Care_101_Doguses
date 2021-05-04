@@ -12,6 +12,7 @@ public class Dog : MonoBehaviour
     [SerializeField] private Controller controller;     //!< Reference to the game's Controller script to retrieve data required by all dogs. 
     [SerializeField] private Pathfinding navigation;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
     [SerializeField] private GameObject defaultNULL;
+    public string currentState;
 
     public void SetGlobalScripts(Controller ctrl, DataDisplay UI, AStarSearch aStar, GameObject randStore, GameObject NULL) { controller = ctrl; navigation.m_aStarSearch = aStar; navigation.m_randomPointStorage = randStore; defaultNULL = NULL;  }
 
@@ -66,21 +67,6 @@ public class Dog : MonoBehaviour
         newStates.Add(typeof(Pause), new Pause(this));
         newStates.Add(typeof(Hungry), new Hungry(this));
         newStates.Add(typeof(Tired), new Tired(this));
-
-        //newStates.Add(typeof(Distressed), new Distressed(this));
-        //newStates.Add(typeof(Happy), new Happy(this));
-
-        //newStates.Add(typeof(Angry), new Angry(this));
-        //newStates.Add(typeof(Scared), new Scared(this));
-        //newStates.Add(typeof(Excited), new Excited(this));
-
-        //newStates.Add(typeof(Play), new Play(this));
-        //newStates.Add(typeof(Grabbed), new Grabbed(this));
-        //newStates.Add(typeof(Interact), new Interact(this));
-        //newStates.Add(typeof(Inspect), new Inspect(this));
-
-        //newStates.Add(typeof(RunAway), new RunAway(this));
-        //newStates.Add(typeof(Bite), new Bite(this));
 
         //newStates.Add(typeof(Die), new Die(this));
 
@@ -387,7 +373,6 @@ public class Dog : MonoBehaviour
         m_currentItemTarget = null;
         m_currentObjectTarget = defaultNULL;
         navigation.SetTargetToRandom();
-        m_RB.velocity = Vector3.zero;
     }
 
     public void Spooked() { }

@@ -160,6 +160,8 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
+    [SerializeField] private float defaultCareDecrement;
+
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>();
 
@@ -380,7 +382,7 @@ public class DogGeneration : MonoBehaviour
     {
         foreach (DogCareValue careValue in (DogCareValue[])DogCareValue.GetValues(typeof(DogCareValue)))
         {
-            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(careValue, new CareProperty(careValueStates[careValue], -1 / (72f * 60)));
+            if (careValue != DogCareValue.NONE) dog.m_careValues.Add(careValue, new CareProperty(careValueStates[careValue], defaultCareDecrement));
         }
 
         foreach (DogPersonalityValue personalityValue in (DogPersonalityValue[])DogPersonalityValue.GetValues(typeof(DogPersonalityValue)))

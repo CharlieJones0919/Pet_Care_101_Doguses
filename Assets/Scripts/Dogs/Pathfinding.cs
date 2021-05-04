@@ -28,7 +28,6 @@ public class Pathfinding : MonoBehaviour
     [SerializeField] private GameObject m_currentTarget;
     [SerializeField] private bool m_reachedTarget = false;
 
-
     /** \fn Start
     *  \brief Instantiate variable values when application starts.
     */
@@ -158,7 +157,7 @@ public class Pathfinding : MonoBehaviour
     */
     private void MoveDog()
     {
-        m_RB.velocity = (transform.forward * m_currentSpeed);
+        m_RB.velocity = (transform.forward * (m_currentSpeed * Time.timeScale));
     }
 
     /** \fn DogLookAt
@@ -175,7 +174,7 @@ public class Pathfinding : MonoBehaviour
         targetPosition.z = 0.0f;
 
         //Rotate dog towards target position.
-        if (!instant) transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, m_currentSpeed);
+        if (!instant) transform.rotation = Quaternion.RotateTowards(transform.rotation, targetPosition, (m_currentSpeed * 2.0f) * Time.timeScale);
         else transform.rotation = targetPosition;
     }
 

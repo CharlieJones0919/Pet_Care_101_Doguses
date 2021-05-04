@@ -16,14 +16,12 @@ public class Tired : State
 
     public override Type StateEnter()
     {
-        Debug.Log(doggo.name + ": Entering: Tired State");
+        doggo.currentState = "Tired State";
         return null;
     }
 
     public override Type StateExit()
     {
-        Debug.Log(doggo.name + ": Exiting Tired State");
-
         if (doggo.m_usingItem)
         {
             doggo.m_animationCTRL.SetTrigger("WakingUp");
@@ -41,7 +39,7 @@ public class Tired : State
         //{
         //    return typeof(Pause);
         //}
-        if (!doggo.Rested() && doggo.FindItemType(ItemType.BED))
+        if (!doggo.Rejuvinated() && doggo.FindItemType(ItemType.BED))
         {
             if (!doggo.m_usingItem)
             {
