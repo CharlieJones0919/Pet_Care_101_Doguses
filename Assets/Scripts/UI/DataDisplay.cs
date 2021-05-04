@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class DataDisplay : MonoBehaviour
 {
     [SerializeField] private Controller controller;
@@ -49,11 +47,6 @@ public class DataDisplay : MonoBehaviour
                         }
                         break;
                 }
-            }
-
-            foreach (KeyValuePair<DogPersonalityValue, Slider> sliderValue in personalityValueDisplayUI)
-            {
-                sliderValue.Value.value = focusedDog.m_personalityValues[sliderValue.Key].GetValue();
             }
         }
     }

@@ -10,7 +10,8 @@ public class Controller : MonoBehaviour
     [SerializeField] private Text ffButtonText;
 
     [SerializeField] private List<Dog> allDogs = new List<Dog>();
-    [SerializeField] private static int dogLimit = 8;
+    [SerializeField] private int dogLimit;
+    private const int maxGameSpeed = 10;
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
     public List<Vector3> permanentItemPositions = new List<Vector3>();
@@ -34,11 +35,11 @@ public class Controller : MonoBehaviour
         switch (Time.timeScale)
         {
             case (0):
-            case (10):
+            case (maxGameSpeed):
                 PAUSE(false);
                 break;
             default:
-                if (Time.timeScale < 10)
+                if (Time.timeScale < maxGameSpeed)
                 {
                     Time.timeScale++;
                 }
@@ -72,7 +73,7 @@ public class Controller : MonoBehaviour
                 if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
             }
         } 
-        Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
+        //Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
         return false;
     }
 
@@ -93,6 +94,11 @@ public class Controller : MonoBehaviour
     {
         if (allDogs.Count > 0) { return allDogs[allDogs.Count - 1]; }
         else return null;  
+    }
+
+    public void AgeDogs()
+    {
+        if (allDogs.Count > 0) {   foreach (Dog K9 in allDogs) { K9.m_age++; }  }
     }
 }
 
@@ -155,7 +161,7 @@ public class PersonalityProperty
 
     public void UpdateValue(float increment)
     {
-        m_value = Mathf.Clamp(m_value + ((increment/100) * Time.timeScale), 0.0f, 5.0f);
+        m_value = Mathf.Clamp(m_value + ((increment) * Time.timeScale), 0.0f, 5.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {

@@ -39,7 +39,10 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         private ItemType m_type;
         private GameObject m_instance;
         private Vector3 m_lastSpawnedPos = Vector3.zero;
+        private GameObject m_defaultParent;
+
         private Vector3 m_inactivePos;
+        private float m_activePosY;
         private GameObject m_nullUser;
         private GameObject m_user;
 
@@ -48,8 +51,10 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             m_type = itemType;
             m_instance = Instantiate(objectBase, inactivePos, objectBase.transform.rotation);
             m_instance.transform.SetParent(parentTransform.transform);
+            m_defaultParent = parentTransform;
 
             m_inactivePos = inactivePos;
+            m_activePosY = objectBase.transform.position.y;
             m_nullUser = nullObj;
             m_user = m_nullUser;
         }
@@ -59,6 +64,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             m_lastSpawnedPos = activePos;
             m_instance.SetActive(true);
             m_instance.transform.localPosition = activePos;
+            m_instance.transform.localPosition += new Vector3(0, m_activePosY, 0);
         }
 
         public void Deactivate()
@@ -77,6 +83,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public bool IsObject(GameObject thisObject) { return (m_instance == thisObject); }
         public Vector3 GetPosition() { return m_instance.transform.position; }
         public Vector3 GetLastSpawnPos() { return m_lastSpawnedPos; }
+        public GameObject GetParent() { return m_defaultParent; }
         public bool CurrentlyActive() { return m_instance.activeSelf; }
 
         public void SetUser(GameObject user) { m_user = user; }
@@ -155,7 +162,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         return false;
     }
 
-
     public bool TryGetClosestAvailableInstance(Dog attemptingUser)
     {
         if (numberOfAvailableInstances != 0)
@@ -189,13 +195,17 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     {
         foreach (ItemInstance instance in m_availablePoolInstances)
         {
-            if (instance.UsableFor(attemptingUser) && instance.IsObject(requestedInstance))
+            if (instance.IsObject(requestedInstance))
             {
-                instance.SetUser(attemptingUser);
-                m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
-                return true;
+                if (instance.UsableFor(attemptingUser))
+                {
+                    instance.SetUser(attemptingUser);
+                    m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
+                    return true;
+                }
             }
         }
+        Debug.LogWarning("This object could not be found in this item's instance pool.");
         return false;
     }
 
@@ -224,9 +234,17 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         return Vector3.zero;
     }
 
-    public float GetUseTime()
+    public GameObject GetInstanceParent(GameObject requestedInstance)
     {
-        return useTime;
+        foreach (ItemInstance instance in m_instancePool)
+        {
+            if (instance.IsObject(requestedInstance))
+            {
+                return instance.GetParent();
+            }
+        }
+        Debug.Log("Instance not found in the pool: " + requestedInstance.name);
+        return m_defaultNullObject;
     }
 
     public void StopUsingItemInstance(GameObject requestedInstance)
@@ -250,13 +268,13 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     }
 
     public ItemType GetItemType() { return m_itemType; }
-
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }
     public void SetSprite(Sprite sprite) { m_sprite = sprite; }
     public double GetPrice() { return m_price; }
     public string GetDescription() { return m_description; }
 
+    public float GetUseTime() { return useTime; }
     public bool IsSingleUse() { return m_singleUse; }
     public Vector2 GetUsePosOffset() { return m_relUsePos; }
     public bool NeedsUseOffset() { return m_needsUseOffset; }

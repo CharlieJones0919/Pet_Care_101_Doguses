@@ -8,7 +8,6 @@ public class Tired : State
 {
     protected Dog doggo;
 
-    //Called in the Chuck script to set this state's reference to itself.
     public Tired(Dog subjectDog)
     {
         doggo = subjectDog;

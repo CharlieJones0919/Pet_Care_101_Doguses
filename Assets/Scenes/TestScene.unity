@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 66242524}
   - component: {fileID: 66242527}
   - component: {fileID: 66242526}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2052,7 +2052,7 @@ GameObject:
   - component: {fileID: 596725318}
   - component: {fileID: 596725320}
   - component: {fileID: 596725319}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3108,7 +3108,7 @@ GameObject:
   - component: {fileID: 807378297}
   - component: {fileID: 807378299}
   - component: {fileID: 807378298}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4695,7 +4695,7 @@ GameObject:
   - component: {fileID: 1238925875}
   - component: {fileID: 1238925874}
   - component: {fileID: 1238925877}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8527,6 +8527,7 @@ MonoBehaviour:
   UIOutput: {fileID: 1793242820}
   ffButtonText: {fileID: 1933246477}
   allDogs: []
+  dogLimit: 10
   permanentItemPositions: []
 --- !u!114 &1958195945
 MonoBehaviour:
@@ -8540,7 +8541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCareDecrement: -0.0072
+  defaultCareDecrement: -0.0036
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   snoutMdls:
@@ -8585,6 +8586,7 @@ MonoBehaviour:
   - {fileID: 710161013}
   controller: {fileID: 1958195944}
   dogGenerator: {fileID: 1958195945}
+  timeAdjustment: 144
 --- !u!1 &2011454208
 GameObject:
   m_ObjectHideFlags: 0
@@ -8911,7 +8913,7 @@ GameObject:
   - component: {fileID: 2029690495}
   - component: {fileID: 2029690497}
   - component: {fileID: 2029690496}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

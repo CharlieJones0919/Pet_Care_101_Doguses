@@ -13,7 +13,7 @@ public class GameTime : MonoBehaviour
     [SerializeField] private Controller controller;
     [SerializeField] private DogGeneration dogGenerator;
 
-    [SerializeField] private const int timeAdjustment = 72; // 20 minutes of real time is 1 day in game time.
+    [SerializeField] private int timeAdjustment = 72 * 4; // 20 minutes of real time is 1 day in game time.
     private const int allowance = 80;
     [SerializeField] private static float playerMoney = 0;
 
@@ -92,7 +92,7 @@ public class GameTime : MonoBehaviour
         totalDaysTextbox.text = ("TOTAL DAYS: " + gameTimeDaysTotal);
     }
 
-    public static int GetSecondMultiplier() { return timeAdjustment; }
+    public int GetSecondMultiplier() { return timeAdjustment; }
     public static float GetPlayerMoney() { return playerMoney; }
 
     public static float GetGameTimeSeconds() { return gameTimeSeconds; }
@@ -118,6 +118,8 @@ public class GameTime : MonoBehaviour
     {
         weeklyFunctions.Add(WeeklyFunction_PayPlayer);
         weeklyFunctions.Add(WeeklyFunction_OfferDog);
+
+        annualFunctions.Add(AnnualFunction_AgeDogs);
     }
 
     private void DailyEvents()
@@ -139,6 +141,6 @@ public class GameTime : MonoBehaviour
 
     private void WeeklyFunction_PayPlayer() { UpdateMoneyValue(allowance); }
     private void WeeklyFunction_OfferDog() { dogGenerator.GenerateRandomNewDog(); }
-
+    private void AnnualFunction_AgeDogs() { controller.AgeDogs(); }
 
 }

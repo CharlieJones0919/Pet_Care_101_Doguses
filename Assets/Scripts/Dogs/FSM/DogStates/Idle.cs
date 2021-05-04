@@ -8,7 +8,6 @@ public class Idle : State
 {
     protected Dog doggo;
 
-    //Called in the Chuck script to set this state's reference to itself.
     public Idle(Dog subjectDog)
     {
         doggo = subjectDog;
@@ -27,13 +26,17 @@ public class Idle : State
 
     public override Type StateUpdate()
     {
-        if (!doggo.Fed() && doggo.FindItemType(ItemType.FOOD))
+        if (doggo.Hungry() && doggo.FindItemType(ItemType.FOOD))
         {
             return typeof(Hungry);
         }
         else if (doggo.Tired() && doggo.FindItemType(ItemType.BED))
         {
             return typeof(Tired);
+        }
+        else if (doggo.Lonely() && doggo.FindItemType(ItemType.TOYS))
+        {
+            return typeof(Playful);
         }
 
         doggo.Wander();

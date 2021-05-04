@@ -270,7 +270,7 @@ public class DogGeneration : MonoBehaviour
         Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 90), new Vector2(90, 100) };
 
         string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated"};
-        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100), new Vector2(100, 100) };
+        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100), new Vector2(95, 100) };
 
         string[] hygieneState = { "Filthy", "Dirty", "Clean" };
         Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(0, 75), new Vector2(75, 100) };
@@ -360,7 +360,8 @@ public class DogGeneration : MonoBehaviour
 
         dogScript.SetGlobalScripts(controller, dogUIOutputScript, groundAStar, randomPointStorage, defaultNullObject);
         dogScript.m_breed = breed;
-        dogScript.m_age = UnityEngine.Random.Range(1, int.Parse(GetBreedValue(breed, DogDataField.Max_Age)));
+        dogScript.m_maxAge = int.Parse(GetBreedValue(breed, DogDataField.Max_Age));
+        dogScript.m_age = UnityEngine.Random.Range(1, dogScript.m_maxAge);
 
         DefineDogProperties(dogScript);
         FinaliseDogBody(dogScript.m_breed, dogScript.m_body);

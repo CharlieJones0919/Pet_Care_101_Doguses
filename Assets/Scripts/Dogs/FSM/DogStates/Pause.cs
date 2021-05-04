@@ -8,7 +8,6 @@ public class Pause : State
 {
     protected Dog doggo;
 
-    //Called in the Chuck script to set this state's reference to itself.
     public Pause(Dog subjectDog)
     {
         doggo = subjectDog;
