@@ -38,6 +38,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     {
         private ItemType m_type;
         private GameObject m_instance;
+        private Vector3 m_lastSpawnedPos = Vector3.zero;
         private Vector3 m_inactivePos;
         private GameObject m_nullUser;
         private GameObject m_user;
@@ -55,6 +56,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
         public void Activate(Vector3 activePos)
         {
+            m_lastSpawnedPos = activePos;
             m_instance.SetActive(true);
             m_instance.transform.localPosition = activePos;
         }
@@ -74,6 +76,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public GameObject GetObject() { return m_instance; }
         public bool IsObject(GameObject thisObject) { return (m_instance == thisObject); }
         public Vector3 GetPosition() { return m_instance.transform.position; }
+        public Vector3 GetLastSpawnPos() { return m_lastSpawnedPos; }
         public bool CurrentlyActive() { return m_instance.activeSelf; }
 
         public void SetUser(GameObject user) { m_user = user; }
@@ -206,6 +209,19 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             }
         }
         return false;
+    }
+
+    public Vector3 GetInstanceSpawnPos(GameObject requestedInstance)
+    {
+        foreach (ItemInstance instance in m_instancePool)
+        {
+            if (instance.IsObject(requestedInstance))
+            {
+                return instance.GetLastSpawnPos();
+            }
+        }
+        Debug.Log("Instance not found in the pool: " + requestedInstance.name);
+        return Vector3.zero;
     }
 
     public float GetUseTime()

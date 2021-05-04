@@ -8,9 +8,9 @@ public class DogController : MonoBehaviour
     public GameTime localTime;
     public TipPopUp tipPopUp;
 
-   // private List<GameObject> objectsForDeletion = new List<GameObject>();
-
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
+    public List<Vector3> permanentItemPositions = new List<Vector3>();
+    public Dictionary<Vector3, bool> tempItemPositions = new Dictionary<Vector3, bool>();
 
     public void AddToItemPools(ItemType itemGroup, Item item)
     {
@@ -32,6 +32,19 @@ public class DogController : MonoBehaviour
         } 
         Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
         return false;
+    }
+
+    public void EndItemUse(Item item, GameObject instance)
+    {
+        if (item.IsSingleUse())
+        {
+            Vector3 instanceSpawnPos = item.GetInstanceSpawnPos(instance);
+            if (tempItemPositions.ContainsKey(instanceSpawnPos))
+            {
+                tempItemPositions[instanceSpawnPos] = false;
+            }
+        }
+        item.StopUsingItemInstance(instance);
     }
 }
 
