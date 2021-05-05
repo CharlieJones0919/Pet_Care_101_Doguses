@@ -54,6 +54,7 @@ public class DataDisplay : MonoBehaviour
     private void OnDisable()
     {
         focusedDog = null;
+        controller.NotFocusedOnDog();
     }
 
     private void FixedUpdate()
@@ -73,13 +74,13 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
+    
+
     public void SetFocusDog(Dog focus) { focusedDog = focus; gameObject.SetActive(true); }
 
     public void ActivateNewDogPanel() { newDogPanel.SetActive(true); }
-
     public void NewDogAdded()
     {
-        SetFocusDog(controller.GetNewestDog());
         controller.PAUSE(false);
         gameObject.SetActive(true);
         newDogPanel.SetActive(false);
@@ -87,10 +88,8 @@ public class DataDisplay : MonoBehaviour
 
     public GameObject GetFocusDog()
     {
-        if (focusedDog != null)
-            return focusedDog.gameObject;
-        else
-            return null;
+        if (focusedDog != null) { return focusedDog.gameObject; }
+        else { return null; }
     }
 
     public void SetNewDogName(string name)

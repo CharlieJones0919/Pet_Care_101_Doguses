@@ -32,7 +32,6 @@ public class TipPopUp : MonoBehaviour
         SetTipDisplayTime(tip);
         yield return new WaitForSeconds(secondsToDisplay);
         messageQue.Remove(tipText.text);
-
         if (messageQue.Count > 0) { StartCoroutine(TipTimer(messageQue[0])); }
         else { gameObject.SetActive(false); }
     }

@@ -121,34 +121,45 @@ public class StoreController : MonoBehaviour
      
         SectionSelected(storeSections[(ItemType)0]);
         gameObject.SetActive(false);
+        purchaseButton.interactable = true;
     }
 
     public void PurchaseAttempt()
     {
-        if (!focusItem.IsSingleUse())
+        if (controller.HasEnoughMoney(focusItem.GetPrice()))
         {
-            if (controller.permanentItemPositions.Count > 0)
+            if (!focusItem.IsSingleUse())
             {
-                focusItem.ActivateAvailableInstanceTo(controller.permanentItemPositions[0]);
-                controller.permanentItemPositions.Remove(controller.permanentItemPositions[0]);
-                return;
+                if (controller.permanentItemPositions.Count > 0)
+                {
+                    focusItem.ActivateAvailableInstanceTo(controller.permanentItemPositions[0]);
+                    controller.permanentItemPositions.Remove(controller.permanentItemPositions[0]);
+                    controller.MakePurchase(focusItem.GetPrice());
+                    return;
+                }
+                controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore items.");
             }
-            controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore items."); 
+            else
+            {
+                foreach (KeyValuePair<Vector3, bool> position in controller.tempItemPositions)
+                {
+                    if (!position.Value)
+                    {
+                        focusItem.ActivateAvailableInstanceTo(position.Key);
+                        controller.tempItemPositions[position.Key] = true;
+                        controller.MakePurchase(focusItem.GetPrice());
+                        return;
+                    }
+                }
+                controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore temporary items.");
+            }
         }
         else
         {
-            foreach (KeyValuePair<Vector3, bool> position in controller.tempItemPositions)
-            {
-                if (!position.Value)
-                {
-                    focusItem.ActivateAvailableInstanceTo(position.Key);
-                    controller.tempItemPositions[position.Key] = true;
-                    return;
-                }
-            }
-            controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore temporary items.");
+            controller.tipPopUp.DisplayTipMessage("You don't have enough money for this item.");
+            purchaseButton.interactable = false;
         }
-    }
+    }     
 
     public void SetFocusItem(ItemSlot focusSlot)
     {
@@ -159,6 +170,9 @@ public class StoreController : MonoBehaviour
             focusItemImage.sprite = focusItem.GetSprite();
             focusItemPrice.text = string.Format("{0:F2}", focusItem.GetPrice());
             focusItemDesc.text = focusItem.GetDescription();
+
+            if (!controller.HasEnoughMoney(focusItem.GetPrice())) { purchaseButton.interactable = false; }
+            else { purchaseButton.interactable = true; }
             return;
         }
     }

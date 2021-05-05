@@ -8,30 +8,27 @@ public class Hungry : State
 {
     protected Dog doggo;
 
-    public Hungry(Dog subjectDog)
-    {
-        doggo = subjectDog;
-    }
+    public Hungry(Dog subjectDog) { doggo = subjectDog; }
 
     public override Type StateEnter()
     {
-        doggo.currentState = "Hungry State";
+#if UNITY_EDITOR
+        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Entering Hungry State");
+#endif
         return null;
     }
 
     public override Type StateExit()
     {
-        if (doggo.m_usingItem)
-        {
-            doggo.EndItemUse();
-        } 
-
+#if UNITY_EDITOR
+        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Exiting Hungry State");
+#endif
         return null;
     }
 
     public override Type StateUpdate()
     {
-        if (!doggo.Overfed())
+        if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
         {
             if (!doggo.m_usingItem)
             {
@@ -45,10 +42,7 @@ public class Hungry : State
                 }
             }
         }
-        else 
-        {
-            return typeof(Pause);
-        }
+        else { return typeof(Pause); }
 
         return null;
     }

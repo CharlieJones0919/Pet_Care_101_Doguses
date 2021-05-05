@@ -5,17 +5,29 @@ using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
+    public GameObject defaultNULL;
+    public AStarSearch groundSearch;
+    public GameObject randomPointStorage;
+
     public TipPopUp tipPopUp;
     public DataDisplay UIOutput;     //!< Script from the infoPanelObject.
     [SerializeField] private Text ffButtonText;
 
-    [SerializeField] private List<Dog> allDogs = new List<Dog>();
+    private static float playerMoney = 0;
+    [SerializeField] private List<Text> playerMoneyTextboxes = new List<Text>();
+
+    [SerializeField] private Dictionary<GameObject, Dog> allDogs = new Dictionary<GameObject, Dog>();
     [SerializeField] private int dogLimit;
     private const int maxGameSpeed = 10;
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
     public List<Vector3> permanentItemPositions = new List<Vector3>();
     public Dictionary<Vector3, bool> tempItemPositions = new Dictionary<Vector3, bool>();
+
+    //[SerializeField] private bool isPetting = false;
+
+    //public bool IsPetting() { return isPetting; }
+    //public void SetPetting() { isPetting = !isPetting; }
 
     public void PAUSE(bool state)
     {
@@ -50,8 +62,11 @@ public class Controller : MonoBehaviour
 
     public void AddDog(Dog newDog)
     {
-        allDogs.Add(newDog);
+        allDogs.Add(newDog.gameObject, newDog);
+        newDog.SetController(this);
+
         UIOutput.ActivateNewDogPanel();
+        UIOutput.SetFocusDog(newDog);
         PAUSE(true);
     }
 
@@ -64,6 +79,18 @@ public class Controller : MonoBehaviour
         itemPools[itemGroup].Add(item);
     }
 
+    public bool GetActiveItemFor(ItemType requiredType, Dog attemptingDog)
+    {
+        if (itemPools[requiredType].Count > 0)
+        {
+            foreach (Item item in itemPools[requiredType])
+            {
+                if (item.TryGetAvailableInstance(attemptingDog)) { return true; }
+            }
+        }
+        return false;
+    }
+
     public bool GetClosestActiveItemFor(ItemType requiredType, Dog attemptingDog)
     {
         if (itemPools[requiredType].Count > 0)
@@ -73,7 +100,6 @@ public class Controller : MonoBehaviour
                 if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
             }
         } 
-        //Debug.LogWarning("No " + requiredType.ToString() + " type items are available for the " + attemptingDog.m_breed + " called " + attemptingDog.m_name.ToString() + "." );
         return false;
     }
 
@@ -90,23 +116,53 @@ public class Controller : MonoBehaviour
         item.StopUsingItemInstance(instance);
     }
 
-    public Dog GetNewestDog()
-    {
-        if (allDogs.Count > 0) { return allDogs[allDogs.Count - 1]; }
-        else return null;  
-    }
-
     public void AgeDogs()
     {
-        if (allDogs.Count > 0) {   foreach (Dog K9 in allDogs) { K9.m_age++; }  }
+        if (allDogs.Count > 0) {   foreach (Dog K9 in allDogs.Values) { K9.m_age++; }  }
     }
+
+    public static float GetPlayerMoney() { return playerMoney; }
+
+    public void GiveAllowance(float amount) { UpdateMoneyValue(amount); }
+    public bool HasEnoughMoney(float cost) { return (cost <= playerMoney); }
+
+    public bool MakePurchase(float cost)
+    {
+        if (HasEnoughMoney(cost))
+        {
+            UpdateMoneyValue(-cost);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void UpdateMoneyValue(float modification)
+    {
+        playerMoney += modification; 
+
+        if (playerMoneyTextboxes.Count > 0)
+        {
+            foreach (Text textbox in playerMoneyTextboxes)
+            {
+                textbox.text = string.Format("{0:F2}", playerMoney);
+            }
+        }
+    }
+
+    public void InsufficientFundsCheck()
+    {
+        if (playerMoney == 0) { tipPopUp.DisplayTipMessage("You don't have enough funds to buy anything right now. You'll get another donation tomorrow."); }
+    }
+
+    public void NotFocusedOnDog() { foreach (Dog dog in allDogs.Values) { dog.m_isFocusDog = false; } }
 }
 
 public class CareProperty
 {
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
     private List<string> m_currentStates = new List<string>();
-    private float m_value = 75;
+    private float m_value = 50;
     private float m_decrement;
 
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)

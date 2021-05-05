@@ -9,13 +9,11 @@ public class GameTime : MonoBehaviour
     [SerializeField] private Text dateTextbox;
     [SerializeField] private Text timeTextbox;
     [SerializeField] private Text totalDaysTextbox;
-    [SerializeField] private List<Text> playerMoneyTextboxes = new List<Text>();
     [SerializeField] private Controller controller;
     [SerializeField] private DogGeneration dogGenerator;
 
-    [SerializeField] private int timeAdjustment = 72 * 50; 
+    [SerializeField] private int timeAdjustment = 72 * 100; 
     private const int allowance = 80;
-    [SerializeField] private static float playerMoney = 0;
 
     [SerializeField] private static float gameTimeSeconds = 0;
     [SerializeField] private static int gameTimeMinutes = 0;
@@ -93,26 +91,12 @@ public class GameTime : MonoBehaviour
     }
 
     public int GetSecondMultiplier() { return timeAdjustment; }
-    public static float GetPlayerMoney() { return playerMoney; }
 
     public static float GetGameTimeSeconds() { return gameTimeSeconds; }
     public static int GetGameTimeMinutes() { return gameTimeMinutes; }
     public static int GetGameTimeHours() { return gameTimeHours; }
     public static int GetGameTimeDays() { return gameTimeDays; }
     public static int GetGameTimeWeeks() { return gameTimeWeeks; }
-
-    private void UpdateMoneyValue(float modification = 0.0f)
-    {
-        if (modification > 0.0f) { playerMoney += modification; }
-
-        if (playerMoneyTextboxes.Count > 0)
-        {
-            foreach (Text textbox in playerMoneyTextboxes)
-            {
-                textbox.text = string.Format("{0:F2}", playerMoney);
-            }
-        }
-    }
 
     private void InstantiateFunctionLists()
     {
@@ -139,7 +123,7 @@ public class GameTime : MonoBehaviour
         if (annualFunctions.Count > 0) { foreach (AnnualFunction function in annualFunctions) function(); }
     }
 
-    private void WeeklyFunction_PayPlayer() { UpdateMoneyValue(allowance); }
+    private void WeeklyFunction_PayPlayer() { controller.GiveAllowance(allowance); }
     private void WeeklyFunction_OfferDog() { dogGenerator.GenerateRandomNewDog(); }
     private void AnnualFunction_AgeDogs() { controller.AgeDogs(); }
 

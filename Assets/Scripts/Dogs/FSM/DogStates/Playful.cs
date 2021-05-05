@@ -8,23 +8,25 @@ public class Playful : State
 {
     protected Dog doggo;
 
-    public Playful(Dog subjectDog)
-    {
-        doggo = subjectDog;
-    }
+    public Playful(Dog subjectDog) { doggo = subjectDog; }
 
     public override Type StateEnter()
     {
-        doggo.currentState = "Playful State";
+#if UNITY_EDITOR
+        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Entering Playful State");
+#endif
         return null;
     }
 
     public override Type StateExit()
     {
+#if UNITY_EDITOR
+        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Exiting Playful State");
+#endif
         if (doggo.m_usingItem)
         {
+            doggo.SetRunning(false);
             doggo.EndItemUse();
-           // doggo.StopPlaying();
         }
         return null;
     }
@@ -38,11 +40,13 @@ public class Playful : State
                 if (doggo.ReachedTarget())
                 {
                     doggo.UseItem();
+                    doggo.PickUpTarget();
+                    doggo.SetRunning(true);
                 }
             }
-            else { doggo.UseItem(); doggo.Play(); }
+            else { doggo.Wander(); }
         }
-        else { return typeof(Idle); }
+        else {  return typeof(Idle);  }
 
         return null;
     }

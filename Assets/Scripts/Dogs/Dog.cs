@@ -9,12 +9,9 @@ using UnityEngine;
 */
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private Controller controller;     //!< Reference to the game's Controller script to retrieve data required by all dogs. 
+    [SerializeField] private Controller controller;     //!< Reference to the game's Controller script to retrieve data required by all dogs.
     [SerializeField] private Pathfinding navigation;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
-    [SerializeField] private GameObject defaultNULL;
-    public string currentState;
-
-    public void SetGlobalScripts(Controller ctrl, DataDisplay UI, AStarSearch aStar, GameObject randStore, GameObject NULL) { controller = ctrl; navigation.m_aStarSearch = aStar; navigation.m_randomPointStorage = randStore; defaultNULL = NULL; }
+    public void SetController(Controller ctrl) { controller = ctrl; navigation.m_aStarSearch = controller.groundSearch; navigation.m_randomPointStorage = controller.randomPointStorage; }
 
     public string m_name;   //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
@@ -25,8 +22,6 @@ public class Dog : MonoBehaviour
     public Animator m_animationCTRL;
     public BoxCollider m_collider;
     [SerializeField] private Rigidbody m_RB;
-
-    private int lastDayUpdated = 0;
 
     public Dictionary<DogCareValue, CareProperty> m_careValues = new Dictionary<DogCareValue, CareProperty>(); //!< A list of the dog's current care value properties so they can be easily iterated through.
     public Dictionary<DogPersonalityValue, PersonalityProperty> m_personalityValues = new Dictionary<DogPersonalityValue, PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
@@ -41,7 +36,13 @@ public class Dog : MonoBehaviour
     public bool m_usingItem = false;         //!< Whether the dog is currently using an item.
     public bool m_waiting = true;            //!< Whether the dog is currently paused and waiting to stop pausing.
     public bool m_needsToFinishAnim = false;            //!< Whether the dog is currently paused and waiting to stop pausing.
+    public bool m_beingPet = false;
+    public bool m_isFocusDog = true;
+
     public bool m_holdingItem = false;
+    private Vector3 m_holdingOffset = new Vector3(0.0f, -0.45f, 1.0f);
+    private float m_heldItemPrevYPos;
+  //  private GameObject m_heldItemPrevParent;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
@@ -64,8 +65,9 @@ public class Dog : MonoBehaviour
         //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
 
-        newStates.Add(typeof(Idle), new Idle(this));    //When finished this will be the default starting state. (Wandering until current care values need attending to).
+        newStates.Add(typeof(Idle), new Idle(this));    // This is the default starting state. (Wandering until current care values need attending to).
         newStates.Add(typeof(Pause), new Pause(this));
+      
         newStates.Add(typeof(Hungry), new Hungry(this));
         newStates.Add(typeof(Tired), new Tired(this));
         newStates.Add(typeof(Playful), new Playful(this));
@@ -81,7 +83,8 @@ public class Dog : MonoBehaviour
         while (!navigation.GenerateRandomPointInWorld(gameObject)) ;
         float ground2FootDiff = navigation.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
         transform.position += new Vector3(0, ground2FootDiff, 0);
-        m_currentObjectTarget = defaultNULL;
+
+        m_currentObjectTarget = controller.defaultNULL;
 
         ///////// Rules /////
 
@@ -118,13 +121,16 @@ public class Dog : MonoBehaviour
         UpdatePersonalityValues();
 
         if (InFocus())
-        {
-            controller.UIOutput.gameObject.SetActive(false);
-
+        {     
             if (controller.UIOutput.GetFocusDog() != gameObject)
             {
                 controller.UIOutput.SetFocusDog(this);
             }
+        }
+
+        if (m_holdingItem)
+        {
+           // m_currentObjectTarget.transform.position = m_body[BodyPart.Snout].m_component.transform.position + Vector3.Cross(m_holdingOffset, transform.forward);
         }
 
         m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
@@ -156,9 +162,9 @@ public class Dog : MonoBehaviour
     /** \fn InFocus
      *  \brief An API agnostic function to check whether the dog has been tapped or clicked on by the player. If in the editor it's defined by the function checking for mouse input but is otherwise defined by the function checking for touch input.
      *  */
-#if UNITY_EDITOR //If in the editor, check for mouse input.
     private bool InFocus() //If presumably in the editor check for left mouse button click input.
     {
+#if UNITY_EDITOR //If in the editor, check for mouse input.
         if (Input.GetMouseButtonDown(0))
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -167,28 +173,28 @@ public class Dog : MonoBehaviour
             if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
             {
                 Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
-                if (raycastHit.collider == m_collider) { m_careValues[DogCareValue.Attention].UpdateValue(-10.0f); return true; }
+                if (raycastHit.collider == m_collider)
+                {
+                    m_isFocusDog = true;
+                    return true;
+                }
             }
         }
         return false;
-    }
 #elif UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
-    private bool InFocus()
-    {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
             RaycastHit raycastHit;
 
-            if (Physics.Raycast(raycast, out raycastHit)) //If the raycast hits anything...
+            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity)) //If the raycast hits anything...
             {
-                Debug.Log("Selected: " + raycastHit.collider.gameObject.name); //Output the name of the object hit by the raycast.
                 if (raycastHit.collider == m_collider) return true; //If the collider hit belongs to this object, this dog is in focus.
             }
         }
-        return false;
-    }
+        return false;  
 #endif
+    }
 
     //private void OnTriggerEnter(Collider collision)
     //{
@@ -257,12 +263,12 @@ public class Dog : MonoBehaviour
 
     public bool HasTarget()
     {
-        return (m_currentObjectTarget != defaultNULL);
+        return (m_currentObjectTarget != controller.defaultNULL);
     }
 
     public bool TargetItemIsFor(DogCareValue value)
     {
-        if (m_currentObjectTarget != defaultNULL)
+        if (m_currentObjectTarget != controller.defaultNULL)
         {
             return m_currentItemTarget.FufillsCareValue(value);
         }
@@ -271,7 +277,7 @@ public class Dog : MonoBehaviour
 
     public bool TargetItemIsFor(DogPersonalityValue value)
     {
-        if (m_currentObjectTarget != defaultNULL)
+        if (m_currentObjectTarget != controller.defaultNULL)
         {
             return m_currentItemTarget.FufillsPersonalityValue(value);
         }
@@ -290,12 +296,16 @@ public class Dog : MonoBehaviour
         {
             return true;
         }
+        else if (controller.GetActiveItemFor(type, this))
+        {
+            return true;
+        }
         return false;
     }
 
     public bool ReachedTarget()
     {
-        if (m_currentObjectTarget != defaultNULL)
+        if (m_currentObjectTarget != controller.defaultNULL)
         {
             if (navigation.IsSetToObject(m_currentObjectTarget))
             {
@@ -314,29 +324,55 @@ public class Dog : MonoBehaviour
 
     public void UseItem()
     {
-        if (m_currentObjectTarget != defaultNULL)
+        if (m_currentObjectTarget != controller.defaultNULL)
         {
             if (!m_usingItem)
             {
-                m_usingItem = true;
-
-                if (m_currentItemTarget.NeedsUseOffset())
+                if (m_currentItemTarget.UseItemInstance(gameObject, m_currentObjectTarget))
                 {
-                    Vector3 usePosition = m_currentObjectTarget.transform.position;
-                    Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
-                    usePosition.x += usePosOffset.x;
-                    usePosition.y = transform.position.y;
-                    usePosition.z += usePosOffset.y;
-                    transform.position = usePosition;
+                    m_usingItem = true;
+
+                    if (m_currentItemTarget.NeedsUseOffset())
+                    {
+                        Vector3 usePosition = m_currentObjectTarget.transform.position;
+                        Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
+                        usePosition.x += usePosOffset.x;
+                        usePosition.y = transform.position.y;
+                        usePosition.z += usePosOffset.y;
+                        transform.position = usePosition;
+                    }
+
+                    if (m_currentItemTarget.IsSingleUse())
+                    {
+                        UpdateCareValues();
+                        UpdatePersonalityValues();
+                        EndItemUse();
+                    }
                 }
-
-                UpdateCareValues();
-                UpdatePersonalityValues();
-
-                if (m_currentItemTarget.IsSingleUse()) { EndItemUse(); }
+                else { Debug.Log("Failed use."); }
             }
         }
         else { Debug.LogWarning("No item to use."); }
+    }
+
+    public void EndItemUse()
+    {
+        Debug.LogWarning("Ending Item Use");
+        controller.EndItemUse(m_currentItemTarget, m_currentObjectTarget);
+        m_usingItem = false;
+
+        if (m_holdingItem)
+        {
+            m_currentObjectTarget.transform.SetParent(m_currentItemTarget.GetInstanceParent(m_currentObjectTarget).transform);
+
+            Vector3 groundPos = m_currentObjectTarget.transform.position;
+            groundPos.y = m_heldItemPrevYPos;
+            m_currentObjectTarget.transform.position = groundPos;
+
+            m_holdingItem = false;
+        }
+
+        ClearCurrentTarget();
     }
 
     public void Wander()
@@ -356,40 +392,26 @@ public class Dog : MonoBehaviour
         m_waiting = false;
     }
 
-    public void EndItemUse()
+    public void PickUpTarget()
     {
-        m_usingItem = false;
-        controller.EndItemUse(m_currentItemTarget, m_currentObjectTarget);
-        ClearCurrentTarget();
-    }
-
-    public void Play()
-    {
-        if (m_currentObjectTarget != defaultNULL)
+        if (m_currentObjectTarget != controller.defaultNULL)
         {
             if (!m_holdingItem)
-            {
-                m_currentObjectTarget.transform.position = m_body[BodyPart.Snout].m_component.transform.position;
-                m_currentObjectTarget.transform.parent = m_body[BodyPart.Snout].m_component.transform;
-                navigation.SetRunning(true);
+            { 
+                m_heldItemPrevYPos = m_currentObjectTarget.transform.position.y;
+                m_currentObjectTarget.transform.SetParent(m_body[BodyPart.Snout].m_component.transform);
+                m_currentObjectTarget.transform.localPosition = Vector3.zero + m_holdingOffset;
                 m_holdingItem = true;
             }
         }
-      // Wander();
     }
 
-    public void StopPlaying()
-    {
-        m_currentObjectTarget.transform.position = m_currentItemTarget.GetInstanceSpawnPos(m_currentObjectTarget);
-        m_currentObjectTarget.transform.parent = m_currentItemTarget.GetInstanceParent(m_currentObjectTarget).transform;
-        navigation.SetRunning(false);
-        m_holdingItem = false;
-    }
+    public void SetRunning(bool running) { navigation.SetRunning(running); }
 
     public void ClearCurrentTarget()
     {
         m_currentItemTarget = null;
-        m_currentObjectTarget = defaultNULL;
+        m_currentObjectTarget = controller.defaultNULL;
         navigation.SetTargetToRandom();
     }
 

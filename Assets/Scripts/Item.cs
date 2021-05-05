@@ -19,14 +19,12 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     [SerializeField] private Vector3 m_instancesInactivePos;
 
     private List<ItemInstance> m_instancePool = new List<ItemInstance>();
-    private List<ItemInstance> m_availablePoolInstances = new List<ItemInstance>();
     private int numberOfPoolInstances = 0;
-    private int numberOfAvailableInstances = 0;
 
     [SerializeField] private ItemType m_itemType;
     [SerializeField] private string m_name = null;
     [SerializeField] private Sprite m_sprite;
-    [SerializeField] private double m_price;
+    [SerializeField] private float m_price;
     [SerializeField] private string m_description;
 
     [SerializeField] private bool m_singleUse;
@@ -88,7 +86,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         public void SetUser(GameObject user) { m_user = user; }
         public bool UserIs(GameObject thisUser) { return (m_user == thisUser); }
         public GameObject GetUser() { return m_user; }
-        public bool UsableFor(GameObject user) { return (((m_user == m_nullUser) || (m_user == user)) && m_instance.activeSelf); }
+        public bool UsableFor(GameObject user) { return (((m_user == m_nullUser) || (m_user == user)) && CurrentlyActive()); }
     }
 
     public void InstantiatePool(uint numInitialInstances = 0)
@@ -122,14 +120,12 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             if (!instance.CurrentlyActive())
             {
                 instance.Activate(spawnPos);
-                m_availablePoolInstances.Add(instance); numberOfAvailableInstances++;
                 return;
             }
         }
 
         AddNewToPool().Activate(spawnPos);
-        m_availablePoolInstances.Add(m_instancePool[m_instancePool.Count - 1]); numberOfAvailableInstances++;
-    }
+     }
 
     public void DeactivateInstance(GameObject instanceToDeactivate)
     {
@@ -138,8 +134,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             if (instance.IsObject(instanceToDeactivate) && instance.CurrentlyActive())
             {
                 instance.Deactivate();
-
-                m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
                 return;
             }
         }
@@ -148,14 +142,15 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public bool TryGetAvailableInstance(Dog attemptingUser)
     {
-        if (numberOfAvailableInstances == 0) { return false; }
-
-        foreach (ItemInstance instance in m_availablePoolInstances)
+        if (numberOfPoolInstances != 0)
         {
-            if (instance.UsableFor(attemptingUser.gameObject))
+            foreach (ItemInstance instance in m_instancePool)
             {
-                attemptingUser.SetCurrentTargetItem(this, instance.GetObject());
-                return true;
+                if (instance.UsableFor(attemptingUser.gameObject))
+                {
+                    attemptingUser.SetCurrentTargetItem(this, instance.GetObject());
+                    return true;
+                }
             }
         }
         return false;
@@ -163,18 +158,18 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public bool TryGetClosestAvailableInstance(Dog attemptingUser)
     {
-        if (numberOfAvailableInstances != 0)
+        if (numberOfPoolInstances != 0)
         {
             Vector3 userPosition = attemptingUser.gameObject.transform.position;
             ItemInstance closestInstanceSoFar = null;
             float closestDistanceSoFar = 0.0f;
 
-            foreach (ItemInstance instance in m_availablePoolInstances)
+            foreach (ItemInstance instance in m_instancePool)
             {
                 if (instance.UsableFor(attemptingUser.gameObject) || instance.UserIs(attemptingUser.gameObject))
                 {
                     float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
-                    if ((thisDist < closestDistanceSoFar) || (instance == m_availablePoolInstances[0]))
+                    if ((thisDist < closestDistanceSoFar) || (instance == m_instancePool[0]))
                     {
                         closestInstanceSoFar = instance;
                         closestDistanceSoFar = thisDist;
@@ -192,29 +187,33 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public bool UseItemInstance(GameObject attemptingUser, GameObject requestedInstance)
     {
-        foreach (ItemInstance instance in m_availablePoolInstances)
+        if (numberOfPoolInstances != 0)
         {
-            if (instance.IsObject(requestedInstance))
+            foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.UsableFor(attemptingUser))
-                {
-                    instance.SetUser(attemptingUser);
-                    m_availablePoolInstances.Remove(instance); numberOfAvailableInstances--;
-                    return true;
+                if (instance.IsObject(requestedInstance))
+                {       
+                    if (instance.UsableFor(attemptingUser))
+                    {
+                        instance.SetUser(attemptingUser);
+                        return true;
+                    }
                 }
             }
         }
-        Debug.LogWarning("This object could not be found in this item's instance pool.");
         return false;
     }
 
     public bool IsUsable(GameObject attemptingUser, GameObject requestedInstance)
     {
-        foreach (ItemInstance instance in m_availablePoolInstances)
+        if (numberOfPoolInstances != 0)
         {
-            if (instance.UsableFor(attemptingUser) && instance.IsObject(requestedInstance))
+            foreach (ItemInstance instance in m_instancePool)
             {
-                return true;
+                if (instance.UsableFor(attemptingUser) && instance.IsObject(requestedInstance))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -235,11 +234,14 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public GameObject GetInstanceParent(GameObject requestedInstance)
     {
-        foreach (ItemInstance instance in m_instancePool)
+        if (numberOfPoolInstances != 0)
         {
-            if (instance.IsObject(requestedInstance))
+            foreach (ItemInstance instance in m_instancePool)
             {
-                return instance.GetParent();
+                if (instance.IsObject(requestedInstance))
+                {
+                    return instance.GetParent();
+                }
             }
         }
         Debug.Log("Instance not found in the pool: " + requestedInstance.name);
@@ -248,19 +250,21 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
     public void StopUsingItemInstance(GameObject requestedInstance)
     {
-        foreach (ItemInstance instance in m_instancePool)
+        if (numberOfPoolInstances != 0)
         {
-            if (instance.IsObject(requestedInstance))
+            foreach (ItemInstance instance in m_instancePool)
             {
-                switch (IsSingleUse())
+                if (instance.IsObject(requestedInstance))
                 {
-                    case (false):
-                        instance.EndUse();
-                        m_availablePoolInstances.Add(instance); numberOfAvailableInstances++;
-                        break;
-                    case (true):
-                        instance.Deactivate();
-                        break;
+                    switch (IsSingleUse())
+                    {
+                        case (false):
+                            instance.EndUse();
+                            break;
+                        case (true):
+                            instance.Deactivate();
+                            break;
+                    }
                 }
             }
         }
@@ -270,7 +274,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     public string GetName() { return m_name; }
     public Sprite GetSprite() { return m_sprite; }
     public void SetSprite(Sprite sprite) { m_sprite = sprite; }
-    public double GetPrice() { return m_price; }
+    public float GetPrice() { return m_price; }
     public string GetDescription() { return m_description; }
 
     public bool IsSingleUse() { return m_singleUse; }
