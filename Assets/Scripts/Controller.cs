@@ -13,7 +13,9 @@ public class Controller : MonoBehaviour
     public DataDisplay UIOutput;     //!< Script from the infoPanelObject.
     [SerializeField] private Text ffButtonText;
 
-    private static float playerMoney = 0;
+    [SerializeField] private float playerMoney = 0;
+    private const float allowance = 50;
+    private const float bonusPay = 0.05f;
     [SerializeField] private List<Text> playerMoneyTextboxes = new List<Text>();
 
     [SerializeField] private Dictionary<GameObject, Dog> allDogs = new Dictionary<GameObject, Dog>();
@@ -21,13 +23,8 @@ public class Controller : MonoBehaviour
     private const int maxGameSpeed = 10;
 
     private Dictionary<ItemType, List<Item>> itemPools = new Dictionary<ItemType, List<Item>>();
-    public List<Vector3> permanentItemPositions = new List<Vector3>();
-    public Dictionary<Vector3, bool> tempItemPositions = new Dictionary<Vector3, bool>();
-
-    //[SerializeField] private bool isPetting = false;
-
-    //public bool IsPetting() { return isPetting; }
-    //public void SetPetting() { isPetting = !isPetting; }
+    public List<Vector3> bedItemPositions = new List<Vector3>();
+    public Dictionary<Vector3, bool> foodItemPositions = new Dictionary<Vector3, bool>();
 
     public void PAUSE(bool state)
     {
@@ -108,9 +105,9 @@ public class Controller : MonoBehaviour
         if (item.IsSingleUse())
         {
             Vector3 instanceSpawnPos = item.GetInstanceSpawnPos(instance);
-            if (tempItemPositions.ContainsKey(instanceSpawnPos))
+            if (foodItemPositions.ContainsKey(instanceSpawnPos))
             {
-                tempItemPositions[instanceSpawnPos] = false;
+                foodItemPositions[instanceSpawnPos] = false;
             }
         }
         item.StopUsingItemInstance(instance);
@@ -121,9 +118,10 @@ public class Controller : MonoBehaviour
         if (allDogs.Count > 0) {   foreach (Dog K9 in allDogs.Values) { K9.m_age++; }  }
     }
 
-    public static float GetPlayerMoney() { return playerMoney; }
+    public float GetPlayerMoney() { float moneyVal = playerMoney; return moneyVal; }
 
-    public void GiveAllowance(float amount) { UpdateMoneyValue(amount); }
+    public void GiveAllowance() { UpdateMoneyValue(allowance); }
+    public void GiveGoodCareBonus() { UpdateMoneyValue(bonusPay * Time.deltaTime); }
     public bool HasEnoughMoney(float cost) { return (cost <= playerMoney); }
 
     public bool MakePurchase(float cost)
@@ -155,14 +153,14 @@ public class Controller : MonoBehaviour
         if (playerMoney == 0) { tipPopUp.DisplayTipMessage("You don't have enough funds to buy anything right now. You'll get another donation tomorrow."); }
     }
 
-    public void NotFocusedOnDog() { foreach (Dog dog in allDogs.Values) { dog.m_isFocusDog = false; } }
+    public void NotFocusedOnDog() { foreach (Dog dog in allDogs.Values) { dog.m_facts["IS_FOCUS"] = false; } }
 }
 
 public class CareProperty
 {
     private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
     private List<string> m_currentStates = new List<string>();
-    private float m_value = 50;
+    private float m_value = 100;
     private float m_decrement;
 
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)

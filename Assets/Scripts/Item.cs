@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, ISerializationCallbackReceiver
 {
-    [SerializeField] private uint defaultNumToInstantiate = 0;
+    public bool doNotDeploy;
+    [SerializeField] private uint defaultNumToInstantiate;
 
     [SerializeField] private List<DogCareValue> careFufills = new List<DogCareValue>();
     [SerializeField] private List<float> careFufillmentAmounts = new List<float>();

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public enum MoveSpeed { Crawling, Walking, Running };
+
 /** \class Pathfinding
 *  \brief Contains functions which utilise the A* pathfinding classes/functionalities.
 */
@@ -13,6 +15,7 @@ public class Pathfinding : MonoBehaviour
     public GameObject m_randomPointStorage;
     [SerializeField] private GameObject m_randomPoint;                   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
  
+    [SerializeField] private float m_crawlSpeed;      
     [SerializeField] private float m_walkSpeed;      
     [SerializeField] private float m_runSpeed;        
     [SerializeField] private float m_currentSpeed;
@@ -40,10 +43,20 @@ public class Pathfinding : MonoBehaviour
         m_currentTarget = m_randomPoint;
     }
 
-    public void SetRunning(bool isRunning)
+    public void SetSpeed(MoveSpeed pace)
     {
-        if (isRunning) m_currentSpeed = m_runSpeed;
-        else m_currentSpeed = m_walkSpeed;
+        switch (pace)
+        {
+            case (MoveSpeed.Crawling):
+                m_currentSpeed = m_crawlSpeed;
+                break;
+            case (MoveSpeed.Walking):
+                m_currentSpeed = m_walkSpeed;
+                break;
+            case (MoveSpeed.Running):
+                m_currentSpeed = m_runSpeed;
+                break;
+        }
     }
 
     /** \fn FindPathTo

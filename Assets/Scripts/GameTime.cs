@@ -12,8 +12,7 @@ public class GameTime : MonoBehaviour
     [SerializeField] private Controller controller;
     [SerializeField] private DogGeneration dogGenerator;
 
-    [SerializeField] private int timeAdjustment = 72 * 100; 
-    private const int allowance = 80;
+    [SerializeField] private int timeAdjustment = 72 * 500; 
 
     [SerializeField] private static float gameTimeSeconds = 0;
     [SerializeField] private static int gameTimeMinutes = 0;
@@ -123,7 +122,7 @@ public class GameTime : MonoBehaviour
         if (annualFunctions.Count > 0) { foreach (AnnualFunction function in annualFunctions) function(); }
     }
 
-    private void WeeklyFunction_PayPlayer() { controller.GiveAllowance(allowance); }
+    private void WeeklyFunction_PayPlayer() { controller.GiveAllowance(); }
     private void WeeklyFunction_OfferDog() { dogGenerator.GenerateRandomNewDog(); }
     private void AnnualFunction_AgeDogs() { controller.AgeDogs(); }
 

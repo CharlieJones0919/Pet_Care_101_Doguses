@@ -12,24 +12,22 @@ public class Idle : State
 
     public override Type StateEnter()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Entering Idle State");
-#endif 
+        doggo.m_facts["IDLE"] = true;
+        doggo.m_facts["SWP_IDLE"] = false;
+
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Entering Idle State");
         return null;
     }
 
     public override Type StateExit()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Exiting Idle State");
-#endif
+        doggo.m_facts["IDLE"] = false;
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Exiting Idle State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        //if (doggo.beingInteractedWith) { return typeof(Pause); }
-
         //if (doggo.Hungry() && doggo.FindItemType(ItemType.FOOD))
         //{
         //    return typeof(Hungry);
@@ -38,12 +36,33 @@ public class Idle : State
         //{
         //    return typeof(Tired);
         //}
-        //else 
-        if (doggo.Lonely() && doggo.FindItemType(ItemType.TOYS))
+        //else        if (doggo.Lonely() && doggo.FindItemType(ItemType.TOYS))
+       // {
+       //     return typeof(Playful);
+       // }
+
+        //Checking each rule in the rules list to see if a state change should occur.
+        foreach (Rule rule in doggo.m_rules)
         {
-            return typeof(Playful);
+            if (rule.CheckRule(doggo.m_facts) != null)
+            {
+                return rule.CheckRule(doggo.m_facts);
+            }
         }
 
+        // Check global conditional sequences. (These won't result in state changes directly).
+        foreach (BTSequence sequenceCheck in doggo.GlobalSequences)
+        {
+            sequenceCheck.Evaluate(); 
+        }
+
+        // Check if the state should be exited. By returning null the state change will be caught by the next rule check.
+        foreach (BTSequence sequenceCheck in doggo.IdleEndSequences)
+        {
+            if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
+        }
+
+        // If the state wasn't exited, proceed with the regular state behaviour.
         doggo.Wander();
         return null;
     }

@@ -45,7 +45,7 @@ public class StoreController : MonoBehaviour
         itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
 
-        int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length;
+        int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length + 1;
 
         float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
         float requiredContentSpace = (tabWidth * (numStoreCatergories - 1)) - (3 * tabWidth);
@@ -70,7 +70,7 @@ public class StoreController : MonoBehaviour
             List<Item> catergoryItems = new List<Item>();
             foreach (Item item in itemPrefabs)
             {
-                if (item.GetItemType() == tabCat) { catergoryItems.Add(item); }
+                if ((item.GetItemType() == tabCat) && !item.doNotDeploy) { catergoryItems.Add(item); }
             }
 
             StoreSection tabSection = currentTab.GetComponent<StoreSection>();
@@ -106,8 +106,8 @@ public class StoreController : MonoBehaviour
 
             if ((posX <= floorEndX))
             {
-                controller.permanentItemPositions.Add(new Vector3(posX, 0, posZ));
-                if (posZ > 3) { controller.tempItemPositions.Add(new Vector3(posX, 0, -posZ), false); }
+                controller.bedItemPositions.Add(new Vector3(posX, 0, posZ));
+                if (posZ > 3) { controller.foodItemPositions.Add(new Vector3(posX, 0, -posZ), false); }
 
                 posX += 1.0f;
             }
@@ -128,30 +128,40 @@ public class StoreController : MonoBehaviour
     {
         if (controller.HasEnoughMoney(focusItem.GetPrice()))
         {
-            if (!focusItem.IsSingleUse())
+            switch (focusItem.GetItemType())
             {
-                if (controller.permanentItemPositions.Count > 0)
-                {
-                    focusItem.ActivateAvailableInstanceTo(controller.permanentItemPositions[0]);
-                    controller.permanentItemPositions.Remove(controller.permanentItemPositions[0]);
-                    controller.MakePurchase(focusItem.GetPrice());
-                    return;
-                }
-                controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore items.");
-            }
-            else
-            {
-                foreach (KeyValuePair<Vector3, bool> position in controller.tempItemPositions)
-                {
-                    if (!position.Value)
+                case (ItemType.BED):
+                    if (controller.bedItemPositions.Count > 0)
                     {
-                        focusItem.ActivateAvailableInstanceTo(position.Key);
-                        controller.tempItemPositions[position.Key] = true;
+                        focusItem.ActivateAvailableInstanceTo(controller.bedItemPositions[0]);
+                        controller.bedItemPositions.Remove(controller.bedItemPositions[0]);
                         controller.MakePurchase(focusItem.GetPrice());
                         return;
                     }
-                }
-                controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore temporary items.");
+                    controller.tipPopUp.DisplayTipMessage("The shelter has no more room for anymore beds.");
+                    break;
+                case (ItemType.FOOD):
+                    foreach (KeyValuePair<Vector3, bool> position in controller.foodItemPositions)
+                    {
+                        if (!position.Value)
+                        {
+                            focusItem.ActivateAvailableInstanceTo(position.Key);
+                            controller.foodItemPositions[position.Key] = true;
+                            controller.MakePurchase(focusItem.GetPrice());
+                            return;
+                        }
+                    }
+                    controller.tipPopUp.DisplayTipMessage("The shelter has no more room to place anymore food items.");
+                    break;
+                case (ItemType.TOYS):
+                    Vector3 randomToyPosition = worldFloor.transform.position;
+                    randomToyPosition += new Vector3(Random.Range(0.0f, 1.0f), 0.0f, Random.Range(0.0f, 1.0f));
+                    focusItem.ActivateAvailableInstanceTo(randomToyPosition);
+                    controller.MakePurchase(focusItem.GetPrice());
+                    break;
+                default:
+                    Debug.Log("Hasn't been specified how to instantiate this item type.");
+                    break;
             }
         }
         else

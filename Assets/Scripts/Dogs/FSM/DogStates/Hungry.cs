@@ -12,25 +12,47 @@ public class Hungry : State
 
     public override Type StateEnter()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Entering Hungry State");
-#endif
+        doggo.m_facts["HUNGRY"] = true;
+        doggo.m_facts["SWP_HUNGRY"] = false;
+
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Entering Hungry State");
         return null;
     }
 
     public override Type StateExit()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Exiting Hungry State");
-#endif
+        doggo.m_facts["HUNGRY"] = false;
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Exiting Hungry State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
+        //Checking each rule in the rules list to see if a state change should occur.
+        foreach (Rule rule in doggo.m_rules)
         {
-            if (!doggo.m_usingItem)
+            if (rule.CheckRule(doggo.m_facts) != null)
+            {
+                return rule.CheckRule(doggo.m_facts);
+            }
+        }
+
+        // Check global conditional sequences. (These won't result in state changes directly).
+        foreach (BTSequence sequenceCheck in doggo.GlobalSequences)
+        {
+            sequenceCheck.Evaluate();
+        }
+
+        // Check if the state should be exited. By returning null the state change will be caught by the next rule check.
+        foreach (BTSequence sequenceCheck in doggo.TiredEndSequences)
+        {
+            if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
+        }
+
+        // If the state wasn't exited, proceed with the regular state behaviour.
+        if (doggo.FindItemType(ItemType.FOOD))
+        {
+            if (!doggo.m_facts["USING_ITEM"])
             {
                 if (doggo.FindItemType(ItemType.FOOD))
                 {
@@ -42,8 +64,24 @@ public class Hungry : State
                 }
             }
         }
-        else { return typeof(Pause); }
-
         return null;
+
+        //   if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
+        //   {
+        //       if (!doggo.m_facts["USING_ITEM"])
+        //       {
+        //           if (doggo.FindItemType(ItemType.FOOD))
+        //           {
+        //               if (doggo.ReachedTarget())
+        //               {
+        //                   doggo.UseItem();
+        //                   doggo.m_animationCTRL.SetTrigger("Eating");
+        //               }
+        //           }
+        //       }
+        //   }
+        //   else { return typeof(HUNGRY); }
+        //
+        //   return null;
     }
 }

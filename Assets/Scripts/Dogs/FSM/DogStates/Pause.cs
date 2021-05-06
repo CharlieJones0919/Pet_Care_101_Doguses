@@ -12,30 +12,31 @@ public class Pause : State
 
     public override Type StateEnter()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Entering Pause State");
-#endif
-        doggo.StartCoroutine(doggo.Pause(3.0f));
+        doggo.m_facts["SWP_PAUSE"] = false;
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Entering Pause State");
+        doggo.StartCoroutine(doggo.Pause(2.5f));
         return null;
     }
 
     public override Type StateExit()
     {
-#if UNITY_EDITOR
-        if (doggo.m_isFocusDog) Debug.Log(doggo.name + ": Exiting Pause State");
-#endif
+        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Exiting Pause State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        if (doggo.m_waiting || doggo.m_needsToFinishAnim || doggo.m_beingPet)
+        // Check global conditional sequences. (These won't result in state changes directly).
+        foreach (BTSequence sequenceCheck in doggo.GlobalSequences)
+        {
+            sequenceCheck.Evaluate();
+        }
+
+        // Wait until timer has finished or animation is done.
+        if (doggo.m_facts["WAITING"] || doggo.m_facts["NEEDS_2_FINISH_ANIM"])
         {
             return typeof(Pause);
         }
-        else
-        {
-            return typeof(Idle);
-        }
+        return typeof(Idle);
     }
 }

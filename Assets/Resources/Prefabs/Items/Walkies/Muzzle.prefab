@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 1
   defaultNumToInstantiate: 5
   careFufills: 060000000700000003000000
   careFufillmentAmounts:
@@ -52,8 +53,8 @@ MonoBehaviour:
   personalityFufills: 010000000200000003000000
   personalityFufillmentAmounts:
   - 2
-  - -1.25
-  - -0.15
+  - -0.0125
+  - -0.015
   m_objectPrefab: {fileID: 6987228530398497235, guid: e2f26bfc405547240b218b8ee1187a93,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -20, z: 0}
@@ -63,5 +64,5 @@ MonoBehaviour:
   m_price: 14
   m_description: S
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0, z: 0}
-  m_relUseRot: {x: 0, y: 0, z: 0}
+  m_relUsePos: {x: 0, y: 0}
+  m_needsUseOffset: 0

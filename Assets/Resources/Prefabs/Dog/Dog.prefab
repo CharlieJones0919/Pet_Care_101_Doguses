@@ -260,6 +260,7 @@ MonoBehaviour:
   m_randomPointStorage: {fileID: 0}
   m_randomPoint: {fileID: 4290487959017610959, guid: 423117f9fece72045b119a052b620588,
     type: 3}
+  m_crawlSpeed: 1.5
   m_walkSpeed: 2.5
   m_runSpeed: 6
   m_currentSpeed: 0
@@ -291,12 +292,6 @@ MonoBehaviour:
   m_collider: {fileID: 9089536525100727229}
   m_RB: {fileID: 7821002846244337834}
   m_currentObjectTarget: {fileID: 0}
-  m_usingItem: 0
-  m_waiting: 0
-  m_needsToFinishAnim: 0
-  m_beingPet: 0
-  m_isFocusDog: 1
-  m_holdingItem: 0
 --- !u!114 &243922474303207471
 MonoBehaviour:
   m_ObjectHideFlags: 0

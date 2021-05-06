@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 1
   defaultNumToInstantiate: 1
   careFufills: 04000000030000000500000006000000
   careFufillmentAmounts:
@@ -62,5 +63,5 @@ MonoBehaviour:
   m_price: 150
   m_description: S
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0, z: 0}
-  m_relUseRot: {x: 0, y: 0, z: 0}
+  m_relUsePos: {x: 0, y: 0}
+  m_needsUseOffset: 0
