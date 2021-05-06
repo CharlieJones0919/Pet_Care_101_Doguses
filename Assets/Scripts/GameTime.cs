@@ -16,7 +16,7 @@ public class GameTime : MonoBehaviour
 
     [SerializeField] private static float gameTimeSeconds = 0;
     [SerializeField] private static int gameTimeMinutes = 0;
-    [SerializeField] private static int gameTimeHours = 0;
+    [SerializeField] private static int gameTimeHours = 7;
     [SerializeField] private static int gameTimeDays = 0;
     [SerializeField] private static int gameTimeDaysTotal = 0;
     [SerializeField] private static int gameTimeWeeks = 0;
@@ -37,8 +37,13 @@ public class GameTime : MonoBehaviour
     private void Start()
     {
         InstantiateFunctionLists();
+        DailyEvents();
+        WeeklyEvents();
 
-        WeeklyEvents(); 
+        controller.tipPopUp.DisplayTipMessage("This is your first dog! You should buy them a bed and some food with your first daily allowance at the store. (Bottom left).");
+        controller.tipPopUp.DisplayTipMessage("You're currently recieving a bonus because your dog has peak care values.");
+        controller.tipPopUp.DisplayTipMessage("Use the blue buttons to control the game's speed.");
+        controller.tipPopUp.DisplayTipMessage("And remember, always do your own reseach if you're going to adopt a dog or any pet. While intended to be educational, the information given in this game is gamified/anacdotal and not academically cited.");
     }
 
     private void Update()
@@ -99,9 +104,8 @@ public class GameTime : MonoBehaviour
 
     private void InstantiateFunctionLists()
     {
-        weeklyFunctions.Add(WeeklyFunction_PayPlayer);
+        dailyFunctions.Add(DailyFunction_PayPlayer);
         weeklyFunctions.Add(WeeklyFunction_OfferDog);
-
         annualFunctions.Add(AnnualFunction_AgeDogs);
     }
 
@@ -122,8 +126,11 @@ public class GameTime : MonoBehaviour
         if (annualFunctions.Count > 0) { foreach (AnnualFunction function in annualFunctions) function(); }
     }
 
-    private void WeeklyFunction_PayPlayer() { controller.GiveAllowance(); }
-    private void WeeklyFunction_OfferDog() { dogGenerator.GenerateRandomNewDog(); }
+    private void DailyFunction_PayPlayer() { controller.GiveAllowance(); }
+    private void WeeklyFunction_OfferDog() {
+        if (controller.NumberOfDogs() < controller.dogLimit) { dogGenerator.GenerateRandomNewDog(); }
+        else { controller.tipPopUp.DisplayTipMessage("No new dog this week. You're already caring for the maximum number of dogs."); }
+    }
     private void AnnualFunction_AgeDogs() { controller.AgeDogs(); }
 
 }

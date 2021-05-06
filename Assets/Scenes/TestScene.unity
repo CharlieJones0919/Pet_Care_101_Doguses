@@ -152,7 +152,7 @@ RectTransform:
   m_Children:
   - {fileID: 2052642448}
   m_Father: {fileID: 683673109}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1922,7 +1922,7 @@ RectTransform:
   - {fileID: 232827415}
   - {fileID: 1557295663}
   m_Father: {fileID: 683673109}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipText: {fileID: 232827416}
   messageQue: []
-  timePerCharacter: 0.025
+  timePerCharacter: 0.03
 --- !u!1 &523572912
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,8 +3432,8 @@ RectTransform:
   - {fileID: 301359708}
   - {fileID: 1810142301}
   - {fileID: 1887629727}
-  - {fileID: 8950340}
   - {fileID: 510614412}
+  - {fileID: 8950340}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9914,7 +9914,7 @@ MonoBehaviour:
   playerMoneyTextboxes:
   - {fileID: 575115987}
   - {fileID: 710161013}
-  dogLimit: 10
+  dogLimit: 8
   bedItemPositions: []
 --- !u!114 &1958195945
 MonoBehaviour:

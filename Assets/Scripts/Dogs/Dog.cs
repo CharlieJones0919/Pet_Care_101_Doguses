@@ -10,35 +10,38 @@ using UnityEngine;
 public class Dog : MonoBehaviour
 {
     [SerializeField] private Controller controller;     //!< Reference to the game's Controller script to retrieve data required by all dogs.
-    [SerializeField] private Pathfinding navigation;   //!< Instance of the Pathfinding script for the dog to utalise for navigation around the map.
+    [SerializeField] private Pathfinding navigation;    //!< Instance of the Pathfinding script for the dog to utalize for navigation around the map.
     public void SetController(Controller ctrl) { controller = ctrl; navigation.m_aStarSearch = controller.groundSearch; navigation.m_randomPointStorage = controller.randomPointStorage; }
 
-    public string m_name;   //!< This dog's name. 
+    public string m_name;     //!< This dog's name. 
     public DogBreed m_breed;  //!< The breed of this dog.
-    public int m_maxAge;
-    public int m_age;       //!< Age of this dog - how long since it has was instantiated in game time. (Not yet implemented).
-    public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>();
+    public int m_maxAge;      //!< Would have been a condition for killing the dog if death had of been implemented in time.
+    public int m_age;         //!< Age of this dog - how long since it has was instantiated in game time. 
+    public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>(); //!< References to all the dog's body parts. (The definition for a BodyPart and BodyComponent are in the DogGeneration file).
 
-    public Animator m_animationCTRL;
-    public BoxCollider m_collider;
-    [SerializeField] private Rigidbody m_RB;
+    public Animator m_animationCTRL; //!< Animation controller. 
+    public BoxCollider m_collider;   //!< Dog's collider component/bounds. Set dynamically in DogGeneration depending on the dog's mesh space varying by breed type.
+    [SerializeField] private Rigidbody m_RB; //!< Dog's rigid body to derive it's speed from/to.
 
     public Dictionary<DogCareValue, CareProperty> m_careValues = new Dictionary<DogCareValue, CareProperty>(); //!< A list of the dog's current care value properties so they can be easily iterated through.
-    public Dictionary<DogPersonalityValue, PersonalityProperty> m_personalityValues = new Dictionary<DogPersonalityValue, PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full).
+    public Dictionary<DogPersonalityValue, PersonalityProperty> m_personalityValues = new Dictionary<DogPersonalityValue, PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full to be conditional on the dog's average care values in the long term).
 
-    private Item m_currentItemTarget;
-    [SerializeField] private GameObject m_currentObjectTarget;  //!< An item on the map the dog is currently using or travelling towards.   
+    private Item m_currentItemTarget; //!< An item the dog is currently focused on. Stored so it can be travelled to or used if reached and usable.
+    [SerializeField] private GameObject m_currentObjectTarget;  //!< The specific object instance of the current target item.
 
-    private float m_heldItemPrevYPos;
-    private Vector3 m_holdingOffset = new Vector3(0.0f, -0.45f, 1.0f);
+    private float m_heldItemPrevYPos; //!< If an item has been picked up, it's previous Y position is stored so it can be placed back down.
+    private Vector3 m_holdingOffset = new Vector3(0.0f, -0.45f, 1.0f); //!< Local offset from the dog's snout a held item should be positioned at.
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////// BEHAVIOURAL TREE ////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Will be used to store definitions for the dog's different "facts" and rules based on them.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////// RULE BASED SYSTEM VARIABLES ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Used to store definitions for the dog's different "facts" and rules based on them. (Just used to determine if a state should be exited into another based on the outcome of the state's behaviour tree sequences).
     public Dictionary<string, bool> m_facts = new Dictionary<string, bool>();
     public List<Rule> m_rules = new List<Rule>();
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////// BEHAVIOURAL TREE VARIABLES ////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Action nodes which are children to sequence nodes which must be successful in a sequence for the sequence node to succeed.
     //////////////////// Check Current FSM State Actions ////////////////////
     public BTAction check_Idle_State;
@@ -66,7 +69,7 @@ public class Dog : MonoBehaviour
     public BTAction check_Tired;
     public BTAction check_Rested;
     public BTAction check_Rejuvinated;
-    ///// Hygiene Status /////
+    ///// Hygiene Status /////              // Ran out of time to implement items to restore care value. 
     ///public BTAction check_Filthy;
     ///public BTAction check_Dirty;
     ///public BTAction check_Clean;
@@ -79,6 +82,10 @@ public class Dog : MonoBehaviour
     public BTAction check_Upset;
     public BTAction check_Happy;
 
+    public BTAction check_AllGood;
+    public BTAction bonus_GoodCare;
+
+    //////////////////// Status False Check Actions ////////////////////
     public BTAction check_N_Starving;
     public BTAction check_N_Hungry;
     public BTAction check_N_Fed;
@@ -97,9 +104,7 @@ public class Dog : MonoBehaviour
     public BTAction check_N_Upset;
     public BTAction check_N_Happy;
 
-    public BTAction check_AllGood;
-    public BTAction bonus_GoodCare;
-
+    //////////////////// Items Found Check Actions ////////////////////
     public BTAction found_Food;
     public BTAction found_Bed;
     public BTAction found_Toys;
@@ -107,51 +112,45 @@ public class Dog : MonoBehaviour
     public BTAction found_N_Bed;
     public BTAction found_N_Toys;
 
+    //////////////////// Set Move Speed Actions ////////////////////
     public BTAction move_Crawling;
     public BTAction move_Walking;
     public BTAction move_Running;
 
-    //////////////////// Behaviour Tree Condition Sequences ////////////////////
-    public List<BTSequence> GlobalSequences = new List<BTSequence>();
+    //////////////////// Behaviour Tree Condition Sequence Lists for Leaving Each State ////////////////////
+    public List<BTSequence> GlobalSequences = new List<BTSequence>(); // Checks general values which shouldn't result in state changes. 
     public List<BTSequence> IdleEndSequences = new List<BTSequence>();
     public List<BTSequence> HungryEndSequences = new List<BTSequence>();
     public List<BTSequence> TiredEndSequences = new List<BTSequence>();
     public List<BTSequence> PlayfulEndSequences = new List<BTSequence>();
 
     /** \fn Awake
-    *  \brief Callled once when the scene loads to instantiate variable values and functions before the application starts. Used to define and add states to the FSM.
+    *  \brief Callled once when the scene loads to instantiate variable values and functions before the application starts. Used to define and add states to the FSM, rules abd facts.
     */
     private void Awake()
     {
-        //Define the dog's FSM states then add them to the object's FSM. (Implementation is not finished yet).
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////// BEHAVIOUR TREE STATES ///////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Defining the dog's FSM states then adding them to the dog's FSM. 
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
-
         newStates.Add(typeof(Idle), new Idle(this));    // This is the default starting state. (Wandering until current care values need attending to).
         newStates.Add(typeof(Pause), new Pause(this));
         newStates.Add(typeof(Hungry), new Hungry(this));
         newStates.Add(typeof(Tired), new Tired(this));
         newStates.Add(typeof(Playful), new Playful(this));
-
         GetComponent<FiniteStateMachine>().SetStates(newStates); //Add defined states to FSM.
-        GetExistingBodyParts();
-    }
-
-    void Start()
-    {
-        while (!navigation.GenerateRandomPointInWorld(gameObject)) ;
-        float ground2FootDiff = navigation.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
-        transform.position += new Vector3(0, ground2FootDiff, 0);
-        m_currentObjectTarget = controller.defaultNULL;
 
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// RBS FACTS ///////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
+        // The dog's "fact" values.
         m_facts.Add("IDLE", true);
         m_facts.Add("HUNGRY", false);
         m_facts.Add("TIRED", false);
         m_facts.Add("PLAYFUL", false);
 
-        m_facts.Add("IS_FOCUS", true);
+        m_facts.Add("IS_FOCUS", true); // Is true by default as the dog is made the focus when it's first generated.
         m_facts.Add("USING_ITEM", false);
         m_facts.Add("WAITING", false);
         m_facts.Add("NEEDS_2_FINISH_ANIM", false);
@@ -166,6 +165,7 @@ public class Dog : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// RBS RULES ///////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////
+        // Defines which rules should result in the state being changed and to which one. 
         m_rules.Add(new Rule("IDLE", "SWP_PAUSE", Rule.Predicate.And, typeof(Pause)));
         m_rules.Add(new Rule("IDLE", "SWP_HUNGRY", Rule.Predicate.And, typeof(Hungry)));
         m_rules.Add(new Rule("IDLE", "SWP_TIRED", Rule.Predicate.And, typeof(Tired)));
@@ -178,6 +178,8 @@ public class Dog : MonoBehaviour
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// BEHAVIOUR TREE ACTIONS ///////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Binding the behaviour tree actions to their BTState functions.
+
         //////////////////// Check Current FSM State Actions ////////////////////
         check_Idle_State = new BTAction(IdleState);
         check_Hungry_State = new BTAction(HungryState);
@@ -246,9 +248,9 @@ public class Dog : MonoBehaviour
         move_Walking = new BTAction(MoveWalking);
         move_Running = new BTAction(MoveRunning);
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////// BEHAVIOUR TREE SEQUENCES ///////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////// BEHAVIOUR TREE SEQUENCES ///////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         {
             BTSequence[] globalSeqs =
             {
@@ -260,11 +262,12 @@ public class Dog : MonoBehaviour
             };
             foreach (BTSequence sequence in globalSeqs) { GlobalSequences.Add(sequence); }
         }
+        // The behaviour tree sequences (list of conditional node checks/actions) to determine if the dog should exit its current FSM state.
         {
             BTSequence[] idleEndSeqs =
             {
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Starving, found_N_Food, move_Crawling }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Exhausted, found_N_Bed, move_Crawling }), 
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Exhausted, found_N_Bed, move_Crawling }),
 
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_Exhausted, found_N_Bed, found_Food, move_Crawling, swp_Hungry_State }),
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_N_Tired, found_Food, move_Walking, swp_Hungry_State }),
@@ -306,29 +309,37 @@ public class Dog : MonoBehaviour
                 new BTSequence(new List<BTNode> { check_Playful_State, found_N_Toys, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Playful_State, check_Tired, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Playful_State, check_Hungry, swp_Pause_State }),
-      
+
             };
             foreach (BTSequence sequence in playfulEndSeqs) { PlayfulEndSequences.Add(sequence); }
         }
 
-        //leave_Idle_2_Tired = new BTSequence(new List<BTNode> { });
-        //leave_Idle_2_Playful = new BTSequence(new List<BTNode> { });
-        //
-        //leave_Pause = new BTSequence(new List<BTNode> { });
-        //leave_Hungry = new BTSequence(new List<BTNode> { });
-        //leave_Tired = new BTSequence(new List<BTNode> { });
-        //leave_Playful = new BTSequence(new List<BTNode> { });
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////// RETRIEVE THE DOG PREFAB'S DEFAULT BODY PARTS ///////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        GetExistingBodyParts();
+    }
+    /** \fn Start
+    *   \brief Called when the dog object is first made active. Finds itself a random point in the world to spawn to, sets its Y position so its feet are on the ground (as its height will vary on breed), then sets its current target as the default null object.
+    */
+    private void Start()
+    {
+        while (!navigation.GenerateRandomPointInWorld(gameObject)) ;
+        float ground2FootDiff = navigation.m_aStarSearch.transform.position.y - m_body[BodyPart.Foot0].m_component.transform.position.y;
+        transform.position += new Vector3(0, ground2FootDiff, 0);
+        m_currentObjectTarget = controller.defaultNULL;
     }
 
 
     /** \fn Update
-     *  \brief Called every frame on a loop to check if the dog has been tapped on (is InFocus) and updates the dog's current care values with time progression.
-     *  */
+    *  \brief Called every frame on a loop to check if the dog has been tapped on (is InFocus) and updates the dog's current care/personality values with time progression/item use.
+    */
     private void Update()
     {
         UpdateCareValues();
         UpdatePersonalityValues();
 
+        ///// Check if the dog has been tapped.
 #if UNITY_EDITOR //If in the editor, check for mouse input.
         if (Input.GetMouseButtonDown(0))
         {
@@ -354,6 +365,7 @@ public class Dog : MonoBehaviour
         }
 #endif
 
+        // If the dog has been tapped, set the DogInfoPanel's focus dog to this one if it hasn't been already. 
         if (m_facts["IS_FOCUS"])
         {
             if (controller.UIOutput.GetFocusDog() != gameObject)
@@ -362,9 +374,13 @@ public class Dog : MonoBehaviour
             }
         }
 
+        // Set the animator's Speed value to the dog's current forwards velocity to determine if the walking, running or stationary animations should be called.
         m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
     }
 
+    /** \fn GetExistingBodyParts
+    *  \brief Retrieves all the Dog prefab's default body part component's game objects and adds them to the dog's m_body dictionary. The others are set in DogGeneration as they are assigned dynamically based on the dog's randomised breed.
+    */
     private void GetExistingBodyParts()
     {
         m_collider = gameObject.GetComponent<BoxCollider>();
@@ -388,11 +404,9 @@ public class Dog : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider collision)
-    //{
-    //    if (collision.gameObject.layer == 8) { StartCoroutine(Pause(5)); };
-    //}
-
+    /** \fn UpdateCareValues
+    *  \brief If the dog isn't using an item the care values are decreased by a default value multiplied by the current time scale. If the dog is using an item the "fufillement amount" of that item is added/subtracted from the affected care values instead.
+    */
     private void UpdateCareValues()
     {
         foreach (KeyValuePair<DogCareValue, CareProperty> prop in m_careValues)
@@ -405,6 +419,9 @@ public class Dog : MonoBehaviour
         }
     }
 
+    /** \fn UpdatePersonalityValues
+    *  \brief The same as UpdateCareValues(), however the personality values are changed on a increment indefintely by only changed when the dog is using an item.
+    */
     private void UpdatePersonalityValues()
     {
         if (m_facts["USING_ITEM"])
@@ -419,6 +436,10 @@ public class Dog : MonoBehaviour
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////// BEHAVIOUR TREE ACTION FUNCTION BINDINGS ///////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////// Actions to Check and Change the Current FSM State ////////////////////
     public BTState IdleState() { if (m_facts["IDLE"]) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState HungryState() { if (m_facts["HUNGRY"]) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState TiredState() { if (m_facts["TIRED"]) { return BTState.SUCCESS; } return BTState.FAILURE; }
@@ -430,6 +451,7 @@ public class Dog : MonoBehaviour
     public BTState SWP_TiredState() { m_facts["SWP_TIRED"] = true; return BTState.SUCCESS; }
     public BTState SWP_PlayfulState() { m_facts["SWP_PLAYFUL"] = true; return BTState.SUCCESS; }
 
+    //////////////////// State Checks Based on Care Values ////////////////////
     public BTState Starving() { if (m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState Hungry() { if (m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState Fed() { if (m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
@@ -456,7 +478,7 @@ public class Dog : MonoBehaviour
     public BTState Upset() { if (m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState Happy() { if (m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
-    ////////// Inverses of State Checks //////////
+    //////////////////// Inverse of State Checks ////////////////////
     public BTState NStarving() { if (m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.FAILURE; } return BTState.SUCCESS; }
     public BTState NHungry() { if (m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.FAILURE; } return BTState.SUCCESS; }
     public BTState NFed() { if (m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.FAILURE; } return BTState.SUCCESS; }
@@ -478,6 +500,7 @@ public class Dog : MonoBehaviour
     public BTState NUpset() { if (m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.FAILURE; } return BTState.SUCCESS; }
     public BTState NHappy() { if (m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.FAILURE; } return BTState.SUCCESS; }
 
+    //////////////////// Good Care Value Check ////////////////////
     public BTState AllGood()
     {
         if (m_careValues[DogCareValue.Hunger].IsState("Fed") &&
@@ -490,6 +513,7 @@ public class Dog : MonoBehaviour
         return BTState.FAILURE;
     }
 
+    //////////////////// Good Care Bonus Action ////////////////////
     public BTState GoodCareBonuses()
     {
         controller.GiveGoodCareBonus();
@@ -500,6 +524,7 @@ public class Dog : MonoBehaviour
         return BTState.SUCCESS;
     }
 
+    //////////////////// Item Location Check Actions
     public BTState CanFindFood() { if (FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState CanFindBed() { if (FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState CanFindToys() { if (FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
@@ -507,6 +532,7 @@ public class Dog : MonoBehaviour
     public BTState CannotFindBed() { if (!FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     public BTState CannotFindToys() { if (!FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
+    //////////////////// Movement Speed Actions ////////////////////
     public BTState MoveCrawling() { navigation.SetSpeed(MoveSpeed.Crawling); return BTState.SUCCESS; }
     public BTState MoveWalking() { navigation.SetSpeed(MoveSpeed.Walking); return BTState.SUCCESS; }
     public BTState MoveRunning() { navigation.SetSpeed(MoveSpeed.Running); return BTState.SUCCESS; }
