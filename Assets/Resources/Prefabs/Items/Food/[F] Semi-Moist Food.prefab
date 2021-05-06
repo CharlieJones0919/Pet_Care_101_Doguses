@@ -43,12 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 010000000600000005000000
   careFufillmentAmounts:
   - 70
   - 30
-  - -5
+  - -15
   personalityFufills: 03000000
   personalityFufillmentAmounts:
   - 0.0175
@@ -59,7 +60,9 @@ MonoBehaviour:
   m_name: '[F] Semi-Moist Food'
   m_sprite: {fileID: 21300000, guid: ac7cfbb9ffd703b4f8ab136e858e8ff1, type: 3}
   m_price: 4.5
-  m_description: Dry food is..
+  m_description: Some say commercial semi-wet food is the least nutritional variety
+    of dog food. While alright as an occasional treat, they often contain artificial
+    flavours and colourings which should not be a part of your dog's staple diet.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

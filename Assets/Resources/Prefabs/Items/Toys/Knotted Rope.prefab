@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 06000000020000000500000003000000
   careFufillmentAmounts:
@@ -50,9 +51,10 @@ MonoBehaviour:
   - 0.025
   - 0.01
   - -0.025
-  personalityFufills: 06000000
+  personalityFufills: 0600000001000000
   personalityFufillmentAmounts:
   - 0.0002
+  - 0.0001
   m_objectPrefab: {fileID: 5752050639008929189, guid: 9991636b9f9498943b8836dcd77e1018,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -17.5, z: 0}
@@ -60,7 +62,8 @@ MonoBehaviour:
   m_name: Knotted Rope
   m_sprite: {fileID: 21300000, guid: 4879ed87f436d854c9bb7b489fdb758b, type: 3}
   m_price: 8
-  m_description: S
+  m_description: Tough toys like a rope can be good for teething dogs and as a means
+    of teaching them what items are alright and not to chew on.
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
   m_needsUseOffset: 0

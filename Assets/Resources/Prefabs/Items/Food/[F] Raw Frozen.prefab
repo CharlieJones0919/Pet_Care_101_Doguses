@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 010000000600000005000000
   careFufillmentAmounts:
@@ -59,7 +60,10 @@ MonoBehaviour:
   m_name: '[F] Raw Frozen Meat'
   m_sprite: {fileID: 21300000, guid: 56741fb96de04184b838e8f8963d9f81, type: 3}
   m_price: 10
-  m_description: Dry food is..
+  m_description: This is likely the healthiest option for a dog's diet, although
+    likely the most expensive. This kind of food IRL would require refridgeration,
+    and it would be advisable to talk to your vet before starting your dog on a raw
+    food diet.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 1
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
@@ -60,7 +61,8 @@ MonoBehaviour:
   m_name: Cushion
   m_sprite: {fileID: 21300000, guid: 7d4b6df8791189d4f9525620f2fe2c60, type: 3}
   m_price: 10
-  m_description: Nest beds are...
+  m_description: One of the most comfortable options and cheaper than a bought for
+    purpose dog bed.
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
   m_needsUseOffset: 1

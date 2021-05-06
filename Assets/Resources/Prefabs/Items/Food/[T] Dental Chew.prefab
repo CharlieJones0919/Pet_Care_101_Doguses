@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 01000000060000000500000002000000
   careFufillmentAmounts:
@@ -60,7 +61,10 @@ MonoBehaviour:
   m_name: '[T] Dental Chew'
   m_sprite: {fileID: 21300000, guid: 1d19be21a03721a49a263c007af8dea4, type: 3}
   m_price: 3
-  m_description: S
+  m_description: Dental chews are thought by some to be good for your dog's dental
+    health, as chewing on a hard treat can help break down tartar build-up. Be sure
+    that the chews aren't too hard, as they could cause oral injury if too tough;
+    especially for older dogs with deteriorating teeth.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

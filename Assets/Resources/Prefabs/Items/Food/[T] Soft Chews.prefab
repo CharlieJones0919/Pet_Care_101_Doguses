@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 01000000060000000500000002000000
   careFufillmentAmounts:
@@ -61,7 +62,8 @@ MonoBehaviour:
   m_name: '[T] Soft Chews'
   m_sprite: {fileID: 21300000, guid: 2f4c53f86f3e7794fb624bbb371c93c6, type: 3}
   m_price: 5
-  m_description: S
+  m_description: Soft treats are often more desirable than crunchy so can be a good
+    high value item for training your dog.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

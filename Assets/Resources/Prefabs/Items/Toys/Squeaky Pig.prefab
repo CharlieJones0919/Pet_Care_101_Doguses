@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 06000000020000000500000003000000
   careFufillmentAmounts:
@@ -60,7 +61,8 @@ MonoBehaviour:
   m_name: Squeaky Pig
   m_sprite: {fileID: 21300000, guid: 251c9528ff4dffd4194fdc116a583a64, type: 3}
   m_price: 5
-  m_description: S
+  m_description: This kind of toy can allow a dog to amuse themself and are often
+    made to be more durable. Good for a dog that likes their independance.
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
   m_needsUseOffset: 0

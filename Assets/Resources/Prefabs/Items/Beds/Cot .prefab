@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 1
   careFufills: 030000000500000006000000
   careFufillmentAmounts:
@@ -60,7 +61,9 @@ MonoBehaviour:
   m_name: Cot Bed
   m_sprite: {fileID: 21300000, guid: 0199bb7db37c3db4caca07baf1995388, type: 3}
   m_price: 20
-  m_description: Nest beds are...
+  m_description: A cot bed (like the kind of military bed by the same name), will
+    be more comfortable than the ground, and will be warmer due to the distance made
+    from the cold floor.
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
   m_needsUseOffset: 1

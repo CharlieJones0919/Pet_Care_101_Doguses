@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 01000000060000000500000002000000
   careFufillmentAmounts:
@@ -61,7 +62,9 @@ MonoBehaviour:
   m_name: '[T] Crunchy Biscuit'
   m_sprite: {fileID: 21300000, guid: ec318ee69f887e74183f398227b37ff0, type: 3}
   m_price: 1.5
-  m_description: S
+  m_description: Crunchy treats IRL should be chosen at a size appropriate to your
+    dog. They're good for your dog's teeth and due to their low fat value, can be
+    a good everyday treat for training rewards.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

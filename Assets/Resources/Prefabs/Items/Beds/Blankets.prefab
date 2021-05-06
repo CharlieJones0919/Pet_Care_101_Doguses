@@ -61,7 +61,9 @@ MonoBehaviour:
   m_name: Blankets
   m_sprite: {fileID: 21300000, guid: d78a9fec3209a0f4f920d076169a5681, type: 3}
   m_price: 5
-  m_description: Nest beds are...
+  m_description: While an affordable option, a pile of blankets for a bed won't be
+    as comfortable for your dog. This option may be bad for your dog's health in
+    the long run due to the lack of padding and poor protection from the cold.
   m_singleUse: 0
   m_relUsePos: {x: 0, y: 0}
   m_needsUseOffset: 1

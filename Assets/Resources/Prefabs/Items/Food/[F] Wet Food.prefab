@@ -43,12 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 010000000600000005000000
   careFufillmentAmounts:
   - 30
   - 50
-  - -10
+  - -5
   personalityFufills: 03000000
   personalityFufillmentAmounts:
   - 0.175
@@ -59,7 +60,11 @@ MonoBehaviour:
   m_name: '[F] Wet Food'
   m_sprite: {fileID: 21300000, guid: 993dba8112bdd964c914052c8d904da6, type: 3}
   m_price: 6
-  m_description: Dry food is..
+  m_description: Wet foods are onThis variety is one of the most enjoyed kinds of
+    dog food, but doesn't combat tartar for their dental health and most brands are
+    largely composed of water; so not very nutritional. Canned or wet food often
+    has a good shelf life compared to a raw diet, but is more expensive than dry
+    food.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0

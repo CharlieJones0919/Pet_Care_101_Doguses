@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff63f25f9a3a0478ed6535ab2ac870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doNotDeploy: 0
   defaultNumToInstantiate: 5
   careFufills: 010000000600000005000000
   careFufillmentAmounts:
@@ -59,7 +60,9 @@ MonoBehaviour:
   m_name: '[F] Dry Kibble'
   m_sprite: {fileID: 21300000, guid: 233d8cd56af553846a0802c8ffe0a039, type: 3}
   m_price: 2.5
-  m_description: Dry food is..
+  m_description: Dry foods (that don't contain too many cereals and filler ingredients)
+    are better for your dog's teeth, and are a more affordable plus less fatty option
+    to wet foods. Although, perhaps not as well enjoyed.
   m_singleUse: 1
   m_relUsePos: {x: 0, y: 2}
   m_needsUseOffset: 0
