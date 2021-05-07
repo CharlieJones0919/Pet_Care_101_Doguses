@@ -31,6 +31,8 @@ public class Controller : MonoBehaviour
     public List<Vector3> bedItemPositions = new List<Vector3>(); //!< Positions beds can be placed to.
     public Dictionary<Vector3, bool> foodItemPositions = new Dictionary<Vector3, bool>(); //!< Positions temporary food items can be placed to.
 
+
+
     /** \fn PAUSE
     *  \brief Sets the game's time scale to pause or play the game based on its bool parameter.
     *  \param state Whether to pause or play the game's time.
@@ -88,6 +90,8 @@ public class Controller : MonoBehaviour
     *  \brief Returns the number of active dogs.
     */
     public int NumberOfDogs() { return allDogs.Count; }
+
+    public Dictionary<GameObject, Dog> GetAllDogs() { return allDogs; }
 
     /** \fn AddToItemPools
     *  \brief Used by the StoreController to add a new item to the Controller's complete list of items possible to purchase.

@@ -1,17 +1,19 @@
 ﻿/** \file CameraControl.cs
  *  \brief Contains any classes relevant to controlling the world camera/view.
  */
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /** \class CameraControl 
  *  \brief Allows touchscreen pinch and scroll controls to move the camera.
  */
 public class CameraControl : MonoBehaviour
 {
-#if UNITY_IOS || UNITY_ANDROID
     private float m_movementSpeed = 1.75f;
     private float m_rotationSpeed = 2.75f;
+
+    [SerializeField] private Controller controller;
 
     private Camera m_camera;    //!< The camera object to set the camera specific values of.
     [SerializeField] private Collider m_cameraBounds;   //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
@@ -40,6 +42,77 @@ public class CameraControl : MonoBehaviour
     *   \brief Checks for touch input on a loop. Includes zooming and rotation with 2 fingers, and position movement with 1 finger.
     **/
     private void Update()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            //If in the editor, check for mouse input.
+#if UNITY_EDITOR
+            CheckDogTap_Editor();
+            //If not in the editor check for touch input. 
+#elif UNITY_IOS || UNITY_ANDROID
+            CheckDogTap_Mobile();
+            CheckCameraMovement_Mobile();
+#endif
+        }
+    }
+
+    private void CheckDogTap_Editor()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("AAA");
+
+            Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit raycastHit;
+
+            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
+            {
+                Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
+
+                foreach (KeyValuePair<GameObject, Dog> dog in controller.GetAllDogs())
+                {
+                    if (raycastHit.transform.gameObject == dog.Key)
+                    {
+                        dog.Value.m_facts["IS_FOCUS"] = true;
+
+                        if (controller.UIOutput.GetFocusDog() != dog.Key)
+                        {
+                            controller.UIOutput.SetFocusDog(dog.Value);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private void CheckDogTap_Mobile()
+    {
+        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
+        {
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
+            RaycastHit raycastHit;
+
+            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity)) //If the raycast hits anything...
+            {
+                foreach (KeyValuePair<GameObject, Dog> dog in controller.GetAllDogs())
+                {
+                    if (raycastHit.transform.gameObject == dog.Key)
+                    {
+                        dog.Value.m_facts["IS_FOCUS"] = true;
+
+                        if (controller.UIOutput.GetFocusDog() != dog.Key)
+                        {
+                            controller.UIOutput.SetFocusDog(dog.Value);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private void CheckCameraMovement_Mobile()
     {
         int touchCount = Input.touchCount; // Number of screen touches this update.   
 
@@ -142,5 +215,4 @@ public class CameraControl : MonoBehaviour
         m_camera.transform.rotation = m_initialRot;
         m_camera.fieldOfView = m_initialZoom;
     }
-#endif
 }

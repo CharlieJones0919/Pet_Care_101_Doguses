@@ -339,31 +339,7 @@ public class Dog : MonoBehaviour
         UpdateCareValues();
         UpdatePersonalityValues();
 
-        ///// Check if the dog has been tapped.
-#if UNITY_EDITOR //If in the editor, check for mouse input.
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit;
 
-            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity))
-            {
-                Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
-                if (raycastHit.collider == m_collider) { m_facts["IS_FOCUS"] = true; }
-            }
-        }
-#elif UNITY_IOS || UNITY_ANDROID //If not in the editor check for touch input. 
-         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
-        {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position); //A raycast between the camera and touch position to get the world position of the touch.
-            RaycastHit raycastHit;
-
-            if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity)) //If the raycast hits anything...
-            {
-                if (raycastHit.collider == m_collider) m_facts["IS_FOCUS"] = true; //If the collider hit belongs to this object, this dog is in focus.
-            } 
-        }
-#endif
 
         // If the dog has been tapped, set the DogInfoPanel's focus dog to this one if it hasn't been already. 
         if (m_facts["IS_FOCUS"])

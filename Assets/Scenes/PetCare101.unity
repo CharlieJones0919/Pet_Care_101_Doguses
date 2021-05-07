@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipText: {fileID: 232827416}
   messageQue: []
-  timePerCharacter: 0.03
+  timePerCharacter: 0.05
 --- !u!1 &523572912
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cebf8ae04747ba4389bd3546422847d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 1958195944}
   m_cameraBounds: {fileID: 1595712118}
   m_minZoomLimit: 10
   m_maxZoomLimit: 125
@@ -4719,7 +4720,7 @@ GameObject:
   - component: {fileID: 1067725369}
   - component: {fileID: 1067725368}
   - component: {fileID: 1067725367}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9383,6 +9384,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190955130967510242, guid: 2c2742e3768d1b348a30ce7e056350e5,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4190955130967510243, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
