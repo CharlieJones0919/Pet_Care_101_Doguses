@@ -175,7 +175,7 @@ public class DogGeneration : MonoBehaviour
     private Dictionary<string, float> modelScalers = new Dictionary<string, float>();
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();
 
-    [SerializeField] private Controller controller;
+    [SerializeField] private Controller controller; //!< Reference to the game controller.
     [SerializeField] private DataDisplay dogUIOutputScript;
     [SerializeField] private AStarSearch groundAStar;
     [SerializeField] private GameObject randomPointStorage;

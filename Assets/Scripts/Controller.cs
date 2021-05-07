@@ -168,7 +168,11 @@ public class Controller : MonoBehaviour
     /** \fn GiveAllowance
     *  \brief Increases the player's money by the set daily allowance value.
     */
-    public void GiveAllowance() { UpdateMoneyValue(allowance); }
+    public void GiveAllowance()
+    {
+        tipPopUp.DisplayTipMessage("It's a new day! You've recieved your daily donation of " + allowance.ToString() + " credits!");
+        UpdateMoneyValue(allowance);
+    }
     /** \fn GiveGoodCareBonus
     *  \brief Bonus pay given by a Dog class if all of their care values are in good states.
     */

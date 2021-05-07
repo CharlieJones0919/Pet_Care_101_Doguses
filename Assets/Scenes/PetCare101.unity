@@ -9971,12 +9971,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb511655abb8ab040b95a78d3059d33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 1958195944}
+  dogGenerator: {fileID: 1958195945}
+  timeAdjustment: 216
   dateTextbox: {fileID: 301359709}
   timeTextbox: {fileID: 1452231953}
   totalDaysTextbox: {fileID: 647772041}
-  controller: {fileID: 1958195944}
-  dogGenerator: {fileID: 1958195945}
-  timeAdjustment: 144
 --- !u!1 &2011454208
 GameObject:
   m_ObjectHideFlags: 0

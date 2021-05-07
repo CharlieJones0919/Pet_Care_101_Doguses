@@ -1,39 +1,41 @@
-﻿using System;
-using System.Collections;
+﻿/** \file GameTime.cs
+*   \brief Controls time keeping and game-time based events (like dog generation).
+*/
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/** \class GameTime
+*   \brief Keeps game-time (system time modified by an speed adjustment for gameification) and calls time triggered events like daily payment and weekly dog offerings.
+*/
 public class GameTime : MonoBehaviour
 {
-    [SerializeField] private Text dateTextbox;
-    [SerializeField] private Text timeTextbox;
-    [SerializeField] private Text totalDaysTextbox;
-    [SerializeField] private Controller controller;
-    [SerializeField] private DogGeneration dogGenerator;
+    [SerializeField] private Controller controller;      //!< Reference to the game controller.
+    [SerializeField] private DogGeneration dogGenerator; //!< Reference to DogGeneration so a new dog can be generated every in-game week.
+    [SerializeField] private int timeAdjustment;         //!< Multiplier from regular seconds to game time.
+                                                         
+    [SerializeField] private Text dateTextbox;           //!< UI to output the current in-game date to.
+    [SerializeField] private Text timeTextbox;           //!< UI to output the current in-game time to.
+    [SerializeField] private Text totalDaysTextbox;      //!< UI to output the total number of in-game days passed since the game started.
 
-    [SerializeField] private int timeAdjustment = 72 * 500; 
+    private static float gameTimeSeconds = 0;            //!< Game-time Seconds. 
+    private static int   gameTimeMinutes = 0;            //!< Game-time Minutes. 
+    private static int   gameTimeHours = 8;              //!< Game-time Hours. (Game starts at 8AM).
+    private static int   gameTimeDays = 0;               //!< Game-time Days.
+    private static int   gameTimeDaysTotal = 0;          //!< Game-time Days Total.
+    private static int   gameTimeWeeks = 0;              //!< Game-time Weeks. 
+    private static int   gameTimeYears = 0;              //!< Game-time Years. 
 
-    [SerializeField] private static float gameTimeSeconds = 0;
-    [SerializeField] private static int gameTimeMinutes = 0;
-    [SerializeField] private static int gameTimeHours = 7;
-    [SerializeField] private static int gameTimeDays = 0;
-    [SerializeField] private static int gameTimeDaysTotal = 0;
-    [SerializeField] private static int gameTimeWeeks = 0;
-    [SerializeField] private static int gameTimeYears = 0;
+    private delegate void TimeFunction();                //!< Delegate function for time triggered functions to define. (So they can be added to lists as generic types for iterating through to call at the appropritate time stamps).
+    private List<TimeFunction> dailyFunctions = new List<TimeFunction>();       //!< List of daily functions. 
+    private List<TimeFunction> weeklyFunctions = new List<TimeFunction>();      //!< List of weekly functions. 
+    private List<TimeFunction> biannualFunctions = new List<TimeFunction>();    //!< List of biannual functions.
+    private List<TimeFunction> annualFunctions = new List<TimeFunction>();      //!< List of annual functions. 
 
-    private delegate void DailyFunction();
-    private List<DailyFunction> dailyFunctions = new List<DailyFunction>();
-
-    private delegate void WeeklyFunction();
-    private List<WeeklyFunction> weeklyFunctions = new List<WeeklyFunction>();
-
-    private delegate void BiannualFunction();
-    private List<BiannualFunction> biannualFunctions = new List<BiannualFunction>();
-
-    private delegate void AnnualFunction();
-    private List<AnnualFunction> annualFunctions = new List<AnnualFunction>();
-
+    /** \fn Start
+    *   \brief Adds the time functions to their lists, calls them on first game start, then displays the initial game tip messages.
+    */
     private void Start()
     {
         InstantiateFunctionLists();
@@ -46,6 +48,9 @@ public class GameTime : MonoBehaviour
         controller.tipPopUp.DisplayTipMessage("And remember, always do your own reseach if you're going to adopt a dog or any pet. While intended to be educational, the information given in this game is gamified/anacdotal and not academically cited.");
     }
 
+    /** \fn Update
+    *   \brief Updates the in-game time and required date/time variables using the time adjustment value, then outputs the new values to the UI. Also calls the time based functions at their required intervals.
+    */
     private void Update()
     {
         gameTimeSeconds += Time.deltaTime * timeAdjustment;
@@ -94,14 +99,35 @@ public class GameTime : MonoBehaviour
         totalDaysTextbox.text = ("TOTAL DAYS: " + gameTimeDaysTotal);
     }
 
+    /** \fn GetSecondMultiplier
+     *   \brief Returns the time adjustment value. Not currentyly used anywhere but could be used if a value in another class needed scaling in time with the adjustment.
+     */
     public int GetSecondMultiplier() { return timeAdjustment; }
 
+    /** \fn GetGameTimeSeconds
+     *   \brief Returns the seconds passed in game time.
+     */
     public static float GetGameTimeSeconds() { return gameTimeSeconds; }
+    /** \fn GetGameTimeMinutes
+     *   \brief Returns the minutes passed in game time.
+     */
     public static int GetGameTimeMinutes() { return gameTimeMinutes; }
+    /** \fn GetGameTimeHours
+    *   \brief Returns the hours passed in game time.
+    */
     public static int GetGameTimeHours() { return gameTimeHours; }
+    /** \fn GetGameTimeDays
+    *   \brief Returns the days passed in game time.
+    */
     public static int GetGameTimeDays() { return gameTimeDays; }
+    /** \fn GetGameTimeWeeks
+    *   \brief Returns the weeks passed in game time.
+    */
     public static int GetGameTimeWeeks() { return gameTimeWeeks; }
 
+    /** \fn InstantiateFunctionLists
+     *   \brief Adds the instantiations of TimeFunctions to their appropriate lists.
+     */
     private void InstantiateFunctionLists()
     {
         dailyFunctions.Add(DailyFunction_PayPlayer);
@@ -109,28 +135,37 @@ public class GameTime : MonoBehaviour
         annualFunctions.Add(AnnualFunction_AgeDogs);
     }
 
-    private void DailyEvents()
-    {
-        if (dailyFunctions.Count > 0) { foreach (DailyFunction function in dailyFunctions) function(); }
-    }
-    private void WeeklyEvents()
-    {
-        if (weeklyFunctions.Count > 0) { foreach (WeeklyFunction function in weeklyFunctions) function(); }
-    }
-    private void BiannualEvents()
-    {
-        if (biannualFunctions.Count > 0) { foreach (BiannualFunction function in biannualFunctions) function(); }
-    }
-    private void AnnualEvents()
-    {
-        if (annualFunctions.Count > 0) { foreach (AnnualFunction function in annualFunctions) function(); }
-    }
+    /** \fn DailyEvents
+    *   \brief Calls all the functions in the dailyFunctions list. Called when a day passes in game time.
+    */
+    private void DailyEvents() { if (dailyFunctions.Count > 0) { foreach (TimeFunction function in dailyFunctions) function(); } }
+    /** \fn WeeklyEvents
+    *   \brief Calls all the functions in the weeklyFunctions list. Called when a week passes in game time.
+    */
+    private void WeeklyEvents() { if (weeklyFunctions.Count > 0) { foreach (TimeFunction function in weeklyFunctions) function(); } }
+    /** \fn BiannualEvents
+     *   \brief Calls all the functions in the biannualFunctions list. Called when half a year passes in game time.
+     */
+    private void BiannualEvents() { if (biannualFunctions.Count > 0) { foreach (TimeFunction function in biannualFunctions) function(); } }
+    /** \fn AnnualEvents
+     *   \brief Calls all the functions in the annualFunctions list. Called when a year passes in game time.
+     */
+    private void AnnualEvents() { if (annualFunctions.Count > 0) { foreach (TimeFunction function in annualFunctions) function(); } }
 
+    /** \fn DailyFunction_PayPlayer
+    *   \brief A daily function which pays the player their dailt allowance.
+    */
     private void DailyFunction_PayPlayer() { controller.GiveAllowance(); }
-    private void WeeklyFunction_OfferDog() {
+    /** \fn WeeklyFunction_OfferDog
+    *   \brief A weekly function which generates a new dog.
+    */
+    private void WeeklyFunction_OfferDog()
+    {
         if (controller.NumberOfDogs() < controller.dogLimit) { dogGenerator.GenerateRandomNewDog(); }
         else { controller.tipPopUp.DisplayTipMessage("No new dog this week. You're already caring for the maximum number of dogs."); }
     }
+    /** \fn AnnualFunction_AgeDogs
+    *   \brief A annual function which ages all the dogs by 1 year.
+    */
     private void AnnualFunction_AgeDogs() { controller.AgeDogs(); }
-
 }
