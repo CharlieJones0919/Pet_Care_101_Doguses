@@ -339,17 +339,6 @@ public class Dog : MonoBehaviour
         UpdateCareValues();
         UpdatePersonalityValues();
 
-
-
-        // If the dog has been tapped, set the DogInfoPanel's focus dog to this one if it hasn't been already. 
-        if (m_facts["IS_FOCUS"])
-        {
-            if (controller.UIOutput.GetFocusDog() != gameObject)
-            {
-                controller.UIOutput.SetFocusDog(this);
-            }
-        }
-
         // Set the animator's Speed value to the dog's current forwards velocity to determine if the walking, running or stationary animations should be called.
         m_animationCTRL.SetFloat("Speed", transform.InverseTransformDirection(m_RB.velocity).z);
     }

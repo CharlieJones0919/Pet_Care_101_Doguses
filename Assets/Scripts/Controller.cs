@@ -31,8 +31,6 @@ public class Controller : MonoBehaviour
     public List<Vector3> bedItemPositions = new List<Vector3>(); //!< Positions beds can be placed to.
     public Dictionary<Vector3, bool> foodItemPositions = new Dictionary<Vector3, bool>(); //!< Positions temporary food items can be placed to.
 
-
-
     /** \fn PAUSE
     *  \brief Sets the game's time scale to pause or play the game based on its bool parameter.
     *  \param state Whether to pause or play the game's time.
@@ -91,6 +89,9 @@ public class Controller : MonoBehaviour
     */
     public int NumberOfDogs() { return allDogs.Count; }
 
+    /** \fn GetAllDogs
+    *  \brief Returns the Dictionary of all world dogs.
+    */
     public Dictionary<GameObject, Dog> GetAllDogs() { return allDogs; }
 
     /** \fn AddToItemPools
@@ -221,13 +222,20 @@ public class Controller : MonoBehaviour
     public void NotFocusedOnDog() { foreach (Dog dog in allDogs.Values) { dog.m_facts["IS_FOCUS"] = false; } }
 }
 
+/** \class CareProperty
+ *  \brief Stores all the dog's "CareProperties" as defined in DogGeneration (e.g. Hunger, Rest, etc...), the care value's associated "states" (e.g. Exhausted, Tired, Rested, etc...), 
+ *  and its current actual numerical value. Also contains a function for updating the care value and sets the care property's subsequent current state from that new value based on the state's lower and upper qualification bounds. 
+ */
 public class CareProperty
 {
-    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
-    private List<string> m_currentStates = new List<string>();
-    private float m_value = 100;
-    private float m_decrement;
+    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>(); //!< This care property's possible states (e.g. Hunger has the states of Starving, Hungry, Fed and Overfed), and the Vector2 is each state's lower and upper bounds.
+    private List<string> m_currentStates = new List<string>(); //!< Current states based on the current numerical value of the property. Care properties have a list of multiple current states instead of just one, because the bounds of some overlap (e.g. if the dog is "Exhausted" it'll also still be "Tired").
+    private float m_value = 100; //!< The care property's current value. Set to 100 by default so the dog is in good health when first instantiated.
+    private float m_decrement;   //!< Care properties are always going down and need replenishing. This is the default decrement to take from the value on each update.
 
+    /** \fn CareProperty
+    *  \brief Constructor to instantiate the care property's states, their bounds, and default decrement.
+    */
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)
     {
         m_states = states;
@@ -235,17 +243,31 @@ public class CareProperty
         UpdateValue(0.0f);
     }
 
-    public float GetValue() { return m_value; }
-    public float GetUsualDecrement() { return m_decrement; }
+    /** \fn IsState
+    *  \brief Returns whether or not the property is currently in the given parameter state.
+    */
     public bool IsState(string state)
     {
         if (m_states.ContainsKey(state)) { return m_currentStates.Contains(state); }
         else { Debug.Log("No care property has a state defined as " + state); return false; }
     }
 
-    public void UpdateValue(float increment)
+    /** \fn GetUsualDecrement
+    *  \brief Returns the property's usual decrement.
+    */
+    public float GetUsualDecrement() { return m_decrement; }
+
+    /** \fn GetValue
+    *  \brief Returns the property's current value.
+    */
+    public float GetValue() { return m_value; }
+
+    /** \fn UpdateValue
+    *  \brief Updates the property's value and checks which state[s] it's in now from that change.
+    */
+    public void UpdateValue(float modifiyer)
     {
-        m_value = Mathf.Clamp(m_value + increment, 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + modifiyer, 0.0f, 100.0f);
 
         m_currentStates.Clear();
         foreach (KeyValuePair<string, Vector2> state in m_states)
@@ -258,29 +280,49 @@ public class CareProperty
     }
 }
 
+/** \fn PersonalityProperty
+*  \brief The same as CareProperty except for the personality properties which can only be one state at a time and aren't decreased every update by default.
+*/
 public class PersonalityProperty
 {
-    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>();
-    private string m_currentState;
-    private float m_value;
+    private Dictionary<string, Vector2> m_states = new Dictionary<string, Vector2>(); //!< This personality property's possible states, and the Vector2 is each state's lower and upper bounds.
+    private string m_currentState; //!< Current state based on the current numerical value of the property. Personality properties can only be one state at a time, because their state bounds don't overlap.
+    private float m_value;         //!< The personality property's current value. This isn't given a default starting value like in CareProperty as the values are determined by the breed.
 
+    /** \fn PersonalityProperty
+    *  \brief Constructor to instantiate the personality property's states, their bounds, and default values based on breed.
+    */
     public PersonalityProperty(Dictionary<string, Vector2> states, float value)
     {
         m_states = states;
         UpdateValue(value);
     }
 
-    public float GetValue() { return m_value; }
-    public string GetState() { return m_currentState; }
+    /** \fn IsState
+    *  \brief Returns whether or not the property is currently in the given parameter state.
+    */
     public bool IsState(string state)
     {
         if (m_states.ContainsKey(state)) { return (m_currentState == state); }
         else { Debug.Log("No personality property has a state defined as " + state); return false; }
     }
 
-    public void UpdateValue(float increment)
+    /** \fn GetState
+    *  \brief Returns the property's current state.
+    */
+    public string GetState() { return m_currentState; }
+
+    /** \fn GetValue
+    *  \brief Returns the property's current value.
+    */
+    public float GetValue() { return m_value; }
+
+    /** \fn UpdateValue
+    *  \brief Updates the property's value and checks which state it's in now from that change.
+    */
+    public void UpdateValue(float modifiyer)
     {
-        m_value = Mathf.Clamp(m_value + increment, 0.0f, 5.0f);
+        m_value = Mathf.Clamp(m_value + modifiyer, 0.0f, 5.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {
