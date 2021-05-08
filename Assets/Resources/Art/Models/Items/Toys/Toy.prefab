@@ -482,6 +482,7 @@ GameObject:
   - component: {fileID: 470004920965260272}
   - component: {fileID: 6427357828138146366}
   - component: {fileID: 4537763752079460401}
+  - component: {fileID: -1845786409429951434}
   m_Layer: 0
   m_Name: Toy
   m_TagString: Untagged
@@ -584,6 +585,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-1845786409429951434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5752050639008929189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca46e0dd30e78cf4cb90a5bb8a3c9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lastSpawnedPos: {x: 0, y: 0, z: 0}
+  m_inactivePos: {x: 0, y: 0, z: 0}
+  m_activePosY: 0
+  m_nullUser: {fileID: 0}
+  m_user: {fileID: 0}
 --- !u!1 &5891008483945842726
 GameObject:
   m_ObjectHideFlags: 0

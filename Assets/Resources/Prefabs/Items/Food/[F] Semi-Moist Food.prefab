@@ -53,7 +53,7 @@ MonoBehaviour:
   personalityFufills: 03000000
   personalityFufillmentAmounts:
   - 0.0175
-  m_objectPrefab: {fileID: 8451974279864578185, guid: 194b1b69afe1f4948bed4695c8d48261,
+  m_instancePrefab: {fileID: -8964980684353799176, guid: 194b1b69afe1f4948bed4695c8d48261,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -12.5, z: 0}
   m_itemType: 0

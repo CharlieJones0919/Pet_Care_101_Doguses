@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6292049011481810780}
   - component: {fileID: 6292049011481810781}
   - component: {fileID: 6292049011481810782}
+  - component: {fileID: 7134088005383308378}
   m_Layer: 0
   m_Name: DogBed
   m_TagString: Untagged
@@ -93,3 +94,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 5, z: 1.75}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7134088005383308378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292049011481810776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca46e0dd30e78cf4cb90a5bb8a3c9bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lastSpawnedPos: {x: 0, y: 0, z: 0}
+  m_inactivePos: {x: 0, y: 0, z: 0}
+  m_activePosY: 0
+  m_nullUser: {fileID: 0}
+  m_user: {fileID: 0}

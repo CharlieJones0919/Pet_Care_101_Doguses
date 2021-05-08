@@ -13,7 +13,7 @@ public class CameraControl : MonoBehaviour
     private float m_movementSpeed = 1.75f;
     private float m_rotationSpeed = 2.75f;
 
-    [SerializeField] private Controller controller;
+    [SerializeField] private Controller controller; //!< Reference to the game controller.
 
     private Camera m_camera;    //!< The camera object to set the camera specific values of.
     [SerializeField] private Collider m_cameraBounds;   //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
@@ -60,8 +60,6 @@ public class CameraControl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("AAA");
-
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit raycastHit;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DataDisplay : MonoBehaviour
 {
-    [SerializeField] private Controller controller;
+    [SerializeField] private Controller controller; //!< Reference to the game controller.
     [SerializeField] private Dog focusedDog;
     [SerializeField] private GameObject newDogPanel;
 

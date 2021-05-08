@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipText: {fileID: 232827416}
   messageQue: []
-  timePerCharacter: 0.05
+  timePerCharacter: 0.025
 --- !u!1 &523572912
 GameObject:
   m_ObjectHideFlags: 0

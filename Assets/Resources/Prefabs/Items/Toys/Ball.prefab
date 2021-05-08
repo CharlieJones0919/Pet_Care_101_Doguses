@@ -55,7 +55,7 @@ MonoBehaviour:
   personalityFufillmentAmounts:
   - 0.0002
   - 0.0001
-  m_objectPrefab: {fileID: 5752050639008929189, guid: 9991636b9f9498943b8836dcd77e1018,
+  m_instancePrefab: {fileID: -1845786409429951434, guid: 9991636b9f9498943b8836dcd77e1018,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -17.5, z: 0}
   m_itemType: 3
