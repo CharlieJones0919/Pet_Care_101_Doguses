@@ -1,5 +1,5 @@
 ﻿/** \file AStarSearch.cs
-*  \brief An implementation of A* searching.
+*  \brief An implementation of A* searching. (Attached to the ground object to search the game floor for traversable paths).
 */
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,16 +11,16 @@ using UnityEngine;
 public class AStarSearch : MonoBehaviour
 {
     // Grid Map Data
-    private ASNode[,] grid;       //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
-    public Vector2 gridSize;      //!< Size of the grid on the X & Y axes.
-    public Vector2 gridNodes;     //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
-    public float nodeSize;    //!< Translation of physical world scale to node size.
-    public LayerMask obstacleLayerMask;   //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
+    private ASNode[,] grid;             //!< A grid interpretation of the game world map/floor as X & Y co-ordinates.
+    public Vector2 gridSize;            //!< Size of the grid on the X & Y axes.
+    public Vector2 gridNodes;           //!< How many nodes high and wide the ground plane should be divided into to make the grid. (More divisions improves accuracy of movement, but increases path finding time).
+    public float nodeSize;              //!< Translation of physical world scale to node size.
+    public LayerMask obstacleLayerMask; //!< Non-traversable object layer for the grid nodes. (The class checks if the node's position contains any GameObjects of this layer to determine if it's traversable).
 
     // Node Set Data
-    private Heap<ASNode> openSet;        //!< A heap class instance for nodes that should be looked at for traversal next to be stored in.
-    private HashSet<ASNode> closedSet;   //!< A list for the nodes which have already been considered for the path.
-    private ASNode currentNode;          //!< The node the search is currently in and calculating from.
+    private Heap<ASNode> openSet;       //!< A heap class instance for nodes that should be looked at for traversal next to be stored in.
+    private HashSet<ASNode> closedSet;  //!< A list for the nodes which have already been considered for the path.
+    private ASNode currentNode;         //!< The node the search is currently in and calculating from.
 
     // Path Data
     [SerializeField] private Vector3 rootNodePos;    //!< The starting node of the path.
@@ -44,7 +44,7 @@ public class AStarSearch : MonoBehaviour
     }
 
     /** \fn CreateGrid
-    *  \brief Creates a grid map based on the data set in the Start() function.
+    *  \brief Creates a grid map based on the data set in the Start() function. Called again on every path request to check if traversable points have changed.
     */
     public void CreateGrid()
     {
@@ -74,8 +74,8 @@ public class AStarSearch : MonoBehaviour
 
     /** \fn RequestPath
     *  \brief Returns an A* found path between 2 input GameObjects.
-    *  \param startObject The object to find a path FROM.
-    *  \param goalObject The object to find a path TO.
+    *  \param startObject The position to find a path FROM.
+    *  \param goalObject The position to find a path TO.
     */
     public List<ASNode> RequestPath(Vector3 startPoint, Vector3 goalPoint)
     {
@@ -87,7 +87,7 @@ public class AStarSearch : MonoBehaviour
         CreateGrid();
        
         AStarPathFind(); // Run path search.
-        return m_path; // Return the path between objects found.
+        return m_path;   // Return the path between objects found.
     }
 
     /** \fn NodePositionInGrid
@@ -136,8 +136,8 @@ public class AStarSearch : MonoBehaviour
             if (currentNode == goalNode)
             {
                 RetracePath(rootNode, goalNode); // Retrace the path.
-                pathFound = true;   // Path is now found.
-                searching = false;  // No longer searching.
+                pathFound = true;                // Path is now found.
+                searching = false;               // No longer searching.
                 break;
             }
             else // If a path to the goal node hasn't been found yet, continue searching.
@@ -236,8 +236,6 @@ public class AStarSearch : MonoBehaviour
         return neighbours;
     }
 
-    // returns distance between nodeA and nodeB based on heuristic class
-
     /** \fn GetDistance 
     *  \brief Returns the heuristic (currently Euclidean) distance between 2 nodes.
     *  \param nodeA The first node to find the distance from.
@@ -249,6 +247,10 @@ public class AStarSearch : MonoBehaviour
         return Heuristic.GetDistanceEuclidean(nodeA, nodeB); 
     }
 
+    /** \fn IsTraversable 
+    *  \brief A quick check for if a position contains any hits with the non-traversable layer.
+    *  \param point The position to check the traversability of.
+    */
     public bool IsTraversable(Vector3 point)
     {
         return !(Physics.CheckBox(point, new Vector3(nodeSize, nodeSize, nodeSize), Quaternion.identity, obstacleLayerMask));

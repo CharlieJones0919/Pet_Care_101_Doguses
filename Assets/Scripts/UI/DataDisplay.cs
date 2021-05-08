@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿/** \file DataDisplay.cs
+*  \brief Contains a class for outputting data about a selected dog.
+*/
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/** \class DataDisplay
+*  \brief Contains a reference to a selected dog and the DogInfoPanel UI components as sent in by their GetUIComponent scripts. While active will output the data specific to that dog in the panel (e.g. their name, breed, hunger level, etc...).
+*/
 public class DataDisplay : MonoBehaviour
 {
-    [SerializeField] private Controller controller; //!< Reference to the game controller.
-    [SerializeField] private Dog focusedDog;
-    [SerializeField] private GameObject newDogPanel;
+    [SerializeField] private Controller controller;     //!< Reference to the game controller.
+    [SerializeField] private Dog focusedDog;            //!< The dog to output the data of.
+    [SerializeField] private GameObject newDogPanel;    //!< The adoption screen panel to activate when a new dog is added.
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
     public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>();

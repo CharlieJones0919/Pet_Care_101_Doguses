@@ -1,33 +1,33 @@
 ﻿/** \file CameraControl.cs
- *  \brief Contains any classes relevant to controlling the world camera/view.
+ *  \brief Contains any classes relevant to controlling the world camera/view or detecting touch input.
  */
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 /** \class CameraControl 
- *  \brief Allows touchscreen pinch and scroll controls to move the camera.
+ *  \brief Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog) has been tapped.
  */
 public class CameraControl : MonoBehaviour
 {
-    private float m_movementSpeed = 1.75f;
-    private float m_rotationSpeed = 2.75f;
+    private float m_movementSpeed = 1.75f; //!< Camera movement speed.
+    private float m_rotationSpeed = 2.75f; //!< Camera rotation speed.
 
     [SerializeField] private Controller controller; //!< Reference to the game controller.
 
-    private Camera m_camera;    //!< The camera object to set the camera specific values of.
-    [SerializeField] private Collider m_cameraBounds;   //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
-    [SerializeField] private float m_minZoomLimit;      //!< Minimum the camera's field of view can be zoomed into.
-    [SerializeField] private float m_maxZoomLimit;      //!< Maximum the camera's field of view can be zoomed out to.
-    private Plane m_plane;                              //!< A plane to use as a direction reference for movement.
+    private Camera m_camera;                                //!< The camera object. (Just set to the main camera).
+    [SerializeField] private Collider m_cameraBounds;       //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
+    [SerializeField] private float m_minZoomLimit;          //!< Minimum the camera's field of view can be zoomed into.
+    [SerializeField] private float m_maxZoomLimit;          //!< Maximum the camera's field of view can be zoomed out to.
+    private Plane m_plane;                                  //!< A plane to use as a direction reference for movement.
 
     [SerializeField] private Vector3 m_initialPos;          //!< The camera's initial position before any touch input. (For resetting the camera.)
     [SerializeField] private Quaternion m_initialRot;       //!< The camera's initial rotation before any touch input. (For resetting the camera.)
     [SerializeField] private float m_initialZoom;           //!< The camera's initial field of view before any touch input. (For resetting the camera.)
     [SerializeField] private bool m_cameraRotationEnabled;  //!< Set by the rotation toggle button to enable/disable camera rotation.
 
-    /** \fn Awake 
-     *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object before runtime and sets the camera's initial orientation values.
+    /** \fn Start 
+     *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object and sets the camera's initial orientation values.
      */
     private void Start()
     {
@@ -38,9 +38,10 @@ public class CameraControl : MonoBehaviour
         m_plane.distance = 10.0f;
     }
 
-    /** \fn FixedUpdate 
-    *   \brief Checks for touch input on a loop. Includes zooming and rotation with 2 fingers, and position movement with 1 finger.
-    **/
+    /** \fn Update 
+    *   \brief Checks for touch input on a loop. Includes zooming and rotation with 2 fingers and position movement with 1 finger for mobile. Also checks if a dog has been tapped. 
+    *   Contains PC control checks for the latter and is API agnostic for debugging purposes.
+    */
     private void Update()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -56,6 +57,9 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    /** \fn CheckDogTap_Editor 
+    *   \brief Checks if a raycast between the camera and the worldspace has hit a dog object from mouse click input. If it has, that dog is set to be the "focus dog" - this will display the info panel for it.
+    */
     private void CheckDogTap_Editor()
     {
         if (Input.GetMouseButtonDown(0))
@@ -84,6 +88,9 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    /** \fn CheckDogTap_Mobile 
+    *   \brief Checks if a raycast between the camera and the worldspace has hit a dog object from touch input. If it has, that dog is set to be the "focus dog" - this will display the info panel for it.
+    */
     private void CheckDogTap_Mobile()
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began)) //Gets first touch input.
@@ -110,13 +117,18 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    /** \fn CheckCameraMovement_Mobile 
+    *   \brief Detects touch screen input for camera movement. One finger touch dragging results in panning if rotation is toggled as off, and rotation otherwise, and pinching/expanding results in zooming in and out.
+    */
     private void CheckCameraMovement_Mobile()
     {
-        int touchCount = Input.touchCount; // Number of screen touches this update.   
+        // Number of screen touches this update.   
+        int touchCount = Input.touchCount; 
 
-        if (touchCount > 0)    // If there has been touchscreen input...
+        // If there has been touchscreen input...
+        if (touchCount > 0)   
         {
-            m_plane.SetNormalAndPosition(transform.up, transform.position); // Update the relative position of "upwards."
+            m_plane.SetNormalAndPosition(transform.up, transform.position); // Update the relative position of upwards.
             Touch touch1 = Input.GetTouch(0); // Get the first finger's touch input data.
 
             if (touch1.phase == TouchPhase.Moved)
@@ -125,17 +137,26 @@ public class CameraControl : MonoBehaviour
                 {
                     switch (m_cameraRotationEnabled)
                     {
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////// CAMERA ROTATION ///////////////////////////////////////////////
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         case (true):
                             var pos1 = PlanePosition(Input.GetTouch(0).position);
                             var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
                             m_camera.transform.RotateAround(pos1, m_plane.normal, -Vector3.SignedAngle(pos1, pos1b, m_plane.normal) * m_rotationSpeed);
                             break;
                         case (false):
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            /////////////////////////////////////////////// CAMERA PANNING ///////////////////////////////////////////////
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             m_camera.transform.Translate(PlanePositionDelta(touch1) * m_movementSpeed, Space.World);
                             break;
                     }
                 }
-                else if (touchCount >= 2) //Two Finger Input
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////// 2 FINGER ZOOM MOVEMENT ///////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                else if (touchCount >= 2) 
                 {
                     Touch touch2 = Input.GetTouch(1); // Get the second finger's touch input data.
 

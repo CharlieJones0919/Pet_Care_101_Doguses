@@ -23,7 +23,7 @@ public interface IHeapElement<T> : IComparable<T>
 */
 public class Heap<T> where T : IHeapElement<T>
 {
-    T[] array;          //!< A list for the items/elements in the heap. Stores a generic "type" for polymorphism of storing any specified data type.
+    T[] array;             //!< A list for the items/elements in the heap. Stores a generic "type" for polymorphism of storing any specified data type.
     int currentItemCount;  //!< Newly added element's position in the heap; sequentially incremented as items are added to keep count of how many items are on the heap so far.
 
     /** \fn Heap 
@@ -57,7 +57,7 @@ public class Heap<T> where T : IHeapElement<T>
 
         while (true)
         {
-            T parentElement = array[parentIndex];   // This element's parent element.
+            T parentElement = array[parentIndex];      // This element's parent element.
 
             // If the parent element currently has a higher priority than the parameter element, swap these element's positions in the heap.
             if (element.CompareTo(parentElement) > 0)

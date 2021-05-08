@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tipText: {fileID: 232827416}
-  messageQue: []
+  messageQueue: []
   timePerCharacter: 0.025
 --- !u!1 &523572912
 GameObject:
@@ -9843,7 +9843,7 @@ PrefabInstance:
     - target: {fileID: 4190955130967510268, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4190955131444565129, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
@@ -10138,12 +10138,12 @@ PrefabInstance:
     - target: {fileID: 8902602172923811233, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8902602172923811233, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8902602172923811233, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}

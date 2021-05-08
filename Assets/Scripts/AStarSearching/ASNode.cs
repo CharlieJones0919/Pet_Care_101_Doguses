@@ -9,16 +9,16 @@ using UnityEngine;
 */
 public class ASNode : IHeapElement<ASNode>
 {
-    public Vector3 m_worldPos;         //!< The node's physical position in the game world.
-    public bool m_traversable = false; //!< Whether or not the node can currently be navigated into. (Initialised to false until checked).
-    public int m_gridX; //!< The node's position in the world map grid on the X-axis.
-    public int m_gridY; //!< The node's position in the world map grid on the Y-axis.
+    public Vector3 m_worldPos;          //!< The node's physical position in the game world.
+    public bool m_traversable = false;  //!< Whether or not the node can currently be traversed. (Initialised to false until checked).
+    public int m_gridX;                 //!< The node's position in the world map grid on the X-axis.
+    public int m_gridY;                 //!< The node's position in the world map grid on the Y-axis.
 
-    public float g;     //!< The distance to travel to the goal from the initial node.
-    public float h;     //!< The heuristic estimate of "cost" to travel to the goal.
+    public float g;                     //!< The distance to travel to the goal from the initial node.
+    public float h;                     //!< The heuristic estimate of "cost" to travel to the goal.
 
-    public ASNode parentNode; //!< This node's parent node.
-    int heapIndex;            //!< This node's priority index number in the heap.
+    public ASNode parentNode;           //!< This node's parent node.
+    int heapIndex;                      //!< This node's priority index number in the heap.
 
     /** \fn ASNode
     *  \brief Constructor to create a node and initialise its values.
@@ -41,14 +41,8 @@ public class ASNode : IHeapElement<ASNode>
     */
     public int HeapIndex
     {
-        get
-        {
-            return heapIndex;
-        }
-        set
-        {
-            heapIndex = value;
-        }
+        get { return heapIndex; }
+        set { heapIndex = value; }
     }
 
     /** \fn f
@@ -56,10 +50,7 @@ public class ASNode : IHeapElement<ASNode>
     */
     public float f
     {
-        get
-        {
-            return g + h;
-        }
+        get { return g + h; }
     }
 
     /** \fn CompareTo
