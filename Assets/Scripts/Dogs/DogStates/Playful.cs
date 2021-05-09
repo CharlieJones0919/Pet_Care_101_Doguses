@@ -34,21 +34,6 @@ public class Playful : State
 
     public override Type StateUpdate()
     {
-        //if ((!doggo.Loved() || !doggo.Happy()) && doggo.FindItemType(ItemType.TOYS))
-        //{
-        //    if (!doggo.m_facts["USING_ITEM"])
-        //    {
-        //        if (doggo.ReachedTarget())
-        //        {
-        //            doggo.UseItem();
-        //            doggo.PickUpTarget();
-        //            doggo.SetRunning(true);
-        //        }
-        //    }
-        //    else { doggo.Wander(); }
-        //}
-        //else {  return typeof(Idle);  }
-
         //Checking each rule in the rules list to see if a state change should occur.
         foreach (Rule rule in doggo.m_rules)
         {

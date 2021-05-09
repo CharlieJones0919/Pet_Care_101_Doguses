@@ -98,7 +98,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         ItemInstance newInstance = Instantiate(m_instancePrefab, m_instancesInactivePos, m_instancePrefab.transform.rotation);
         newInstance.Initialise(m_instanceParent, m_instancesInactivePos, m_defaultNullObject);
         m_instancePool.Add(newInstance);
-        return m_instancePool[m_instancePool.Count - 1];
+        return newInstance;
     }
 
     /** \fn TryGetAvailableInstance
@@ -110,11 +110,15 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.UsableFor(attemptingUser.gameObject))
+                if (instance != null)
                 {
-                    attemptingUser.SetCurrentTargetItem(this, instance.gameObject);
-                    return true;
+                    if (instance.UsableFor(attemptingUser.gameObject))
+                    {
+                        attemptingUser.SetCurrentTargetItem(this, instance.gameObject);
+                        return true;
+                    }
                 }
+                else { return false; }
             }
         }
         return false;
@@ -133,14 +137,18 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.UsableFor(attemptingUser.gameObject))
+                if (instance != null)
                 {
-                    float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
+                    if (instance.UsableFor(attemptingUser.gameObject))
                     {
-                        closestInstanceSoFar = instance;
-                        closestDistanceSoFar = thisDist;
+                        float thisDist = Vector3.Distance(instance.GetPosition(), userPosition);
+                        {
+                            closestInstanceSoFar = instance;
+                            closestDistanceSoFar = thisDist;
+                        }
                     }
                 }
+                else { return false; }
             }
 
             if (closestInstanceSoFar != null)
@@ -160,14 +168,18 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.IsObject(requestedInstance))
-                {       
-                    if (instance.UsableFor(attemptingUser))
+                if (instance != null)
+                {
+                    if (instance.IsObject(requestedInstance))
                     {
-                        instance.StartUse(attemptingUser);
-                        return true;
+                        if (instance.UsableFor(attemptingUser))
+                        {
+                            instance.StartUse(attemptingUser);
+                            return true;
+                        }
                     }
                 }
+                else { return false; }
             }
         }
         return false;
@@ -183,16 +195,19 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.IsObject(requestedInstance))
+                if (instance != null)
                 {
-                    switch (IsSingleUse())
+                    if (instance.IsObject(requestedInstance))
                     {
-                        case (false):
-                            instance.EndUse();
-                            break;
-                        case (true):
-                            instance.Deactivate();
-                            break;
+                        switch (IsSingleUse())
+                        {
+                            case (false):
+                                instance.EndUse();
+                                break;
+                            case (true):
+                                instance.Deactivate();
+                                break;
+                        }
                     }
                 }
             }
@@ -208,9 +223,12 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (instance.IsObject(requestedInstance))
+                if (instance != null)
                 {
-                    return instance.GetLastSpawnPos();
+                    if (instance.IsObject(requestedInstance))
+                    {
+                        return instance.GetLastSpawnPos();
+                    }
                 }
             }
         }

@@ -4720,7 +4720,7 @@ GameObject:
   - component: {fileID: 1067725369}
   - component: {fileID: 1067725368}
   - component: {fileID: 1067725367}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5399,7 +5399,7 @@ GameObject:
   - component: {fileID: 1238925875}
   - component: {fileID: 1238925874}
   - component: {fileID: 1238925877}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10344,7 +10344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCareDecrement: -0.01
+  defaultCareDecrement: -0.005
   dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   snoutMdls:

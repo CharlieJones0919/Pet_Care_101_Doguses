@@ -134,8 +134,9 @@ public class Dog : MonoBehaviour
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Defining the dog's FSM states then adding them to the dog's FSM. 
         Dictionary<Type, State> newStates = new Dictionary<Type, State>();
-        newStates.Add(typeof(Idle), new Idle(this));    // This is the default starting state. (Wandering until current care values need attending to).
+        newStates.Add(typeof(Idle), new Idle(this));      // This is the default starting state. 
         newStates.Add(typeof(Pause), new Pause(this));
+   
         newStates.Add(typeof(Hungry), new Hungry(this));
         newStates.Add(typeof(Tired), new Tired(this));
         newStates.Add(typeof(Playful), new Playful(this));
@@ -254,11 +255,15 @@ public class Dog : MonoBehaviour
         {
             BTSequence[] globalSeqs =
             {
-                new BTSequence(new List<BTNode> { check_AllGood, bonus_GoodCare }),
+                new BTSequence(new List<BTNode> { check_AllGood, move_Running, bonus_GoodCare }),
 
                 new BTSequence(new List<BTNode> { check_Lonely, move_Crawling }),
                 new BTSequence(new List<BTNode> { check_Sick, move_Crawling }),
-                new BTSequence(new List<BTNode> { check_Distressed, move_Crawling })
+                new BTSequence(new List<BTNode> { check_Distressed, move_Crawling }),
+                new BTSequence(new List<BTNode> { check_Starving, move_Crawling }),
+                new BTSequence(new List<BTNode> { check_Exhausted, move_Crawling }),
+
+                new BTSequence(new List<BTNode> { check_N_Lonely, check_N_Sick, check_N_Distressed, check_N_Starving, check_N_Exhausted, move_Walking })
             };
             foreach (BTSequence sequence in globalSeqs) { GlobalSequences.Add(sequence); }
         }
@@ -266,18 +271,15 @@ public class Dog : MonoBehaviour
         {
             BTSequence[] idleEndSeqs =
             {
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Starving, found_N_Food, move_Crawling }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Exhausted, found_N_Bed, move_Crawling }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_N_Tired, found_Food, swp_Hungry_State }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_Tired, found_N_Bed, found_Food, swp_Hungry_State }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Starving, check_Exhausted, found_N_Bed, found_Food, swp_Hungry_State }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Starving, check_N_Exhausted, found_Food, swp_Hungry_State }),
 
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_Exhausted, found_N_Bed, found_Food, move_Crawling, swp_Hungry_State }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_N_Tired, found_Food, move_Walking, swp_Hungry_State }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Starving, check_N_Exhausted, found_Food, move_Running, swp_Hungry_State }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Tired, found_Bed, swp_Tired_State }),
 
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Tired, found_Bed, move_Walking, swp_Tired_State }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Exhausted, found_Bed, move_Crawling, swp_Tired_State }),
-
-                new BTSequence(new List<BTNode> { check_Idle_State, check_N_Lonely, check_N_Tired, found_Food, move_Walking, swp_Hungry_State }),
-                new BTSequence(new List<BTNode> { check_Idle_State, check_Rested, check_Fed, found_Toys, move_Walking, swp_Playful_State })
+                new BTSequence(new List<BTNode> { check_Idle_State, check_N_Overfed, check_N_Lonely, check_N_Tired, found_Food, swp_Hungry_State }),
+                new BTSequence(new List<BTNode> { check_Idle_State, check_Rested, check_Fed, found_Toys, swp_Playful_State })
             };
             foreach (BTSequence sequence in idleEndSeqs) { IdleEndSequences.Add(sequence); }
         }
@@ -288,7 +290,7 @@ public class Dog : MonoBehaviour
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Overfed, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Tired, check_Fed, found_Bed, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Exhausted, check_N_Starving, found_Bed, swp_Pause_State }),
-                new BTSequence(new List<BTNode> { check_Hungry_State, check_Fed, check_Lonely, found_Toys, swp_Pause_State })
+                new BTSequence(new List<BTNode> { check_Hungry_State, check_Fed, check_Rested, check_Lonely, found_Toys, swp_Pause_State })
             };
             foreach (BTSequence sequence in hungryEndSeqs) { HungryEndSequences.Add(sequence); }
         }
@@ -578,6 +580,8 @@ public class Dog : MonoBehaviour
                 {
                     m_facts["USING_ITEM"] = true;
 
+                    Debug.Log(name + ": ITEM USE START");
+
                     if (m_currentItemTarget.NeedsUseOffset())
                     {
                         Vector3 usePosition = m_currentObjectTarget.transform.position;
@@ -603,7 +607,6 @@ public class Dog : MonoBehaviour
 
     public void EndItemUse()
     {
-        Debug.LogWarning("Ending Item Use");
         controller.EndItemUse(m_currentItemTarget, m_currentObjectTarget);
         m_facts["USING_ITEM"] = false;
 
@@ -617,7 +620,7 @@ public class Dog : MonoBehaviour
 
             m_facts["HOLDING_ITEM"] = false;
         }
-
+        Debug.Log(name + ": ITEM USE END");
         ClearCurrentTarget();
     }
 

@@ -272,7 +272,7 @@ public class CareProperty
     */
     public void UpdateValue(float modifiyer)
     {
-        m_value = Mathf.Clamp(m_value + modifiyer, 0.0f, 100.0f);
+        m_value = Mathf.Clamp(m_value + (modifiyer * Time.timeScale), 0.0f, 100.0f);
 
         m_currentStates.Clear();
         foreach (KeyValuePair<string, Vector2> state in m_states)
@@ -327,7 +327,7 @@ public class PersonalityProperty
     */
     public void UpdateValue(float modifiyer)
     {
-        m_value = Mathf.Clamp(m_value + modifiyer, 0.0f, 5.0f);
+        m_value = Mathf.Clamp(m_value + (modifiyer * Time.timeScale), 0.0f, 5.0f);
 
         foreach (KeyValuePair<string, Vector2> state in m_states)
         {

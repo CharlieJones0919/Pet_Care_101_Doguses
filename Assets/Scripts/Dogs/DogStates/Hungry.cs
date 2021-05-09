@@ -15,14 +15,14 @@ public class Hungry : State
         doggo.m_facts["HUNGRY"] = true;
         doggo.m_facts["SWP_HUNGRY"] = false;
 
-        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Entering Hungry State");
+        Debug.Log(doggo.name + ": Entering Hungry State");
         return null;
     }
 
     public override Type StateExit()
     {
         doggo.m_facts["HUNGRY"] = false;
-        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Exiting Hungry State");
+        Debug.Log(doggo.name + ": Exiting Hungry State");
         return null;
     }
 
@@ -44,7 +44,7 @@ public class Hungry : State
         }
 
         // Check if the state should be exited. By returning null the state change will be caught by the next rule check.
-        foreach (BTSequence sequenceCheck in doggo.TiredEndSequences)
+        foreach (BTSequence sequenceCheck in doggo.HungryEndSequences)
         {
             if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
         }
@@ -65,23 +65,5 @@ public class Hungry : State
             }
         }
         return null;
-
-        //   if (!doggo.Overfed() && doggo.FindItemType(ItemType.FOOD))
-        //   {
-        //       if (!doggo.m_facts["USING_ITEM"])
-        //       {
-        //           if (doggo.FindItemType(ItemType.FOOD))
-        //           {
-        //               if (doggo.ReachedTarget())
-        //               {
-        //                   doggo.UseItem();
-        //                   doggo.m_animationCTRL.SetTrigger("Eating");
-        //               }
-        //           }
-        //       }
-        //   }
-        //   else { return typeof(HUNGRY); }
-        //
-        //   return null;
     }
 }

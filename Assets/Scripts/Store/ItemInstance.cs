@@ -28,11 +28,9 @@ public class ItemInstance : MonoBehaviour
     public void Initialise(GameObject parentTransform, Vector3 inactivePos, GameObject nullObj)
     {
         transform.SetParent(parentTransform.transform);
-
         m_inactivePos = inactivePos;
-
         m_nullUser = nullObj;
-        m_user = m_nullUser;
+        Deactivate();
     }
 
     /** \fn StartUse

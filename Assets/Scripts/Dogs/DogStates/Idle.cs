@@ -15,32 +15,19 @@ public class Idle : State
         doggo.m_facts["IDLE"] = true;
         doggo.m_facts["SWP_IDLE"] = false;
 
-        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Entering Idle State");
+        Debug.Log(doggo.name + ": Entering Idle State");
         return null;
     }
 
     public override Type StateExit()
     {
         doggo.m_facts["IDLE"] = false;
-        if (doggo.m_facts["IS_FOCUS"]) Debug.Log(doggo.name + ": Exiting Idle State");
+        Debug.Log(doggo.name + ": Exiting Idle State");
         return null;
     }
 
     public override Type StateUpdate()
     {
-        //if (doggo.Hungry() && doggo.FindItemType(ItemType.FOOD))
-        //{
-        //    return typeof(Hungry);
-        //}
-        //else if (doggo.Tired() && doggo.FindItemType(ItemType.BED))
-        //{
-        //    return typeof(Tired);
-        //}
-        //else        if (doggo.Lonely() && doggo.FindItemType(ItemType.TOYS))
-       // {
-       //     return typeof(Playful);
-       // }
-
         //Checking each rule in the rules list to see if a state change should occur.
         foreach (Rule rule in doggo.m_rules)
         {

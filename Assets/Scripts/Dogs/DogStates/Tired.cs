@@ -34,19 +34,6 @@ public class Tired : State
 
     public override Type StateUpdate()
     {
-        //if (!doggo.Rejuvinated() && (doggo.FindItemType(ItemType.BED)))
-        //{
-        //    if (!doggo.m_facts["USING_ITEM"])
-        //    {
-        //        if (doggo.ReachedTarget())
-        //        {
-        //            doggo.m_animationCTRL.SetTrigger("GoingToSleep");
-        //            doggo.UseItem();
-        //        }
-        //    }
-        //}
-        //else { return typeof(TIRED); }
-
         //Checking each rule in the rules list to see if a state change should occur.
         foreach (Rule rule in doggo.m_rules)
         {

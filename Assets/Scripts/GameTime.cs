@@ -21,7 +21,7 @@ public class GameTime : MonoBehaviour
 
     private static float gameTimeSeconds = 0;            //!< Game-time Seconds. 
     private static int   gameTimeMinutes = 0;            //!< Game-time Minutes. 
-    private static int   gameTimeHours = 8;              //!< Game-time Hours. (Game starts at 8AM).
+    private static int   gameTimeHours = 20;              //!< Game-time Hours. (Game starts at 8AM).
     private static int   gameTimeDays = 0;               //!< Game-time Days.
     private static int   gameTimeDaysTotal = 0;          //!< Game-time Days Total.
     private static int   gameTimeWeeks = 0;              //!< Game-time Weeks. 

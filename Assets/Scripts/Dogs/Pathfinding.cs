@@ -107,7 +107,7 @@ public class Pathfinding : MonoBehaviour
      */
     public bool AttemptToReachTarget()
     {
-        if (IsSetToRandom() && !m_randomNodeFound) { if (!GenerateRandomPointInWorld(m_randomPoint)) { return false; } }
+        if (IsSetToObject(m_randomPoint) && !m_randomNodeFound) { if (!GenerateRandomPointInWorld(m_randomPoint)) { return false; } }
         if (!m_pathFound) { FindPathTo(m_currentTarget); return false; }
 
         // if (transform.InverseTransformDirection(m_RB.velocity).z == 0.0f) { FindPathTo(m_currentTarget); }
@@ -130,6 +130,7 @@ public class Pathfinding : MonoBehaviour
         {
             DogLookAt(m_foundPath[0], false); //Look at the first position in the path list.
             MoveDog();   //Move forwards towards the position.
+          //  if (transform.InverseTransformDirection(m_RB.velocity).z == 0) { m_pathFound = false; }
             return false;
         }
         else  //If within the "found" distance of the node, remove it from the list.
