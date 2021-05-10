@@ -1,5 +1,5 @@
 ﻿/** \file DataDisplay.cs
-*  \brief Contains a class for outputting data about a selected dog.
+*  \brief Contains a class for outputting data about a selected dog. This is attached to the DogInfoPanel UI object.
 */
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,15 +14,13 @@ public class DataDisplay : MonoBehaviour
     [SerializeField] private Dog focusedDog;            //!< The dog to output the data of.
     [SerializeField] private GameObject newDogPanel;    //!< The adoption screen panel to activate when a new dog is added.
 
-    public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();
-    public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>();
-    public Dictionary<DogPersonalityValue, Slider> personalityValueDisplayUI = new Dictionary<DogPersonalityValue, Slider>();
+    public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();                                                       //!< UI for outputting data other than Care/Personality values. (E.g. Name, Breed, age, etc...).
+    public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>(); //!< UI for outputting the dog's care values, paired with the percentage text and a key for the specific care value this slider/text are for.
+    public Dictionary<DogPersonalityValue, Slider> personalityValueDisplayUI = new Dictionary<DogPersonalityValue, Slider>();                    //!< UI for outputting the dog's personality values, with a key for the specific personality value this slider is for.
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
+    /** \fn OnEnable
+    *  \brief When the panel is activated, its general data UI elements to the values of the current dog of focus. (This will be set via Control as called by CameraControl when a dog is tapped/clicked).
+    */
     private void OnEnable()
     {
         if (focusedDog != null)
@@ -57,12 +55,14 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        focusedDog = null;
-        controller.NotFocusedOnDog();
-    }
+    /** \fn OnDisable
+    *  \brief When the panel is de-activated, it tells the controller to unset all the dogs' "IS_FOCUS_DOG" facts as true.
+    */
+    private void OnDisable() { controller.NotFocusedOnDog(); }
 
+    /** \fn FixedUpdate
+    *  \brief While the InfoPanel is active, this function updates the slider and text UI element's values to those of the focused dog. 
+    */
     private void FixedUpdate()
     {
         if (focusedDog != null)
@@ -80,11 +80,19 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
-    
-
+    /** \fn SetFocusDog
+    *  \brief Called by CameraControl when a dog is tapped/clicked. Sets this script's reference to a dog to the one passed in after being hit by a camera raycast. 
+    */
     public void SetFocusDog(Dog focus) { focusedDog = focus; gameObject.SetActive(true); }
 
+    /** \fn ActivateNewDogPanel
+     *  \brief Activates the adoption screen when a new dog is generated. Called by the Control class. 
+     */
     public void ActivateNewDogPanel() { newDogPanel.SetActive(true); }
+
+    /** \fn NewDogAdded
+     *  \brief Unpauses the game, activates this object (the dog info panel), and deactivates the adoption screen panel. This is called by the confirmation button on the adoption panel to continue the game.
+     */
     public void NewDogAdded()
     {
         controller.PAUSE(false);
@@ -92,12 +100,18 @@ public class DataDisplay : MonoBehaviour
         newDogPanel.SetActive(false);
     }
 
+    /** \fn GetFocusDog
+     *  \brief Returns the script's current focus dog data is being output for.
+     */
     public GameObject GetFocusDog()
     {
         if (focusedDog != null) { return focusedDog.gameObject; }
         else { return null; }
     }
 
+    /** \fn SetNewDogName
+     *  \brief Attached to the name input textbox to set the focus dog's name on data entry.
+     */
     public void SetNewDogName(string name)
     {
         if ((focusedDog != null) && (name != ""))
@@ -118,6 +132,9 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
+    /** \fn ToggleNameInputField
+     *  \brief Sets the active state of the name input button. Is used to deactivate the field when a name is entered to show the name in text behind it, then reactivate it again when the edit button is pressed.
+     */
     public void ToggleNameInputField(bool activeState)
     {
         foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)

@@ -57,7 +57,10 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             ItemInstance newInstance = Instantiate(m_instancePrefab, m_instancesInactivePos, m_instancePrefab.transform.rotation);
             newInstance.Initialise(m_instanceParent, m_instancesInactivePos, m_defaultNullObject);
             m_instancePool.Add(newInstance);
+            newInstance.gameObject.SetActive(false);
         }
+
+        Debug.Log(m_itemType + ": "+ m_instancePool.Count);
     }
 
     /** \fn SetInstanceParent
@@ -77,15 +80,17 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     */
     public void ActivateAvailableInstanceTo(Vector3 spawnPos)
     {
-        foreach (ItemInstance instance in m_instancePool)
+        if (m_instancePool.Count != 0)
         {
-            if (!instance.CurrentlyActive())
+            foreach (ItemInstance instance in m_instancePool)
             {
-                instance.Activate(spawnPos);
-                return;
-            }
+                if (!instance.CurrentlyActive())
+                {
+                    instance.Activate(spawnPos);
+                    return;
+                }
+            }        
         }
-
         //If none were available for activation in the pool already.
         AddNewToPool().Activate(spawnPos);
     }
