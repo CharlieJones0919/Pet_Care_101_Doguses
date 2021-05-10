@@ -9538,7 +9538,7 @@ PrefabInstance:
     - target: {fileID: 3726415348840834278, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15.099976
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 3726415349658326074, guid: 2c2742e3768d1b348a30ce7e056350e5,
         type: 3}
@@ -10344,30 +10344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6373a63310db0014ca3e6509b83ae306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCareDecrement: -0.005
-  dogPrefabBase: {fileID: 9089536525100727228, guid: be36d44d95883ff4b9532da8692a06ff,
-    type: 3}
-  snoutMdls:
-  - {fileID: 919132149155446097, guid: e50bcf64042dcd540971a004c1dadd86, type: 3}
-  - {fileID: 919132149155446097, guid: ca26b55d25e2fc34d945338eb080b04b, type: 3}
-  - {fileID: 919132149155446097, guid: 3cfd195171e1eb240827c7e010b1dfd0, type: 3}
-  earMdls:
-  - {fileID: 919132149155446097, guid: f063c134149ada9449245fa731ab1054, type: 3}
-  - {fileID: 919132149155446097, guid: 0387004389419c846be3f46b106aadc3, type: 3}
-  - {fileID: 919132149155446097, guid: fbb72a55f482d24409c981ab9748a703, type: 3}
-  tailMdls:
-  - {fileID: 919132149155446097, guid: 8968342a2c6549046bce2a1215474de2, type: 3}
-  - {fileID: 919132149155446097, guid: a69d4e832ac344e47958d58504726c78, type: 3}
-  - {fileID: 919132149155446097, guid: 62daf8ec98753e140a2971d9ea96186a, type: 3}
-  - {fileID: 919132149155446097, guid: efcb3150aaa57e14d81ad8db2fdb58e7, type: 3}
-  - {fileID: 919132149155446097, guid: 5d6831e82d8bba845a14b7eb9f389311, type: 3}
-  - {fileID: 919132149155446097, guid: 79cc47ca882ff32468f656e73ebacbd3, type: 3}
-  - {fileID: 919132149155446097, guid: 66146bd427139df47863358e1f270379, type: 3}
   controller: {fileID: 1958195944}
-  dogUIOutputScript: {fileID: 1793242820}
-  groundAStar: {fileID: 1238925877}
-  randomPointStorage: {fileID: 1697991418}
-  defaultNullObject: {fileID: 20102056}
+  defaultCareDecrement: -0.005
+  dogPrefabBase: {fileID: 9089536525100727225, guid: be36d44d95883ff4b9532da8692a06ff,
+    type: 3}
+  dogModelPartsPath: Art/Models/DogComponentModels/BreedSpecific
   breedDataFileDir: /Scripts/ReferenceFiles/BreedData.txt
 --- !u!114 &1958195946
 MonoBehaviour:

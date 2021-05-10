@@ -13,7 +13,7 @@ public class StoreController : MonoBehaviour
     [SerializeField] private AStarSearch worldFloor;
     [SerializeField] private float traversableFloorOffset;
 
-    [SerializeField] private string itemPrefabBaseDir = "Prefabs/Items";
+    [SerializeField] private string itemPrefabBaseDir;
     [SerializeField] private UnityEngine.Object[] itemPrefabs;
 
     private Dictionary<ItemType, StoreSection> storeSections = new Dictionary<ItemType, StoreSection>();
