@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('class_heap.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_heap-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Heap&lt; T &gt; Class Template Reference</div>  </div>
@@ -131,6 +132,15 @@ Properties</h2></td></tr>
 <tr class="memitem:a549b17db065b04e97f13caf577338f60"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_heap.html#a549b17db065b04e97f13caf577338f60">Count</a><code> [get]</code></td></tr>
 <tr class="memdesc:a549b17db065b04e97f13caf577338f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current number of elements in the heap.  <a href="class_heap.html#a549b17db065b04e97f13caf577338f60">More...</a><br /></td></tr>
 <tr class="separator:a549b17db065b04e97f13caf577338f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a22f09192f336c913586d84e81c93fdb0"><td class="memItemLeft" align="right" valign="top">T[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_heap.html#a22f09192f336c913586d84e81c93fdb0">array</a></td></tr>
+<tr class="memdesc:a22f09192f336c913586d84e81c93fdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list for the items/elements in the heap. Stores a generic "type" for polymorphism of storing any specified data type.  <a href="class_heap.html#a22f09192f336c913586d84e81c93fdb0">More...</a><br /></td></tr>
+<tr class="separator:a22f09192f336c913586d84e81c93fdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab23ec5a3edfe8462c0bc7a6e39a7ee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_heap.html#a2ab23ec5a3edfe8462c0bc7a6e39a7ee">currentItemCount</a></td></tr>
+<tr class="memdesc:a2ab23ec5a3edfe8462c0bc7a6e39a7ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Newly added element's position in the heap; sequentially incremented as items are added to keep count of how many items are on the heap so far.  <a href="class_heap.html#a2ab23ec5a3edfe8462c0bc7a6e39a7ee">More...</a><br /></td></tr>
+<tr class="separator:a2ab23ec5a3edfe8462c0bc7a6e39a7ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An emulation of a heap which takes generic "type" elements. However, these elements should have implementations of the functions specified by <a class="el" href="interface_i_heap_element.html" title="As the heap doesn&#39;t specify a data type and thus what can be done to the elements,...">IHeapElement</a>. </p>
@@ -417,6 +427,55 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a22f09192f336c913586d84e81c93fdb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f09192f336c913586d84e81c93fdb0">&#9670;&nbsp;</a></span>array</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T [] <a class="el" href="class_heap.html">Heap</a>&lt; T &gt;.array</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A list for the items/elements in the heap. Stores a generic "type" for polymorphism of storing any specified data type. </p>
+
+</div>
+</div>
+<a id="a2ab23ec5a3edfe8462c0bc7a6e39a7ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ab23ec5a3edfe8462c0bc7a6e39a7ee">&#9670;&nbsp;</a></span>currentItemCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_heap.html">Heap</a>&lt; T &gt;.currentItemCount</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Newly added element's position in the heap; sequentially incremented as items are added to keep count of how many items are on the heap so far. </p>
 
 </div>
 </div>

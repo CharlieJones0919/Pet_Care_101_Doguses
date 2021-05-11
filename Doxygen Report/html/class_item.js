@@ -1,6 +1,7 @@
 var class_item =
 [
     [ "ActivateAvailableInstanceTo", "class_item.html#a1bd2dbb961b9385e219cdeeafd07565c", null ],
+    [ "AddNewToPool", "class_item.html#a6b613be4efca12e82d58b46ebbf46fab", null ],
     [ "FufillsCareValue", "class_item.html#afaada5b2e6f0cfc0276ebb02bb32f6d3", null ],
     [ "FufillsPersonalityValue", "class_item.html#ace837e9209d57f1e50157b33a79ac8d2", null ],
     [ "GetCareFufillmentAmount", "class_item.html#a21276e223e5178f125cbe8d10ffa2bfb", null ],
@@ -24,5 +25,25 @@ var class_item =
     [ "TryGetAvailableInstance", "class_item.html#a284f7a5faa3a73a035fe9c750ecdc519", null ],
     [ "TryGetClosestAvailableInstance", "class_item.html#ae47d8b2d77be6aff3f8d8f9b4fe6a887", null ],
     [ "UseItemInstance", "class_item.html#a8db5757ce832aeaf15c5c0335c49b014", null ],
-    [ "doNotDeploy", "class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4", null ]
+    [ "careFufillmentAmounts", "class_item.html#aba20e9705b386944a3b40fb95f2a9183", null ],
+    [ "careFufills", "class_item.html#ad5ea1dd0b82e8e3c6a6709d09909c1a2", null ],
+    [ "defaultNumToInstantiate", "class_item.html#af460018607ad308960cd6235cfd64e31", null ],
+    [ "doNotDeploy", "class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4", null ],
+    [ "m_careFufillments", "class_item.html#a62b3939569546af3149d4b7b4317096f", null ],
+    [ "m_defaultNullObject", "class_item.html#a94aa1475e120ea6d346a540f5043f1f6", null ],
+    [ "m_description", "class_item.html#aabb7aa554a6236be5da7d5ba9b822f6a", null ],
+    [ "m_instanceParent", "class_item.html#acb5c1fb946430e87b266a1364de66b35", null ],
+    [ "m_instancePool", "class_item.html#afd93d2c1ec35d775d630882944cf0632", null ],
+    [ "m_instancePrefab", "class_item.html#a7984fb8ba4485879e360ab2107f8da7d", null ],
+    [ "m_instancesInactivePos", "class_item.html#a1d0999f15f19a2e6117ea166e74dc92f", null ],
+    [ "m_itemType", "class_item.html#a6f896c4040086532e6378f2fba1e8068", null ],
+    [ "m_name", "class_item.html#aee02798cc7744d42a714522fa38d8b69", null ],
+    [ "m_needsUseOffset", "class_item.html#ab00b47cda145bdf36e88972f402c92ee", null ],
+    [ "m_personalityFufillments", "class_item.html#a1549791ebfed648e2bc8edd733d78635", null ],
+    [ "m_price", "class_item.html#affebefd54a85d8d74e9f597c4e8e97cd", null ],
+    [ "m_relUsePos", "class_item.html#a477fe00bfd24a196c8828c490c6640a1", null ],
+    [ "m_singleUse", "class_item.html#a85e96aada98d5b8b3524e0a566a60790", null ],
+    [ "m_sprite", "class_item.html#a63fb04d69654dc32e850a62c782cbde4", null ],
+    [ "personalityFufillmentAmounts", "class_item.html#a53a5b1b214a0f9a52c39670fe9281b35", null ],
+    [ "personalityFufills", "class_item.html#ad73721ae4ba890d784c0a8cb7f6f3294", null ]
 ];

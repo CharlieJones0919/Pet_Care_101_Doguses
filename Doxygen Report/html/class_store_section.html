@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_store_section.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_store_section-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StoreSection Class Reference</div>  </div>
@@ -124,6 +125,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2cf04a04d6832938b075e8201c90cccd"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_item.html">Item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#a2cf04a04d6832938b075e8201c90cccd">GetPageItems</a> (int pageNum)</td></tr>
 <tr class="memdesc:a2cf04a04d6832938b075e8201c90cccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of the Items that will fit on one "page" (set of ItemSlots) for a specific page.  <a href="class_store_section.html#a2cf04a04d6832938b075e8201c90cccd">More...</a><br /></td></tr>
 <tr class="separator:a2cf04a04d6832938b075e8201c90cccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a9fa8ca15eea8a1de20cf00bb8d4e5717"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#a9fa8ca15eea8a1de20cf00bb8d4e5717">sectionCatergory</a></td></tr>
+<tr class="memdesc:a9fa8ca15eea8a1de20cf00bb8d4e5717"><td class="mdescLeft">&#160;</td><td class="mdescRight">ItemType of this <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a> and all the Items within.  <a href="class_store_section.html#a9fa8ca15eea8a1de20cf00bb8d4e5717">More...</a><br /></td></tr>
+<tr class="separator:a9fa8ca15eea8a1de20cf00bb8d4e5717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3da1c3f29b594317c9c2a00c83ae885b"><td class="memItemLeft" align="right" valign="top">Text&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#a3da1c3f29b594317c9c2a00c83ae885b">sectionLabel</a></td></tr>
+<tr class="memdesc:a3da1c3f29b594317c9c2a00c83ae885b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text displayed on this tab toggle button. Gets set to the ItemType of this <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a>.  <a href="class_store_section.html#a3da1c3f29b594317c9c2a00c83ae885b">More...</a><br /></td></tr>
+<tr class="separator:a3da1c3f29b594317c9c2a00c83ae885b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94563b0fb5764c7616c44b5c12eecf76"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_item.html">Item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#a94563b0fb5764c7616c44b5c12eecf76">sectionItems</a></td></tr>
+<tr class="memdesc:a94563b0fb5764c7616c44b5c12eecf76"><td class="mdescLeft">&#160;</td><td class="mdescRight">The items of the same ItemType in this section.  <a href="class_store_section.html#a94563b0fb5764c7616c44b5c12eecf76">More...</a><br /></td></tr>
+<tr class="separator:a94563b0fb5764c7616c44b5c12eecf76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cad2b7a57cb11efa989f31b5a8544a6"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; int, List&lt; <a class="el" href="class_item.html">Item</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#a6cad2b7a57cb11efa989f31b5a8544a6">pageItems</a> = new Dictionary&lt;int, List&lt;<a class="el" href="class_item.html">Item</a>&gt;&gt;()</td></tr>
+<tr class="separator:a6cad2b7a57cb11efa989f31b5a8544a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc9155fe36d2f6408a4b589ed1a2b70c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#abc9155fe36d2f6408a4b589ed1a2b70c">extraSectionPages</a> = 0</td></tr>
+<tr class="memdesc:abc9155fe36d2f6408a4b589ed1a2b70c"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many "pages" are in this section. This is simply the number of sectionItems divided by how many ItemSlots are in the store UI to display said Items.  <a href="class_store_section.html#abc9155fe36d2f6408a4b589ed1a2b70c">More...</a><br /></td></tr>
+<tr class="separator:abc9155fe36d2f6408a4b589ed1a2b70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb31105dbdbe4261ddf30f4d09f6801c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_store_section.html#aeb31105dbdbe4261ddf30f4d09f6801c">numItems</a> = 0</td></tr>
+<tr class="memdesc:aeb31105dbdbe4261ddf30f4d09f6801c"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many Items are in this section. Seeing as this will be static at run-time, this variable saves calling sectionItems.Count so often.  <a href="class_store_section.html#aeb31105dbdbe4261ddf30f4d09f6801c">More...</a><br /></td></tr>
+<tr class="separator:aeb31105dbdbe4261ddf30f4d09f6801c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class for storing all the Items and number of pages a store "section" has. A section is just all the ItemTypes with their own tab in the store; the section contains all the items of that type. </p>
@@ -305,6 +326,149 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Instantiation class to set this tab to an ItemType and populate its list of corresponding Items (of that type). Extrapolates the number of pages and Items from that given <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> list. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abc9155fe36d2f6408a4b589ed1a2b70c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc9155fe36d2f6408a4b589ed1a2b70c">&#9670;&nbsp;</a></span>extraSectionPages</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int StoreSection.extraSectionPages = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How many "pages" are in this section. This is simply the number of sectionItems divided by how many ItemSlots are in the store UI to display said Items. </p>
+
+</div>
+</div>
+<a id="aeb31105dbdbe4261ddf30f4d09f6801c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb31105dbdbe4261ddf30f4d09f6801c">&#9670;&nbsp;</a></span>numItems</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int StoreSection.numItems = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How many Items are in this section. Seeing as this will be static at run-time, this variable saves calling sectionItems.Count so often. </p>
+
+</div>
+</div>
+<a id="a6cad2b7a57cb11efa989f31b5a8544a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cad2b7a57cb11efa989f31b5a8544a6">&#9670;&nbsp;</a></span>pageItems</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;int, List&lt;<a class="el" href="class_item.html">Item</a>&gt; &gt; StoreSection.pageItems = new Dictionary&lt;int, List&lt;<a class="el" href="class_item.html">Item</a>&gt;&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9fa8ca15eea8a1de20cf00bb8d4e5717"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fa8ca15eea8a1de20cf00bb8d4e5717">&#9670;&nbsp;</a></span>sectionCatergory</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a> StoreSection.sectionCatergory</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ItemType of this <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a> and all the Items within. </p>
+
+</div>
+</div>
+<a id="a94563b0fb5764c7616c44b5c12eecf76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94563b0fb5764c7616c44b5c12eecf76">&#9670;&nbsp;</a></span>sectionItems</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="class_item.html">Item</a>&gt; StoreSection.sectionItems</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The items of the same ItemType in this section. </p>
+
+</div>
+</div>
+<a id="a3da1c3f29b594317c9c2a00c83ae885b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3da1c3f29b594317c9c2a00c83ae885b">&#9670;&nbsp;</a></span>sectionLabel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Text StoreSection.sectionLabel</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The text displayed on this tab toggle button. Gets set to the ItemType of this <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a>. </p>
 
 </div>
 </div>

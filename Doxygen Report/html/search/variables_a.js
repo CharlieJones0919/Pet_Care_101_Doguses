@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['parentnode_621',['parentNode',['../class_a_s_node.html#af91e1d84539c51682c7606b6f51bea28',1,'ASNode']]],
-  ['personalityvaluedisplayui_622',['personalityValueDisplayUI',['../class_data_display.html#afdb0b78b73f2c08876f44a4d4d7b5a99',1,'DataDisplay']]],
-  ['playfulendsequences_623',['PlayfulEndSequences',['../class_dog.html#af919c38fdd35fe2ecea11760c4d30efa',1,'Dog']]]
+  ['navigation_1187',['navigation',['../class_dog.html#a3384cb35e3fd4a01c75a823f2c6412ae',1,'Dog']]],
+  ['newdogpanel_1188',['newDogPanel',['../class_data_display.html#a47b3f358e3ca247d773ae45bf82929e2',1,'DataDisplay']]],
+  ['nextpagebutton_1189',['nextPageButton',['../class_store_controller.html#a29ceac47ea7247eaa0bc6ee280ce345a',1,'StoreController']]],
+  ['nodesize_1190',['nodeSize',['../class_a_star_search.html#aeee12e56c0267160f43552ebfb9caf4c',1,'AStarSearch']]],
+  ['numitems_1191',['numItems',['../class_store_section.html#aeb31105dbdbe4261ddf30f4d09f6801c',1,'StoreSection']]]
 ];

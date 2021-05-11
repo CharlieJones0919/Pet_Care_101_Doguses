@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_animation_management.html','');}
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_animation_management-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">AnimationManagement Class Reference</div>  </div>
@@ -112,6 +113,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa88a80fa6beb56e2e52f2156d43d3cf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_management.html#aa88a80fa6beb56e2e52f2156d43d3cf0">FinishedAnimation</a> ()</td></tr>
 <tr class="memdesc:aa88a80fa6beb56e2e52f2156d43d3cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets dog's "NEEDS_2_FINISH_ANIM" fact back to false after <a class="el" href="class_animation_management.html#ac28107b5bae6511c38f67a1916eac545" title="Sets the dog&#39;s &quot;NEEDS_2_FINISH_ANIM&quot; fact as true. The dog can&#39;t exit the pause state until this is u...">NeedsToFinishAnimation()</a> is called. Allows the dog to unpause after the animation is done.  <a href="class_animation_management.html#aa88a80fa6beb56e2e52f2156d43d3cf0">More...</a><br /></td></tr>
 <tr class="separator:aa88a80fa6beb56e2e52f2156d43d3cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae75ff0bed23df3b695aa5adc4024301a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_dog.html">Dog</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_animation_management.html#ae75ff0bed23df3b695aa5adc4024301a">dog</a></td></tr>
+<tr class="memdesc:ae75ff0bed23df3b695aa5adc4024301a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A reference to the dog this animator is attached to. Required to allow the animations to influence the dog's behaviour.  <a href="class_animation_management.html#ae75ff0bed23df3b695aa5adc4024301a">More...</a><br /></td></tr>
+<tr class="separator:ae75ff0bed23df3b695aa5adc4024301a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class for the dogs' animation controller's events. (Only currently has 2 functions). These are functions called at specified keyframes in some of the dog's animations. </p>
@@ -167,6 +174,31 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the dog's "NEEDS_2_FINISH_ANIM" fact as true. The dog can't exit the pause state until this is unset back to false. Used so the dog stops all behaviours until finishing specific animations. (E.g. Pauses while finishing the waking up animation). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ae75ff0bed23df3b695aa5adc4024301a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae75ff0bed23df3b695aa5adc4024301a">&#9670;&nbsp;</a></span>dog</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_dog.html">Dog</a> AnimationManagement.dog</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A reference to the dog this animator is attached to. Required to allow the animations to influence the dog's behaviour. </p>
 
 </div>
 </div>

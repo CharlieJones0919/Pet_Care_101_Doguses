@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_personality_property.html','');}
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_personality_property-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">PersonalityProperty Class Reference</div>  </div>
@@ -112,6 +113,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aef76f07f564138ff7185e28042e702a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_personality_property.html#aef76f07f564138ff7185e28042e702a8">UpdateValue</a> (float modifiyer)</td></tr>
 <tr class="memdesc:aef76f07f564138ff7185e28042e702a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the property's value and checks which state it's in now from that change.  <a href="class_personality_property.html#aef76f07f564138ff7185e28042e702a8">More...</a><br /></td></tr>
 <tr class="separator:aef76f07f564138ff7185e28042e702a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab4f6a96a6ab930aba9f631208229e343"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, Vector2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_personality_property.html#ab4f6a96a6ab930aba9f631208229e343">m_states</a> = new Dictionary&lt;string, Vector2&gt;()</td></tr>
+<tr class="memdesc:ab4f6a96a6ab930aba9f631208229e343"><td class="mdescLeft">&#160;</td><td class="mdescRight">This personality property's possible states, and the Vector2 is each state's lower and upper bounds.  <a href="class_personality_property.html#ab4f6a96a6ab930aba9f631208229e343">More...</a><br /></td></tr>
+<tr class="separator:ab4f6a96a6ab930aba9f631208229e343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41be48a4ca08106998757544d21a5e83"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_personality_property.html#a41be48a4ca08106998757544d21a5e83">m_currentState</a></td></tr>
+<tr class="memdesc:a41be48a4ca08106998757544d21a5e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state based on the current numerical value of the property. Personality properties can only be one state at a time, because their state bounds don't overlap.  <a href="class_personality_property.html#a41be48a4ca08106998757544d21a5e83">More...</a><br /></td></tr>
+<tr class="separator:a41be48a4ca08106998757544d21a5e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb1227dab6810bffe705e2e568f3bdd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_personality_property.html#a3bb1227dab6810bffe705e2e568f3bdd">m_value</a></td></tr>
+<tr class="memdesc:a3bb1227dab6810bffe705e2e568f3bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The personality property's current value. This isn't given a default starting value like in <a class="el" href="class_care_property.html" title="Stores all the dog&#39;s &quot;CareProperties&quot; as defined in DogGeneration (e.g. Hunger, Rest,...">CareProperty</a> as the values are determined by the breed.  <a href="class_personality_property.html#a3bb1227dab6810bffe705e2e568f3bdd">More...</a><br /></td></tr>
+<tr class="separator:a3bb1227dab6810bffe705e2e568f3bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a981c106ad43478caa6b2f1909d3bbd80"></a>
@@ -260,6 +273,79 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Updates the property's value and checks which state it's in now from that change. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a41be48a4ca08106998757544d21a5e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41be48a4ca08106998757544d21a5e83">&#9670;&nbsp;</a></span>m_currentState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string PersonalityProperty.m_currentState</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current state based on the current numerical value of the property. Personality properties can only be one state at a time, because their state bounds don't overlap. </p>
+
+</div>
+</div>
+<a id="ab4f6a96a6ab930aba9f631208229e343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4f6a96a6ab930aba9f631208229e343">&#9670;&nbsp;</a></span>m_states</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;string, Vector2&gt; PersonalityProperty.m_states = new Dictionary&lt;string, Vector2&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This personality property's possible states, and the Vector2 is each state's lower and upper bounds. </p>
+
+</div>
+</div>
+<a id="a3bb1227dab6810bffe705e2e568f3bdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bb1227dab6810bffe705e2e568f3bdd">&#9670;&nbsp;</a></span>m_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float PersonalityProperty.m_value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The personality property's current value. This isn't given a default starting value like in <a class="el" href="class_care_property.html" title="Stores all the dog&#39;s &quot;CareProperties&quot; as defined in DogGeneration (e.g. Hunger, Rest,...">CareProperty</a> as the values are determined by the breed. </p>
 
 </div>
 </div>

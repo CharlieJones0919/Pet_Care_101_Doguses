@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['needstofinishanimation_522',['NeedsToFinishAnimation',['../class_animation_management.html#ac28107b5bae6511c38f67a1916eac545',1,'AnimationManagement']]],
-  ['needsuseoffset_523',['NeedsUseOffset',['../class_item.html#a71fbe5b1da602832255291d698b1597e',1,'Item']]],
-  ['newdogadded_524',['NewDogAdded',['../class_data_display.html#ae28be6951fcbe8a3e615ba42aa13c86f',1,'DataDisplay']]],
-  ['nodepositioningrid_525',['NodePositionInGrid',['../class_a_star_search.html#ab43edcd0e475c38d475fc8b7ba8a68bf',1,'AStarSearch']]],
-  ['notfocusedondog_526',['NotFocusedOnDog',['../class_controller.html#a953cecb2fd06d5b121eb71fe6ae19df5',1,'Controller']]],
-  ['numberofdogs_527',['NumberOfDogs',['../class_controller.html#a80f96759139f6c8747ae3acca2285479',1,'Controller']]]
+  ['makepurchase_862',['MakePurchase',['../class_controller.html#a40dbc7407e66866da3ae59eff4b09101',1,'Controller']]],
+  ['modelorientation_863',['ModelOrientation',['../struct_dog_generation_1_1_model_orientation.html#af190113745b4f893a61ebf681ebe6d08',1,'DogGeneration::ModelOrientation']]],
+  ['movecrawling_864',['MoveCrawling',['../class_dog.html#abcf48d035476ab480ba49aa341fe9ad8',1,'Dog']]],
+  ['movedog_865',['MoveDog',['../class_pathfinding.html#a42fe34ff91126d9e2bd11be315e56275',1,'Pathfinding']]],
+  ['moverunning_866',['MoveRunning',['../class_dog.html#aee0e331b9a17c67364d0e7aef0ba13fb',1,'Dog']]],
+  ['movewalking_867',['MoveWalking',['../class_dog.html#a7a45392d730aa60c14bd2fd6e32f451a',1,'Dog']]]
 ];

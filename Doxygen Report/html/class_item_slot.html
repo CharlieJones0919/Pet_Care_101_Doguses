@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_item_slot.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_item_slot-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ItemSlot Class Reference</div>  </div>
@@ -118,6 +119,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a65ebb99c78bc6e18396ff77d9ab0fe76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_item.html">Item</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_slot.html#a65ebb99c78bc6e18396ff77d9ab0fe76">GetItem</a> ()</td></tr>
 <tr class="memdesc:a65ebb99c78bc6e18396ff77d9ab0fe76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> this slot is displaying.  <a href="class_item_slot.html#a65ebb99c78bc6e18396ff77d9ab0fe76">More...</a><br /></td></tr>
 <tr class="separator:a65ebb99c78bc6e18396ff77d9ab0fe76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1532ad18b98c6e44941e1727b0ac7d4b"><td class="memItemLeft" align="right" valign="top">Toggle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_slot.html#a1532ad18b98c6e44941e1727b0ac7d4b">itemToggle</a></td></tr>
+<tr class="memdesc:a1532ad18b98c6e44941e1727b0ac7d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Toggle/checkbox UI component of the slot.  <a href="class_item_slot.html#a1532ad18b98c6e44941e1727b0ac7d4b">More...</a><br /></td></tr>
+<tr class="separator:a1532ad18b98c6e44941e1727b0ac7d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b489eb2993b56d534b392b3634f0c09"><td class="memItemLeft" align="right" valign="top">Image&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_slot.html#a6b489eb2993b56d534b392b3634f0c09">displayImage</a></td></tr>
+<tr class="memdesc:a6b489eb2993b56d534b392b3634f0c09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image UI component of the slot - this will be set to the sprite of the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> it's currently set to.  <a href="class_item_slot.html#a6b489eb2993b56d534b392b3634f0c09">More...</a><br /></td></tr>
+<tr class="separator:a6b489eb2993b56d534b392b3634f0c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb5e7fdc310e0b911b2e1b844995eb5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_item.html">Item</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_slot.html#abb5e7fdc310e0b911b2e1b844995eb5b">displayItem</a></td></tr>
+<tr class="memdesc:abb5e7fdc310e0b911b2e1b844995eb5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> this slot is displaying/representing.  <a href="class_item_slot.html#abb5e7fdc310e0b911b2e1b844995eb5b">More...</a><br /></td></tr>
+<tr class="separator:abb5e7fdc310e0b911b2e1b844995eb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores a reference to an <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> class along with references to the slot's UI elements. The <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> reference this slot script is set to is set by <a class="el" href="class_store_controller.html" title="Controls the Items displayed in the Store menu. Instantiates said Items and manages the store UI to o...">StoreController</a> to display the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> images/data of each <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a>'s page[s]. </p>
@@ -238,6 +251,79 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Called by <a class="el" href="class_store_controller.html" title="Controls the Items displayed in the Store menu. Instantiates said Items and manages the store UI to o...">StoreController</a> and set when populating a <a class="el" href="class_store_section.html" title="A class for storing all the Items and number of pages a store &quot;section&quot; has. A section is just all th...">StoreSection</a>'s page Items to set this <a class="el" href="class_item_slot.html" title="Stores a reference to an Item class along with references to the slot&#39;s UI elements....">ItemSlot</a> as empty (not displaying an <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>) and non-interactable. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a6b489eb2993b56d534b392b3634f0c09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b489eb2993b56d534b392b3634f0c09">&#9670;&nbsp;</a></span>displayImage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Image ItemSlot.displayImage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Image UI component of the slot - this will be set to the sprite of the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> it's currently set to. </p>
+
+</div>
+</div>
+<a id="abb5e7fdc310e0b911b2e1b844995eb5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb5e7fdc310e0b911b2e1b844995eb5b">&#9670;&nbsp;</a></span>displayItem</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_item.html">Item</a> ItemSlot.displayItem</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reference to the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> this slot is displaying/representing. </p>
+
+</div>
+</div>
+<a id="a1532ad18b98c6e44941e1727b0ac7d4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1532ad18b98c6e44941e1727b0ac7d4b">&#9670;&nbsp;</a></span>itemToggle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Toggle ItemSlot.itemToggle</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Toggle/checkbox UI component of the slot. </p>
 
 </div>
 </div>

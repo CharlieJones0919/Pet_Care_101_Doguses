@@ -89,6 +89,8 @@ $(document).ready(function(){initNavTree('class_item_instance.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_item_instance-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ItemInstance Class Reference</div>  </div>
@@ -135,6 +137,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeebb7f07dc763b4baab7371921f5fdaf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#aeebb7f07dc763b4baab7371921f5fdaf">CurrentlyActive</a> ()</td></tr>
 <tr class="memdesc:aeebb7f07dc763b4baab7371921f5fdaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not this instance object is currently active. (Used by <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> when looking through its instance list to find pre-generated inactive copies to activate upon purchase).  <a href="class_item_instance.html#aeebb7f07dc763b4baab7371921f5fdaf">More...</a><br /></td></tr>
 <tr class="separator:aeebb7f07dc763b4baab7371921f5fdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a79cb378cf2a436c1ff7554a5545104ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#a79cb378cf2a436c1ff7554a5545104ac">Start</a> ()</td></tr>
+<tr class="memdesc:a79cb378cf2a436c1ff7554a5545104ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Just used to get the prefab's initial Y position before it's set to it's inactive position.  <a href="class_item_instance.html#a79cb378cf2a436c1ff7554a5545104ac">More...</a><br /></td></tr>
+<tr class="separator:a79cb378cf2a436c1ff7554a5545104ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ab530a72b1cec775f6e1b80df716bf597"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#ab530a72b1cec775f6e1b80df716bf597">m_lastSpawnedPos</a> = Vector3.zero</td></tr>
+<tr class="memdesc:ab530a72b1cec775f6e1b80df716bf597"><td class="mdescLeft">&#160;</td><td class="mdescRight">The position this object instance was placed to when last activated onto the map.  <a href="class_item_instance.html#ab530a72b1cec775f6e1b80df716bf597">More...</a><br /></td></tr>
+<tr class="separator:ab530a72b1cec775f6e1b80df716bf597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b87ba77581bef008097e7a5320ced2"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#a21b87ba77581bef008097e7a5320ced2">m_inactivePos</a></td></tr>
+<tr class="memdesc:a21b87ba77581bef008097e7a5320ced2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position to place the instance when it's not active in the world.  <a href="class_item_instance.html#a21b87ba77581bef008097e7a5320ced2">More...</a><br /></td></tr>
+<tr class="separator:a21b87ba77581bef008097e7a5320ced2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4de85203a1d6ab159c4f6977b12d8ffb"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#a4de85203a1d6ab159c4f6977b12d8ffb">m_activePosY</a></td></tr>
+<tr class="memdesc:a4de85203a1d6ab159c4f6977b12d8ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default Y-axis position of the prefab. Used so when the object is placed in the world, irregardless of where it's centre pivot point is, it can still be placed ON the ground.  <a href="class_item_instance.html#a4de85203a1d6ab159c4f6977b12d8ffb">More...</a><br /></td></tr>
+<tr class="separator:a4de85203a1d6ab159c4f6977b12d8ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa5cd7b872bed6beab786f2d2c8ab0f1"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#afa5cd7b872bed6beab786f2d2c8ab0f1">m_nullUser</a></td></tr>
+<tr class="memdesc:afa5cd7b872bed6beab786f2d2c8ab0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is m_defaultNullObject from the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> class. Is what the instance's user is set to when it's not in use instead of setting a GameObject to system NULL which will throw errors.  <a href="class_item_instance.html#afa5cd7b872bed6beab786f2d2c8ab0f1">More...</a><br /></td></tr>
+<tr class="separator:afa5cd7b872bed6beab786f2d2c8ab0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3171aafee74afbbaa2e91937f855863"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item_instance.html#ab3171aafee74afbbaa2e91937f855863">m_user</a></td></tr>
+<tr class="memdesc:ab3171aafee74afbbaa2e91937f855863"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dog object using this instance at current, and if not in use will be set to m_nullUser.  <a href="class_item_instance.html#ab3171aafee74afbbaa2e91937f855863">More...</a><br /></td></tr>
+<tr class="separator:ab3171aafee74afbbaa2e91937f855863"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class encapsulates an object instance of an <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. Combines the object with some other data about that particular instance like if it's being used, where it was activated to in the map. </p>
@@ -372,6 +398,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a79cb378cf2a436c1ff7554a5545104ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79cb378cf2a436c1ff7554a5545104ac">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ItemInstance.Start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Just used to get the prefab's initial Y position before it's set to it's inactive position. </p>
+
+</div>
+</div>
 <a id="a2b4852a8db7cacd599f868cfe758561a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b4852a8db7cacd599f868cfe758561a">&#9670;&nbsp;</a></span>StartUse()</h2>
 
@@ -425,6 +478,127 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns whether or not this instance can be used by the specified object (should be a dog). It's usable if the instance doesn't currently have a user (it's set to the null object), or the user IS the object specified already, and this instance is [still] active. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4de85203a1d6ab159c4f6977b12d8ffb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4de85203a1d6ab159c4f6977b12d8ffb">&#9670;&nbsp;</a></span>m_activePosY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float ItemInstance.m_activePosY</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default Y-axis position of the prefab. Used so when the object is placed in the world, irregardless of where it's centre pivot point is, it can still be placed ON the ground. </p>
+
+</div>
+</div>
+<a id="a21b87ba77581bef008097e7a5320ced2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21b87ba77581bef008097e7a5320ced2">&#9670;&nbsp;</a></span>m_inactivePos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3 ItemInstance.m_inactivePos</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Position to place the instance when it's not active in the world. </p>
+
+</div>
+</div>
+<a id="ab530a72b1cec775f6e1b80df716bf597"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab530a72b1cec775f6e1b80df716bf597">&#9670;&nbsp;</a></span>m_lastSpawnedPos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3 ItemInstance.m_lastSpawnedPos = Vector3.zero</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The position this object instance was placed to when last activated onto the map. </p>
+
+</div>
+</div>
+<a id="afa5cd7b872bed6beab786f2d2c8ab0f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa5cd7b872bed6beab786f2d2c8ab0f1">&#9670;&nbsp;</a></span>m_nullUser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject ItemInstance.m_nullUser</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is m_defaultNullObject from the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> class. Is what the instance's user is set to when it's not in use instead of setting a GameObject to system NULL which will throw errors. </p>
+
+</div>
+</div>
+<a id="ab3171aafee74afbbaa2e91937f855863"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3171aafee74afbbaa2e91937f855863">&#9670;&nbsp;</a></span>m_user</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject ItemInstance.m_user</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The dog object using this instance at current, and if not in use will be set to m_nullUser. </p>
 
 </div>
 </div>

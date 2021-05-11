@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('class_a_s_node.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_a_s_node-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ASNode Class Reference</div>  </div>
@@ -153,6 +154,12 @@ Properties</h2></td></tr>
 <tr class="inherit_header properties_interface_i_heap_element"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_i_heap_element')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_i_heap_element.html">IHeapElement&lt; ASNode &gt;</a></td></tr>
 <tr class="memitem:ac6647c16233c2ea1b8ed565266bac150 inherit properties_interface_i_heap_element"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_i_heap_element.html#ac6647c16233c2ea1b8ed565266bac150">HeapIndex</a><code> [get, set]</code></td></tr>
 <tr class="separator:ac6647c16233c2ea1b8ed565266bac150 inherit properties_interface_i_heap_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ae336d38c12163bf430d542f1588c5a7a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_a_s_node.html#ae336d38c12163bf430d542f1588c5a7a">heapIndex</a></td></tr>
+<tr class="memdesc:ae336d38c12163bf430d542f1588c5a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This node's priority index number in the heap.  <a href="class_a_s_node.html#ae336d38c12163bf430d542f1588c5a7a">More...</a><br /></td></tr>
+<tr class="separator:ae336d38c12163bf430d542f1588c5a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A node class which inherits from and implements the functions from the pure virtual abstract class "IHeapElement." (This allows the nodes can be added to and sorted in an instance of the heap class). </p>
@@ -281,6 +288,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The heuristic estimate of "cost" to travel to the goal. </p>
+
+</div>
+</div>
+<a id="ae336d38c12163bf430d542f1588c5a7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae336d38c12163bf430d542f1588c5a7a">&#9670;&nbsp;</a></span>heapIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ASNode.heapIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This node's priority index number in the heap. </p>
 
 </div>
 </div>

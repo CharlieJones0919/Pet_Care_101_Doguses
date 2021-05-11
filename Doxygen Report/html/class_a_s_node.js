@@ -4,6 +4,7 @@ var class_a_s_node =
     [ "CompareTo", "class_a_s_node.html#a05c02e32234dcb18d72e989f1b2cf8aa", null ],
     [ "g", "class_a_s_node.html#a8fedd2d3d7db36d5ac1c0a3d790751dc", null ],
     [ "h", "class_a_s_node.html#ab21471d19d11ff98bc2bbd1580bc7734", null ],
+    [ "heapIndex", "class_a_s_node.html#ae336d38c12163bf430d542f1588c5a7a", null ],
     [ "m_gridX", "class_a_s_node.html#a70ef34d6a96966b674c1a6425be2efce", null ],
     [ "m_gridY", "class_a_s_node.html#a74a419e555077518df6d9ce3b9e7a10c", null ],
     [ "m_traversable", "class_a_s_node.html#af86dac0950d20b8532747d8a94e63186", null ],

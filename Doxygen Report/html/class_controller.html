@@ -90,6 +90,9 @@ $(document).ready(function(){initNavTree('class_controller.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_controller-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Controller Class Reference</div>  </div>
@@ -184,6 +187,42 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:acbeed2ec045dd02098f7dbd8296cc2e5"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; Vector3, bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#acbeed2ec045dd02098f7dbd8296cc2e5">foodItemPositions</a> = new Dictionary&lt;Vector3, bool&gt;()</td></tr>
 <tr class="memdesc:acbeed2ec045dd02098f7dbd8296cc2e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Positions temporary food items can be placed to.  <a href="class_controller.html#acbeed2ec045dd02098f7dbd8296cc2e5">More...</a><br /></td></tr>
 <tr class="separator:acbeed2ec045dd02098f7dbd8296cc2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a734ecdaf65f08e25de09996261a3505c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#a734ecdaf65f08e25de09996261a3505c">UpdateMoneyValue</a> (float modification)</td></tr>
+<tr class="memdesc:a734ecdaf65f08e25de09996261a3505c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the player's money value and the related UI textboxes.  <a href="class_controller.html#a734ecdaf65f08e25de09996261a3505c">More...</a><br /></td></tr>
+<tr class="separator:a734ecdaf65f08e25de09996261a3505c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aaa2bff9fcd831b1150744be516df01bf"><td class="memItemLeft" align="right" valign="top">Text&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#aaa2bff9fcd831b1150744be516df01bf">ffButtonText</a></td></tr>
+<tr class="memdesc:aaa2bff9fcd831b1150744be516df01bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the number text on the fast forward button to display the current time multiplier to.  <a href="class_controller.html#aaa2bff9fcd831b1150744be516df01bf">More...</a><br /></td></tr>
+<tr class="separator:aaa2bff9fcd831b1150744be516df01bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9953ee575a9477d89ea9fef0b0100a5c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#a9953ee575a9477d89ea9fef0b0100a5c">playerMoney</a> = 0</td></tr>
+<tr class="memdesc:a9953ee575a9477d89ea9fef0b0100a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The player's in-game currency value.  <a href="class_controller.html#a9953ee575a9477d89ea9fef0b0100a5c">More...</a><br /></td></tr>
+<tr class="separator:a9953ee575a9477d89ea9fef0b0100a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3ac7b2d3b854940ea1ec71102767091"><td class="memItemLeft" align="right" valign="top">List&lt; Text &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#af3ac7b2d3b854940ea1ec71102767091">playerMoneyTextboxes</a> = new List&lt;Text&gt;()</td></tr>
+<tr class="memdesc:af3ac7b2d3b854940ea1ec71102767091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Textboxes the player's money value is outputted to.  <a href="class_controller.html#af3ac7b2d3b854940ea1ec71102767091">More...</a><br /></td></tr>
+<tr class="separator:af3ac7b2d3b854940ea1ec71102767091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6ec9c9a5a1995ec7afc8462a559507"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; GameObject, <a class="el" href="class_dog.html">Dog</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#a3b6ec9c9a5a1995ec7afc8462a559507">allDogs</a> = new Dictionary&lt;GameObject, <a class="el" href="class_dog.html">Dog</a>&gt;()</td></tr>
+<tr class="memdesc:a3b6ec9c9a5a1995ec7afc8462a559507"><td class="mdescLeft">&#160;</td><td class="mdescRight">A dictionary of all the player's dogs with their GameObjects as their key for ease of reference.  <a href="class_controller.html#a3b6ec9c9a5a1995ec7afc8462a559507">More...</a><br /></td></tr>
+<tr class="separator:a3b6ec9c9a5a1995ec7afc8462a559507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c1ccc6912bb371e612d95eebd0475aa"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>, List&lt; <a class="el" href="class_item.html">Item</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#a8c1ccc6912bb371e612d95eebd0475aa">itemPools</a> = new Dictionary&lt;<a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>, List&lt;<a class="el" href="class_item.html">Item</a>&gt;&gt;()</td></tr>
+<tr class="memdesc:a8c1ccc6912bb371e612d95eebd0475aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">All the Items generated by the store controller and their ItemType as a key for ease of locating Items of a specific type.  <a href="class_controller.html#a8c1ccc6912bb371e612d95eebd0475aa">More...</a><br /></td></tr>
+<tr class="separator:a8c1ccc6912bb371e612d95eebd0475aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aeb5f2b03ff8bf88a244e7e9f9ac5fa0c"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#aeb5f2b03ff8bf88a244e7e9f9ac5fa0c">allowance</a> = 50</td></tr>
+<tr class="memdesc:aeb5f2b03ff8bf88a244e7e9f9ac5fa0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">How much money the player is given daily. (In-game days).  <a href="class_controller.html#aeb5f2b03ff8bf88a244e7e9f9ac5fa0c">More...</a><br /></td></tr>
+<tr class="separator:aeb5f2b03ff8bf88a244e7e9f9ac5fa0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff74a7c4a988a4384cbf0a95d164e80"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#a4ff74a7c4a988a4384cbf0a95d164e80">bonusPay</a> = 0.05f</td></tr>
+<tr class="memdesc:a4ff74a7c4a988a4384cbf0a95d164e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">How much money the player is given for as long as a dog has peak care conditions.  <a href="class_controller.html#a4ff74a7c4a988a4384cbf0a95d164e80">More...</a><br /></td></tr>
+<tr class="separator:a4ff74a7c4a988a4384cbf0a95d164e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecbf060465cfae87e0a6db9d140bc469"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_controller.html#aecbf060465cfae87e0a6db9d140bc469">maxGameSpeed</a> = 10</td></tr>
+<tr class="memdesc:aecbf060465cfae87e0a6db9d140bc469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum fast forward speed.  <a href="class_controller.html#aecbf060465cfae87e0a6db9d140bc469">More...</a><br /></td></tr>
+<tr class="separator:aecbf060465cfae87e0a6db9d140bc469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Keeps references to widely used objects and scripts for other classes to use. Allows for game time controls. </p>
@@ -706,7 +745,83 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a734ecdaf65f08e25de09996261a3505c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734ecdaf65f08e25de09996261a3505c">&#9670;&nbsp;</a></span>UpdateMoneyValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Controller.UpdateMoneyValue </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>modification</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates the player's money value and the related UI textboxes. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a3b6ec9c9a5a1995ec7afc8462a559507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b6ec9c9a5a1995ec7afc8462a559507">&#9670;&nbsp;</a></span>allDogs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;GameObject, <a class="el" href="class_dog.html">Dog</a>&gt; Controller.allDogs = new Dictionary&lt;GameObject, <a class="el" href="class_dog.html">Dog</a>&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A dictionary of all the player's dogs with their GameObjects as their key for ease of reference. </p>
+
+</div>
+</div>
+<a id="aeb5f2b03ff8bf88a244e7e9f9ac5fa0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb5f2b03ff8bf88a244e7e9f9ac5fa0c">&#9670;&nbsp;</a></span>allowance</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const float Controller.allowance = 50</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How much money the player is given daily. (In-game days). </p>
+
+</div>
+</div>
 <a id="ae1c4b164dfb9682f8246f16d433c1146"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae1c4b164dfb9682f8246f16d433c1146">&#9670;&nbsp;</a></span>bedItemPositions</h2>
 
@@ -720,6 +835,30 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Positions beds can be placed to. </p>
+
+</div>
+</div>
+<a id="a4ff74a7c4a988a4384cbf0a95d164e80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ff74a7c4a988a4384cbf0a95d164e80">&#9670;&nbsp;</a></span>bonusPay</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const float Controller.bonusPay = 0.05f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How much money the player is given for as long as a dog has peak care conditions. </p>
 
 </div>
 </div>
@@ -755,6 +894,30 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aaa2bff9fcd831b1150744be516df01bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa2bff9fcd831b1150744be516df01bf">&#9670;&nbsp;</a></span>ffButtonText</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Text Controller.ffButtonText</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reference to the number text on the fast forward button to display the current time multiplier to. </p>
+
+</div>
+</div>
 <a id="acbeed2ec045dd02098f7dbd8296cc2e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acbeed2ec045dd02098f7dbd8296cc2e5">&#9670;&nbsp;</a></span>foodItemPositions</h2>
 
@@ -784,6 +947,102 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The ground's A-Star search script for the dog's to use for navigation and for any other class to use for point generation/finding on the map's floor. </p>
+
+</div>
+</div>
+<a id="a8c1ccc6912bb371e612d95eebd0475aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c1ccc6912bb371e612d95eebd0475aa">&#9670;&nbsp;</a></span>itemPools</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;<a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>, List&lt;<a class="el" href="class_item.html">Item</a>&gt; &gt; Controller.itemPools = new Dictionary&lt;<a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>, List&lt;<a class="el" href="class_item.html">Item</a>&gt;&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>All the Items generated by the store controller and their ItemType as a key for ease of locating Items of a specific type. </p>
+
+</div>
+</div>
+<a id="aecbf060465cfae87e0a6db9d140bc469"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecbf060465cfae87e0a6db9d140bc469">&#9670;&nbsp;</a></span>maxGameSpeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int Controller.maxGameSpeed = 10</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum fast forward speed. </p>
+
+</div>
+</div>
+<a id="a9953ee575a9477d89ea9fef0b0100a5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9953ee575a9477d89ea9fef0b0100a5c">&#9670;&nbsp;</a></span>playerMoney</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Controller.playerMoney = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The player's in-game currency value. </p>
+
+</div>
+</div>
+<a id="af3ac7b2d3b854940ea1ec71102767091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3ac7b2d3b854940ea1ec71102767091">&#9670;&nbsp;</a></span>playerMoneyTextboxes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;Text&gt; Controller.playerMoneyTextboxes = new List&lt;Text&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Textboxes the player's money value is outputted to. </p>
 
 </div>
 </div>

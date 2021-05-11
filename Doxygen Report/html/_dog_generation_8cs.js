@@ -2,6 +2,7 @@ var _dog_generation_8cs =
 [
     [ "BodyComponent", "struct_body_component.html", "struct_body_component" ],
     [ "DogGeneration", "class_dog_generation.html", "class_dog_generation" ],
+    [ "ModelOrientation", "struct_dog_generation_1_1_model_orientation.html", "struct_dog_generation_1_1_model_orientation" ],
     [ "BodyPart", "_dog_generation_8cs.html#a7a4875f2b53773a016c13bcfc2a55ac3", [
       [ "Neck", "_dog_generation_8cs.html#a7a4875f2b53773a016c13bcfc2a55ac3a6833e5c3ce1911011c2bb97d48a0a24b", null ],
       [ "Head", "_dog_generation_8cs.html#a7a4875f2b53773a016c13bcfc2a55ac3a98921133d10fbdb0fb6dbb7b2648befe", null ],

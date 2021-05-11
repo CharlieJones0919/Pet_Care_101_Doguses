@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_care_property.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_care_property-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">CareProperty Class Reference</div>  </div>
@@ -115,6 +116,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5581a39628c39395e08b366aefef49d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_care_property.html#a5581a39628c39395e08b366aefef49d4">UpdateValue</a> (float modifiyer)</td></tr>
 <tr class="memdesc:a5581a39628c39395e08b366aefef49d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the property's value and checks which state[s] it's in now from that change.  <a href="class_care_property.html#a5581a39628c39395e08b366aefef49d4">More...</a><br /></td></tr>
 <tr class="separator:a5581a39628c39395e08b366aefef49d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a6bb33ad4689b592a4dcef0867713439a"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, Vector2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_care_property.html#a6bb33ad4689b592a4dcef0867713439a">m_states</a> = new Dictionary&lt;string, Vector2&gt;()</td></tr>
+<tr class="memdesc:a6bb33ad4689b592a4dcef0867713439a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This care property's possible states (e.g. Hunger has the states of Starving, <a class="el" href="class_hungry.html" title="Checks the dog&#39;s rules for if the state should be swapped out of, does regular speed check/bonus sequ...">Hungry</a>, Fed and Overfed), and the Vector2 is each state's lower and upper bounds.  <a href="class_care_property.html#a6bb33ad4689b592a4dcef0867713439a">More...</a><br /></td></tr>
+<tr class="separator:a6bb33ad4689b592a4dcef0867713439a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4e42495846ac61a29c0def6526d3814"><td class="memItemLeft" align="right" valign="top">List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_care_property.html#ad4e42495846ac61a29c0def6526d3814">m_currentStates</a> = new List&lt;string&gt;()</td></tr>
+<tr class="memdesc:ad4e42495846ac61a29c0def6526d3814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current states based on the current numerical value of the property. Care properties have a list of multiple current states instead of just one, because the bounds of some overlap (e.g. if the dog is "Exhausted" it'll also still be "Tired").  <a href="class_care_property.html#ad4e42495846ac61a29c0def6526d3814">More...</a><br /></td></tr>
+<tr class="separator:ad4e42495846ac61a29c0def6526d3814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060f06d9a62070bdc7602beabe5988e1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_care_property.html#a060f06d9a62070bdc7602beabe5988e1">m_value</a> = 100</td></tr>
+<tr class="memdesc:a060f06d9a62070bdc7602beabe5988e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The care property's current value. Set to 100 by default so the dog is in good health when first instantiated.  <a href="class_care_property.html#a060f06d9a62070bdc7602beabe5988e1">More...</a><br /></td></tr>
+<tr class="separator:a060f06d9a62070bdc7602beabe5988e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaae3993cb3b1a4825ac06941187fc86"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_care_property.html#adaae3993cb3b1a4825ac06941187fc86">m_decrement</a></td></tr>
+<tr class="memdesc:adaae3993cb3b1a4825ac06941187fc86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Care properties are always going down and need replenishing. This is the default decrement to take from the value on each update.  <a href="class_care_property.html#adaae3993cb3b1a4825ac06941187fc86">More...</a><br /></td></tr>
+<tr class="separator:adaae3993cb3b1a4825ac06941187fc86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores all the dog's "CareProperties" as defined in <a class="el" href="class_dog_generation.html" title="This class is responcible for creating the Dog instances when triggered to by GameTime,...">DogGeneration</a> (e.g. Hunger, Rest, etc...), the care value's associated "states" (e.g. Exhausted, <a class="el" href="class_tired.html" title="Checks the dog&#39;s rules for if the state should be swapped out of, does regular speed check/bonus sequ...">Tired</a>, Rested, etc...), and its current actual numerical value. Also contains a function for updating the care value and sets the care property's subsequent current state from that new value based on the state's lower and upper qualification bounds. </p>
@@ -265,6 +281,103 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Updates the property's value and checks which state[s] it's in now from that change. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad4e42495846ac61a29c0def6526d3814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4e42495846ac61a29c0def6526d3814">&#9670;&nbsp;</a></span>m_currentStates</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;string&gt; CareProperty.m_currentStates = new List&lt;string&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Current states based on the current numerical value of the property. Care properties have a list of multiple current states instead of just one, because the bounds of some overlap (e.g. if the dog is "Exhausted" it'll also still be "Tired"). </p>
+
+</div>
+</div>
+<a id="adaae3993cb3b1a4825ac06941187fc86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaae3993cb3b1a4825ac06941187fc86">&#9670;&nbsp;</a></span>m_decrement</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CareProperty.m_decrement</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Care properties are always going down and need replenishing. This is the default decrement to take from the value on each update. </p>
+
+</div>
+</div>
+<a id="a6bb33ad4689b592a4dcef0867713439a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb33ad4689b592a4dcef0867713439a">&#9670;&nbsp;</a></span>m_states</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;string, Vector2&gt; CareProperty.m_states = new Dictionary&lt;string, Vector2&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This care property's possible states (e.g. Hunger has the states of Starving, <a class="el" href="class_hungry.html" title="Checks the dog&#39;s rules for if the state should be swapped out of, does regular speed check/bonus sequ...">Hungry</a>, Fed and Overfed), and the Vector2 is each state's lower and upper bounds. </p>
+
+</div>
+</div>
+<a id="a060f06d9a62070bdc7602beabe5988e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a060f06d9a62070bdc7602beabe5988e1">&#9670;&nbsp;</a></span>m_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CareProperty.m_value = 100</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The care property's current value. Set to 100 by default so the dog is in good health when first instantiated. </p>
 
 </div>
 </div>

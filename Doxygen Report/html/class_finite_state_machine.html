@@ -91,6 +91,8 @@ $(document).ready(function(){initNavTree('class_finite_state_machine.html','');}
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_finite_state_machine-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">FiniteStateMachine Class Reference</div>  </div>
@@ -108,7 +110,7 @@ Inheritance diagram for FiniteStateMachine:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab4de029228aedd68d2729b7b84be91a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#ab4de029228aedd68d2729b7b84be91a6">SetStates</a> (Dictionary&lt; Type, <a class="el" href="class_state.html">State</a> &gt; states)</td></tr>
+<tr class="memitem:ab4de029228aedd68d2729b7b84be91a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#ab4de029228aedd68d2729b7b84be91a6">SetStates</a> (Dictionary&lt; Type, <a class="el" href="class_state.html">State</a> &gt; <a class="el" href="class_finite_state_machine.html#aa36adc477fad1c9a47c2f0469a1d752a">states</a>)</td></tr>
 <tr class="separator:ab4de029228aedd68d2729b7b84be91a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -119,9 +121,24 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a3f62d9a63fb1c6e80de2f8cecc381318"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_state.html">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#a3f62d9a63fb1c6e80de2f8cecc381318">CurrentState</a><code> [get]</code></td></tr>
+<tr class="memitem:a3f62d9a63fb1c6e80de2f8cecc381318"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_state.html">State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#a3f62d9a63fb1c6e80de2f8cecc381318">CurrentState</a><code> [get, private set]</code></td></tr>
 <tr class="memdesc:a3f62d9a63fb1c6e80de2f8cecc381318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the FSM's current state.  <a href="class_finite_state_machine.html#a3f62d9a63fb1c6e80de2f8cecc381318">More...</a><br /></td></tr>
 <tr class="separator:a3f62d9a63fb1c6e80de2f8cecc381318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a2e3cff63aed582af1ef9bba38c14046b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#a2e3cff63aed582af1ef9bba38c14046b">Update</a> ()</td></tr>
+<tr class="memdesc:a2e3cff63aed582af1ef9bba38c14046b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the current state's update function on a loop and checks if it has returned a next state to swap to.  <a href="class_finite_state_machine.html#a2e3cff63aed582af1ef9bba38c14046b">More...</a><br /></td></tr>
+<tr class="separator:a2e3cff63aed582af1ef9bba38c14046b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9af639106ad76cbae6ffea9b09b06c8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#a9af639106ad76cbae6ffea9b09b06c8c">SwitchToState</a> (Type nextState)</td></tr>
+<tr class="memdesc:a9af639106ad76cbae6ffea9b09b06c8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the current state's end function, swaps the current state to the new state, then calls that new state's enter function.  <a href="class_finite_state_machine.html#a9af639106ad76cbae6ffea9b09b06c8c">More...</a><br /></td></tr>
+<tr class="separator:a9af639106ad76cbae6ffea9b09b06c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aa36adc477fad1c9a47c2f0469a1d752a"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; Type, <a class="el" href="class_state.html">State</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_finite_state_machine.html#aa36adc477fad1c9a47c2f0469a1d752a">states</a></td></tr>
+<tr class="memdesc:aa36adc477fad1c9a47c2f0469a1d752a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all the FSM's states.  <a href="class_finite_state_machine.html#aa36adc477fad1c9a47c2f0469a1d752a">More...</a><br /></td></tr>
+<tr class="separator:aa36adc477fad1c9a47c2f0469a1d752a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores a list of states and a current state. Calls the current state's function implementations from the base <a class="el" href="class_state.html" title="This abstract class defines the structure of a &quot;state&quot; for the finite state machine in what it does o...">State</a> class' abstractions, and allows the FSM to swap into another state. </p>
@@ -152,6 +169,67 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a9af639106ad76cbae6ffea9b09b06c8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9af639106ad76cbae6ffea9b09b06c8c">&#9670;&nbsp;</a></span>SwitchToState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FiniteStateMachine.SwitchToState </td>
+          <td>(</td>
+          <td class="paramtype">Type&#160;</td>
+          <td class="paramname"><em>nextState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls the current state's end function, swaps the current state to the new state, then calls that new state's enter function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nextState</td><td>The state to set the current state as. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2e3cff63aed582af1ef9bba38c14046b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e3cff63aed582af1ef9bba38c14046b">&#9670;&nbsp;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FiniteStateMachine.Update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calls the current state's update function on a loop and checks if it has returned a next state to swap to. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a2aa5b644c72d9902e42736b89ea4ee7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2aa5b644c72d9902e42736b89ea4ee7c">&#9670;&nbsp;</a></span>currentState</h2>
@@ -166,6 +244,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stores the value of the current state. </p>
+
+</div>
+</div>
+<a id="aa36adc477fad1c9a47c2f0469a1d752a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa36adc477fad1c9a47c2f0469a1d752a">&#9670;&nbsp;</a></span>states</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;Type, <a class="el" href="class_state.html">State</a>&gt; FiniteStateMachine.states</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>List of all the FSM's states. </p>
 
 </div>
 </div>
@@ -185,7 +287,7 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">private set</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

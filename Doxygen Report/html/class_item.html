@@ -90,6 +90,8 @@ $(document).ready(function(){initNavTree('class_item.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Item Class Reference</div>  </div>
@@ -184,6 +186,75 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac822bee50d68ce6a0e855fc914f2a6f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4">doNotDeploy</a></td></tr>
 <tr class="memdesc:ac822bee50d68ce6a0e855fc914f2a6f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the item should be displayed in the store. (Added last minute to de-include items I ran out of time to implement).  <a href="class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4">More...</a><br /></td></tr>
 <tr class="separator:ac822bee50d68ce6a0e855fc914f2a6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6b613be4efca12e82d58b46ebbf46fab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_item_instance.html">ItemInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a6b613be4efca12e82d58b46ebbf46fab">AddNewToPool</a> ()</td></tr>
+<tr class="memdesc:a6b613be4efca12e82d58b46ebbf46fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="class_item.html#a1bd2dbb961b9385e219cdeeafd07565c" title="Called by StoreController when the Item is successfully purchased, and if a pre-instantiated ItemInst...">ActivateAvailableInstanceTo()</a> if there wasn't already an inactive instance to activate. Creates a new instance, adds it to the pool, and returns that newest instance for <a class="el" href="class_item.html#a1bd2dbb961b9385e219cdeeafd07565c" title="Called by StoreController when the Item is successfully purchased, and if a pre-instantiated ItemInst...">ActivateAvailableInstanceTo()</a> to activate.  <a href="class_item.html#a6b613be4efca12e82d58b46ebbf46fab">More...</a><br /></td></tr>
+<tr class="separator:a6b613be4efca12e82d58b46ebbf46fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:af460018607ad308960cd6235cfd64e31"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#af460018607ad308960cd6235cfd64e31">defaultNumToInstantiate</a></td></tr>
+<tr class="memdesc:af460018607ad308960cd6235cfd64e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many object prefabs for this model should be instantiated by default. (This isn't a cap on the number that can be activated/purchased, but if it's known that there will be many instances it could save on overhead to create them ahead of time instead of during play-time).  <a href="class_item.html#af460018607ad308960cd6235cfd64e31">More...</a><br /></td></tr>
+<tr class="separator:af460018607ad308960cd6235cfd64e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ea1dd0b82e8e3c6a6709d09909c1a2"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#ad5ea1dd0b82e8e3c6a6709d09909c1a2">careFufills</a> = new List&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>&gt;()</td></tr>
+<tr class="memdesc:ad5ea1dd0b82e8e3c6a6709d09909c1a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializable list of the DogCareValues this item modifies when used by a dog. Added to the m_careFufillments Dictionary as a key when entry is submitted in the inspector.  <a href="class_item.html#ad5ea1dd0b82e8e3c6a6709d09909c1a2">More...</a><br /></td></tr>
+<tr class="separator:ad5ea1dd0b82e8e3c6a6709d09909c1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba20e9705b386944a3b40fb95f2a9183"><td class="memItemLeft" align="right" valign="top">List&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#aba20e9705b386944a3b40fb95f2a9183">careFufillmentAmounts</a> = new List&lt;float&gt;()</td></tr>
+<tr class="memdesc:aba20e9705b386944a3b40fb95f2a9183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializable float amount the modified DogCareValues are modified by when this item is used. Added to the m_careFufillments Dictionary as a value when entry is submitted in the inspector.  <a href="class_item.html#aba20e9705b386944a3b40fb95f2a9183">More...</a><br /></td></tr>
+<tr class="separator:aba20e9705b386944a3b40fb95f2a9183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad73721ae4ba890d784c0a8cb7f6f3294"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#ad73721ae4ba890d784c0a8cb7f6f3294">personalityFufills</a> = new List&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>&gt;()</td></tr>
+<tr class="memdesc:ad73721ae4ba890d784c0a8cb7f6f3294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializable list of the DogPersonalityValues this item modifies when used by a dog. Added to the m_personalityFufillments Dictionary as a key when entry is submitted in the inspector.  <a href="class_item.html#ad73721ae4ba890d784c0a8cb7f6f3294">More...</a><br /></td></tr>
+<tr class="separator:ad73721ae4ba890d784c0a8cb7f6f3294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a5b1b214a0f9a52c39670fe9281b35"><td class="memItemLeft" align="right" valign="top">List&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a53a5b1b214a0f9a52c39670fe9281b35">personalityFufillmentAmounts</a> = new List&lt;float&gt;()</td></tr>
+<tr class="memdesc:a53a5b1b214a0f9a52c39670fe9281b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializable float amount the modified DogPersonalityValues are modified by when this item is used. Added to the m_personalityFufillments Dictionary as a value when entry is submitted in the inspector.  <a href="class_item.html#a53a5b1b214a0f9a52c39670fe9281b35">More...</a><br /></td></tr>
+<tr class="separator:a53a5b1b214a0f9a52c39670fe9281b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62b3939569546af3149d4b7b4317096f"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a62b3939569546af3149d4b7b4317096f">m_careFufillments</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, float&gt;()</td></tr>
+<tr class="memdesc:a62b3939569546af3149d4b7b4317096f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Dictionary list of the care values in a dog modified when using this item, paired with the amount the care value is modified by.  <a href="class_item.html#a62b3939569546af3149d4b7b4317096f">More...</a><br /></td></tr>
+<tr class="separator:a62b3939569546af3149d4b7b4317096f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1549791ebfed648e2bc8edd733d78635"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a1549791ebfed648e2bc8edd733d78635">m_personalityFufillments</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, float&gt;()</td></tr>
+<tr class="memdesc:a1549791ebfed648e2bc8edd733d78635"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Dictionary list of the personality values in a dog modified when using this item, paired with the amount the personality value is modified by.  <a href="class_item.html#a1549791ebfed648e2bc8edd733d78635">More...</a><br /></td></tr>
+<tr class="separator:a1549791ebfed648e2bc8edd733d78635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94aa1475e120ea6d346a540f5043f1f6"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a94aa1475e120ea6d346a540f5043f1f6">m_defaultNullObject</a></td></tr>
+<tr class="memdesc:a94aa1475e120ea6d346a540f5043f1f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">An empty game object for when game objects shouldn't be set to any actual reference anymore, but unity throws errors if game objects are set to null during runtime.  <a href="class_item.html#a94aa1475e120ea6d346a540f5043f1f6">More...</a><br /></td></tr>
+<tr class="separator:a94aa1475e120ea6d346a540f5043f1f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb5c1fb946430e87b266a1364de66b35"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#acb5c1fb946430e87b266a1364de66b35">m_instanceParent</a></td></tr>
+<tr class="memdesc:acb5c1fb946430e87b266a1364de66b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">The empty GameObject the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> prefab instances should be parented to. Just specified for organisation and ease of finding instances, and so held items (which are made a child of a dog's snout object) can be placed back from where they came from.  <a href="class_item.html#acb5c1fb946430e87b266a1364de66b35">More...</a><br /></td></tr>
+<tr class="separator:acb5c1fb946430e87b266a1364de66b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7984fb8ba4485879e360ab2107f8da7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_item_instance.html">ItemInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a7984fb8ba4485879e360ab2107f8da7d">m_instancePrefab</a></td></tr>
+<tr class="memdesc:a7984fb8ba4485879e360ab2107f8da7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GameObject representation of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. An instance of this will be activated to the game world when the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> is purchased from the store.  <a href="class_item.html#a7984fb8ba4485879e360ab2107f8da7d">More...</a><br /></td></tr>
+<tr class="separator:a7984fb8ba4485879e360ab2107f8da7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d0999f15f19a2e6117ea166e74dc92f"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a1d0999f15f19a2e6117ea166e74dc92f">m_instancesInactivePos</a></td></tr>
+<tr class="memdesc:a1d0999f15f19a2e6117ea166e74dc92f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A position to place the GameObject instances of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> when they're deactivated and out of use. (Under the floor).  <a href="class_item.html#a1d0999f15f19a2e6117ea166e74dc92f">More...</a><br /></td></tr>
+<tr class="separator:a1d0999f15f19a2e6117ea166e74dc92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd93d2c1ec35d775d630882944cf0632"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_item_instance.html">ItemInstance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#afd93d2c1ec35d775d630882944cf0632">m_instancePool</a> = new List&lt;<a class="el" href="class_item_instance.html">ItemInstance</a>&gt;()</td></tr>
+<tr class="memdesc:afd93d2c1ec35d775d630882944cf0632"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of the m_instancePrefab objects instantiated to be activated representations of this item. The object includes a simple <a class="el" href="class_item_instance.html" title="This class encapsulates an object instance of an Item. Combines the object with some other data about...">ItemInstance</a> class which contains additional data like if that instance is currently being used or is active.  <a href="class_item.html#afd93d2c1ec35d775d630882944cf0632">More...</a><br /></td></tr>
+<tr class="separator:afd93d2c1ec35d775d630882944cf0632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f896c4040086532e6378f2fba1e8068"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a6f896c4040086532e6378f2fba1e8068">m_itemType</a></td></tr>
+<tr class="memdesc:a6f896c4040086532e6378f2fba1e8068"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ItemType of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. (E.g. FOOD, BED, TOYS, etc...).  <a href="class_item.html#a6f896c4040086532e6378f2fba1e8068">More...</a><br /></td></tr>
+<tr class="separator:a6f896c4040086532e6378f2fba1e8068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee02798cc7744d42a714522fa38d8b69"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#aee02798cc7744d42a714522fa38d8b69">m_name</a> = null</td></tr>
+<tr class="memdesc:aee02798cc7744d42a714522fa38d8b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> to be displayed in the store. (E.g. Dry Kibble, Plush Duck, etc...).  <a href="class_item.html#aee02798cc7744d42a714522fa38d8b69">More...</a><br /></td></tr>
+<tr class="separator:aee02798cc7744d42a714522fa38d8b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63fb04d69654dc32e850a62c782cbde4"><td class="memItemLeft" align="right" valign="top">Sprite&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a63fb04d69654dc32e850a62c782cbde4">m_sprite</a></td></tr>
+<tr class="memdesc:a63fb04d69654dc32e850a62c782cbde4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The image to be displayed in the store for this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>.  <a href="class_item.html#a63fb04d69654dc32e850a62c782cbde4">More...</a><br /></td></tr>
+<tr class="separator:a63fb04d69654dc32e850a62c782cbde4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affebefd54a85d8d74e9f597c4e8e97cd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#affebefd54a85d8d74e9f597c4e8e97cd">m_price</a></td></tr>
+<tr class="memdesc:affebefd54a85d8d74e9f597c4e8e97cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Price of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> for the store.  <a href="class_item.html#affebefd54a85d8d74e9f597c4e8e97cd">More...</a><br /></td></tr>
+<tr class="separator:affebefd54a85d8d74e9f597c4e8e97cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb7aa554a6236be5da7d5ba9b822f6a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#aabb7aa554a6236be5da7d5ba9b822f6a">m_description</a></td></tr>
+<tr class="memdesc:aabb7aa554a6236be5da7d5ba9b822f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Description of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> for the store.  <a href="class_item.html#aabb7aa554a6236be5da7d5ba9b822f6a">More...</a><br /></td></tr>
+<tr class="separator:aabb7aa554a6236be5da7d5ba9b822f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e96aada98d5b8b3524e0a566a60790"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a85e96aada98d5b8b3524e0a566a60790">m_singleUse</a></td></tr>
+<tr class="memdesc:a85e96aada98d5b8b3524e0a566a60790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not this item can be used multiple times or just once. (E.g. Food items are single use and will be deactivated after use, but beds will remain after use).  <a href="class_item.html#a85e96aada98d5b8b3524e0a566a60790">More...</a><br /></td></tr>
+<tr class="separator:a85e96aada98d5b8b3524e0a566a60790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a477fe00bfd24a196c8828c490c6640a1"><td class="memItemLeft" align="right" valign="top">Vector2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a477fe00bfd24a196c8828c490c6640a1">m_relUsePos</a></td></tr>
+<tr class="memdesc:a477fe00bfd24a196c8828c490c6640a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Where the dog should be positioned on the X and Z axis relative to an object instance of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> when using it. (E.g. Placed in the centre of a bed). Only X&amp;Y as the dogs heights/Y-positions will vary depending on breed which would differ their required Y-offset.  <a href="class_item.html#a477fe00bfd24a196c8828c490c6640a1">More...</a><br /></td></tr>
+<tr class="separator:a477fe00bfd24a196c8828c490c6640a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab00b47cda145bdf36e88972f402c92ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#ab00b47cda145bdf36e88972f402c92ee">m_needsUseOffset</a></td></tr>
+<tr class="memdesc:ab00b47cda145bdf36e88972f402c92ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not to actually set the dog's position to the specified m_relUsePos. Some Items don't require the dog to be positioned anywhere in partiular around the item instance to use them.  <a href="class_item.html#ab00b47cda145bdf36e88972f402c92ee">More...</a><br /></td></tr>
+<tr class="separator:ab00b47cda145bdf36e88972f402c92ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamically be made by changing these values in Unity's inspector GUI. </p>
@@ -214,6 +285,33 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Called by <a class="el" href="class_store_controller.html" title="Controls the Items displayed in the Store menu. Instantiates said Items and manages the store UI to o...">StoreController</a> when the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> is successfully purchased, and if a pre-instantiated <a class="el" href="class_item_instance.html" title="This class encapsulates an object instance of an Item. Combines the object with some other data about...">ItemInstance</a> has already been made and hasn't been activated yet, this function will just call it's activation function to activate that instance to the specified world position. If there isn't already an inactive instance in the pool though, it'll just instatiate a new one and activate that. </p>
+
+</div>
+</div>
+<a id="a6b613be4efca12e82d58b46ebbf46fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b613be4efca12e82d58b46ebbf46fab">&#9670;&nbsp;</a></span>AddNewToPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Item.AddNewToPool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called by <a class="el" href="class_item.html#a1bd2dbb961b9385e219cdeeafd07565c" title="Called by StoreController when the Item is successfully purchased, and if a pre-instantiated ItemInst...">ActivateAvailableInstanceTo()</a> if there wasn't already an inactive instance to activate. Creates a new instance, adds it to the pool, and returns that newest instance for <a class="el" href="class_item.html#a1bd2dbb961b9385e219cdeeafd07565c" title="Called by StoreController when the Item is successfully purchased, and if a pre-instantiated ItemInst...">ActivateAvailableInstanceTo()</a> to activate. </p>
 
 </div>
 </div>
@@ -861,6 +959,78 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="aba20e9705b386944a3b40fb95f2a9183"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba20e9705b386944a3b40fb95f2a9183">&#9670;&nbsp;</a></span>careFufillmentAmounts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;float&gt; Item.careFufillmentAmounts = new List&lt;float&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serializable float amount the modified DogCareValues are modified by when this item is used. Added to the m_careFufillments Dictionary as a value when entry is submitted in the inspector. </p>
+
+</div>
+</div>
+<a id="ad5ea1dd0b82e8e3c6a6709d09909c1a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5ea1dd0b82e8e3c6a6709d09909c1a2">&#9670;&nbsp;</a></span>careFufills</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>&gt; Item.careFufills = new List&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serializable list of the DogCareValues this item modifies when used by a dog. Added to the m_careFufillments Dictionary as a key when entry is submitted in the inspector. </p>
+
+</div>
+</div>
+<a id="af460018607ad308960cd6235cfd64e31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af460018607ad308960cd6235cfd64e31">&#9670;&nbsp;</a></span>defaultNumToInstantiate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Item.defaultNumToInstantiate</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How many object prefabs for this model should be instantiated by default. (This isn't a cap on the number that can be activated/purchased, but if it's known that there will be many instances it could save on overhead to create them ahead of time instead of during play-time). </p>
+
+</div>
+</div>
 <a id="ac822bee50d68ce6a0e855fc914f2a6f4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac822bee50d68ce6a0e855fc914f2a6f4">&#9670;&nbsp;</a></span>doNotDeploy</h2>
 
@@ -874,6 +1044,414 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Whether the item should be displayed in the store. (Added last minute to de-include items I ran out of time to implement). </p>
+
+</div>
+</div>
+<a id="a62b3939569546af3149d4b7b4317096f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62b3939569546af3149d4b7b4317096f">&#9670;&nbsp;</a></span>m_careFufillments</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, float&gt; Item.m_careFufillments = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, float&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A Dictionary list of the care values in a dog modified when using this item, paired with the amount the care value is modified by. </p>
+
+</div>
+</div>
+<a id="a94aa1475e120ea6d346a540f5043f1f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94aa1475e120ea6d346a540f5043f1f6">&#9670;&nbsp;</a></span>m_defaultNullObject</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject Item.m_defaultNullObject</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>An empty game object for when game objects shouldn't be set to any actual reference anymore, but unity throws errors if game objects are set to null during runtime. </p>
+
+</div>
+</div>
+<a id="aabb7aa554a6236be5da7d5ba9b822f6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabb7aa554a6236be5da7d5ba9b822f6a">&#9670;&nbsp;</a></span>m_description</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Item.m_description</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Description of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> for the store. </p>
+
+</div>
+</div>
+<a id="acb5c1fb946430e87b266a1364de66b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb5c1fb946430e87b266a1364de66b35">&#9670;&nbsp;</a></span>m_instanceParent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject Item.m_instanceParent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The empty GameObject the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> prefab instances should be parented to. Just specified for organisation and ease of finding instances, and so held items (which are made a child of a dog's snout object) can be placed back from where they came from. </p>
+
+</div>
+</div>
+<a id="afd93d2c1ec35d775d630882944cf0632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd93d2c1ec35d775d630882944cf0632">&#9670;&nbsp;</a></span>m_instancePool</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="class_item_instance.html">ItemInstance</a>&gt; Item.m_instancePool = new List&lt;<a class="el" href="class_item_instance.html">ItemInstance</a>&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A list of the m_instancePrefab objects instantiated to be activated representations of this item. The object includes a simple <a class="el" href="class_item_instance.html" title="This class encapsulates an object instance of an Item. Combines the object with some other data about...">ItemInstance</a> class which contains additional data like if that instance is currently being used or is active. </p>
+
+</div>
+</div>
+<a id="a7984fb8ba4485879e360ab2107f8da7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7984fb8ba4485879e360ab2107f8da7d">&#9670;&nbsp;</a></span>m_instancePrefab</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_item_instance.html">ItemInstance</a> Item.m_instancePrefab</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The GameObject representation of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. An instance of this will be activated to the game world when the <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> is purchased from the store. </p>
+
+</div>
+</div>
+<a id="a1d0999f15f19a2e6117ea166e74dc92f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d0999f15f19a2e6117ea166e74dc92f">&#9670;&nbsp;</a></span>m_instancesInactivePos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3 Item.m_instancesInactivePos</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A position to place the GameObject instances of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> when they're deactivated and out of use. (Under the floor). </p>
+
+</div>
+</div>
+<a id="a6f896c4040086532e6378f2fba1e8068"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f896c4040086532e6378f2fba1e8068">&#9670;&nbsp;</a></span>m_itemType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_store_controller_8cs.html#a443f647757dde85043b49343f5cbe66b">ItemType</a> Item.m_itemType</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The ItemType of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. (E.g. FOOD, BED, TOYS, etc...). </p>
+
+</div>
+</div>
+<a id="aee02798cc7744d42a714522fa38d8b69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee02798cc7744d42a714522fa38d8b69">&#9670;&nbsp;</a></span>m_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Item.m_name = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Name of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> to be displayed in the store. (E.g. Dry Kibble, Plush Duck, etc...). </p>
+
+</div>
+</div>
+<a id="ab00b47cda145bdf36e88972f402c92ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab00b47cda145bdf36e88972f402c92ee">&#9670;&nbsp;</a></span>m_needsUseOffset</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Item.m_needsUseOffset</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether or not to actually set the dog's position to the specified m_relUsePos. Some Items don't require the dog to be positioned anywhere in partiular around the item instance to use them. </p>
+
+</div>
+</div>
+<a id="a1549791ebfed648e2bc8edd733d78635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1549791ebfed648e2bc8edd733d78635">&#9670;&nbsp;</a></span>m_personalityFufillments</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, float&gt; Item.m_personalityFufillments = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, float&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A Dictionary list of the personality values in a dog modified when using this item, paired with the amount the personality value is modified by. </p>
+
+</div>
+</div>
+<a id="affebefd54a85d8d74e9f597c4e8e97cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affebefd54a85d8d74e9f597c4e8e97cd">&#9670;&nbsp;</a></span>m_price</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Item.m_price</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Price of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> for the store. </p>
+
+</div>
+</div>
+<a id="a477fe00bfd24a196c8828c490c6640a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a477fe00bfd24a196c8828c490c6640a1">&#9670;&nbsp;</a></span>m_relUsePos</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector2 Item.m_relUsePos</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Where the dog should be positioned on the X and Z axis relative to an object instance of this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a> when using it. (E.g. Placed in the centre of a bed). Only X&amp;Y as the dogs heights/Y-positions will vary depending on breed which would differ their required Y-offset. </p>
+
+</div>
+</div>
+<a id="a85e96aada98d5b8b3524e0a566a60790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e96aada98d5b8b3524e0a566a60790">&#9670;&nbsp;</a></span>m_singleUse</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Item.m_singleUse</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether or not this item can be used multiple times or just once. (E.g. Food items are single use and will be deactivated after use, but beds will remain after use). </p>
+
+</div>
+</div>
+<a id="a63fb04d69654dc32e850a62c782cbde4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63fb04d69654dc32e850a62c782cbde4">&#9670;&nbsp;</a></span>m_sprite</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Sprite Item.m_sprite</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The image to be displayed in the store for this <a class="el" href="class_item.html" title="A class with almost all of its pertinant values serialized so prefabs of instances can easily/dynamic...">Item</a>. </p>
+
+</div>
+</div>
+<a id="a53a5b1b214a0f9a52c39670fe9281b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a5b1b214a0f9a52c39670fe9281b35">&#9670;&nbsp;</a></span>personalityFufillmentAmounts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;float&gt; Item.personalityFufillmentAmounts = new List&lt;float&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serializable float amount the modified DogPersonalityValues are modified by when this item is used. Added to the m_personalityFufillments Dictionary as a value when entry is submitted in the inspector. </p>
+
+</div>
+</div>
+<a id="ad73721ae4ba890d784c0a8cb7f6f3294"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad73721ae4ba890d784c0a8cb7f6f3294">&#9670;&nbsp;</a></span>personalityFufills</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>&gt; Item.personalityFufills = new List&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serializable list of the DogPersonalityValues this item modifies when used by a dog. Added to the m_personalityFufillments Dictionary as a key when entry is submitted in the inspector. </p>
 
 </div>
 </div>

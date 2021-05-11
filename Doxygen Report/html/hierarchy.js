@@ -17,6 +17,7 @@ var hierarchy =
     [ "ISerializationCallbackReceiver", null, [
       [ "Item", "class_item.html", null ]
     ] ],
+    [ "DogGeneration.ModelOrientation", "struct_dog_generation_1_1_model_orientation.html", null ],
     [ "ModelOrientation", "struct_model_orientation.html", null ],
     [ "MonoBehaviour", null, [
       [ "AnimationManagement", "class_animation_management.html", null ],

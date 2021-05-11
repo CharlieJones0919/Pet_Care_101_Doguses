@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('struct_body_component.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="struct_body_component-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">BodyComponent Struct Reference</div>  </div>
@@ -126,6 +127,18 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ae93841c4588c50ce9436526314c491c7"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_body_component.html#ae93841c4588c50ce9436526314c491c7">m_component</a></td></tr>
 <tr class="memdesc:ae93841c4588c50ce9436526314c491c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GameObject/model of this body part.  <a href="struct_body_component.html#ae93841c4588c50ce9436526314c491c7">More...</a><br /></td></tr>
 <tr class="separator:ae93841c4588c50ce9436526314c491c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:acc1cf7c4143c14c88bcbad8865fc192a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_dog_generation_8cs.html#a7a4875f2b53773a016c13bcfc2a55ac3">BodyPart</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_body_component.html#acc1cf7c4143c14c88bcbad8865fc192a">m_part</a></td></tr>
+<tr class="memdesc:acc1cf7c4143c14c88bcbad8865fc192a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which BodyPart this <a class="el" href="struct_body_component.html" title="Each &quot;BodyPart&quot; enum is paired with a BodyComponent structure in the Dog class as a dictionary of pai...">BodyComponent</a> is paired to.  <a href="struct_body_component.html#acc1cf7c4143c14c88bcbad8865fc192a">More...</a><br /></td></tr>
+<tr class="separator:acc1cf7c4143c14c88bcbad8865fc192a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7400ed1b6c4dd41362b853aa28b6a955"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_body_component.html#a7400ed1b6c4dd41362b853aa28b6a955">m_parent</a></td></tr>
+<tr class="memdesc:a7400ed1b6c4dd41362b853aa28b6a955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent of this GameObject in the hierarchy.  <a href="struct_body_component.html#a7400ed1b6c4dd41362b853aa28b6a955">More...</a><br /></td></tr>
+<tr class="separator:a7400ed1b6c4dd41362b853aa28b6a955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54e354c9cbb11a9133eb12241985cb24"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_body_component.html#a54e354c9cbb11a9133eb12241985cb24">m_data</a></td></tr>
+<tr class="memdesc:a54e354c9cbb11a9133eb12241985cb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DogDataField data from the BreedData.txt file which should be applied to that component. (E.g. If this is a BodyPart, the Leg_Length data should be applied to it for scaling in <a class="el" href="class_dog_generation.html" title="This class is responcible for creating the Dog instances when triggered to by GameTime,...">DogGeneration</a>).  <a href="struct_body_component.html#a54e354c9cbb11a9133eb12241985cb24">More...</a><br /></td></tr>
+<tr class="separator:a54e354c9cbb11a9133eb12241985cb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Each "BodyPart" enum is paired with a <a class="el" href="struct_body_component.html" title="Each &quot;BodyPart&quot; enum is paired with a BodyComponent structure in the Dog class as a dictionary of pai...">BodyComponent</a> structure in the <a class="el" href="class_dog.html" title="This class contains the implementations of functions (or behaviour actions) that can be employed by t...">Dog</a> class as a dictionary of pairs. This struct stores the BodyPart enum, the actual GameObject being referred to, the object's parent in the hierarchy, and the DogDataField data from the BreedData.txt file which should be applied to that component. In retrospect, this would probably be better achieved by making this a class and attaching it to each body component in the inspector with a serializable list to set the data for which would send itself to controller or the <a class="el" href="class_dog.html" title="This class contains the implementations of functions (or behaviour actions) that can be employed by t...">Dog</a> script's list of parts. </p>
@@ -416,6 +429,78 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The GameObject/model of this body part. </p>
+
+</div>
+</div>
+<a id="a54e354c9cbb11a9133eb12241985cb24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54e354c9cbb11a9133eb12241985cb24">&#9670;&nbsp;</a></span>m_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;<a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>&gt; BodyComponent.m_data</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The DogDataField data from the BreedData.txt file which should be applied to that component. (E.g. If this is a BodyPart, the Leg_Length data should be applied to it for scaling in <a class="el" href="class_dog_generation.html" title="This class is responcible for creating the Dog instances when triggered to by GameTime,...">DogGeneration</a>). </p>
+
+</div>
+</div>
+<a id="a7400ed1b6c4dd41362b853aa28b6a955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7400ed1b6c4dd41362b853aa28b6a955">&#9670;&nbsp;</a></span>m_parent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject BodyComponent.m_parent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parent of this GameObject in the hierarchy. </p>
+
+</div>
+</div>
+<a id="acc1cf7c4143c14c88bcbad8865fc192a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc1cf7c4143c14c88bcbad8865fc192a">&#9670;&nbsp;</a></span>m_part</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="_dog_generation_8cs.html#a7a4875f2b53773a016c13bcfc2a55ac3">BodyPart</a> BodyComponent.m_part</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Which BodyPart this <a class="el" href="struct_body_component.html" title="Each &quot;BodyPart&quot; enum is paired with a BodyComponent structure in the Dog class as a dictionary of pai...">BodyComponent</a> is paired to. </p>
 
 </div>
 </div>

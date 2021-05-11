@@ -15,7 +15,7 @@ var annotated_dup =
     [ "DogGeneration", "class_dog_generation.html", "class_dog_generation" ],
     [ "FiniteStateMachine", "class_finite_state_machine.html", "class_finite_state_machine" ],
     [ "GameTime", "class_game_time.html", "class_game_time" ],
-    [ "GetUIComponent", "class_get_u_i_component.html", null ],
+    [ "GetUIComponent", "class_get_u_i_component.html", "class_get_u_i_component" ],
     [ "Heap", "class_heap.html", "class_heap" ],
     [ "Hungry", "class_hungry.html", "class_hungry" ],
     [ "Idle", "class_idle.html", "class_idle" ],

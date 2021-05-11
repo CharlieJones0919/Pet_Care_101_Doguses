@@ -90,6 +90,8 @@ $(document).ready(function(){initNavTree('class_data_display.html','');});
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_data_display-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DataDisplay Class Reference</div>  </div>
@@ -137,6 +139,30 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#afdb0b78b73f2c08876f44a4d4d7b5a99">personalityValueDisplayUI</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider&gt;()</td></tr>
 <tr class="memdesc:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI for outputting the dog's personality values, with a key for the specific personality value this slider is for.  <a href="class_data_display.html#afdb0b78b73f2c08876f44a4d4d7b5a99">More...</a><br /></td></tr>
 <tr class="separator:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af0e443e475ef30091e26a55e178be5fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#af0e443e475ef30091e26a55e178be5fd">OnEnable</a> ()</td></tr>
+<tr class="memdesc:af0e443e475ef30091e26a55e178be5fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the panel is activated, its general data UI elements to the values of the current dog of focus. (This will be set via Control as called by <a class="el" href="class_camera_control.html" title="Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog)...">CameraControl</a> when a dog is tapped/clicked).  <a href="class_data_display.html#af0e443e475ef30091e26a55e178be5fd">More...</a><br /></td></tr>
+<tr class="separator:af0e443e475ef30091e26a55e178be5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace78dcfb34ced7413fc9422708722e39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ace78dcfb34ced7413fc9422708722e39">OnDisable</a> ()</td></tr>
+<tr class="memdesc:ace78dcfb34ced7413fc9422708722e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the panel is de-activated, it tells the controller to unset all the dogs' "IS_FOCUS_DOG" facts as true.  <a href="class_data_display.html#ace78dcfb34ced7413fc9422708722e39">More...</a><br /></td></tr>
+<tr class="separator:ace78dcfb34ced7413fc9422708722e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5726fc292035b716062c534b8adb8046"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a5726fc292035b716062c534b8adb8046">FixedUpdate</a> ()</td></tr>
+<tr class="memdesc:a5726fc292035b716062c534b8adb8046"><td class="mdescLeft">&#160;</td><td class="mdescRight">While the InfoPanel is active, this function updates the slider and text UI element's values to those of the focused dog.  <a href="class_data_display.html#a5726fc292035b716062c534b8adb8046">More...</a><br /></td></tr>
+<tr class="separator:a5726fc292035b716062c534b8adb8046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a19acd3bb5ac2c7808cc4832947ec06ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_controller.html">Controller</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a19acd3bb5ac2c7808cc4832947ec06ff">controller</a></td></tr>
+<tr class="memdesc:a19acd3bb5ac2c7808cc4832947ec06ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the game controller.  <a href="class_data_display.html#a19acd3bb5ac2c7808cc4832947ec06ff">More...</a><br /></td></tr>
+<tr class="separator:a19acd3bb5ac2c7808cc4832947ec06ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b78fe8c2a785505b450999321ec364"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_dog.html">Dog</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ae1b78fe8c2a785505b450999321ec364">focusedDog</a></td></tr>
+<tr class="memdesc:ae1b78fe8c2a785505b450999321ec364"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dog to output the data of.  <a href="class_data_display.html#ae1b78fe8c2a785505b450999321ec364">More...</a><br /></td></tr>
+<tr class="separator:ae1b78fe8c2a785505b450999321ec364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47b3f358e3ca247d773ae45bf82929e2"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a47b3f358e3ca247d773ae45bf82929e2">newDogPanel</a></td></tr>
+<tr class="memdesc:a47b3f358e3ca247d773ae45bf82929e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The adoption screen panel to activate when a new dog is added.  <a href="class_data_display.html#a47b3f358e3ca247d773ae45bf82929e2">More...</a><br /></td></tr>
+<tr class="separator:a47b3f358e3ca247d773ae45bf82929e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains a reference to a selected dog and the DogInfoPanel UI components as sent in by their <a class="el" href="class_get_u_i_component.html" title="Just contains a reference to the DataDisplay script in the DogInfoPanel, and a Start() function to ad...">GetUIComponent</a> scripts. While active will output the data specific to that dog in the panel (e.g. their name, breed, hunger level, etc...). </p>
@@ -165,6 +191,33 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Activates the adoption screen when a new dog is generated. Called by the Control class. </p>
+
+</div>
+</div>
+<a id="a5726fc292035b716062c534b8adb8046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5726fc292035b716062c534b8adb8046">&#9670;&nbsp;</a></span>FixedUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataDisplay.FixedUpdate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>While the InfoPanel is active, this function updates the slider and text UI element's values to those of the focused dog. </p>
 
 </div>
 </div>
@@ -219,6 +272,60 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Unpauses the game, activates this object (the dog info panel), and deactivates the adoption screen panel. This is called by the confirmation button on the adoption panel to continue the game. </p>
+
+</div>
+</div>
+<a id="ace78dcfb34ced7413fc9422708722e39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace78dcfb34ced7413fc9422708722e39">&#9670;&nbsp;</a></span>OnDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataDisplay.OnDisable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When the panel is de-activated, it tells the controller to unset all the dogs' "IS_FOCUS_DOG" facts as true. </p>
+
+</div>
+</div>
+<a id="af0e443e475ef30091e26a55e178be5fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0e443e475ef30091e26a55e178be5fd">&#9670;&nbsp;</a></span>OnEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataDisplay.OnEnable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>When the panel is activated, its general data UI elements to the values of the current dog of focus. (This will be set via Control as called by <a class="el" href="class_camera_control.html" title="Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog)...">CameraControl</a> when a dog is tapped/clicked). </p>
 
 </div>
 </div>
@@ -323,6 +430,54 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a19acd3bb5ac2c7808cc4832947ec06ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19acd3bb5ac2c7808cc4832947ec06ff">&#9670;&nbsp;</a></span>controller</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_controller.html">Controller</a> DataDisplay.controller</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reference to the game controller. </p>
+
+</div>
+</div>
+<a id="ae1b78fe8c2a785505b450999321ec364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1b78fe8c2a785505b450999321ec364">&#9670;&nbsp;</a></span>focusedDog</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_dog.html">Dog</a> DataDisplay.focusedDog</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The dog to output the data of. </p>
+
+</div>
+</div>
 <a id="a0db4dce32b152b3c43b4d3e6c818ca11"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0db4dce32b152b3c43b4d3e6c818ca11">&#9670;&nbsp;</a></span>generalDataDisplayUI</h2>
 
@@ -336,6 +491,30 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>UI for outputting data other than Care/Personality values. (E.g. Name, Breed, age, etc...). </p>
+
+</div>
+</div>
+<a id="a47b3f358e3ca247d773ae45bf82929e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47b3f358e3ca247d773ae45bf82929e2">&#9670;&nbsp;</a></span>newDogPanel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject DataDisplay.newDogPanel</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The adoption screen panel to activate when a new dog is added. </p>
 
 </div>
 </div>
