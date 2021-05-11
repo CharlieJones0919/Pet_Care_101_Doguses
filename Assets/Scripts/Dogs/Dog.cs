@@ -1,4 +1,9 @@
 ﻿/** \file Dog.cs */
+/*! \mainpage Pets 101 - Doguses
+ * \section intro_sec Project Aim Introduction
+ * The aim of this project was to educate children (via an interactive experience) in dog behavior - and the impact provided care and environment can have on said behavior. 
+ * Application of AI principles were used to aid this goal, by dynamically simulating responses to the dog's environment and available resources.  
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,78 +49,78 @@ public class Dog : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Action nodes which are children to sequence nodes which must be successful in a sequence for the sequence node to succeed.
     //////////////////// Check Current FSM State Actions ////////////////////
-    public BTAction check_Idle_State;     //!< Whether the dog is currently in its Idle     state.
-    public BTAction check_Hungry_State;   //!< Whether the dog is currently in its Hungry   state.
-    public BTAction check_Tired_State;    //!< Whether the dog is currently in its Tired    state.
-    public BTAction check_Playful_State;  //!< Whether the dog is currently in its Playful  state.
+    private BTAction check_Idle_State;     //!< Whether the dog is currently in its Idle     state.
+    private BTAction check_Hungry_State;   //!< Whether the dog is currently in its Hungry   state.
+    private BTAction check_Tired_State;    //!< Whether the dog is currently in its Tired    state.
+    private BTAction check_Playful_State;  //!< Whether the dog is currently in its Playful  state.
     //////////////////// Swap FSM State Actions ////////////////////
-    public BTAction swp_Idle_State;       //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Idle state.
-    public BTAction swp_Pause_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Hungry state.
-    public BTAction swp_Hungry_State;     //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Tired state.
-    public BTAction swp_Tired_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Playful state.
-    public BTAction swp_Playful_State;
+    private BTAction swp_Idle_State;       //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Idle state.
+    private BTAction swp_Pause_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Hungry state.
+    private BTAction swp_Hungry_State;     //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Tired state.
+    private BTAction swp_Tired_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Playful state.
+    private BTAction swp_Playful_State;
     //////////////////// Status Check Actions ////////////////////
     ///// Hunger Status /////
-    public BTAction check_Starving;       //!< Whether the dog's Hunger CareValue is currently in the state of Starving. 
-    public BTAction check_Hungry;         //!< Whether the dog's Hunger CareValue is currently in the state of Hungry.   
-    public BTAction check_Fed;            //!< Whether the dog's Hunger CareValue is currently in the state of Fed.      
-    public BTAction check_Overfed;        //!< Whether the dog's Hunger CareValue is currently in the state of Overfed.  
+    private BTAction check_Starving;       //!< Whether the dog's Hunger CareValue is currently in the state of Starving. 
+    private BTAction check_Hungry;         //!< Whether the dog's Hunger CareValue is currently in the state of Hungry.   
+    private BTAction check_Fed;            //!< Whether the dog's Hunger CareValue is currently in the state of Fed.      
+    private BTAction check_Overfed;        //!< Whether the dog's Hunger CareValue is currently in the state of Overfed.  
     ///// Attention Status /////         
-    public BTAction check_Lonely;         //!< Whether the dog's Attention CareValue is currently in the state of Lonely.      
-    public BTAction check_Loved;          //!< Whether the dog's Attention CareValue is currently in the state of Loved.       
-    public BTAction check_Overcrowded;    //!< Whether the dog's Attention CareValue is currently in the state of Overcrowded. 
+    private BTAction check_Lonely;         //!< Whether the dog's Attention CareValue is currently in the state of Lonely.      
+    private BTAction check_Loved;          //!< Whether the dog's Attention CareValue is currently in the state of Loved.       
+    private BTAction check_Overcrowded;    //!< Whether the dog's Attention CareValue is currently in the state of Overcrowded. 
     ///// Rest Status /////              
-    public BTAction check_Exhausted;      //!< Whether the dog's Rest CareValue is currently in the state of Exhausted.   
-    public BTAction check_Tired;          //!< Whether the dog's Rest CareValue is currently in the state of Tired.       
-    public BTAction check_Rested;         //!< Whether the dog's Rest CareValue is currently in the state of Rested.      
-    public BTAction check_Rejuvinated;    //!< Whether the dog's Rest CareValue is currently in the state of Rejuvinated. 
+    private BTAction check_Exhausted;      //!< Whether the dog's Rest CareValue is currently in the state of Exhausted.   
+    private BTAction check_Tired;          //!< Whether the dog's Rest CareValue is currently in the state of Tired.       
+    private BTAction check_Rested;         //!< Whether the dog's Rest CareValue is currently in the state of Rested.      
+    private BTAction check_Rejuvinated;    //!< Whether the dog's Rest CareValue is currently in the state of Rejuvinated. 
     ///// Hygiene Status /////              
-    ///public BTAction check_Filthy;
-    ///public BTAction check_Dirty;
-    ///public BTAction check_Clean;
+    ///private BTAction check_Filthy;
+    ///private BTAction check_Dirty;
+    ///private BTAction check_Clean;
     ///// Health Status /////
-    public BTAction check_Dying;          //!< Whether the dog's Health CareValue is currently in the state of Dying.    
-    public BTAction check_Sick;           //!< Whether the dog's Health CareValue is currently in the state of Sick.     
-    public BTAction check_Healthy;        //!< Whether the dog's Health CareValue is currently in the state of Healthy.  
+    private BTAction check_Dying;          //!< Whether the dog's Health CareValue is currently in the state of Dying.    
+    private BTAction check_Sick;           //!< Whether the dog's Health CareValue is currently in the state of Sick.     
+    private BTAction check_Healthy;        //!< Whether the dog's Health CareValue is currently in the state of Healthy.  
     ///// Happiness Status /////         
-    public BTAction check_Distressed;     //!< Whether the dog's Happiness CareValue is currently in the state of Distressed.
-    public BTAction check_Upset;          //!< Whether the dog's Happiness CareValue is currently in the state of Upset.     
-    public BTAction check_Happy;          //!< Whether the dog's Happiness CareValue is currently in the state of Happy.     
+    private BTAction check_Distressed;     //!< Whether the dog's Happiness CareValue is currently in the state of Distressed.
+    private BTAction check_Upset;          //!< Whether the dog's Happiness CareValue is currently in the state of Upset.     
+    private BTAction check_Happy;          //!< Whether the dog's Happiness CareValue is currently in the state of Happy.     
 
-    public BTAction check_AllGood;        //!< If all of the dog's CareValues are in "good" condition.
-    public BTAction bonus_GoodCare;       //!< A function to pay the player and improve the dog's personality values if the dog is being cared for well.
+    private BTAction check_AllGood;        //!< If all of the dog's CareValues are in "good" condition.
+    private BTAction bonus_GoodCare;       //!< A function to pay the player and improve the dog's personality values if the dog is being cared for well.
 
     //////////////////// Status False Check Actions ////////////////////
-    public BTAction check_N_Starving;     //!< Whether the dog's Hunger CareValue is NOT currently in the state of Starving. 
-    public BTAction check_N_Hungry;       //!< Whether the dog's Hunger CareValue is NOT currently in the state of Hungry.   
-    public BTAction check_N_Fed;          //!< Whether the dog's Hunger CareValue is NOT currently in the state of Fed.      
-    public BTAction check_N_Overfed;      //!< Whether the dog's Hunger CareValue is NOT currently in the state of Overfed.  
-    public BTAction check_N_Lonely;       //!< Whether the dog's Attention CareValue is NOT currently in the state of Lonely.     
-    public BTAction check_N_Loved;        //!< Whether the dog's Attention CareValue is NOT currently in the state of Loved.      
-    public BTAction check_N_Overcrowded;  //!< Whether the dog's Attention CareValue is NOT currently in the state of Overcrowded.
-    public BTAction check_N_Exhausted;    //!< Whether the dog's Rest CareValue is NOT currently in the state of Exhausted.   
-    public BTAction check_N_Tired;        //!< Whether the dog's Rest CareValue is NOT currently in the state of Tired.       
-    public BTAction check_N_Rested;       //!< Whether the dog's Rest CareValue is NOT currently in the state of Rested.      
-    public BTAction check_N_Rejuvinated;  //!< Whether the dog's Rest CareValue is NOT currently in the state of Rejuvinated. 
-    public BTAction check_N_Dying;        //!< Whether the dog's Health CareValue is NOT currently in the state of Dying.    
-    public BTAction check_N_Sick;         //!< Whether the dog's Health CareValue is NOT currently in the state of Sick.     
-    public BTAction check_N_Healthy;      //!< Whether the dog's Health CareValue is NOT currently in the state of Healthy.  
-    public BTAction check_N_Distressed;   //!< Whether the dog's Happiness CareValue is NOT currently in the state of Distressed.
-    public BTAction check_N_Upset;        //!< Whether the dog's Happiness CareValue is NOT currently in the state of Upset.     
-    public BTAction check_N_Happy;        //!< Whether the dog's Happiness CareValue is NOT currently in the state of Happy.     
+    private BTAction check_N_Starving;     //!< Whether the dog's Hunger CareValue is NOT currently in the state of Starving. 
+    private BTAction check_N_Hungry;       //!< Whether the dog's Hunger CareValue is NOT currently in the state of Hungry.   
+    private BTAction check_N_Fed;          //!< Whether the dog's Hunger CareValue is NOT currently in the state of Fed.      
+    private BTAction check_N_Overfed;      //!< Whether the dog's Hunger CareValue is NOT currently in the state of Overfed.  
+    private BTAction check_N_Lonely;       //!< Whether the dog's Attention CareValue is NOT currently in the state of Lonely.     
+    private BTAction check_N_Loved;        //!< Whether the dog's Attention CareValue is NOT currently in the state of Loved.      
+    private BTAction check_N_Overcrowded;  //!< Whether the dog's Attention CareValue is NOT currently in the state of Overcrowded.
+    private BTAction check_N_Exhausted;    //!< Whether the dog's Rest CareValue is NOT currently in the state of Exhausted.   
+    private BTAction check_N_Tired;        //!< Whether the dog's Rest CareValue is NOT currently in the state of Tired.       
+    private BTAction check_N_Rested;       //!< Whether the dog's Rest CareValue is NOT currently in the state of Rested.      
+    private BTAction check_N_Rejuvinated;  //!< Whether the dog's Rest CareValue is NOT currently in the state of Rejuvinated. 
+    private BTAction check_N_Dying;        //!< Whether the dog's Health CareValue is NOT currently in the state of Dying.    
+    private BTAction check_N_Sick;         //!< Whether the dog's Health CareValue is NOT currently in the state of Sick.     
+    private BTAction check_N_Healthy;      //!< Whether the dog's Health CareValue is NOT currently in the state of Healthy.  
+    private BTAction check_N_Distressed;   //!< Whether the dog's Happiness CareValue is NOT currently in the state of Distressed.
+    private BTAction check_N_Upset;        //!< Whether the dog's Happiness CareValue is NOT currently in the state of Upset.     
+    private BTAction check_N_Happy;        //!< Whether the dog's Happiness CareValue is NOT currently in the state of Happy.     
 
     //////////////////// Items Found Check Actions ////////////////////
-    public BTAction found_Food;           //!< If the dog has located a food item active on the map.
-    public BTAction found_Bed;            //!< If the dog has located a bed item active on the map.
-    public BTAction found_Toys;           //!< If the dog has located a toy item active on the map.
-    public BTAction found_N_Food;         //!< If the dog cannot locate a food item active on the map.
-    public BTAction found_N_Bed;          //!< If the dog cannot locate a bed item active on the map.
-    public BTAction found_N_Toys;         //!< If the dog cannot locate a toy item active on the map.
+    private BTAction found_Food;           //!< If the dog has located a food item active on the map.
+    private BTAction found_Bed;            //!< If the dog has located a bed item active on the map.
+    private BTAction found_Toys;           //!< If the dog has located a toy item active on the map.
+    private BTAction found_N_Food;         //!< If the dog cannot locate a food item active on the map.
+    private BTAction found_N_Bed;          //!< If the dog cannot locate a bed item active on the map.
+    private BTAction found_N_Toys;         //!< If the dog cannot locate a toy item active on the map.
 
     //////////////////// Set Move Speed Actions ////////////////////
-    public BTAction move_Crawling;        //!< Sets the dog's Pathfinding script moving speed to its defined Crawling speed.
-    public BTAction move_Walking;         //!< Sets the dog's Pathfinding script moving speed to its defined Walking speed.
-    public BTAction move_Running;         //!< Sets the dog's Pathfinding script moving speed to its defined Running speed.
+    private BTAction move_Crawling;        //!< Sets the dog's Pathfinding script moving speed to its defined Crawling speed.
+    private BTAction move_Walking;         //!< Sets the dog's Pathfinding script moving speed to its defined Walking speed.
+    private BTAction move_Running;         //!< Sets the dog's Pathfinding script moving speed to its defined Running speed.
 
     //////////////////// Behaviour Tree Condition Sequence Lists for Leaving Each State ////////////////////
     public List<BTSequence> GlobalSequences = new List<BTSequence>();       //!< A sequence of BT node checks general values which shouldn't result in state changes. Includes a check for if the dog is in good health and the others are for setting the dog's walking speed. 
@@ -412,156 +417,156 @@ public class Dog : MonoBehaviour
     /////////////////////////////////////////////// BEHAVIOUR TREE ACTION FUNCTION BINDINGS ///////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////// Actions to Check and Change the Current FSM State ////////////////////
-    public BTState IdleState() { if (m_facts["IDLE"]) { return BTState.SUCCESS; } return BTState.FAILURE; }       //!< Function implementation of its BTAction.
-    public BTState HungryState() { if (m_facts["HUNGRY"]) { return BTState.SUCCESS; } return BTState.FAILURE; }   //!< Function implementation of its BTAction.
-    public BTState TiredState() { if (m_facts["TIRED"]) { return BTState.SUCCESS; } return BTState.FAILURE; }     //!< Function implementation of its BTAction.
-    public BTState PlayfulState() { if (m_facts["PLAYFUL"]) { return BTState.SUCCESS; } return BTState.FAILURE; } //!< Function implementation of its BTAction.
+    private BTState IdleState() { if (m_facts["IDLE"]) { return BTState.SUCCESS; } return BTState.FAILURE; }       //!< Function implementation of its BTAction.
+    private BTState HungryState() { if (m_facts["HUNGRY"]) { return BTState.SUCCESS; } return BTState.FAILURE; }   //!< Function implementation of its BTAction.
+    private BTState TiredState() { if (m_facts["TIRED"]) { return BTState.SUCCESS; } return BTState.FAILURE; }     //!< Function implementation of its BTAction.
+    private BTState PlayfulState() { if (m_facts["PLAYFUL"]) { return BTState.SUCCESS; } return BTState.FAILURE; } //!< Function implementation of its BTAction.
 
-    public BTState SWP_IdleState() { m_facts["SWP_IDLE"] = true; return BTState.SUCCESS; }                        //!< Function implementation of its BTAction.
-    public BTState SWP_PauseState() { m_facts["SWP_PAUSE"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
-    public BTState SWP_HungryState() { m_facts["SWP_HUNGRY"] = true; return BTState.SUCCESS; }                    //!< Function implementation of its BTAction.
-    public BTState SWP_TiredState() { m_facts["SWP_TIRED"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
-    public BTState SWP_PlayfulState() { m_facts["SWP_PLAYFUL"] = true; return BTState.SUCCESS; }                  //!< Function implementation of its BTAction.
+    private BTState SWP_IdleState() { m_facts["SWP_IDLE"] = true; return BTState.SUCCESS; }                        //!< Function implementation of its BTAction.
+    private BTState SWP_PauseState() { m_facts["SWP_PAUSE"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
+    private BTState SWP_HungryState() { m_facts["SWP_HUNGRY"] = true; return BTState.SUCCESS; }                    //!< Function implementation of its BTAction.
+    private BTState SWP_TiredState() { m_facts["SWP_TIRED"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
+    private BTState SWP_PlayfulState() { m_facts["SWP_PLAYFUL"] = true; return BTState.SUCCESS; }                  //!< Function implementation of its BTAction.
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////// CARE VALUE BTACTION FUNCTION BINDINGS ///////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /** \fn Starving 
      * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Starving state. */
-    public BTState Starving() { if (m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Starving() { if (m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Hungry 
      * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Hungry state. */
-    public BTState Hungry() { if (m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Hungry() { if (m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Fed 
      * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Fed state. */
-    public BTState Fed() { if (m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Fed() { if (m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Overfed 
      * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Overfed state. */
-    public BTState Overfed() { if (m_careValues[DogCareValue.Hunger].IsState("Overfed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Overfed() { if (m_careValues[DogCareValue.Hunger].IsState("Overfed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /** \fn Lonely 
      * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Lonely state. */
-    public BTState Lonely() { if (m_careValues[DogCareValue.Attention].IsState("Lonely")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Lonely() { if (m_careValues[DogCareValue.Attention].IsState("Lonely")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Loved 
      * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Loved state. */
-    public BTState Loved() { if (m_careValues[DogCareValue.Attention].IsState("Loved")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Loved() { if (m_careValues[DogCareValue.Attention].IsState("Loved")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Overcrowded 
      * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Overcrowded state. */
-    public BTState Overcrowded() { if (m_careValues[DogCareValue.Attention].IsState("Overcrowded")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Overcrowded() { if (m_careValues[DogCareValue.Attention].IsState("Overcrowded")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /** \fn Exhausted 
      * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Exhausted state. */
-    public BTState Exhausted() { if (m_careValues[DogCareValue.Rest].IsState("Exhausted")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Exhausted() { if (m_careValues[DogCareValue.Rest].IsState("Exhausted")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Tired 
      * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Tired state. */
-    public BTState Tired() { if (m_careValues[DogCareValue.Rest].IsState("Tired")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Tired() { if (m_careValues[DogCareValue.Rest].IsState("Tired")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Rested 
      * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Rested state. */
-    public BTState Rested() { if (m_careValues[DogCareValue.Rest].IsState("Rested")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Rested() { if (m_careValues[DogCareValue.Rest].IsState("Rested")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Rejuvinated 
      * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Rejuvinated state. */
-    public BTState Rejuvinated() { if (m_careValues[DogCareValue.Rest].IsState("Rejuvinated")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Rejuvinated() { if (m_careValues[DogCareValue.Rest].IsState("Rejuvinated")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /** \fn Filthy 
      * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Filthy state. */
-    public BTState Filthy() { if (m_careValues[DogCareValue.Hygiene].IsState("Filthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Filthy() { if (m_careValues[DogCareValue.Hygiene].IsState("Filthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Dirty 
       * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Dirty state. */
-    public BTState Dirty() { if (m_careValues[DogCareValue.Hygiene].IsState("Dirty")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Dirty() { if (m_careValues[DogCareValue.Hygiene].IsState("Dirty")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Clean 
      * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Clean state. */
-    public BTState Clean() { if (m_careValues[DogCareValue.Hygiene].IsState("Clean")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Clean() { if (m_careValues[DogCareValue.Hygiene].IsState("Clean")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /** \fn Dying 
      * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Dying state. */
-    public BTState Dying() { if (m_careValues[DogCareValue.Health].IsState("Dying")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Dying() { if (m_careValues[DogCareValue.Health].IsState("Dying")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Sick 
      * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Sick state. */
-    public BTState Sick() { if (m_careValues[DogCareValue.Health].IsState("Sick")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Sick() { if (m_careValues[DogCareValue.Health].IsState("Sick")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Healthy 
      * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Healthy state. */
-    public BTState Healthy() { if (m_careValues[DogCareValue.Health].IsState("Healthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Healthy() { if (m_careValues[DogCareValue.Health].IsState("Healthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /** \fn Distressed 
       * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Distressed state. */
-    public BTState Distressed() { if (m_careValues[DogCareValue.Happiness].IsState("Distressed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Distressed() { if (m_careValues[DogCareValue.Happiness].IsState("Distressed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Upset 
      * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Upset state. */
-    public BTState Upset() { if (m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Upset() { if (m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn Happy 
      * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Happy state. */
-    public BTState Happy() { if (m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState Happy() { if (m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////// INVERSE CARE VALUE BTACTION FUNCTION BINDINGS ///////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /** \fn NStarving 
-     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Starving state. */
-    public BTState NStarving() { if (!m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is NOT currently in the Starving state. */
+    private BTState NStarving() { if (!m_careValues[DogCareValue.Hunger].IsState("Starving")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NHungry 
-     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Hungry state. */
-    public BTState NHungry() { if (!m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is NOT currently in the Hungry state. */
+    private BTState NHungry() { if (!m_careValues[DogCareValue.Hunger].IsState("Hungry")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NFed 
-     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Fed state. */
-    public BTState NFed() { if (!m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is NOT currently in the Fed state. */
+    private BTState NFed() { if (!m_careValues[DogCareValue.Hunger].IsState("Fed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NOverfed 
-     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is currently in the Overfed state. */
-    public BTState NOverfed() { if (!m_careValues[DogCareValue.Hunger].IsState("Overfed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hunger CareValue is NOT currently in the Overfed state. */
+    private BTState NOverfed() { if (!m_careValues[DogCareValue.Hunger].IsState("Overfed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NLonely 
-     * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Lonely state. */
-    public BTState NLonely() { if (!m_careValues[DogCareValue.Attention].IsState("Lonely")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Attention CareValue is NOT currently in the Lonely state. */
+    private BTState NLonely() { if (!m_careValues[DogCareValue.Attention].IsState("Lonely")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NLoved 
-     * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Loved state. */
-    public BTState NLoved() { if (!m_careValues[DogCareValue.Attention].IsState("Loved")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Attention CareValue is NOT currently in the Loved state. */
+    private BTState NLoved() { if (!m_careValues[DogCareValue.Attention].IsState("Loved")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NOvercrowded 
-     * \brief Function implementation of its BTAction - checking that the Attention CareValue is currently in the Overcrowded state. */
-    public BTState NOvercrowded() { if (!m_careValues[DogCareValue.Attention].IsState("Overcrowded")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Attention CareValue is NOT currently in the Overcrowded state. */
+    private BTState NOvercrowded() { if (!m_careValues[DogCareValue.Attention].IsState("Overcrowded")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NExhausted 
-     * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Exhausted state. */
-    public BTState NExhausted() { if (!m_careValues[DogCareValue.Rest].IsState("Exhausted")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Tired CareValue is NOT currently in the Exhausted state. */
+    private BTState NExhausted() { if (!m_careValues[DogCareValue.Rest].IsState("Exhausted")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NTired 
-     * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Tired state. */
-    public BTState NTired() { if (!m_careValues[DogCareValue.Rest].IsState("Tired")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Tired CareValue is NOT currently in the Tired state. */
+    private BTState NTired() { if (!m_careValues[DogCareValue.Rest].IsState("Tired")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NRested 
-     * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Rested state. */
-    public BTState NRested() { if (!m_careValues[DogCareValue.Rest].IsState("Rested")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Tired CareValue is NOT currently in the Rested state. */
+    private BTState NRested() { if (!m_careValues[DogCareValue.Rest].IsState("Rested")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NRejuvinated 
-     * \brief Function implementation of its BTAction - checking that the Tired CareValue is currently in the Rejuvinated state. */
-    public BTState NRejuvinated() { if (!m_careValues[DogCareValue.Rest].IsState("Rejuvinated")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Tired CareValue is NOT currently in the Rejuvinated state. */
+    private BTState NRejuvinated() { if (!m_careValues[DogCareValue.Rest].IsState("Rejuvinated")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NFilthy 
-     * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Filthy state. */
-    public BTState NFilthy() { if (!m_careValues[DogCareValue.Hygiene].IsState("Filthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is NOT currently in the Filthy state. */
+    private BTState NFilthy() { if (!m_careValues[DogCareValue.Hygiene].IsState("Filthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NDirty 
-      * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Dirty state. */
-    public BTState NDirty() { if (!m_careValues[DogCareValue.Hygiene].IsState("Dirty")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+      * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is NOT currently in the Dirty state. */
+    private BTState NDirty() { if (!m_careValues[DogCareValue.Hygiene].IsState("Dirty")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NClean 
-     * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is currently in the Clean state. */
-    public BTState NClean() { if (!m_careValues[DogCareValue.Hygiene].IsState("Clean")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Hygiene CareValue is NOT currently in the Clean state. */
+    private BTState NClean() { if (!m_careValues[DogCareValue.Hygiene].IsState("Clean")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NDying 
-     * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Dying state. */
-    public BTState NDying() { if (!m_careValues[DogCareValue.Health].IsState("Dying")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Health CareValue is NOT currently in the Dying state. */
+    private BTState NDying() { if (!m_careValues[DogCareValue.Health].IsState("Dying")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NSick 
-     * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Sick state. */
-    public BTState NSick() { if (!m_careValues[DogCareValue.Health].IsState("Sick")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Health CareValue is NOT currently in the Sick state. */
+    private BTState NSick() { if (!m_careValues[DogCareValue.Health].IsState("Sick")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NHealthy 
-     * \brief Function implementation of its BTAction - checking that the Health CareValue is currently in the Healthy state. */
-    public BTState NHealthy() { if (!m_careValues[DogCareValue.Health].IsState("Healthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Health CareValue is NOT currently in the Healthy state. */
+    private BTState NHealthy() { if (!m_careValues[DogCareValue.Health].IsState("Healthy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NDistressed 
-      * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Distressed state. */
-    public BTState NDistressed() { if (!m_careValues[DogCareValue.Happiness].IsState("Distressed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+      * \brief Function implementation of its BTAction - checking that the Happiness CareValue is NOT currently in the Distressed state. */
+    private BTState NDistressed() { if (!m_careValues[DogCareValue.Happiness].IsState("Distressed")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NUpset 
-     * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Upset state. */
-    public BTState NUpset() { if (!m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Happiness CareValue is NOT currently in the Upset state. */
+    private BTState NUpset() { if (!m_careValues[DogCareValue.Happiness].IsState("Upset")) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn NHappy 
-     * \brief Function implementation of its BTAction - checking that the Happiness CareValue is currently in the Happy state. */
-    public BTState NHappy() { if (!m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
+     * \brief Function implementation of its BTAction - checking that the Happiness CareValue is NOT currently in the Happy state. */
+    private BTState NHappy() { if (!m_careValues[DogCareValue.Happiness].IsState("Happy")) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////// GOOD CARE BTACTION FUNCTION BINDINGS ///////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /** \fn AllGood 
     * \brief Function implementation of its BTAction - checking that all the DogCareValues are in their "good" states. */
-    public BTState AllGood()
+    private BTState AllGood()
     {
         if (m_careValues[DogCareValue.Hunger].IsState("Fed") &&
             m_careValues[DogCareValue.Attention].IsState("Loved") &&
@@ -575,7 +580,7 @@ public class Dog : MonoBehaviour
 
     /** \fn GoodCareBonuses 
     * \brief Function implementation of its BTAction - updating some of the personality values slightly while the dog is being cared for well, and adding a pay bonus to the player's money value. */
-    public BTState GoodCareBonuses()
+    private BTState GoodCareBonuses()
     {
         controller.GiveGoodCareBonus();
         m_personalityValues[DogPersonalityValue.Bond].UpdateValue(0.0005f);
@@ -590,22 +595,22 @@ public class Dog : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /** \fn CanFindFood
          * \brief Function implementation of its BTAction - checks the Control script for currently active Food Items in its Item list from the StoreController. */
-    public BTState CanFindFood() { if (FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CanFindFood() { if (FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CanFindBed                                                                                                                                           
          * \brief Function implementation of its BTAction - checks the Control script for currently active Bed Items in its Item list from the StoreController.  */
-    public BTState CanFindBed() { if (FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CanFindBed() { if (FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CanFindToys                                                                                                                                          
          * \brief Function implementation of its BTAction - checks the Control script for currently active Toy Items in its Item list from the StoreController.  */
-    public BTState CanFindToys() { if (FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CanFindToys() { if (FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CannotFindFood
          * \brief Function implementation of its BTAction - checks the Control script for if there are NOT any active Food Items in its Item list from the StoreController. */
-    public BTState CannotFindFood() { if (!FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CannotFindFood() { if (!FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CannotFindBed                                                                                                                     
          * \brief Function implementation of its BTAction - checks the Control script for if there are NOT any active Bed Items in its Item list from the StoreController.  */
-    public BTState CannotFindBed() { if (!FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CannotFindBed() { if (!FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CannotFindToys                                                                                                               
          * \brief Function implementation of its BTAction - checks the Control script for if there are NOT any active Toy Items in its Item list from the StoreController.  */
-    public BTState CannotFindToys() { if (!FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
+    private BTState CannotFindToys() { if (!FindItemType(ItemType.TOYS)) { return BTState.SUCCESS; } return BTState.FAILURE; }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////// MOVEMENT SPEED BTACTION FUNCTION BINDINGS ///////////////////////////////////////////////
@@ -631,7 +636,7 @@ public class Dog : MonoBehaviour
     /** \fn TargetItemIsFor                                                                                                               
     * \brief Returns whether or not the dog's current target Item modifies the given Care Value when used.
     */
-    public bool TargetItemIsFor(DogCareValue value)
+    private bool TargetItemIsFor(DogCareValue value)
     {
         if (m_currentObjectTarget != controller.defaultNULL)
         {
@@ -643,7 +648,7 @@ public class Dog : MonoBehaviour
     /** \fn TargetItemIsFor                                                                                                               
     * \brief Returns whether or not the dog's current target Item modifies the given Personality Value when used.
     */
-    public bool TargetItemIsFor(DogPersonalityValue value)
+    private bool TargetItemIsFor(DogPersonalityValue value)
     {
         if (m_currentObjectTarget != controller.defaultNULL)
         {
@@ -809,7 +814,7 @@ public class Dog : MonoBehaviour
     /** \fn ClearCurrentTarget                                                                                                               
     * \brief Sets the dog's target Item back to null and the ItemInstance object back to the defaultNULL empty object, then sets Pathfinding's target to the random point so it doesn't have a lost reference when next called on.
     */
-    public void ClearCurrentTarget()
+    private void ClearCurrentTarget()
     {
         m_currentItemTarget = null;
         m_currentObjectTarget = controller.defaultNULL;

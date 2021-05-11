@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['carevaluedisplayui_406',['careValueDisplayUI',['../class_data_display.html#ae641289cd4ed98450602b8815e21483b',1,'DataDisplay']]],
-  ['closedset_407',['closedSet',['../class_a_star_search.html#ae011454d8f633565ce59a7b66069101f',1,'AStarSearch']]],
-  ['controller_408',['controller',['../class_data_display.html#a511e41894b00d75e3464e25b85c29c7f',1,'DataDisplay']]],
-  ['currentitemcount_409',['currentItemCount',['../class_heap.html#a2ab23ec5a3edfe8462c0bc7a6e39a7ee',1,'Heap']]],
-  ['currentnode_410',['currentNode',['../class_a_star_search.html#accd997c8f5a3c3b41e2c77911f836f87',1,'AStarSearch']]],
-  ['currentstate_411',['currentState',['../class_finite_state_machine.html#a2aa5b644c72d9902e42736b89ea4ee7c',1,'FiniteStateMachine']]]
+  ['defaultnull_582',['defaultNULL',['../class_controller.html#abdecc3cbc7ed830c70047bc90f3456cd',1,'Controller']]],
+  ['doggo_583',['doggo',['../class_hungry.html#a34844135120db1fcb69dac29edbba053',1,'Hungry.doggo()'],['../class_idle.html#adf20707d50d9f79a9f5e7c23d81c3392',1,'Idle.doggo()'],['../class_pause.html#aa5063052e92470b1c6ccc5d1ba3cf824',1,'Pause.doggo()'],['../class_playful.html#a64b51348ff45dff42a302470cdd3a4ba',1,'Playful.doggo()'],['../class_tired.html#a93b2151ffe76265486867ce915ee4239',1,'Tired.doggo()']]],
+  ['doglimit_584',['dogLimit',['../class_controller.html#a84da05a69f55d9249ebdd5d18c0822fd',1,'Controller']]],
+  ['dogprefabbase_585',['dogPrefabBase',['../class_dog_generation.html#a6ee9e47f554b28f738d6d3c5a1b555a2',1,'DogGeneration']]],
+  ['donotdeploy_586',['doNotDeploy',['../class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4',1,'Item']]]
 ];

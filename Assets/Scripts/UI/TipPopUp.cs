@@ -1,4 +1,4 @@
-﻿/** \class TipPopUp.cs
+﻿/** \file TipPopUp.cs
 *   \brief Contains a simple class for outputting a message log to the player during runtime.
 */
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/** \class TipPopUp.
+/** \class TipPopUp
 *   \brief A class for outputting messages to the player during runtime for a number of seconds before deactivating using a couroutine.
 */
 public class TipPopUp : MonoBehaviour

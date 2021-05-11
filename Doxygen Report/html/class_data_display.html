@@ -5,10 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pet Care 101 - Doguses Doxygen Report: DataDisplay Class Reference</title>
+<title>Pets 101 - Doguses: DataDisplay Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,9 +29,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Pet Care 101 - Doguses Doxygen Report
+   <div id="projectname">Pets 101 - Doguses
+   &#160;<span id="projectnumber">v.0.5</span>
    </div>
-   <div id="projectbrief">A doxygen code comment report of the project&#39;s script classes and relations.</div>
+   <div id="projectbrief">Virtual dogs in ya phone.</div>
   </td>
  </tr>
  </tbody>
@@ -46,6 +55,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('class_data_display.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,18 +86,18 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_data_display-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DataDisplay Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Contains a reference to a selected dog and the DogInfoPanel UI components as sent in by their <a class="el" href="class_get_u_i_component.html" title="Just contains a reference to the DataDisplay script in the DogInfoPanel, and a Start() function to ad...">GetUIComponent</a> scripts. While active will output the data specific to that dog in the panel (e.g. their name, breed, hunger level, etc...).  
+ <a href="class_data_display.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for DataDisplay:</div>
 <div class="dyncontent">
@@ -81,45 +107,42 @@ Inheritance diagram for DataDisplay:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a643b81bf410eb9e4f917ab3ec6b7aa81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a643b81bf410eb9e4f917ab3ec6b7aa81">SetFocusDog</a> (<a class="el" href="class_dog.html">Dog</a> focus)</td></tr>
-<tr class="separator:a643b81bf410eb9e4f917ab3ec6b7aa81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4660b6278b1d01bb47610c2a773deff"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ac4660b6278b1d01bb47610c2a773deff">GetFocusDog</a> ()</td></tr>
-<tr class="separator:ac4660b6278b1d01bb47610c2a773deff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e3738d4e6386628e6b8dacbca7302b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a9e3738d4e6386628e6b8dacbca7302b2">SetNewDogName</a> (string name)</td></tr>
-<tr class="separator:a9e3738d4e6386628e6b8dacbca7302b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f1b58ab4c861a2164f24bd0d683c5f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a4f1b58ab4c861a2164f24bd0d683c5f9">ToggleNameInputField</a> (bool activeState)</td></tr>
-<tr class="separator:a4f1b58ab4c861a2164f24bd0d683c5f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ab1c915c91488e6c6d3500462d6c34c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a5ab1c915c91488e6c6d3500462d6c34c">SetFocusDog</a> (<a class="el" href="class_dog.html">Dog</a> focus)</td></tr>
+<tr class="memdesc:a5ab1c915c91488e6c6d3500462d6c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="class_camera_control.html" title="Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog)...">CameraControl</a> when a dog is tapped/clicked. Sets this script's reference to a dog to the one passed in after being hit by a camera raycast.  <a href="class_data_display.html#a5ab1c915c91488e6c6d3500462d6c34c">More...</a><br /></td></tr>
+<tr class="separator:a5ab1c915c91488e6c6d3500462d6c34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fc59b71eed6527575ae7da9c4f27541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a2fc59b71eed6527575ae7da9c4f27541">ActivateNewDogPanel</a> ()</td></tr>
+<tr class="memdesc:a2fc59b71eed6527575ae7da9c4f27541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the adoption screen when a new dog is generated. Called by the Control class.  <a href="class_data_display.html#a2fc59b71eed6527575ae7da9c4f27541">More...</a><br /></td></tr>
+<tr class="separator:a2fc59b71eed6527575ae7da9c4f27541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae28be6951fcbe8a3e615ba42aa13c86f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ae28be6951fcbe8a3e615ba42aa13c86f">NewDogAdded</a> ()</td></tr>
+<tr class="memdesc:ae28be6951fcbe8a3e615ba42aa13c86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpauses the game, activates this object (the dog info panel), and deactivates the adoption screen panel. This is called by the confirmation button on the adoption panel to continue the game.  <a href="class_data_display.html#ae28be6951fcbe8a3e615ba42aa13c86f">More...</a><br /></td></tr>
+<tr class="separator:ae28be6951fcbe8a3e615ba42aa13c86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addf385c08a852fbfcd5eacb9d24eb7a2"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#addf385c08a852fbfcd5eacb9d24eb7a2">GetFocusDog</a> ()</td></tr>
+<tr class="memdesc:addf385c08a852fbfcd5eacb9d24eb7a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the script's current focus dog data is being output for.  <a href="class_data_display.html#addf385c08a852fbfcd5eacb9d24eb7a2">More...</a><br /></td></tr>
+<tr class="separator:addf385c08a852fbfcd5eacb9d24eb7a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8b54f46466c0deed6e0b3caf8bb482"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ace8b54f46466c0deed6e0b3caf8bb482">SetNewDogName</a> (string name)</td></tr>
+<tr class="memdesc:ace8b54f46466c0deed6e0b3caf8bb482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attached to the name input textbox to set the focus dog's name on data entry.  <a href="class_data_display.html#ace8b54f46466c0deed6e0b3caf8bb482">More...</a><br /></td></tr>
+<tr class="separator:ace8b54f46466c0deed6e0b3caf8bb482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9289167addc242908444a1b4bb968c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ad9289167addc242908444a1b4bb968c0">ToggleNameInputField</a> (bool activeState)</td></tr>
+<tr class="memdesc:ad9289167addc242908444a1b4bb968c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active state of the name input button. Is used to deactivate the field when a name is entered to show the name in text behind it, then reactivate it again when the edit button is pressed.  <a href="class_data_display.html#ad9289167addc242908444a1b4bb968c0">More...</a><br /></td></tr>
+<tr class="separator:ad9289167addc242908444a1b4bb968c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a0db4dce32b152b3c43b4d3e6c818ca11"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, Text &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a0db4dce32b152b3c43b4d3e6c818ca11">generalDataDisplayUI</a> = new Dictionary&lt;string, Text&gt;()</td></tr>
+<tr class="memdesc:a0db4dce32b152b3c43b4d3e6c818ca11"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI for outputting data other than Care/Personality values. (E.g. Name, Breed, age, etc...).  <a href="class_data_display.html#a0db4dce32b152b3c43b4d3e6c818ca11">More...</a><br /></td></tr>
 <tr class="separator:a0db4dce32b152b3c43b4d3e6c818ca11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae641289cd4ed98450602b8815e21483b"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, Slider &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ae641289cd4ed98450602b8815e21483b">careValueDisplayUI</a> = new Dictionary&lt;string, Slider&gt;()</td></tr>
-<tr class="separator:ae641289cd4ed98450602b8815e21483b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe159647b45d129fbd0e5c526d9c9e44"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, Slider &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#abe159647b45d129fbd0e5c526d9c9e44">personalityValueDisplayUI</a> = new Dictionary&lt;string, Slider&gt;()</td></tr>
-<tr class="separator:abe159647b45d129fbd0e5c526d9c9e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a6a1ae7d158316897f7bc1b5b7109aae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a6a1ae7d158316897f7bc1b5b7109aae4">Start</a> ()</td></tr>
-<tr class="separator:a6a1ae7d158316897f7bc1b5b7109aae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f60e7bf2ae7c15d2870e9783c41b0ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a6f60e7bf2ae7c15d2870e9783c41b0ea">OnEnable</a> ()</td></tr>
-<tr class="separator:a6f60e7bf2ae7c15d2870e9783c41b0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad27f971acdabd31f1bf6cd2aa990141e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ad27f971acdabd31f1bf6cd2aa990141e">OnDisable</a> ()</td></tr>
-<tr class="separator:ad27f971acdabd31f1bf6cd2aa990141e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c99dee71e4ef10d2c23c43b9099e794"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a8c99dee71e4ef10d2c23c43b9099e794">FixedUpdate</a> ()</td></tr>
-<tr class="separator:a8c99dee71e4ef10d2c23c43b9099e794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a511e41894b00d75e3464e25b85c29c7f"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#a511e41894b00d75e3464e25b85c29c7f">controller</a></td></tr>
-<tr class="separator:a511e41894b00d75e3464e25b85c29c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1b78fe8c2a785505b450999321ec364"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_dog.html">Dog</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#ae1b78fe8c2a785505b450999321ec364">focusedDog</a></td></tr>
-<tr class="separator:ae1b78fe8c2a785505b450999321ec364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafb06dc864ce06584ef89acc7bd2e3e0"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, KeyValuePair&lt; Slider, Text &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#aafb06dc864ce06584ef89acc7bd2e3e0">careValueDisplayUI</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, KeyValuePair&lt;Slider, Text&gt;&gt;()</td></tr>
+<tr class="memdesc:aafb06dc864ce06584ef89acc7bd2e3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI for outputting the dog's care values, paired with the percentage text and a key for the specific care value this slider/text are for.  <a href="class_data_display.html#aafb06dc864ce06584ef89acc7bd2e3e0">More...</a><br /></td></tr>
+<tr class="separator:aafb06dc864ce06584ef89acc7bd2e3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_display.html#afdb0b78b73f2c08876f44a4d4d7b5a99">personalityValueDisplayUI</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider&gt;()</td></tr>
+<tr class="memdesc:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="mdescLeft">&#160;</td><td class="mdescRight">UI for outputting the dog's personality values, with a key for the specific personality value this slider is for.  <a href="class_data_display.html#afdb0b78b73f2c08876f44a4d4d7b5a99">More...</a><br /></td></tr>
+<tr class="separator:afdb0b78b73f2c08876f44a4d4d7b5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8c99dee71e4ef10d2c23c43b9099e794"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c99dee71e4ef10d2c23c43b9099e794">&#9670;&nbsp;</a></span>FixedUpdate()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Contains a reference to a selected dog and the DogInfoPanel UI components as sent in by their <a class="el" href="class_get_u_i_component.html" title="Just contains a reference to the DataDisplay script in the DogInfoPanel, and a Start() function to ad...">GetUIComponent</a> scripts. While active will output the data specific to that dog in the panel (e.g. their name, breed, hunger level, etc...). </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2fc59b71eed6527575ae7da9c4f27541"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fc59b71eed6527575ae7da9c4f27541">&#9670;&nbsp;</a></span>ActivateNewDogPanel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,32 +151,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.FixedUpdate </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac4660b6278b1d01bb47610c2a773deff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4660b6278b1d01bb47610c2a773deff">&#9670;&nbsp;</a></span>GetFocusDog()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameObject DataDisplay.GetFocusDog </td>
+          <td class="memname">DataDisplay.ActivateNewDogPanel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -166,10 +164,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Activates the adoption screen when a new dog is generated. Called by the Control class. </p>
+
 </div>
 </div>
-<a id="ad27f971acdabd31f1bf6cd2aa990141e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad27f971acdabd31f1bf6cd2aa990141e">&#9670;&nbsp;</a></span>OnDisable()</h2>
+<a id="addf385c08a852fbfcd5eacb9d24eb7a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addf385c08a852fbfcd5eacb9d24eb7a2">&#9670;&nbsp;</a></span>GetFocusDog()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +178,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.OnDisable </td>
+          <td class="memname">DataDisplay.GetFocusDog </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -186,15 +186,17 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the script's current focus dog data is being output for. </p>
+
 </div>
 </div>
-<a id="a6f60e7bf2ae7c15d2870e9783c41b0ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f60e7bf2ae7c15d2870e9783c41b0ea">&#9670;&nbsp;</a></span>OnEnable()</h2>
+<a id="ae28be6951fcbe8a3e615ba42aa13c86f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae28be6951fcbe8a3e615ba42aa13c86f">&#9670;&nbsp;</a></span>NewDogAdded()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +205,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.OnEnable </td>
+          <td class="memname">DataDisplay.NewDogAdded </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -211,15 +213,17 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Unpauses the game, activates this object (the dog info panel), and deactivates the adoption screen panel. This is called by the confirmation button on the adoption panel to continue the game. </p>
+
 </div>
 </div>
-<a id="a643b81bf410eb9e4f917ab3ec6b7aa81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a643b81bf410eb9e4f917ab3ec6b7aa81">&#9670;&nbsp;</a></span>SetFocusDog()</h2>
+<a id="a5ab1c915c91488e6c6d3500462d6c34c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ab1c915c91488e6c6d3500462d6c34c">&#9670;&nbsp;</a></span>SetFocusDog()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +232,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.SetFocusDog </td>
+          <td class="memname">DataDisplay.SetFocusDog </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_dog.html">Dog</a>&#160;</td>
           <td class="paramname"><em>focus</em></td><td>)</td>
@@ -242,10 +246,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Called by <a class="el" href="class_camera_control.html" title="Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog)...">CameraControl</a> when a dog is tapped/clicked. Sets this script's reference to a dog to the one passed in after being hit by a camera raycast. </p>
+
 </div>
 </div>
-<a id="a9e3738d4e6386628e6b8dacbca7302b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e3738d4e6386628e6b8dacbca7302b2">&#9670;&nbsp;</a></span>SetNewDogName()</h2>
+<a id="ace8b54f46466c0deed6e0b3caf8bb482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8b54f46466c0deed6e0b3caf8bb482">&#9670;&nbsp;</a></span>SetNewDogName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +260,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.SetNewDogName </td>
+          <td class="memname">DataDisplay.SetNewDogName </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -268,10 +274,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Attached to the name input textbox to set the focus dog's name on data entry. </p>
+
 </div>
 </div>
-<a id="a6a1ae7d158316897f7bc1b5b7109aae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a1ae7d158316897f7bc1b5b7109aae4">&#9670;&nbsp;</a></span>Start()</h2>
+<a id="ad9289167addc242908444a1b4bb968c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9289167addc242908444a1b4bb968c0">&#9670;&nbsp;</a></span>ToggleNameInputField()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,32 +288,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DataDisplay.Start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4f1b58ab4c861a2164f24bd0d683c5f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f1b58ab4c861a2164f24bd0d683c5f9">&#9670;&nbsp;</a></span>ToggleNameInputField()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DataDisplay.ToggleNameInputField </td>
+          <td class="memname">DataDisplay.ToggleNameInputField </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>activeState</em></td><td>)</td>
@@ -319,64 +302,24 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Sets the active state of the name input button. Is used to deactivate the field when a name is entered to show the name in text behind it, then reactivate it again when the edit button is pressed. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ae641289cd4ed98450602b8815e21483b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae641289cd4ed98450602b8815e21483b">&#9670;&nbsp;</a></span>careValueDisplayUI</h2>
+<a id="aafb06dc864ce06584ef89acc7bd2e3e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafb06dc864ce06584ef89acc7bd2e3e0">&#9670;&nbsp;</a></span>careValueDisplayUI</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Dictionary&lt;string, Slider&gt; DataDisplay.careValueDisplayUI = new Dictionary&lt;string, Slider&gt;()</td>
+          <td class="memname">Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, KeyValuePair&lt;Slider, Text&gt; &gt; DataDisplay.careValueDisplayUI = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, KeyValuePair&lt;Slider, Text&gt;&gt;()</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a511e41894b00d75e3464e25b85c29c7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a511e41894b00d75e3464e25b85c29c7f">&#9670;&nbsp;</a></span>controller</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameObject DataDisplay.controller</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae1b78fe8c2a785505b450999321ec364"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1b78fe8c2a785505b450999321ec364">&#9670;&nbsp;</a></span>focusedDog</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_dog.html">Dog</a> DataDisplay.focusedDog</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>UI for outputting the dog's care values, paired with the percentage text and a key for the specific care value this slider/text are for. </p>
 
 </div>
 </div>
@@ -392,19 +335,23 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>UI for outputting data other than Care/Personality values. (E.g. Name, Breed, age, etc...). </p>
+
 </div>
 </div>
-<a id="abe159647b45d129fbd0e5c526d9c9e44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe159647b45d129fbd0e5c526d9c9e44">&#9670;&nbsp;</a></span>personalityValueDisplayUI</h2>
+<a id="afdb0b78b73f2c08876f44a4d4d7b5a99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdb0b78b73f2c08876f44a4d4d7b5a99">&#9670;&nbsp;</a></span>personalityValueDisplayUI</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Dictionary&lt;string, Slider&gt; DataDisplay.personalityValueDisplayUI = new Dictionary&lt;string, Slider&gt;()</td>
+          <td class="memname">Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider&gt; DataDisplay.personalityValueDisplayUI = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#ac72353ae47fb3f20be68b035669d8145">DogPersonalityValue</a>, Slider&gt;()</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>UI for outputting the dog's personality values, with a key for the specific personality value this slider is for. </p>
 
 </div>
 </div>
@@ -412,11 +359,15 @@ Private Attributes</h2></td></tr>
 <li>D:/Pet Care 101 - Doguses/Assets/Scripts/UI/<a class="el" href="_data_display_8cs.html">DataDisplay.cs</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.16
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_data_display.html">DataDisplay</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>
+  </ul>
+</div>
 </body>
 </html>

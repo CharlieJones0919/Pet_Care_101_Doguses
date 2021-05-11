@@ -5,10 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pet Care 101 - Doguses Doxygen Report: Pathfinding Class Reference</title>
+<title>Pets 101 - Doguses: Pathfinding Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,9 +29,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Pet Care 101 - Doguses Doxygen Report
+   <div id="projectname">Pets 101 - Doguses
+   &#160;<span id="projectnumber">v.0.5</span>
    </div>
-   <div id="projectbrief">A doxygen code comment report of the project&#39;s script classes and relations.</div>
+   <div id="projectbrief">Virtual dogs in ya phone.</div>
   </td>
  </tr>
  </tbody>
@@ -46,6 +55,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('class_pathfinding.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,19 +86,17 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_pathfinding-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Pathfinding Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains functions which utilise the A* pathfinding classes/functionalities.  
+<p>Contains functions which utilise the A* pathfinding classes/functionalities to move the dog towards its targets at specified speeds and detect when it has reached them.  
  <a href="class_pathfinding.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for Pathfinding:</div>
@@ -83,74 +107,41 @@ Inheritance diagram for Pathfinding:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a83c5222ea2be31cde583d5a022174d5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a83c5222ea2be31cde583d5a022174d5d">SetMoveSpeed</a> (float newSpeed)</td></tr>
-<tr class="separator:a83c5222ea2be31cde583d5a022174d5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5419d9524bcc092380eeee5b8711273"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#ab5419d9524bcc092380eeee5b8711273">SetRotationSpeed</a> (float newSpeed)</td></tr>
-<tr class="separator:ab5419d9524bcc092380eeee5b8711273"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e221c488829888d1afbd7b2ed9b25a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a09e221c488829888d1afbd7b2ed9b25a">FindPathTo</a> (GameObject point)</td></tr>
-<tr class="memdesc:a09e221c488829888d1afbd7b2ed9b25a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates an A* path to a specified point in the world.  <a href="class_pathfinding.html#a09e221c488829888d1afbd7b2ed9b25a">More...</a><br /></td></tr>
-<tr class="separator:a09e221c488829888d1afbd7b2ed9b25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0d1300cd238c295ca5df32ba18810b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a7a0d1300cd238c295ca5df32ba18810b">GetFoundPathLength</a> ()</td></tr>
-<tr class="separator:a7a0d1300cd238c295ca5df32ba18810b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20bd2f9c5d127a064b9030d196eab8b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a20bd2f9c5d127a064b9030d196eab8b6">FollowPathTo</a> (GameObject point)</td></tr>
-<tr class="memdesc:a20bd2f9c5d127a064b9030d196eab8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves this GameObject along a found A* path to a specified point.  <a href="class_pathfinding.html#a20bd2f9c5d127a064b9030d196eab8b6">More...</a><br /></td></tr>
-<tr class="separator:a20bd2f9c5d127a064b9030d196eab8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acde68ce1bd555f1b149eeb82de56919b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#acde68ce1bd555f1b149eeb82de56919b">FollowPathToRandomPoint</a> ()</td></tr>
-<tr class="memdesc:acde68ce1bd555f1b149eeb82de56919b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repositions the randomPoint GameObject to a new position on the map grid then finds/follows a path to that point.  <a href="class_pathfinding.html#acde68ce1bd555f1b149eeb82de56919b">More...</a><br /></td></tr>
-<tr class="separator:acde68ce1bd555f1b149eeb82de56919b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42fe34ff91126d9e2bd11be315e56275"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a42fe34ff91126d9e2bd11be315e56275">MoveDog</a> ()</td></tr>
-<tr class="memdesc:a42fe34ff91126d9e2bd11be315e56275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the dog object to its local direction of forwards - to the direction it's rotated towwards.  <a href="class_pathfinding.html#a42fe34ff91126d9e2bd11be315e56275">More...</a><br /></td></tr>
-<tr class="separator:a42fe34ff91126d9e2bd11be315e56275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcc19c5175b358c70474c1a29c285a82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#abcc19c5175b358c70474c1a29c285a82">DogLookAt</a> (Vector3 target, bool instant)</td></tr>
-<tr class="memdesc:abcc19c5175b358c70474c1a29c285a82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates the dog object towards a specified position on the Y-axis.  <a href="class_pathfinding.html#abcc19c5175b358c70474c1a29c285a82">More...</a><br /></td></tr>
-<tr class="separator:abcc19c5175b358c70474c1a29c285a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a79ea843943fc744e43260cbfbe3d82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a5a79ea843943fc744e43260cbfbe3d82">SetSpeed</a> (<a class="el" href="_pathfinding_8cs.html#a1d2c86aa02706210300d240bca64c3d1">MoveSpeed</a> pace)</td></tr>
+<tr class="memdesc:a5a79ea843943fc744e43260cbfbe3d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">A publically accessible.  <a href="class_pathfinding.html#a5a79ea843943fc744e43260cbfbe3d82">More...</a><br /></td></tr>
+<tr class="separator:a5a79ea843943fc744e43260cbfbe3d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f0707595aab9bc7518fd19e5f505aa5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a9f0707595aab9bc7518fd19e5f505aa5">IsSetToRandom</a> ()</td></tr>
+<tr class="memdesc:a9f0707595aab9bc7518fd19e5f505aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the script's target is currently set to the random point.  <a href="class_pathfinding.html#a9f0707595aab9bc7518fd19e5f505aa5">More...</a><br /></td></tr>
+<tr class="separator:a9f0707595aab9bc7518fd19e5f505aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41285677c119afbe5259191178e85005"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a41285677c119afbe5259191178e85005">IsSetToObject</a> (GameObject obj)</td></tr>
+<tr class="memdesc:a41285677c119afbe5259191178e85005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the script's target is currently set to the object specified as the parameter.  <a href="class_pathfinding.html#a41285677c119afbe5259191178e85005">More...</a><br /></td></tr>
+<tr class="separator:a41285677c119afbe5259191178e85005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60aab3e09ad1434d5a85dfb5f49fb09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#ae60aab3e09ad1434d5a85dfb5f49fb09">SetTarget</a> (GameObject targ)</td></tr>
+<tr class="memdesc:ae60aab3e09ad1434d5a85dfb5f49fb09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the script's current target to the object specified as the parameter.  <a href="class_pathfinding.html#ae60aab3e09ad1434d5a85dfb5f49fb09">More...</a><br /></td></tr>
+<tr class="separator:ae60aab3e09ad1434d5a85dfb5f49fb09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45247f1d77e0228fd8c47c3f9fd4479c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a45247f1d77e0228fd8c47c3f9fd4479c">SetTargetToRandom</a> ()</td></tr>
+<tr class="memdesc:a45247f1d77e0228fd8c47c3f9fd4479c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the script's current target to the random point object.  <a href="class_pathfinding.html#a45247f1d77e0228fd8c47c3f9fd4479c">More...</a><br /></td></tr>
+<tr class="separator:a45247f1d77e0228fd8c47c3f9fd4479c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8ad48ed6951bc09e9a4b8845a14ffe0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#ae8ad48ed6951bc09e9a4b8845a14ffe0">AttemptToReachTarget</a> ()</td></tr>
+<tr class="separator:ae8ad48ed6951bc09e9a4b8845a14ffe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef979c77e42bf5581df5baec713172a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#aef979c77e42bf5581df5baec713172a5">GenerateRandomPointInWorld</a> (GameObject recievingObject)</td></tr>
+<tr class="memdesc:aef979c77e42bf5581df5baec713172a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.  <a href="class_pathfinding.html#aef979c77e42bf5581df5baec713172a5">More...</a><br /></td></tr>
+<tr class="separator:aef979c77e42bf5581df5baec713172a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a46c5dad2eefc98a014e50fbb8e0be41b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a46c5dad2eefc98a014e50fbb8e0be41b">Start</a> ()</td></tr>
-<tr class="memdesc:a46c5dad2eefc98a014e50fbb8e0be41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate variable values when application starts.  <a href="class_pathfinding.html#a46c5dad2eefc98a014e50fbb8e0be41b">More...</a><br /></td></tr>
-<tr class="separator:a46c5dad2eefc98a014e50fbb8e0be41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8dfec98d0919ebbe11603e3d23ae1d3"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#af8dfec98d0919ebbe11603e3d23ae1d3">GenerateRandomPointInWorld</a> ()</td></tr>
-<tr class="memdesc:af8dfec98d0919ebbe11603e3d23ae1d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locates a random traversable node on the ground plane grid and sets the random point GameObject's position to the node's position.  <a href="class_pathfinding.html#af8dfec98d0919ebbe11603e3d23ae1d3">More...</a><br /></td></tr>
-<tr class="separator:af8dfec98d0919ebbe11603e3d23ae1d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8272b94a711a06b1388f38a57a4bd579"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a8272b94a711a06b1388f38a57a4bd579">OnDrawGizmosSelected</a> ()</td></tr>
-<tr class="separator:a8272b94a711a06b1388f38a57a4bd579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
 <tr class="memitem:ae5cfee95885798dcb44429df9aeaa654"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_a_star_search.html">AStarSearch</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#ae5cfee95885798dcb44429df9aeaa654">m_aStarSearch</a></td></tr>
 <tr class="memdesc:ae5cfee95885798dcb44429df9aeaa654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the A* script. (Retrieved from the ground plane).  <a href="class_pathfinding.html#ae5cfee95885798dcb44429df9aeaa654">More...</a><br /></td></tr>
 <tr class="separator:ae5cfee95885798dcb44429df9aeaa654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aa09316723ea0e8bdb8ecb4bc9e16e9"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a9aa09316723ea0e8bdb8ecb4bc9e16e9">groundPlane</a></td></tr>
-<tr class="memdesc:a9aa09316723ea0e8bdb8ecb4bc9e16e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A reference to the ground plane object to retrieve the A* script from.  <a href="class_pathfinding.html#a9aa09316723ea0e8bdb8ecb4bc9e16e9">More...</a><br /></td></tr>
-<tr class="separator:a9aa09316723ea0e8bdb8ecb4bc9e16e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a984abba185586e821d820e25af6f40e8"><td class="memItemLeft" align="right" valign="top">Vector2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a984abba185586e821d820e25af6f40e8">randomPosRange</a></td></tr>
-<tr class="memdesc:a984abba185586e821d820e25af6f40e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The range random positions on the grid can be generated within based on the groundPlane's size.  <a href="class_pathfinding.html#a984abba185586e821d820e25af6f40e8">More...</a><br /></td></tr>
-<tr class="separator:a984abba185586e821d820e25af6f40e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69985cf2e6cec8c354dc63b916703473"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a69985cf2e6cec8c354dc63b916703473">m_moveSpeed</a> = 2.75f</td></tr>
-<tr class="memdesc:a69985cf2e6cec8c354dc63b916703473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Speed of movement.  <a href="class_pathfinding.html#a69985cf2e6cec8c354dc63b916703473">More...</a><br /></td></tr>
-<tr class="separator:a69985cf2e6cec8c354dc63b916703473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82edb836e1383c1b93d850b2894fc234"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a82edb836e1383c1b93d850b2894fc234">m_rotationSpeed</a> = 2.5f</td></tr>
-<tr class="memdesc:a82edb836e1383c1b93d850b2894fc234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Speed of rotation.  <a href="class_pathfinding.html#a82edb836e1383c1b93d850b2894fc234">More...</a><br /></td></tr>
-<tr class="separator:a82edb836e1383c1b93d850b2894fc234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9c2ff3e6a09fd2b8685527b9f080545"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#aa9c2ff3e6a09fd2b8685527b9f080545">m_foundDistance</a> = 1.0f</td></tr>
-<tr class="memdesc:aa9c2ff3e6a09fd2b8685527b9f080545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distance the dog object must be to a node for it to be considered "found" and removed from the path list.  <a href="class_pathfinding.html#aa9c2ff3e6a09fd2b8685527b9f080545">More...</a><br /></td></tr>
-<tr class="separator:aa9c2ff3e6a09fd2b8685527b9f080545"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac50124ec41ed831c9d64965b4025131"><td class="memItemLeft" align="right" valign="top">List&lt; Vector3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#aac50124ec41ed831c9d64965b4025131">m_foundPath</a> = new List&lt;Vector3&gt;()</td></tr>
-<tr class="memdesc:aac50124ec41ed831c9d64965b4025131"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requested path to a destination as a list of Vector3 positions.  <a href="class_pathfinding.html#aac50124ec41ed831c9d64965b4025131">More...</a><br /></td></tr>
-<tr class="separator:aac50124ec41ed831c9d64965b4025131"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afece48e0983ed827af5acfd81d572272"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#afece48e0983ed827af5acfd81d572272">m_randomNodeFound</a> = false</td></tr>
-<tr class="memdesc:afece48e0983ed827af5acfd81d572272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not a random node has been generated.  <a href="class_pathfinding.html#afece48e0983ed827af5acfd81d572272">More...</a><br /></td></tr>
-<tr class="separator:afece48e0983ed827af5acfd81d572272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c2f0cc2794a846cd528b13fd6dbbec0"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a2c2f0cc2794a846cd528b13fd6dbbec0">m_randomPoint</a></td></tr>
-<tr class="memdesc:a2c2f0cc2794a846cd528b13fd6dbbec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">An empty game object which can be placed at a random position on the ground plane for random movement.  <a href="class_pathfinding.html#a2c2f0cc2794a846cd528b13fd6dbbec0">More...</a><br /></td></tr>
-<tr class="separator:a2c2f0cc2794a846cd528b13fd6dbbec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0038573a1331c612a62a2e94a551eb74"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_pathfinding.html#a0038573a1331c612a62a2e94a551eb74">m_randomPointStorage</a></td></tr>
+<tr class="memdesc:a0038573a1331c612a62a2e94a551eb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Where to store the random point in the hierarchy. Done for cleanliness of project.  <a href="class_pathfinding.html#a0038573a1331c612a62a2e94a551eb74">More...</a><br /></td></tr>
+<tr class="separator:a0038573a1331c612a62a2e94a551eb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains functions which utilise the A* pathfinding classes/functionalities. </p>
+<div class="textblock"><p>Contains functions which utilise the A* pathfinding classes/functionalities to move the dog towards its targets at specified speeds and detect when it has reached them. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="abcc19c5175b358c70474c1a29c285a82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcc19c5175b358c70474c1a29c285a82">&#9670;&nbsp;</a></span>DogLookAt()</h2>
+<a id="ae8ad48ed6951bc09e9a4b8845a14ffe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8ad48ed6951bc09e9a4b8845a14ffe0">&#9670;&nbsp;</a></span>AttemptToReachTarget()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,120 +150,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Pathfinding.DogLookAt </td>
-          <td>(</td>
-          <td class="paramtype">Vector3&#160;</td>
-          <td class="paramname"><em>target</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>instant</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Rotates the dog object towards a specified position on the Y-axis. </p>
-<p>Allows found A* path nodes to be drawn in the editor while the dog object is selected.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">target</td><td>The position to rotate towards. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a09e221c488829888d1afbd7b2ed9b25a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09e221c488829888d1afbd7b2ed9b25a">&#9670;&nbsp;</a></span>FindPathTo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Pathfinding.FindPathTo </td>
-          <td>(</td>
-          <td class="paramtype">GameObject&#160;</td>
-          <td class="paramname"><em>point</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generates an A* path to a specified point in the world. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">point</td><td>The point to find a path to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a20bd2f9c5d127a064b9030d196eab8b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20bd2f9c5d127a064b9030d196eab8b6">&#9670;&nbsp;</a></span>FollowPathTo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Pathfinding.FollowPathTo </td>
-          <td>(</td>
-          <td class="paramtype">GameObject&#160;</td>
-          <td class="paramname"><em>point</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Moves this GameObject along a found A* path to a specified point. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">point</td><td>The point to follow the path to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="acde68ce1bd555f1b149eeb82de56919b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acde68ce1bd555f1b149eeb82de56919b">&#9670;&nbsp;</a></span>FollowPathToRandomPoint()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Pathfinding.FollowPathToRandomPoint </td>
+          <td class="memname">bool Pathfinding.AttemptToReachTarget </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -285,12 +163,10 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Repositions the randomPoint GameObject to a new position on the map grid then finds/follows a path to that point. </p>
-
 </div>
 </div>
-<a id="af8dfec98d0919ebbe11603e3d23ae1d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8dfec98d0919ebbe11603e3d23ae1d3">&#9670;&nbsp;</a></span>GenerateRandomPointInWorld()</h2>
+<a id="aef979c77e42bf5581df5baec713172a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef979c77e42bf5581df5baec713172a5">&#9670;&nbsp;</a></span>GenerateRandomPointInWorld()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,13 +177,14 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">Pathfinding.GenerateRandomPointInWorld </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">GameObject&#160;</td>
+          <td class="paramname"><em>recievingObject</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -316,8 +193,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7a0d1300cd238c295ca5df32ba18810b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a0d1300cd238c295ca5df32ba18810b">&#9670;&nbsp;</a></span>GetFoundPathLength()</h2>
+<a id="a41285677c119afbe5259191178e85005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41285677c119afbe5259191178e85005">&#9670;&nbsp;</a></span>IsSetToObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +203,35 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int Pathfinding.GetFoundPathLength </td>
+          <td class="memname">Pathfinding.IsSetToObject </td>
+          <td>(</td>
+          <td class="paramtype">GameObject&#160;</td>
+          <td class="paramname"><em>obj</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether the script's target is currently set to the object specified as the parameter. </p>
+
+</div>
+</div>
+<a id="a9f0707595aab9bc7518fd19e5f505aa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f0707595aab9bc7518fd19e5f505aa5">&#9670;&nbsp;</a></span>IsSetToRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pathfinding.IsSetToRandom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -339,10 +244,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns whether the script's target is currently set to the random point. </p>
+
 </div>
 </div>
-<a id="a42fe34ff91126d9e2bd11be315e56275"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42fe34ff91126d9e2bd11be315e56275">&#9670;&nbsp;</a></span>MoveDog()</h2>
+<a id="a5a79ea843943fc744e43260cbfbe3d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a79ea843943fc744e43260cbfbe3d82">&#9670;&nbsp;</a></span>SetSpeed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,7 +258,63 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Pathfinding.MoveDog </td>
+          <td class="memname">Pathfinding.SetSpeed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_pathfinding_8cs.html#a1d2c86aa02706210300d240bca64c3d1">MoveSpeed</a>&#160;</td>
+          <td class="paramname"><em>pace</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A publically accessible. </p>
+
+</div>
+</div>
+<a id="ae60aab3e09ad1434d5a85dfb5f49fb09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae60aab3e09ad1434d5a85dfb5f49fb09">&#9670;&nbsp;</a></span>SetTarget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pathfinding.SetTarget </td>
+          <td>(</td>
+          <td class="paramtype">GameObject&#160;</td>
+          <td class="paramname"><em>targ</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the script's current target to the object specified as the parameter. </p>
+
+</div>
+</div>
+<a id="a45247f1d77e0228fd8c47c3f9fd4479c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45247f1d77e0228fd8c47c3f9fd4479c">&#9670;&nbsp;</a></span>SetTargetToRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pathfinding.SetTargetToRandom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -364,328 +327,40 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Move the dog object to its local direction of forwards - to the direction it's rotated towwards. </p>
-
-</div>
-</div>
-<a id="a8272b94a711a06b1388f38a57a4bd579"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8272b94a711a06b1388f38a57a4bd579">&#9670;&nbsp;</a></span>OnDrawGizmosSelected()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Pathfinding.OnDrawGizmosSelected </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a83c5222ea2be31cde583d5a022174d5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83c5222ea2be31cde583d5a022174d5d">&#9670;&nbsp;</a></span>SetMoveSpeed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Pathfinding.SetMoveSpeed </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>newSpeed</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab5419d9524bcc092380eeee5b8711273"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5419d9524bcc092380eeee5b8711273">&#9670;&nbsp;</a></span>SetRotationSpeed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Pathfinding.SetRotationSpeed </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>newSpeed</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a46c5dad2eefc98a014e50fbb8e0be41b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46c5dad2eefc98a014e50fbb8e0be41b">&#9670;&nbsp;</a></span>Start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Pathfinding.Start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Instantiate variable values when application starts. </p>
+<p>Sets the script's current target to the random point object. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9aa09316723ea0e8bdb8ecb4bc9e16e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9aa09316723ea0e8bdb8ecb4bc9e16e9">&#9670;&nbsp;</a></span>groundPlane</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameObject Pathfinding.groundPlane</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>A reference to the ground plane object to retrieve the A* script from. </p>
-
-</div>
-</div>
 <a id="ae5cfee95885798dcb44429df9aeaa654"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae5cfee95885798dcb44429df9aeaa654">&#9670;&nbsp;</a></span>m_aStarSearch</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_a_star_search.html">AStarSearch</a> Pathfinding.m_aStarSearch</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Reference to the A* script. (Retrieved from the ground plane). </p>
 
 </div>
 </div>
-<a id="aa9c2ff3e6a09fd2b8685527b9f080545"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9c2ff3e6a09fd2b8685527b9f080545">&#9670;&nbsp;</a></span>m_foundDistance</h2>
+<a id="a0038573a1331c612a62a2e94a551eb74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0038573a1331c612a62a2e94a551eb74">&#9670;&nbsp;</a></span>m_randomPointStorage</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float Pathfinding.m_foundDistance = 1.0f</td>
+          <td class="memname">GameObject Pathfinding.m_randomPointStorage</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Distance the dog object must be to a node for it to be considered "found" and removed from the path list. </p>
-
-</div>
-</div>
-<a id="aac50124ec41ed831c9d64965b4025131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac50124ec41ed831c9d64965b4025131">&#9670;&nbsp;</a></span>m_foundPath</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">List&lt;Vector3&gt; Pathfinding.m_foundPath = new List&lt;Vector3&gt;()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Requested path to a destination as a list of Vector3 positions. </p>
-
-</div>
-</div>
-<a id="a69985cf2e6cec8c354dc63b916703473"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69985cf2e6cec8c354dc63b916703473">&#9670;&nbsp;</a></span>m_moveSpeed</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float Pathfinding.m_moveSpeed = 2.75f</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Speed of movement. </p>
-
-</div>
-</div>
-<a id="afece48e0983ed827af5acfd81d572272"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afece48e0983ed827af5acfd81d572272">&#9670;&nbsp;</a></span>m_randomNodeFound</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Pathfinding.m_randomNodeFound = false</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Whether or not a random node has been generated. </p>
-
-</div>
-</div>
-<a id="a2c2f0cc2794a846cd528b13fd6dbbec0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c2f0cc2794a846cd528b13fd6dbbec0">&#9670;&nbsp;</a></span>m_randomPoint</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameObject Pathfinding.m_randomPoint</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>An empty game object which can be placed at a random position on the ground plane for random movement. </p>
-
-</div>
-</div>
-<a id="a82edb836e1383c1b93d850b2894fc234"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82edb836e1383c1b93d850b2894fc234">&#9670;&nbsp;</a></span>m_rotationSpeed</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float Pathfinding.m_rotationSpeed = 2.5f</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Speed of rotation. </p>
-
-</div>
-</div>
-<a id="a984abba185586e821d820e25af6f40e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a984abba185586e821d820e25af6f40e8">&#9670;&nbsp;</a></span>randomPosRange</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Vector2 Pathfinding.randomPosRange</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The range random positions on the grid can be generated within based on the groundPlane's size. </p>
+<p>Where to store the random point in the hierarchy. Done for cleanliness of project. </p>
 
 </div>
 </div>
@@ -693,11 +368,15 @@ Private Attributes</h2></td></tr>
 <li>D:/Pet Care 101 - Doguses/Assets/Scripts/Dogs/<a class="el" href="_pathfinding_8cs.html">Pathfinding.cs</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.16
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_pathfinding.html">Pathfinding</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>
+  </ul>
+</div>
 </body>
 </html>

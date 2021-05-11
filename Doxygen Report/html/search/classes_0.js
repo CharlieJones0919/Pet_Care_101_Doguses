@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['asnode_262',['ASNode',['../class_a_s_node.html',1,'']]],
-  ['astarsearch_263',['AStarSearch',['../class_a_star_search.html',1,'']]]
+  ['animationmanagement_363',['AnimationManagement',['../class_animation_management.html',1,'']]],
+  ['asnode_364',['ASNode',['../class_a_s_node.html',1,'']]],
+  ['astarsearch_365',['AStarSearch',['../class_a_star_search.html',1,'']]]
 ];

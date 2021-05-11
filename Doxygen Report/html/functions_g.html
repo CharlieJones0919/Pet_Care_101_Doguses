@@ -5,10 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pet Care 101 - Doguses Doxygen Report: Class Members</title>
+<title>Pets 101 - Doguses: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,9 +29,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Pet Care 101 - Doguses Doxygen Report
+   <div id="projectname">Pets 101 - Doguses
+   &#160;<span id="projectnumber">v.0.5</span>
    </div>
-   <div id="projectbrief">A doxygen code comment report of the project&#39;s script classes and relations.</div>
+   <div id="projectbrief">Virtual dogs in ya phone.</div>
   </td>
  </tr>
  </tbody>
@@ -47,6 +56,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_g.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -68,98 +93,135 @@ $(function() {
 <li>g
 : <a class="el" href="class_a_s_node.html#a8fedd2d3d7db36d5ac1c0a3d790751dc">ASNode</a>
 </li>
-<li>gameTime
-: <a class="el" href="class_dog_controller.html#aec86e973ca0074996c78825bcacfcbb7">DogController</a>
-</li>
-<li>gameTimeDays
-: <a class="el" href="class_game_time.html#a1b8a37e58ae9cc01c8ebca748742688f">GameTime</a>
-</li>
-<li>gameTimeHours
-: <a class="el" href="class_game_time.html#a32bf0234f4c84e8d9e9646d3642b02df">GameTime</a>
-</li>
-<li>gameTimeMinutes
-: <a class="el" href="class_game_time.html#ae68b0b70e9230f6e67a4afabe17ae78c">GameTime</a>
-</li>
-<li>gameTimeSeconds
-: <a class="el" href="class_game_time.html#a1c3e5b04560818983c207876688a57ab">GameTime</a>
-</li>
-<li>gameTimeWeeks
-: <a class="el" href="class_game_time.html#a61bd4bd9190f48b19a145753e97171b5">GameTime</a>
-</li>
 <li>generalDataDisplayUI
 : <a class="el" href="class_data_display.html#a0db4dce32b152b3c43b4d3e6c818ca11">DataDisplay</a>
 </li>
+<li>GenerateRandomNewDog()
+: <a class="el" href="class_dog_generation.html#a4e4a947eeb5f9614907cde69b557517a">DogGeneration</a>
+</li>
 <li>GenerateRandomPointInWorld()
-: <a class="el" href="class_pathfinding.html#af8dfec98d0919ebbe11603e3d23ae1d3">Pathfinding</a>
+: <a class="el" href="class_pathfinding.html#aef979c77e42bf5581df5baec713172a5">Pathfinding</a>
 </li>
-<li>GetActiveObjects()
-: <a class="el" href="class_dog_controller.html#a5801ecbddf63a5f7ba3b8d59ff08c208">DogController</a>
+<li>GetActiveItemFor()
+: <a class="el" href="class_controller.html#ac54aa6a1233045a82c6d90da9f391dc7">Controller</a>
 </li>
-<li>GetCentrePreference()
-: <a class="el" href="class_item.html#aca5a3b65f2a2ac288b8a97f15dad36c2">Item</a>
+<li>GetAllDogs()
+: <a class="el" href="class_controller.html#a1885873731fde3db05e2534e2adca352">Controller</a>
+</li>
+<li>GetCareFufillmentAmount()
+: <a class="el" href="class_item.html#a21276e223e5178f125cbe8d10ffa2bfb">Item</a>
+</li>
+<li>GetCatergory()
+: <a class="el" href="class_store_section.html#ad45360af04cb50ccdff69747fe9d84f9">StoreSection</a>
+</li>
+<li>GetClosestActiveItemFor()
+: <a class="el" href="class_controller.html#a53952afab9c65220396dfee6870bb3c4">Controller</a>
+</li>
+<li>GetDataList()
+: <a class="el" href="struct_body_component.html#a7c6b7c5e3240a7a72d4ee879a8d40fe6">BodyComponent</a>
+</li>
+<li>GetDescription()
+: <a class="el" href="class_item.html#ae76f35ef038dc6114614f985c6990d3b">Item</a>
 </li>
 <li>GetDistance()
 : <a class="el" href="class_a_star_search.html#a59591978668f4640df0d7c1aed17b7dd">AStarSearch</a>
 </li>
 <li>GetFocusDog()
-: <a class="el" href="class_data_display.html#ac4660b6278b1d01bb47610c2a773deff">DataDisplay</a>
-</li>
-<li>GetFoundPathLength()
-: <a class="el" href="class_pathfinding.html#a7a0d1300cd238c295ca5df32ba18810b">Pathfinding</a>
-</li>
-<li>GetFufillmentValue()
-: <a class="el" href="class_item.html#aa4a6642f89dcab2992832716fbde8d89">Item</a>
+: <a class="el" href="class_data_display.html#addf385c08a852fbfcd5eacb9d24eb7a2">DataDisplay</a>
 </li>
 <li>GetGameTimeDays()
-: <a class="el" href="class_game_time.html#af2f17cc5b7e7147e0b1e61682d046940">GameTime</a>
+: <a class="el" href="class_game_time.html#a47456e5673cf9c6b7f9a134e21bc5efa">GameTime</a>
 </li>
 <li>GetGameTimeHours()
-: <a class="el" href="class_game_time.html#aed74a893ec99cb9d86e2e44ab43b4ec9">GameTime</a>
+: <a class="el" href="class_game_time.html#a3be34ad5bc8243f7c16d015aee9ec27f">GameTime</a>
 </li>
 <li>GetGameTimeMinutes()
-: <a class="el" href="class_game_time.html#a6d6c00a521593a01c67fc01fe4db1001">GameTime</a>
+: <a class="el" href="class_game_time.html#a96dfeda7621a8ea554a9bf976a62dfc8">GameTime</a>
 </li>
 <li>GetGameTimeSeconds()
-: <a class="el" href="class_game_time.html#a48ead6720ccd7ae0b8c0e2f00ce4ad4a">GameTime</a>
+: <a class="el" href="class_game_time.html#a702da00417c72b361f5d99da5db5b57b">GameTime</a>
 </li>
 <li>GetGameTimeWeeks()
-: <a class="el" href="class_game_time.html#a1c7bc1142e74cfe36590e220fb8497f2">GameTime</a>
+: <a class="el" href="class_game_time.html#a7d3da273d6973b8bc7b27567fa79cdfa">GameTime</a>
 </li>
-<li>GetIncrement()
-: <a class="el" href="class_property.html#a91d4cf6997bdff6a833609b01e05abb0">Property</a>
+<li>GetInstanceParent()
+: <a class="el" href="class_item.html#a7bc729d15fef7c41d39e4063e8d49e2e">Item</a>
+</li>
+<li>GetInstanceSpawnPos()
+: <a class="el" href="class_item.html#a6af18e90c826bf3450dbfffa57717fad">Item</a>
+</li>
+<li>GetItem()
+: <a class="el" href="class_item_slot.html#a65ebb99c78bc6e18396ff77d9ab0fe76">ItemSlot</a>
+</li>
+<li>GetItems()
+: <a class="el" href="class_store_section.html#af2d03533ba44ccfbdaebf87a3ad38d19">StoreSection</a>
+</li>
+<li>GetItemType()
+: <a class="el" href="class_item.html#abee5e087b296e8d9f253420c4c9d2c29">Item</a>
+</li>
+<li>GetLastSpawnPos()
+: <a class="el" href="class_item_instance.html#a9fab51bcf0df5c3696479ee2f63e4293">ItemInstance</a>
+</li>
+<li>GetName()
+: <a class="el" href="class_item.html#a86b2b3c8dffc88b071638384d518e71a">Item</a>
 </li>
 <li>GetNeighbours()
 : <a class="el" href="class_a_star_search.html#a77f5e84d963931d79fcee1f177e55c65">AStarSearch</a>
 </li>
-<li>GetObject()
-: <a class="el" href="class_item.html#adaa0316cc15508f249666e422db65d7d">Item</a>
+<li>GetNumOfPages()
+: <a class="el" href="class_store_section.html#a257300e05b88311f1ef4f865142bf942">StoreSection</a>
+</li>
+<li>GetPageItems()
+: <a class="el" href="class_store_section.html#a2cf04a04d6832938b075e8201c90cccd">StoreSection</a>
+</li>
+<li>GetParent()
+: <a class="el" href="struct_body_component.html#a21969d4e1c65405b44ff355f2af67e4e">BodyComponent</a>
+</li>
+<li>GetPartType()
+: <a class="el" href="struct_body_component.html#a5f47e0d366ef8a4a845a6ec82b456446">BodyComponent</a>
+</li>
+<li>GetPersonalityFufillmentAmount()
+: <a class="el" href="class_item.html#a250ba36a22e5f86702c356de98715540">Item</a>
+</li>
+<li>GetPersonalityState()
+: <a class="el" href="class_dog.html#a8e77ecbff70053dca8abbe9a16911c35">Dog</a>
+</li>
+<li>GetPlayerMoney()
+: <a class="el" href="class_controller.html#a685bf3b9eaf7e65f7ddfab99fe900e76">Controller</a>
 </li>
 <li>GetPosition()
-: <a class="el" href="class_item.html#aa0b66d1c58247b9a1df2293756708281">Item</a>
+: <a class="el" href="class_item_instance.html#ab931e17a051b39f624984251e92a17bf">ItemInstance</a>
 </li>
-<li>GetPropertyName()
-: <a class="el" href="class_property.html#ab02cebc959b789a7988e5b1213175734">Property</a>
+<li>GetPrice()
+: <a class="el" href="class_item.html#a854c1c76db98d5c38a1fc069601d0e6c">Item</a>
 </li>
-<li>GetPropertySubject()
-: <a class="el" href="class_item.html#aa1df49538128bad6eba6f98b5db288cc">Item</a>
+<li>GetSecondMultiplier()
+: <a class="el" href="class_game_time.html#ac22de29a15831e6205ae324bfa7a0a88">GameTime</a>
 </li>
-<li>getSecondMultiplier()
-: <a class="el" href="class_game_time.html#ac6299db93e67335cf0c454fb6db01b35">GameTime</a>
+<li>GetSprite()
+: <a class="el" href="class_item.html#a3078519337fe271a21f82abad0cb63b4">Item</a>
 </li>
-<li>GetUsable()
-: <a class="el" href="class_item.html#a0e7dead382a3ca19906f39819c651f70">Item</a>
+<li>GetState()
+: <a class="el" href="class_personality_property.html#a7d3e0da7441c9a93d7a9d7860158fc47">PersonalityProperty</a>
 </li>
-<li>GetUser()
-: <a class="el" href="class_item.html#ad386e24e332b4d1d07a2d1223bfc4e86">Item</a>
+<li>GetUsePosOffset()
+: <a class="el" href="class_item.html#affef193b67c27a23505807d535bda1d9">Item</a>
+</li>
+<li>GetUsualDecrement()
+: <a class="el" href="class_care_property.html#ae4f01e66c4c605cf5fe7af70c5e022c0">CareProperty</a>
 </li>
 <li>GetValue()
-: <a class="el" href="class_property.html#aaf104b98bcd679e99ebfe63e538904a7">Property</a>
+: <a class="el" href="class_care_property.html#a9358cf09cb7a121638db5ecd2c9f9df7">CareProperty</a>
+, <a class="el" href="class_personality_property.html#ab4032e4535b2bc59bfd7d7f671950904">PersonalityProperty</a>
 </li>
-<li>goalNodePos
-: <a class="el" href="class_a_star_search.html#a7496f1c7c29d7f7e1161a30454df262e">AStarSearch</a>
+<li>GiveAllowance()
+: <a class="el" href="class_controller.html#ab7a1e00c23d44345237098279b0ac06b">Controller</a>
 </li>
-<li>grid
-: <a class="el" href="class_a_star_search.html#aaacf9194c23b9104ee726776806ba520">AStarSearch</a>
+<li>GiveGoodCareBonus()
+: <a class="el" href="class_controller.html#aa0b4b51ba231ddd375b84f18b57ff946">Controller</a>
+</li>
+<li>GlobalSequences
+: <a class="el" href="class_dog.html#a6a36b21a0326718fa89cf883d9201119">Dog</a>
 </li>
 <li>gridNodes
 : <a class="el" href="class_a_star_search.html#a9d18574fcde8965f19829714108b35d3">AStarSearch</a>
@@ -167,16 +229,19 @@ $(function() {
 <li>gridSize
 : <a class="el" href="class_a_star_search.html#a2b8c1a72ef94868b8b5256101297e35f">AStarSearch</a>
 </li>
-<li>groundPlane
-: <a class="el" href="class_pathfinding.html#a9aa09316723ea0e8bdb8ecb4bc9e16e9">Pathfinding</a>
+<li>groundSearch
+: <a class="el" href="class_controller.html#ae69f5d6f5a9ab977a02c21529ba4120a">Controller</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.16
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>
+  </ul>
+</div>
 </body>
 </html>

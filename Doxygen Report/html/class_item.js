@@ -1,0 +1,28 @@
+var class_item =
+[
+    [ "ActivateAvailableInstanceTo", "class_item.html#a1bd2dbb961b9385e219cdeeafd07565c", null ],
+    [ "FufillsCareValue", "class_item.html#afaada5b2e6f0cfc0276ebb02bb32f6d3", null ],
+    [ "FufillsPersonalityValue", "class_item.html#ace837e9209d57f1e50157b33a79ac8d2", null ],
+    [ "GetCareFufillmentAmount", "class_item.html#a21276e223e5178f125cbe8d10ffa2bfb", null ],
+    [ "GetDescription", "class_item.html#ae76f35ef038dc6114614f985c6990d3b", null ],
+    [ "GetInstanceParent", "class_item.html#a7bc729d15fef7c41d39e4063e8d49e2e", null ],
+    [ "GetInstanceSpawnPos", "class_item.html#a6af18e90c826bf3450dbfffa57717fad", null ],
+    [ "GetItemType", "class_item.html#abee5e087b296e8d9f253420c4c9d2c29", null ],
+    [ "GetName", "class_item.html#a86b2b3c8dffc88b071638384d518e71a", null ],
+    [ "GetPersonalityFufillmentAmount", "class_item.html#a250ba36a22e5f86702c356de98715540", null ],
+    [ "GetPrice", "class_item.html#a854c1c76db98d5c38a1fc069601d0e6c", null ],
+    [ "GetSprite", "class_item.html#a3078519337fe271a21f82abad0cb63b4", null ],
+    [ "GetUsePosOffset", "class_item.html#affef193b67c27a23505807d535bda1d9", null ],
+    [ "InstantiatePool", "class_item.html#aec5bdca07df3b156014dfdccd3a7106c", null ],
+    [ "IsSingleUse", "class_item.html#aa61847937bf434582ba57a1467b8a579", null ],
+    [ "NeedsUseOffset", "class_item.html#a71fbe5b1da602832255291d698b1597e", null ],
+    [ "OnAfterDeserialize", "class_item.html#a60d862c36388aa00917aada839b169f3", null ],
+    [ "OnBeforeSerialize", "class_item.html#ad0812912e6d9ed02052f12c2e4989826", null ],
+    [ "SetInstanceParent", "class_item.html#aca70b08d5e963d14bbc150f276ed5db6", null ],
+    [ "SetNULLObjectRef", "class_item.html#acd3af94a6b06e2fe1b432adcbdc32290", null ],
+    [ "StopUsingItemInstance", "class_item.html#adb3ac9e4fe915dccbe3848f63b54aa8c", null ],
+    [ "TryGetAvailableInstance", "class_item.html#a284f7a5faa3a73a035fe9c750ecdc519", null ],
+    [ "TryGetClosestAvailableInstance", "class_item.html#ae47d8b2d77be6aff3f8d8f9b4fe6a887", null ],
+    [ "UseItemInstance", "class_item.html#a8db5757ce832aeaf15c5c0335c49b014", null ],
+    [ "doNotDeploy", "class_item.html#ac822bee50d68ce6a0e855fc914f2a6f4", null ]
+];
