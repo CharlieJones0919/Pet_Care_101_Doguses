@@ -68,6 +68,7 @@ public class ItemInstance : MonoBehaviour
         {
             m_user = m_nullUser;
             transform.position = m_inactivePos;
+            gameObject.SetActive(false);
         }
     }
 

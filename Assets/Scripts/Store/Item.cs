@@ -82,10 +82,13 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
         {
             foreach (ItemInstance instance in m_instancePool)
             {
-                if (!instance.CurrentlyActive())
+                if (instance != null)
                 {
-                    instance.Activate(spawnPos);
-                    return;
+                    if (!instance.CurrentlyActive())
+                    {
+                        instance.Activate(spawnPos);
+                        return;
+                    }
                 }
             }        
         }
