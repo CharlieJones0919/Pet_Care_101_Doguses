@@ -89,8 +89,6 @@ public class StoreController : MonoBehaviour
             if (catergoryItems.Count == 0) { Debug.LogWarning("No definition or items found for store catergory: " + tabCat.ToString()); }
         }
 
-
-
         ////////////////////////////// Instantiate Values for New Store Items //////////////////////////////
         foreach (ItemType catergory in (ItemType[])ItemType.GetValues(typeof(ItemType)))
         {
