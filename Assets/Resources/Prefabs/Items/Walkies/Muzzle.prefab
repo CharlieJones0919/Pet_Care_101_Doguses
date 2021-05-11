@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doNotDeploy: 1
-  defaultNumToInstantiate: 5
+  defaultNumToInstantiate: 0
   careFufills: 060000000700000003000000
   careFufillmentAmounts:
   - -5
@@ -55,8 +55,7 @@ MonoBehaviour:
   - 2
   - -0.0125
   - -0.015
-  m_objectPrefab: {fileID: 6987228530398497235, guid: e2f26bfc405547240b218b8ee1187a93,
-    type: 3}
+  m_instancePrefab: {fileID: 0}
   m_instancesInactivePos: {x: 0, y: -20, z: 0}
   m_itemType: 1
   m_name: Muzzle

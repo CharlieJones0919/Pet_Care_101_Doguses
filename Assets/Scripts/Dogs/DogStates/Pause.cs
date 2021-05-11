@@ -35,7 +35,7 @@ public class Pause : State
 
     /** \fn StateUpdate 
     * \brief Does regular speed check/bonus sequence evaluations then checks the dog's rules for if the state should be swapped out of. For the pause state the only conditions for exiting are that the WAITING and NEEDS_2_FINISH_ANIM are both false.
-    * When these conditions have been met, the dog will swap back into the Idle state to identify which state to enter next, otherwise, the state will be re-entered to re-trigger the Pause couroutine timer. Regular behaviour for this state is to do nothing. The 
+    * When these conditions have been met, the dog will swap back into the Idle state to identify which state to enter next, otherwise, the state will be re-entered to re-trigger the Pause couroutine timer. Regular behaviour for this state is to do nothing.  
     */
     public override Type StateUpdate()
     {

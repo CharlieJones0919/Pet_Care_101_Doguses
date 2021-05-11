@@ -59,8 +59,6 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
             m_instancePool.Add(newInstance);
             newInstance.gameObject.SetActive(false);
         }
-
-        Debug.Log(m_itemType + ": "+ m_instancePool.Count);
     }
 
     /** \fn SetInstanceParent

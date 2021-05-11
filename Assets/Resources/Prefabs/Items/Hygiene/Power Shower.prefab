@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doNotDeploy: 1
-  defaultNumToInstantiate: 1
+  defaultNumToInstantiate: 0
   careFufills: 04000000030000000500000006000000
   careFufillmentAmounts:
   - 7.5
@@ -54,8 +54,7 @@ MonoBehaviour:
   personalityFufills: 01000000
   personalityFufillmentAmounts:
   - 1.15
-  m_objectPrefab: {fileID: 6987228530398497235, guid: e2f26bfc405547240b218b8ee1187a93,
-    type: 3}
+  m_instancePrefab: {fileID: 0}
   m_instancesInactivePos: {x: 0, y: -15, z: 0}
   m_itemType: 4
   m_name: Power Shower

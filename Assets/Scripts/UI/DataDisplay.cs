@@ -58,7 +58,11 @@ public class DataDisplay : MonoBehaviour
     /** \fn OnDisable
     *  \brief When the panel is de-activated, it tells the controller to unset all the dogs' "IS_FOCUS_DOG" facts as true.
     */
-    private void OnDisable() { controller.NotFocusedOnDog(); }
+    private void OnDisable()
+    {
+        focusedDog = null;
+        controller.NotFocusedOnDog();
+    }
 
     /** \fn FixedUpdate
     *  \brief While the InfoPanel is active, this function updates the slider and text UI element's values to those of the focused dog. 

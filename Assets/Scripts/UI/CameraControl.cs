@@ -62,6 +62,7 @@ public class CameraControl : MonoBehaviour
     */
     private void CheckDogTap_Editor()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);

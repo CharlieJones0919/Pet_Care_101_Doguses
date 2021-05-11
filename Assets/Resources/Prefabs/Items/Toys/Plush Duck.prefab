@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doNotDeploy: 0
-  defaultNumToInstantiate: 4
+  defaultNumToInstantiate: 5
   careFufills: 06000000020000000500000003000000
   careFufillmentAmounts:
   - 0.025
