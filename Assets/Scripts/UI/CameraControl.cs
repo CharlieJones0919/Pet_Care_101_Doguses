@@ -50,7 +50,7 @@ public class CameraControl : MonoBehaviour
 #if UNITY_EDITOR
             CheckDogTap_Editor();
             //If not in the editor check for touch input. 
-#elif UNITY_IOS || UNITY_ANDROID
+#else
             CheckDogTap_Mobile();
             CheckCameraMovement_Mobile();
 #endif
@@ -110,6 +110,7 @@ public class CameraControl : MonoBehaviour
 
                         if (controller.UIOutput.GetFocusDog() != dog.Key)
                         {
+                            controller.UIOutput.gameObject.SetActive(true);
                             controller.UIOutput.OnOpen(dog.Value);
                         }
                         return;

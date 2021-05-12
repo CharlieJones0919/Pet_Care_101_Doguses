@@ -228,7 +228,7 @@ public class DogGeneration : MonoBehaviour
     /** \fn Start
     *  \brief Reads the BreedData.txt file and adds the data to the breedData DataTable, retrieves the dog model parts from the assets folder, defines the orientation + scaling descriptions as values, then finally defines the dog's care and personality values/states/bounds.
     */
-    private void Start()
+    private void Awake()
     {
         ////////////////// Read the Breed Data from the Dog Data Text File //////////////////
         string[] data = System.IO.File.ReadAllLines(Application.dataPath + breedDataFileDir);
@@ -437,8 +437,6 @@ public class DogGeneration : MonoBehaviour
         bounds.center += new Vector3(0.0f, -0.25f, 1.0f);
         newDog.m_collider.center = bounds.center;
         newDog.m_collider.size = bounds.size;
-
-        controller.tipPopUp.DisplayTipMessage(bounds.size.ToString());
 
         ///// Add New Dog to Controller List /////
         controller.AddDog(newDog);

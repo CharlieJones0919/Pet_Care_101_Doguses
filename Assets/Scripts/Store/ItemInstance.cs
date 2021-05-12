@@ -12,10 +12,10 @@ using UnityEngine;
 public class ItemInstance : MonoBehaviour
 {
     [SerializeField] private Vector3 m_lastSpawnedPos = Vector3.zero;    //!< The position this object instance was placed to when last activated onto the map.
-    [SerializeField] private Vector3 m_inactivePos;  //!< Position to place the instance when it's not active in the world.
-    [SerializeField] private float m_activePosY;     //!< The default Y-axis position of the prefab. Used so when the object is placed in the world, irregardless of where it's centre pivot point is, it can still be placed ON the ground.
-    [SerializeField] private GameObject m_nullUser;  //!< This is m_defaultNullObject from the Item class. Is what the instance's user is set to when it's not in use instead of setting a GameObject to system NULL which will throw errors.
-    [SerializeField] private GameObject m_user;      //!< The dog object using this instance at current, and if not in use will be set to m_nullUser.
+    [SerializeField] private Vector3 m_inactivePos;                      //!< Position to place the instance when it's not active in the world.
+    [SerializeField] private float m_activePosY = 0;                     //!< The default Y-axis position of the prefab. Used so when the object is placed in the world, irregardless of where it's centre pivot point is, it can still be placed ON the ground.
+    [SerializeField] private GameObject m_nullUser;                       //!< This is m_defaultNullObject from the Item class. Is what the instance's user is set to when it's not in use instead of setting a GameObject to system NULL which will throw errors.
+    [SerializeField] private GameObject m_user;                          //!< The dog object using this instance at current, and if not in use will be set to m_nullUser.
 
     /** \fn ItemInstance
     *   \brief An initialising function to instantiate the ItemInstance which takes its required initial data then sets its user to null. Is always set an inactive by default.

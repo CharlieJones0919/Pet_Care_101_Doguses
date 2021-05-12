@@ -14,7 +14,7 @@ public class TipPopUp : MonoBehaviour
     [SerializeField] private Text tipText = null;           //!< The text UI to output the message[s] to.
     [SerializeField] private List<string> messageQueue = new List<string>(); //!< A list of string messages waiting to be displayed.
     [SerializeField] private float timePerCharacter = 0;    //!< Scaler of time per character to calculate the total amount of time the message should be displayed for.
-    private float secondsToDisplay;                         //!< How much time the current message should be displayed for based on the number of characters in it.
+    [SerializeField] private float secondsToDisplay;        //!< How much time the current message should be displayed for based on the number of characters in it.
 
     /** \fn DisplayTipMessage
     *   \brief Takes a string message and adds it to the message queue if it isn't already in there. If the tip pop-up box isn't currently active it'll immediately activate it then immediately output this message as the first/only.
@@ -28,23 +28,31 @@ public class TipPopUp : MonoBehaviour
             if (!gameObject.activeSelf)
             {
                 gameObject.SetActive(true);
-                StartCoroutine(TipTimer(message));
+               // StartCoroutine(TipTimer(message));
             }
         }
     }
+
+    public void Update()
+    {
+        TipTimer(messageQueue[0]);
+    }
+
 
     /** \fn TipTimer
     *   \brief A couroutine to output the given message to the textbox, wait for the appropriate time for the length of that message, then remove it from the message queue. 
     *   If there are more messages in the queue, it'll display the next one, otherwise it'll just deactivate the pop-up box.
     */
-    private IEnumerator TipTimer(string tip = null)
+    private void TipTimer(string tip = null)
     {
-        tipText.text = tip;
-        SetTipDisplayTime(tip);
-        yield return new WaitForSeconds(secondsToDisplay);
-        messageQueue.Remove(tipText.text);
-        if (messageQueue.Count > 0) { StartCoroutine(TipTimer(messageQueue[0])); }
-        else { gameObject.SetActive(false); }
+        if (tipText.text != tip) { tipText.text = tip; SetTipDisplayTime(tip); }
+
+        if (secondsToDisplay <= 0)
+        {
+            messageQueue.Remove(tipText.text);
+            if (messageQueue.Count == 0) { gameObject.SetActive(false); }
+        }
+        else { secondsToDisplay -= Time.deltaTime; };
     }
 
     /** \fn SetTipDisplayTime
@@ -60,12 +68,9 @@ public class TipPopUp : MonoBehaviour
     */
     public void TipClosed()
     {
-        messageQueue.Remove(tipText.text);
-
-        if (messageQueue.Count > 0) { StartCoroutine(TipTimer(messageQueue[0])); }
+        if (messageQueue.Count > 0) { secondsToDisplay = 0; }
         else
         {
-            StopCoroutine(TipTimer());
             gameObject.SetActive(false);
         }
     }
