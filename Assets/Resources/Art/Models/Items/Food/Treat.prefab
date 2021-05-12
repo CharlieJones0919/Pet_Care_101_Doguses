@@ -108,6 +108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_lastSpawnedPos: {x: 0, y: 0, z: 0}
   m_inactivePos: {x: 0, y: 0, z: 0}
-  m_activePosY: 0
+  m_activePosY: 0.25
   m_nullUser: {fileID: 0}
   m_user: {fileID: 0}

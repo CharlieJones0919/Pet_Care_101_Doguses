@@ -438,6 +438,8 @@ public class DogGeneration : MonoBehaviour
         newDog.m_collider.center = bounds.center;
         newDog.m_collider.size = bounds.size;
 
+        controller.tipPopUp.DisplayTipMessage(bounds.size.ToString());
+
         ///// Add New Dog to Controller List /////
         controller.AddDog(newDog);
         return newDog;

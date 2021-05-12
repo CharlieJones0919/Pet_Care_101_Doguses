@@ -17,11 +17,6 @@ public class ItemInstance : MonoBehaviour
     [SerializeField] private GameObject m_nullUser;  //!< This is m_defaultNullObject from the Item class. Is what the instance's user is set to when it's not in use instead of setting a GameObject to system NULL which will throw errors.
     [SerializeField] private GameObject m_user;      //!< The dog object using this instance at current, and if not in use will be set to m_nullUser.
 
-    /** \fn Start
-    *   \brief Just used to get the prefab's initial Y position before it's set to it's inactive position.
-    */
-    private void Start() { m_activePosY = transform.position.y; }
-
     /** \fn ItemInstance
     *   \brief An initialising function to instantiate the ItemInstance which takes its required initial data then sets its user to null. Is always set an inactive by default.
     */

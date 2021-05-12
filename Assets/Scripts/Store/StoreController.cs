@@ -55,8 +55,8 @@ public class StoreController : MonoBehaviour
     private void Start()
     {
         ////////////////////////////// Retrieve ItemSlot Toggles and Item Prefabs //////////////////////////////
-        itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         UnityEngine.Object[]  itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
+        itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length; // Set number of catergories based on number of ItemType enums (+1 as indexing starts at 0).
 
         ////////////////////////////// Scale Tab Space to Number of Catergories to Tab Width //////////////////////////////
@@ -117,8 +117,8 @@ public class StoreController : MonoBehaviour
 
             if ((posX <= floorEndX))
             {
-                controller.bedItemPositions.Add(new Vector3(posX, 0, posZ));
-                if (posZ > 3) { controller.foodItemPositions.Add(new Vector3(posX, 0, -posZ), false); }
+                controller.bedItemPositions.Add(new Vector3(posX, worldFloor.transform.position.y, posZ));
+                if (posZ > 3) { controller.foodItemPositions.Add(new Vector3(posX, worldFloor.transform.position.y, -posZ), false); }
 
                 posX += 1.0f;
             }
@@ -170,7 +170,7 @@ public class StoreController : MonoBehaviour
                     break;
                 case (ItemType.TOYS):
                     Vector3 randomToyPosition = worldFloor.transform.position;
-                    randomToyPosition += new Vector3(Random.Range(0.0f, 1.0f), 0.0f, Random.Range(0.0f, 1.0f));
+                    randomToyPosition += new Vector3(Random.Range(0.0f, 1.0f), worldFloor.transform.position.y, Random.Range(0.0f, 1.0f));
                     focusItem.ActivateAvailableInstanceTo(randomToyPosition);
                     controller.MakePurchase(focusItem.GetPrice());
                     break;
