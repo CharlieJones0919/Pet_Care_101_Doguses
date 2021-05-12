@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_camera_control.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
@@ -116,6 +117,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab330b901676cb2024c89d8449842b72d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows the reset button to reset all the camera's values to what they were before touch input.  <a href="class_camera_control.html#ab330b901676cb2024c89d8449842b72d">More...</a><br /></td></tr>
 <tr class="separator:ab330b901676cb2024c89d8449842b72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a4409800b3def8393d69a3a3e927d8b2f"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a4409800b3def8393d69a3a3e927d8b2f">m_followTarget</a> = null</td></tr>
+<tr class="memdesc:a4409800b3def8393d69a3a3e927d8b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A target for the camera to follow.  <a href="class_camera_control.html#a4409800b3def8393d69a3a3e927d8b2f">More...</a><br /></td></tr>
+<tr class="separator:a4409800b3def8393d69a3a3e927d8b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af75d9f85cb7a6f56e711845fd7a180e7"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#af75d9f85cb7a6f56e711845fd7a180e7">PlanePosition</a> (Vector2 screenPos)</td></tr>
@@ -139,21 +146,24 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a632115d91f36758747bd322bf756940e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a632115d91f36758747bd322bf756940e">CheckDogTap_Mobile</a> ()</td></tr>
 <tr class="memdesc:a632115d91f36758747bd322bf756940e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a raycast between the camera and the worldspace has hit a dog object from touch input. If it has, that dog is set to be the "focus dog" - this will display the info panel for it.  <a href="class_camera_control.html#a632115d91f36758747bd322bf756940e">More...</a><br /></td></tr>
 <tr class="separator:a632115d91f36758747bd322bf756940e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab6cbe1ff4b39a3a533c2a515f7ae35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a3ab6cbe1ff4b39a3a533c2a515f7ae35">CheckFollowDog</a> ()</td></tr>
+<tr class="memdesc:a3ab6cbe1ff4b39a3a533c2a515f7ae35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Follows the last selected dog at an offset.  <a href="class_camera_control.html#a3ab6cbe1ff4b39a3a533c2a515f7ae35">More...</a><br /></td></tr>
+<tr class="separator:a3ab6cbe1ff4b39a3a533c2a515f7ae35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6689c5033d29eee890ede2ef6a08a2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#ab6689c5033d29eee890ede2ef6a08a2c">CheckCameraMovement_Mobile</a> ()</td></tr>
 <tr class="memdesc:ab6689c5033d29eee890ede2ef6a08a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects touch screen input for camera movement. One finger touch dragging results in panning if rotation is toggled as off, and rotation otherwise, and pinching/expanding results in zooming in and out.  <a href="class_camera_control.html#ab6689c5033d29eee890ede2ef6a08a2c">More...</a><br /></td></tr>
 <tr class="separator:ab6689c5033d29eee890ede2ef6a08a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a08730091cafdf3518cd9487581f9579f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a08730091cafdf3518cd9487581f9579f">m_movementSpeed</a> = 2.5f</td></tr>
+<tr class="memitem:a08730091cafdf3518cd9487581f9579f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a08730091cafdf3518cd9487581f9579f">m_movementSpeed</a> = 0</td></tr>
 <tr class="memdesc:a08730091cafdf3518cd9487581f9579f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Camera movement speed.  <a href="class_camera_control.html#a08730091cafdf3518cd9487581f9579f">More...</a><br /></td></tr>
 <tr class="separator:a08730091cafdf3518cd9487581f9579f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99814625552c5801b7a287aa9073098e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a99814625552c5801b7a287aa9073098e">m_rotationSpeed</a> = 3.5f</td></tr>
+<tr class="memitem:a99814625552c5801b7a287aa9073098e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a99814625552c5801b7a287aa9073098e">m_rotationSpeed</a> = 0</td></tr>
 <tr class="memdesc:a99814625552c5801b7a287aa9073098e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Camera rotation speed.  <a href="class_camera_control.html#a99814625552c5801b7a287aa9073098e">More...</a><br /></td></tr>
 <tr class="separator:a99814625552c5801b7a287aa9073098e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac41c264f8ad5e8dae0927b28cb9ce9f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_controller.html">Controller</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#ac41c264f8ad5e8dae0927b28cb9ce9f4">controller</a> = null</td></tr>
-<tr class="memdesc:ac41c264f8ad5e8dae0927b28cb9ce9f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the game controller.  <a href="class_camera_control.html#ac41c264f8ad5e8dae0927b28cb9ce9f4">More...</a><br /></td></tr>
-<tr class="separator:ac41c264f8ad5e8dae0927b28cb9ce9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac27b55f60053f219a0b0676373320935"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_controller.html">Controller</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#ac27b55f60053f219a0b0676373320935">m_controller</a> = null</td></tr>
+<tr class="memdesc:ac27b55f60053f219a0b0676373320935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the game m_controller.  <a href="class_camera_control.html#ac27b55f60053f219a0b0676373320935">More...</a><br /></td></tr>
+<tr class="separator:ac27b55f60053f219a0b0676373320935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaeb7adf43b8754b7455be8330875f7ef"><td class="memItemLeft" align="right" valign="top">Camera&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#aaeb7adf43b8754b7455be8330875f7ef">m_camera</a></td></tr>
 <tr class="memdesc:aaeb7adf43b8754b7455be8330875f7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">The camera object. (Just set to the main camera).  <a href="class_camera_control.html#aaeb7adf43b8754b7455be8330875f7ef">More...</a><br /></td></tr>
 <tr class="separator:aaeb7adf43b8754b7455be8330875f7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,9 +188,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aba4f3ec4b6a35f6f7d047e5becef266a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#aba4f3ec4b6a35f6f7d047e5becef266a">m_initialZoom</a> = 0</td></tr>
 <tr class="memdesc:aba4f3ec4b6a35f6f7d047e5becef266a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The camera's initial field of view before any touch input. (For resetting the camera.)  <a href="class_camera_control.html#aba4f3ec4b6a35f6f7d047e5becef266a">More...</a><br /></td></tr>
 <tr class="separator:aba4f3ec4b6a35f6f7d047e5becef266a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ae3a3be0c6cdf9db2e607871d15f4b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a6ae3a3be0c6cdf9db2e607871d15f4b9">m_cameraRotationEnabled</a> = false</td></tr>
+<tr class="memitem:a6ae3a3be0c6cdf9db2e607871d15f4b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a6ae3a3be0c6cdf9db2e607871d15f4b9">m_cameraRotationEnabled</a> = true</td></tr>
 <tr class="memdesc:a6ae3a3be0c6cdf9db2e607871d15f4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set by the rotation toggle button to enable/disable camera rotation.  <a href="class_camera_control.html#a6ae3a3be0c6cdf9db2e607871d15f4b9">More...</a><br /></td></tr>
 <tr class="separator:a6ae3a3be0c6cdf9db2e607871d15f4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4af2a7af1ef238da72986d463995cd5f"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_camera_control.html#a4af2a7af1ef238da72986d463995cd5f">m_followOffset</a> = Vector3.zero</td></tr>
+<tr class="memdesc:a4af2a7af1ef238da72986d463995cd5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position offset at which to follow the target.  <a href="class_camera_control.html#a4af2a7af1ef238da72986d463995cd5f">More...</a><br /></td></tr>
+<tr class="separator:a4af2a7af1ef238da72986d463995cd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Allows touchscreen pinch and scroll controls to move the camera and detects if an object (like a dog) has been tapped. </p>
@@ -263,6 +276,33 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Checks if a raycast between the camera and the worldspace has hit a dog object from touch input. If it has, that dog is set to be the "focus dog" - this will display the info panel for it. </p>
+
+</div>
+</div>
+<a id="a3ab6cbe1ff4b39a3a533c2a515f7ae35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ab6cbe1ff4b39a3a533c2a515f7ae35">&#9670;&nbsp;</a></span>CheckFollowDog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CameraControl.CheckFollowDog </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Follows the last selected dog at an offset. </p>
 
 </div>
 </div>
@@ -443,30 +483,6 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac41c264f8ad5e8dae0927b28cb9ce9f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac41c264f8ad5e8dae0927b28cb9ce9f4">&#9670;&nbsp;</a></span>controller</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_controller.html">Controller</a> CameraControl.controller = null</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reference to the game controller. </p>
-
-</div>
-</div>
 <a id="aaeb7adf43b8754b7455be8330875f7ef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaeb7adf43b8754b7455be8330875f7ef">&#9670;&nbsp;</a></span>m_camera</h2>
 
@@ -525,7 +541,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool CameraControl.m_cameraRotationEnabled = false</td>
+          <td class="memname">bool CameraControl.m_cameraRotationEnabled = true</td>
         </tr>
       </table>
   </td>
@@ -536,6 +552,70 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set by the rotation toggle button to enable/disable camera rotation. </p>
+
+</div>
+</div>
+<a id="ac27b55f60053f219a0b0676373320935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac27b55f60053f219a0b0676373320935">&#9670;&nbsp;</a></span>m_controller</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_controller.html">Controller</a> CameraControl.m_controller = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reference to the game m_controller. </p>
+
+</div>
+</div>
+<a id="a4af2a7af1ef238da72986d463995cd5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4af2a7af1ef238da72986d463995cd5f">&#9670;&nbsp;</a></span>m_followOffset</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector3 CameraControl.m_followOffset = Vector3.zero</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Position offset at which to follow the target. </p>
+
+</div>
+</div>
+<a id="a4409800b3def8393d69a3a3e927d8b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4409800b3def8393d69a3a3e927d8b2f">&#9670;&nbsp;</a></span>m_followTarget</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameObject CameraControl.m_followTarget = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A target for the camera to follow. </p>
 
 </div>
 </div>
@@ -669,7 +749,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float CameraControl.m_movementSpeed = 2.5f</td>
+          <td class="memname">float CameraControl.m_movementSpeed = 0</td>
         </tr>
       </table>
   </td>
@@ -717,7 +797,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float CameraControl.m_rotationSpeed = 3.5f</td>
+          <td class="memname">float CameraControl.m_rotationSpeed = 0</td>
         </tr>
       </table>
   </td>

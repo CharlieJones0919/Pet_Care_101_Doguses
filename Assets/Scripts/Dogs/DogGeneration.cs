@@ -388,15 +388,9 @@ public class DogGeneration : MonoBehaviour
      */
     public void DEBUG_GenerateAllDogs()
     {
-        float dogSpace = 3;
-        Vector3 posOffset = Vector3.zero;
-        posOffset.y = dogSpace;
-
         foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
         {
-            GameObject dog = GenerateDog(dogBreed).gameObject;
-            dog.transform.position = posOffset;
-            posOffset.x += dogSpace;
+            GenerateDog(dogBreed);
         }
     }
 

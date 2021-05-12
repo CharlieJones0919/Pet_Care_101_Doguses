@@ -13,6 +13,7 @@ public class Controller : MonoBehaviour
     public GameObject defaultNULL;                     //!< An empty game object for when game objects shouldn't be set to any actual reference anymore, but unity throws errors if game objects are set to null during runtime.
     public AStarSearch groundSearch;                   //!< The ground's A-Star search script for the dog's to use for navigation and for any other class to use for point generation/finding on the map's floor.
     public GameObject randomPointStorage;              //!< A game object for the dog's pathfinding random points to be made children of. (Just for hierarchy organisation).
+    public CameraControl cameraController;             //!< The camera controller.
 
     public TipPopUp tipPopUp;                          //!< Reference to the TipPopUp class for classes to output messages to the player via. 
     public DataDisplay UIOutput;                       //!< Script from the infoPanelObject.
@@ -77,6 +78,8 @@ public class Controller : MonoBehaviour
     */
     public void AddDog(Dog newDog)
     {
+        UIOutput.OnClose();
+
         allDogs.Add(newDog.gameObject, newDog);
         newDog.SetController(this);
 
@@ -225,7 +228,11 @@ public class Controller : MonoBehaviour
     /** \fn NotFocusedOnDog
     *  \brief Sets all dogs to not be in focus if the DogInfoPanel is closed.
     */
-    public void NotFocusedOnDog() { foreach (Dog dog in allDogs.Values) { dog.m_facts["IS_FOCUS"] = false; } }
+    public void NotFocusedOnDog()
+    {
+        foreach (Dog dog in allDogs.Values) { dog.m_facts["IS_FOCUS"] = false; }
+        cameraController.m_followTarget = null;
+    }
 }
 
 /** \class CareProperty

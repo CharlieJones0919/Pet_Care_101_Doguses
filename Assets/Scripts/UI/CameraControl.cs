@@ -10,10 +10,10 @@ using UnityEngine.EventSystems;
  */
 public class CameraControl : MonoBehaviour
 {
-    private float m_movementSpeed = 2.5f; //!< Camera movement speed.
-    private float m_rotationSpeed = 3.5f; //!< Camera rotation speed.
+    [SerializeField] private float m_movementSpeed = 0; //!< Camera movement speed.
+    [SerializeField] private float m_rotationSpeed = 0; //!< Camera rotation speed.
 
-    [SerializeField] private Controller controller = null;   //!< Reference to the game controller.
+    [SerializeField] private Controller m_controller = null;   //!< Reference to the game m_controller.
 
     private Camera m_camera;                                 //!< The camera object. (Just set to the main camera).
     [SerializeField] private Collider m_cameraBounds = null; //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
@@ -24,7 +24,10 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private Vector3 m_initialPos = Vector3.zero;           //!< The camera's initial position before any touch input. (For resetting the camera.)
     [SerializeField] private Quaternion m_initialRot = Quaternion.identity; //!< The camera's initial rotation before any touch input. (For resetting the camera.)
     [SerializeField] private float m_initialZoom = 0;                       //!< The camera's initial field of view before any touch input. (For resetting the camera.)
-    [SerializeField] private bool m_cameraRotationEnabled = false;          //!< Set by the rotation toggle button to enable/disable camera rotation.
+    [SerializeField] private bool m_cameraRotationEnabled = true;           //!< Set by the rotation toggle button to enable/disable camera rotation.
+
+    public GameObject m_followTarget = null;                                //!< A target for the camera to follow.
+    [SerializeField] private Vector3 m_followOffset = Vector3.zero;         //!< Position offset at which to follow the target.
 
     /** \fn Start 
      *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object and sets the camera's initial orientation values.
@@ -36,6 +39,8 @@ public class CameraControl : MonoBehaviour
         m_initialRot = m_camera.transform.rotation;
         m_initialZoom = m_camera.fieldOfView;
         m_plane.distance = 10.0f;
+
+      //  m_followTarget = m_controller.defaultNULL;
     }
 
     /** \fn Update 
@@ -46,15 +51,16 @@ public class CameraControl : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            //If in the editor, check for mouse input.
-#if UNITY_EDITOR
+
+#if UNITY_EDITOR //If in the editor, check for mouse input.
             CheckDogTap_Editor();
-            //If not in the editor check for touch input. 
-#else
+#else            //If not in the editor check for touch input. 
             CheckDogTap_Mobile();
             CheckCameraMovement_Mobile();
 #endif
         }
+
+        CheckFollowDog(); //See if there's a target to follow.
     }
 
     /** \fn CheckDogTap_Editor 
@@ -62,7 +68,6 @@ public class CameraControl : MonoBehaviour
     */
     private void CheckDogTap_Editor()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -72,16 +77,17 @@ public class CameraControl : MonoBehaviour
             {
                 Debug.Log("Selected: " + raycastHit.collider.gameObject.name);
 
-                foreach (KeyValuePair<GameObject, Dog> dog in controller.GetAllDogs())
+                foreach (KeyValuePair<GameObject, Dog> dog in m_controller.GetAllDogs())
                 {
                     if (raycastHit.transform.gameObject == dog.Key)
                     {
                         dog.Value.m_facts["IS_FOCUS"] = true;
 
-                        if (controller.UIOutput.GetFocusDog() != dog.Key)
+                        if (m_controller.UIOutput.GetFocusDog() != dog.Key)
                         {
-                            controller.UIOutput.gameObject.SetActive(true);
-                            controller.UIOutput.OnOpen(dog.Value);
+                            m_followTarget = dog.Value.gameObject;
+                            m_controller.UIOutput.gameObject.SetActive(true);
+                            m_controller.UIOutput.OnOpen(dog.Value);
                         }
                         return;
                     }
@@ -102,21 +108,35 @@ public class CameraControl : MonoBehaviour
 
             if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity)) //If the raycast hits anything...
             {
-                foreach (KeyValuePair<GameObject, Dog> dog in controller.GetAllDogs())
+                foreach (KeyValuePair<GameObject, Dog> dog in m_controller.GetAllDogs())
                 {
                     if (raycastHit.transform.gameObject == dog.Key)
                     {
                         dog.Value.m_facts["IS_FOCUS"] = true;
 
-                        if (controller.UIOutput.GetFocusDog() != dog.Key)
+                        if (m_controller.UIOutput.GetFocusDog() != dog.Key)
                         {
-                            controller.UIOutput.gameObject.SetActive(true);
-                            controller.UIOutput.OnOpen(dog.Value);
+                            m_followTarget = dog.Value.gameObject;
+                            m_controller.UIOutput.gameObject.SetActive(true);
+                            m_controller.UIOutput.OnOpen(dog.Value);
+
                         }
                         return;
                     }
                 }
             }
+        }
+    }
+
+    /** \fn CheckFollowDog
+    *   \brief Follows the last selected dog at an offset.
+    */
+    private void CheckFollowDog()
+    {
+        if (m_followTarget != null)
+        {
+            m_camera.transform.position = m_followTarget.transform.position + m_followOffset;
+            m_camera.transform.rotation = Quaternion.LookRotation(m_followTarget.transform.position - m_camera.transform.position);
         }
     }
 
@@ -138,29 +158,29 @@ public class CameraControl : MonoBehaviour
             {
                 if (touchCount == 1) //Single Finger Input
                 {
-                    switch (m_cameraRotationEnabled)
+                    m_followTarget = null;
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////// CAMERA PANNING ///////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    m_camera.transform.Translate(PlanePositionDelta(touch1) * m_movementSpeed, Space.World);
+                }
+
+                else if (touchCount >= 2) //Two Finger Input
+                {
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////// CAMERA ROTATION ///////////////////////////////////////////////
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    if (m_cameraRotationEnabled)
                     {
-                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        /////////////////////////////////////////////// CAMERA ROTATION ///////////////////////////////////////////////
-                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        case (true):
                             var pos1 = PlanePosition(Input.GetTouch(0).position);
                             var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
                             m_camera.transform.RotateAround(pos1, m_plane.normal, -Vector3.SignedAngle(pos1, pos1b, m_plane.normal) * m_rotationSpeed);
-                            break;
-                        case (false):
-                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            /////////////////////////////////////////////// CAMERA PANNING ///////////////////////////////////////////////
-                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                            m_camera.transform.Translate(PlanePositionDelta(touch1) * m_movementSpeed, Space.World);
-                            break;
                     }
-                }
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                /////////////////////////////////////////////// 2 FINGER ZOOM MOVEMENT ///////////////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                else if (touchCount >= 2) 
-                {
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////// 2 FINGER ZOOM MOVEMENT ///////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     Touch touch2 = Input.GetTouch(1); // Get the second finger's touch input data.
 
                     Vector3 beforePos1 = PlanePosition(touch1.position);   // Player's first touch input of the update before moving.
@@ -233,6 +253,7 @@ public class CameraControl : MonoBehaviour
     **/
     public void ResetCamera()
     {
+        m_followTarget = null;
         m_camera.transform.position = m_initialPos;
         m_camera.transform.rotation = m_initialRot;
         m_camera.fieldOfView = m_initialZoom;
