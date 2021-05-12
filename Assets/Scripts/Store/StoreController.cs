@@ -57,11 +57,11 @@ public class StoreController : MonoBehaviour
         ////////////////////////////// Retrieve ItemSlot Toggles and Item Prefabs //////////////////////////////
         itemSlots = itemSlotsParent.GetComponentsInChildren<ItemSlot>();
         UnityEngine.Object[]  itemPrefabs = Resources.LoadAll(itemPrefabBaseDir, typeof(Item));
-        int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length + 1; // Set number of catergories based on number of ItemType enums (+1 as indexing starts at 0).
+        int numStoreCatergories = ItemType.GetNames(typeof(ItemType)).Length; // Set number of catergories based on number of ItemType enums (+1 as indexing starts at 0).
 
         ////////////////////////////// Scale Tab Space to Number of Catergories to Tab Width //////////////////////////////
         float tabWidth = baseTab.transform.GetComponent<RectTransform>().sizeDelta.x;
-        float requiredContentSpace = (tabWidth * (numStoreCatergories - 1)) - (3 * tabWidth);
+        float requiredContentSpace = (tabWidth * (numStoreCatergories)) - (3 * tabWidth);
         tabContentSpace.offsetMax = new Vector2(requiredContentSpace, tabContentSpace.offsetMax.y);
 
         for (int i = 0; i < numStoreCatergories; i++)

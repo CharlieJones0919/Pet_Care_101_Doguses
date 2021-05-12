@@ -25,7 +25,6 @@ public class AStarSearch : MonoBehaviour
     // Path Data
     [SerializeField] private Vector3 rootNodePos;    //!< The starting node of the path.
     [SerializeField] private Vector3 goalNodePos;    //!< The intended goal/destination node to find a path to from the starting node.
-    [SerializeField] private bool pathFound = false; //!< Whether or not a path to the goal node has been found yet.
     [SerializeField] private bool searching = false; //!< If a search is currently occurring.
     private List<ASNode> m_path;                     //!< A path composed of nodes which can be used to reach the goal node.
 
@@ -120,7 +119,6 @@ public class AStarSearch : MonoBehaviour
         openSet = new Heap<ASNode>(grid.Length); // Instantiate a new list for open (currently unchecked/unconsidered) path nodes.
         closedSet = new HashSet<ASNode>();       // Instantiate a new list for closed (already checked/considered) path nodes.
 
-        pathFound = false;      // Initialise path to not found yet.
         searching = true;       // Search has now started.
         openSet.Add(rootNode);  // Add the root/starting node to the open set.
         currentNode = new ASNode(Vector3.zero, false, -1, -1); // Set the current node to the start of the grid and as currently non-traversable.
@@ -136,7 +134,6 @@ public class AStarSearch : MonoBehaviour
             if (currentNode == goalNode)
             {
                 RetracePath(rootNode, goalNode); // Retrace the path.
-                pathFound = true;                // Path is now found.
                 searching = false;               // No longer searching.
                 break;
             }
