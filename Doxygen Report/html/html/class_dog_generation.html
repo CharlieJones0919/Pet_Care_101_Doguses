@@ -191,9 +191,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:af56a97d7dfd05fa2b934acd372eedabe"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, Vector3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#af56a97d7dfd05fa2b934acd372eedabe">scalingDirections</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, Vector3&gt;()</td></tr>
 <tr class="memdesc:af56a97d7dfd05fa2b934acd372eedabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which directions the modelScalers values should be applied in depending on the data field. (E.g. "Size" should be applied on all axies, whereas "Leg_Length" should only be applied on the Y-axis).  <a href="class_dog_generation.html#af56a97d7dfd05fa2b934acd372eedabe">More...</a><br /></td></tr>
 <tr class="separator:af56a97d7dfd05fa2b934acd372eedabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81012ac8cb7612e19b9051d3bafb223a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a">breedDataFileDir</a> = null</td></tr>
-<tr class="memdesc:a81012ac8cb7612e19b9051d3bafb223a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A string file path to the directory BreedData.txt is being kept in.  <a href="class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a">More...</a><br /></td></tr>
-<tr class="separator:a81012ac8cb7612e19b9051d3bafb223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d3adde1bb91f7cbc954411d33f2782"><td class="memItemLeft" align="right" valign="top">TextAsset&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782">breedDataFile</a> = null</td></tr>
+<tr class="memdesc:a53d3adde1bb91f7cbc954411d33f2782"><td class="mdescLeft">&#160;</td><td class="mdescRight">The BreedData.txt file where all the different breeds' personality and physical characteristic values are defined.  <a href="class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782">More...</a><br /></td></tr>
+<tr class="separator:a53d3adde1bb91f7cbc954411d33f2782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a4ff96ebb9d70f388a68c744d044655"><td class="memItemLeft" align="right" valign="top">DataTable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655">breedData</a> = new DataTable()</td></tr>
 <tr class="memdesc:a3a4ff96ebb9d70f388a68c744d044655"><td class="mdescLeft">&#160;</td><td class="mdescRight">A data table which will be populated by the data in BreedData.txt for easier/faster access to its data.  <a href="class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655">More...</a><br /></td></tr>
 <tr class="separator:a3a4ff96ebb9d70f388a68c744d044655"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -685,8 +685,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a81012ac8cb7612e19b9051d3bafb223a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81012ac8cb7612e19b9051d3bafb223a">&#9670;&nbsp;</a></span>breedDataFileDir</h2>
+<a id="a53d3adde1bb91f7cbc954411d33f2782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53d3adde1bb91f7cbc954411d33f2782">&#9670;&nbsp;</a></span>breedDataFile</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -695,7 +695,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string DogGeneration.breedDataFileDir = null</td>
+          <td class="memname">TextAsset DogGeneration.breedDataFile = null</td>
         </tr>
       </table>
   </td>
@@ -705,7 +705,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>A string file path to the directory BreedData.txt is being kept in. </p>
+<p>The BreedData.txt file where all the different breeds' personality and physical characteristic values are defined. </p>
 
 </div>
 </div>

@@ -15,7 +15,7 @@ var class_dog_generation =
     [ "SetComponentOrientations", "class_dog_generation.html#a8774c668b0bf3fa25f2ec49f72e8724a", null ],
     [ "SetComponentScale", "class_dog_generation.html#a1bbcdc0892d4b8acc57c7a3f96a5d495", null ],
     [ "breedData", "class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655", null ],
-    [ "breedDataFileDir", "class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a", null ],
+    [ "breedDataFile", "class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782", null ],
     [ "careValueStates", "class_dog_generation.html#a82a93c5bb3cc39bfb7403e8f0b0f598f", null ],
     [ "controller", "class_dog_generation.html#a33ad53ab623cde1a42fd076beca352c4", null ],
     [ "defaultCareDecrement", "class_dog_generation.html#ad2a24685917056260b8f6f7a959bee40", null ],

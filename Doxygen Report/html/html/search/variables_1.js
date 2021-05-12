@@ -7,7 +7,7 @@ var searchData=
   ['bonus_5fgoodcare_983',['bonus_GoodCare',['../class_dog.html#acda187b92c103262a4ad3fd20cddd398',1,'Dog']]],
   ['bonuspay_984',['bonusPay',['../class_controller.html#a4ff74a7c4a988a4384cbf0a95d164e80',1,'Controller']]],
   ['breeddata_985',['breedData',['../class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655',1,'DogGeneration']]],
-  ['breeddatafiledir_986',['breedDataFileDir',['../class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a',1,'DogGeneration']]],
+  ['breeddatafile_986',['breedDataFile',['../class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782',1,'DogGeneration']]],
   ['btaction_987',['btAction',['../class_b_t_action.html#a308f7057a6853e7c6e5dd6283bb4f456',1,'BTAction']]],
   ['btnodes_988',['btNodes',['../class_b_t_sequence.html#a2d52fdbcde4e6958b5ee0a0e72623a78',1,'BTSequence']]]
 ];

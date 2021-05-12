@@ -221,7 +221,7 @@ public class DogGeneration : MonoBehaviour
     private Dictionary<string, float> modelScalers = new Dictionary<string, float>();                       //!< A dictionary of paired scaling descriptions as defined in the BreedData.txt file with an actual value for how much the dog's GameObject should be scaled based on its key description.
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();  //!< Which directions the modelScalers values should be applied in depending on the data field. (E.g. "Size" should be applied on all axies, whereas "Leg_Length" should only be applied on the Y-axis).
 
-    [SerializeField] private string breedDataFileDir = null;      //!< A string file path to the directory BreedData.txt is being kept in.
+    [SerializeField] private TextAsset breedDataFile = null;     //!< The BreedData.txt file where all the different breeds' personality and physical characteristic values are defined.
     private DataTable breedData = new DataTable();               //!< A data table which will be populated by the data in BreedData.txt for easier/faster access to its data.
     private int dogBreedsDefined = 0;                            //!< How many dog breeds were defined in BreedData.txt - used to iterate through the list of breeds to find their data values. Assigned after the file has been read.
 
@@ -231,7 +231,8 @@ public class DogGeneration : MonoBehaviour
     private void Awake()
     {
         ////////////////// Read the Breed Data from the Dog Data Text File //////////////////
-        string[] data = System.IO.File.ReadAllLines(Application.dataPath + breedDataFileDir);
+       // string[] data = System.IO.File.ReadAllLines(Application.dataPath + breedDataFileDir);
+        string[] data = breedDataFile.text.Split("\n"[0]);
         for (int i = 0; i < data.Length; i++) //Removes Blank Spaces from Data
         {
             data[i] = string.Concat(data[i].Where(c => !char.IsWhiteSpace(c)));
