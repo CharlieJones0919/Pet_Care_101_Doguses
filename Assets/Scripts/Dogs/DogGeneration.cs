@@ -231,7 +231,6 @@ public class DogGeneration : MonoBehaviour
     private void Awake()
     {
         ////////////////// Read the Breed Data from the Dog Data Text File //////////////////
-       // string[] data = System.IO.File.ReadAllLines(Application.dataPath + breedDataFileDir);
         string[] data = breedDataFile.text.Split("\n"[0]);
         for (int i = 0; i < data.Length; i++) //Removes Blank Spaces from Data
         {
