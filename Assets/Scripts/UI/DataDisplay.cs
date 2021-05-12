@@ -23,7 +23,6 @@ public class DataDisplay : MonoBehaviour
     */
     public void OnOpen(Dog newFocus)
     {
-        gameObject.SetActive(true);
         focusedDog = newFocus;
 
         foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /** \class TipPopUp
-*   \brief A class for outputting messages to the player during runtime for a number of seconds before deactivating using a couroutine.
+*   \brief A class for outputting messages to the player during runtime for a number of seconds before deactivating.
 */
 public class TipPopUp : MonoBehaviour
 {   
@@ -33,14 +33,13 @@ public class TipPopUp : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        TipTimer(messageQueue[0]);
-    }
-
+    /** \fn Update
+    *   \brief Displays the string at the front of the message list.
+    */
+    public void Update() { TipTimer(messageQueue[0]); }
 
     /** \fn TipTimer
-    *   \brief A couroutine to output the given message to the textbox, wait for the appropriate time for the length of that message, then remove it from the message queue. 
+    *   \brief Outputs the given message to the textbox, wait for the appropriate time for the length of that message, then remove it from the message queue. 
     *   If there are more messages in the queue, it'll display the next one, otherwise it'll just deactivate the pop-up box.
     */
     private void TipTimer(string tip = null)

@@ -80,7 +80,6 @@ public class Controller : MonoBehaviour
         allDogs.Add(newDog.gameObject, newDog);
         newDog.SetController(this);
 
-
         UIOutput.ActivateNewDogPanel();
         UIOutput.gameObject.SetActive(true);
         UIOutput.OnOpen(newDog);

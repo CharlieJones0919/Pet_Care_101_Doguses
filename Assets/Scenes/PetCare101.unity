@@ -9205,7 +9205,7 @@ MonoBehaviour:
   dogPrefabBase: {fileID: 9089536525100727225, guid: be36d44d95883ff4b9532da8692a06ff,
     type: 3}
   dogModelPartsPath: Art/Models/DogComponentModels/BreedSpecific
-  breedDataFileDir: /Scripts/ReferenceFiles/BreedData.txt
+  breedDataFileDir: /Assets/ReferenceFiles/BreedData.txt
 --- !u!114 &1958195946
 MonoBehaviour:
   m_ObjectHideFlags: 0
