@@ -151,8 +151,6 @@ public class CameraControl : MonoBehaviour
         // If there has been touchscreen input...
         if (touchCount > 0)   
         {
-            if (m_followTarget != null) { m_followTarget = null; };
-
             m_plane.SetNormalAndPosition(transform.up, transform.position); // Update the relative position of upwards.
             Touch touch1 = Input.GetTouch(0); // Get the first finger's touch input data.
 
