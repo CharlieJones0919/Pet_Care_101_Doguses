@@ -54,9 +54,9 @@ public class CameraControl : MonoBehaviour
 
 #if UNITY_EDITOR //If in the editor, check for mouse input.
             CheckDogTap_Editor();
-#else            //If not in the editor check for touch input. 
-            CheckDogTap_Mobile();
+#else            //If not in the editor check for touch input.   
             CheckCameraMovement_Mobile();
+            CheckDogTap_Mobile();
 #endif
         }
 
@@ -151,7 +151,7 @@ public class CameraControl : MonoBehaviour
         // If there has been touchscreen input...
         if (touchCount > 0)   
         {
-            if (m_followTarget != null) { ResetCamera(); return; };
+            if (m_followTarget != null) { m_followTarget = null; };
 
             m_plane.SetNormalAndPosition(transform.up, transform.position); // Update the relative position of upwards.
             Touch touch1 = Input.GetTouch(0); // Get the first finger's touch input data.
@@ -173,26 +173,28 @@ public class CameraControl : MonoBehaviour
                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (m_cameraRotationEnabled)
                     {
-                            var pos1 = PlanePosition(Input.GetTouch(0).position);
-                            var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
-                            m_camera.transform.RotateAround(pos1, m_plane.normal, -Vector3.SignedAngle(pos1, pos1b, m_plane.normal) * m_rotationSpeed);
+                        var pos1 = PlanePosition(Input.GetTouch(0).position);
+                        var pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
+                        m_camera.transform.RotateAround(pos1, m_plane.normal, -Vector3.SignedAngle(pos1, pos1b, m_plane.normal) * m_rotationSpeed);
                     }
-
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     /////////////////////////////////////////////// 2 FINGER ZOOM MOVEMENT ///////////////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    Touch touch2 = Input.GetTouch(1); // Get the second finger's touch input data.
-
-                    Vector3 beforePos1 = PlanePosition(touch1.position);   // Player's first touch input of the update before moving.
-                    Vector3 beforePos2 = PlanePosition(touch2.position);   // Player's second touch input of the update before moving.
-                    Vector3 afterPos1 = PlanePosition(touch1.position - touch1.deltaPosition);   // Player's first touch input of the update before moving.
-                    Vector3 afterPos2 = PlanePosition(touch2.position - touch2.deltaPosition);   // Player's second touch input of the update before moving.
-
-                    float zoom = Vector3.Distance(afterPos1, afterPos2) / Vector3.Distance(beforePos1, beforePos2); // How much to zoom in or out: the average position between the changed distance of the players 2 fingers after movement.
-
-                    if ((zoom != 0) && ((m_camera.fieldOfView * zoom) >= m_minZoomLimit) && ((m_camera.fieldOfView * zoom) < m_maxZoomLimit))
+                    else
                     {
-                        m_camera.fieldOfView *= zoom;
+                        Touch touch2 = Input.GetTouch(1); // Get the second finger's touch input data.
+
+                        Vector3 beforePos1 = PlanePosition(touch1.position);   // Player's first touch input of the update before moving.
+                        Vector3 beforePos2 = PlanePosition(touch2.position);   // Player's second touch input of the update before moving.
+                        Vector3 afterPos1 = PlanePosition(touch1.position - touch1.deltaPosition);   // Player's first touch input of the update before moving.
+                        Vector3 afterPos2 = PlanePosition(touch2.position - touch2.deltaPosition);   // Player's second touch input of the update before moving.
+
+                        float zoom = Vector3.Distance(afterPos1, afterPos2) / Vector3.Distance(beforePos1, beforePos2); // How much to zoom in or out: the average position between the changed distance of the players 2 fingers after movement.
+
+                        if ((zoom != 0) && ((m_camera.fieldOfView * zoom) >= m_minZoomLimit) && ((m_camera.fieldOfView * zoom) < m_maxZoomLimit))
+                        {
+                            m_camera.fieldOfView *= zoom;
+                        }
                     }
                 }
 
