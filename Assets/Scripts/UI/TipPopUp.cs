@@ -10,11 +10,11 @@ using UnityEngine.UI;
 *   \brief A class for outputting messages to the player during runtime for a number of seconds before deactivating using a couroutine.
 */
 public class TipPopUp : MonoBehaviour
-{
-    [SerializeField] private Text tipText;              //!< The text UI to output the message[s] to.
+{   
+    [SerializeField] private Text tipText = null;           //!< The text UI to output the message[s] to.
     [SerializeField] private List<string> messageQueue = new List<string>(); //!< A list of string messages waiting to be displayed.
-    [SerializeField] private float timePerCharacter;    //!< Scaler of time per character to calculate the total amount of time the message should be displayed for.
-    private float secondsToDisplay;                     //!< How much time the current message should be displayed for based on the number of characters in it.
+    [SerializeField] private float timePerCharacter = 0;    //!< Scaler of time per character to calculate the total amount of time the message should be displayed for.
+    private float secondsToDisplay;                         //!< How much time the current message should be displayed for based on the number of characters in it.
 
     /** \fn DisplayTipMessage
     *   \brief Takes a string message and adds it to the message queue if it isn't already in there. If the tip pop-up box isn't currently active it'll immediately activate it then immediately output this message as the first/only.

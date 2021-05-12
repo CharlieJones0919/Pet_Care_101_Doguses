@@ -19,34 +19,34 @@ public enum ItemType
 */
 public class StoreController : MonoBehaviour
 {
-    [SerializeField] private Controller controller;             //!< Reference to the game controller.
-    [SerializeField] private GameObject worldFloor;             //!< A reference to the game world's ground object. Required to place ItemInstances within the floor's bounds.
-    [SerializeField] private float traversableFloorOffset;      //!< An offset of how much space from the edge of the ground object should be made when populating the possible ItemInstance potencial positions.
+    [SerializeField] private Controller controller = null;             //!< Reference to the game controller.
+    [SerializeField] private GameObject worldFloor = null;             //!< A reference to the game world's ground object. Required to place ItemInstances within the floor's bounds.
+    [SerializeField] private float traversableFloorOffset = 0;         //!< An offset of how much space from the edge of the ground object should be made when populating the possible ItemInstance potencial positions.
                                                                 
-    [SerializeField] private string itemPrefabBaseDir;          //!< The asset directory path to the Item prefabs as a string for retrieving all the prefabs in the asset folder.
+    [SerializeField] private string itemPrefabBaseDir = null;          //!< The asset directory path to the Item prefabs as a string for retrieving all the prefabs in the asset folder.
 
     private Dictionary<ItemType, StoreSection> storeSections = new Dictionary<ItemType, StoreSection>(); //!< A list of the different StoreSections (store tabs and associated Items of that type) in a dictionary with the key as their type for ease of access.
-    private ItemType currentSection;                            //!< The StoreSection currently open in the store menu.
-    [SerializeField] private int currentSectionPage = 0;        //!< The current "page" (segment of Items from the StoreSection's Item list able to be displayed within the number of ItemSlots) the store is displaying.
-    private Item focusItem;                                     //!< Which Item from an ItemSlot has been selected to output the details of in the UI.
+    private ItemType currentSection;                                   //!< The StoreSection currently open in the store menu.
+    [SerializeField] private int currentSectionPage = 0;               //!< The current "page" (segment of Items from the StoreSection's Item list able to be displayed within the number of ItemSlots) the store is displaying.
+    private Item focusItem;                                            //!< Which Item from an ItemSlot has been selected to output the details of in the UI.
 
-    [SerializeField] private StoreSection baseTab;              //!< The base existing UI tab in the store menu UI to use as a base to instantiate more section tabs/StoreSections from. (Each tab has a StoreSection script).
-    [SerializeField] private RectTransform tabContentSpace;     //!< The viewing rectangle of the tabs scrollbar where the store tabs are kept. A reference to this is required to scale the viewport with the number of tabs.
+    [SerializeField] private StoreSection baseTab = null;              //!< The base existing UI tab in the store menu UI to use as a base to instantiate more section tabs/StoreSections from. (Each tab has a StoreSection script).
+    [SerializeField] private RectTransform tabContentSpace = null;     //!< The viewing rectangle of the tabs scrollbar where the store tabs are kept. A reference to this is required to scale the viewport with the number of tabs.
 
-    [SerializeField] private GameObject itemInfoPanel;          //!< UI panel in which the data values about a selected ItemSlot toggle Item can be displayed to the player. Required to activate/deactivate depending on if there's anything to show for that section.
-    [SerializeField] private Button backPageButton;             //!< Button to go to back a section page.
-    [SerializeField] private Button nextPageButton;             //!< Button to go to back a section page.
+    [SerializeField] private GameObject itemInfoPanel = null;          //!< UI panel in which the data values about a selected ItemSlot toggle Item can be displayed to the player. Required to activate/deactivate depending on if there's anything to show for that section.
+    [SerializeField] private Button backPageButton = null;             //!< Button to go to back a section page.
+    [SerializeField] private Button nextPageButton = null;             //!< Button to go to back a section page.
 
-    [SerializeField] private GameObject itemSlotsParent;        //!< Parent object of the ItemSlot toggles. Just used to retrieve the ItemSlots from.
-    [SerializeField] private ItemSlot[] itemSlots;              //!< A list of all the ItemSlots in the StoreMenu page.
+    [SerializeField] private GameObject itemSlotsParent = null;        //!< Parent object of the ItemSlot toggles. Just used to retrieve the ItemSlots from.
+    [SerializeField] private ItemSlot[] itemSlots = null;              //!< A list of all the ItemSlots in the StoreMenu page.
 
     ////////// Focus Item Data Display UI Elements //////////
-    [SerializeField] private Text focusItemName;                //!< Text UI for outputting the name of the ItemSlot Item currently selected.
-    [SerializeField] private Image focusItemImage;              //!< Image UI for outputting the sprite of the ItemSlot Item currently selected.
-    [SerializeField] private Text focusItemPrice;               //!< Text UI for outputting the price of the ItemSlot Item currently selected.
-    [SerializeField] private Text focusItemDesc;                //!< Text UI for outputting the description of the ItemSlot Item currently selected.
+    [SerializeField] private Text focusItemName = null;                //!< Text UI for outputting the name of the ItemSlot Item currently selected.
+    [SerializeField] private Image focusItemImage = null;              //!< Image UI for outputting the sprite of the ItemSlot Item currently selected.
+    [SerializeField] private Text focusItemPrice = null;               //!< Text UI for outputting the price of the ItemSlot Item currently selected.
+    [SerializeField] private Text focusItemDesc = null;                //!< Text UI for outputting the description of the ItemSlot Item currently selected.
 
-    [SerializeField] private Button purchaseButton;             //!< Reference to the purchase button for making interactable or not depending on if the player has enough money to buy the Item they're currently toggled on.                                                    
+    [SerializeField] private Button purchaseButton = null;             //!< Reference to the purchase button for making interactable or not depending on if the player has enough money to buy the Item they're currently toggled on.                                                    
 
     /** \fn Start
     *  \brief Retrieves all the Item prefabs from the assets directory and instantiates tabs for each of the ItemType enums. Makes StoreSections for each ItemType/tab and populates their Item lists with the retrieved Item prefabs of the same ItemType.

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 */
 public class GetUIComponent : MonoBehaviour
 {
-    [SerializeField] private DataDisplay UIOutputScript; //!< Reference to the DataDisplay script in the DogInfoPanel. Set as a serialized field in the inspector.
+    [SerializeField] private DataDisplay UIOutputScript = null; //!< Reference to the DataDisplay script in the DogInfoPanel. Set as a serialized field in the inspector.
 
     /** \fn GetUIComponent
     *  \brief Add its component[s] to the appropriate dictionary in DataDisplay depending on which components can be found in this object and what this object's tag is. 

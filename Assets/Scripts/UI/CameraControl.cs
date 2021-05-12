@@ -10,21 +10,21 @@ using UnityEngine.EventSystems;
  */
 public class CameraControl : MonoBehaviour
 {
-    private float m_movementSpeed = 1.75f; //!< Camera movement speed.
-    private float m_rotationSpeed = 2.75f; //!< Camera rotation speed.
+    private float m_movementSpeed = 2.5f; //!< Camera movement speed.
+    private float m_rotationSpeed = 3.5f; //!< Camera rotation speed.
 
-    [SerializeField] private Controller controller; //!< Reference to the game controller.
+    [SerializeField] private Controller controller = null;   //!< Reference to the game controller.
 
-    private Camera m_camera;                                //!< The camera object. (Just set to the main camera).
-    [SerializeField] private Collider m_cameraBounds;       //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
-    [SerializeField] private float m_minZoomLimit;          //!< Minimum the camera's field of view can be zoomed into.
-    [SerializeField] private float m_maxZoomLimit;          //!< Maximum the camera's field of view can be zoomed out to.
-    private Plane m_plane;                                  //!< A plane to use as a direction reference for movement.
+    private Camera m_camera;                                 //!< The camera object. (Just set to the main camera).
+    [SerializeField] private Collider m_cameraBounds = null; //!< Boundary box the camera can move witin. (Prevents the player from moving the camera out of a range they'll be able to navigate back from).
+    [SerializeField] private float m_minZoomLimit = 0;       //!< Minimum the camera's field of view can be zoomed into.
+    [SerializeField] private float m_maxZoomLimit = 0;       //!< Maximum the camera's field of view can be zoomed out to.
+    private Plane m_plane;                                   //!< A plane to use as a direction reference for movement.
 
-    [SerializeField] private Vector3 m_initialPos;          //!< The camera's initial position before any touch input. (For resetting the camera.)
-    [SerializeField] private Quaternion m_initialRot;       //!< The camera's initial rotation before any touch input. (For resetting the camera.)
-    [SerializeField] private float m_initialZoom;           //!< The camera's initial field of view before any touch input. (For resetting the camera.)
-    [SerializeField] private bool m_cameraRotationEnabled;  //!< Set by the rotation toggle button to enable/disable camera rotation.
+    [SerializeField] private Vector3 m_initialPos = Vector3.zero;           //!< The camera's initial position before any touch input. (For resetting the camera.)
+    [SerializeField] private Quaternion m_initialRot = Quaternion.identity; //!< The camera's initial rotation before any touch input. (For resetting the camera.)
+    [SerializeField] private float m_initialZoom = 0;                       //!< The camera's initial field of view before any touch input. (For resetting the camera.)
+    [SerializeField] private bool m_cameraRotationEnabled = false;          //!< Set by the rotation toggle button to enable/disable camera rotation.
 
     /** \fn Start 
      *  \brief Sets the camera to the scene's main camera on script instantiation if it hasn't been allocated a camera object and sets the camera's initial orientation values.
@@ -80,7 +80,8 @@ public class CameraControl : MonoBehaviour
 
                         if (controller.UIOutput.GetFocusDog() != dog.Key)
                         {
-                            controller.UIOutput.SetFocusDog(dog.Value);
+                            controller.UIOutput.gameObject.SetActive(true);
+                            controller.UIOutput.OnOpen(dog.Value);
                         }
                         return;
                     }
@@ -109,7 +110,7 @@ public class CameraControl : MonoBehaviour
 
                         if (controller.UIOutput.GetFocusDog() != dog.Key)
                         {
-                            controller.UIOutput.SetFocusDog(dog.Value);
+                            controller.UIOutput.OnOpen(dog.Value);
                         }
                         return;
                     }

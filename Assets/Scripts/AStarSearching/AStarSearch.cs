@@ -25,7 +25,7 @@ public class AStarSearch : MonoBehaviour
     // Path Data
     [SerializeField] private Vector3 rootNodePos;    //!< The starting node of the path.
     [SerializeField] private Vector3 goalNodePos;    //!< The intended goal/destination node to find a path to from the starting node.
-    [SerializeField] private bool pathFound;         //!< Whether or not a path to the goal node has been found yet.
+    [SerializeField] private bool pathFound = false; //!< Whether or not a path to the goal node has been found yet.
     [SerializeField] private bool searching = false; //!< If a search is currently occurring.
     private List<ASNode> m_path;                     //!< A path composed of nodes which can be used to reach the goal node.
 

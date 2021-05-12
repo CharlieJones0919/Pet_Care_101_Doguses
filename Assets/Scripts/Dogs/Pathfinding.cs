@@ -14,25 +14,25 @@ public enum MoveSpeed { Crawling, Walking, Running };
 */
 public class Pathfinding : MonoBehaviour
 {
-    public AStarSearch m_aStarSearch;                          //!< Reference to the A* script. (Retrieved from the ground plane).
-    public GameObject m_randomPointStorage;                    //!< Where to store the random point in the hierarchy. Done for cleanliness of project.
-    [SerializeField] private GameObject m_randomPoint;         //!< An empty game object which can be placed at a random position on the ground plane for random movement.
-                                                               
-    ////////// Dog Movement Speeds //////////                  
-    [SerializeField] private float m_crawlSpeed;               //!< Slowest movement speed definition.   
-    [SerializeField] private float m_walkSpeed;                //!< Regular movement speed definition. 
-    [SerializeField] private float m_runSpeed;                 //!< Fastest movement speed definition. 
-    [SerializeField] private float m_currentSpeed;             //!< The dog's current set movement speed. (Is set to m_walkSpeed on initialisation).
-                                                               
-    [SerializeField] private Rigidbody m_RB;                   //!< The dog's rigidbody component for setting velocity to for movement. 
-    [SerializeField] private Collider m_collider;              //!< The dog's collider for checking if the next node in a found path has been reached yet: its position is within the collider's bounds.
+    public AStarSearch m_aStarSearch;                           //!< Reference to the A* script. (Retrieved from the ground plane).
+    public GameObject m_randomPointStorage;                     //!< Where to store the random point in the hierarchy. Done for cleanliness of project.
+    [SerializeField] private GameObject m_randomPoint = null;   //!< An empty game object which can be placed at a random position on the ground plane for random movement.
+                                                                
+    ////////// Dog Movement Speeds //////////                   
+    [SerializeField] private float m_crawlSpeed = 0;            //!< Slowest movement speed definition.   
+    [SerializeField] private float m_walkSpeed = 0;             //!< Regular movement speed definition. 
+    [SerializeField] private float m_runSpeed = 0;              //!< Fastest movement speed definition. 
+    [SerializeField] private float m_currentSpeed = 0;          //!< The dog's current set movement speed. (Is set to m_walkSpeed on initialisation).
+                                                                
+    [SerializeField] private Rigidbody m_RB = null;             //!< The dog's rigidbody component for setting velocity to for movement. 
+    [SerializeField] private Collider m_collider = null;        //!< The dog's collider for checking if the next node in a found path has been reached yet: its position is within the collider's bounds.
+                                                                
+    private List<Vector3> m_foundPath = new List<Vector3>();    //!< Requested path to a destination as a list of Vector3 positions.
+    [SerializeField] private bool m_randomNodeFound = false;    //!< Whether or not a traversable random node has been generated.
+    [SerializeField] private bool m_pathFound = false;          //!< If a path has been found yet or not.
 
-    private List<Vector3> m_foundPath = new List<Vector3>();   //!< Requested path to a destination as a list of Vector3 positions.
-    [SerializeField] private bool m_randomNodeFound = false;   //!< Whether or not a traversable random node has been generated.
-    [SerializeField] private bool m_pathFound = false;         //!< If a path has been found yet or not.
-
-    [SerializeField] private GameObject m_currentTarget;       //!< What the dog is currently trying to find a path to and move towards.
-    [SerializeField] private bool m_reachedTarget = false;     //!< Whether or not the dog has reached its target yet: collided with it.
+    [SerializeField] private GameObject m_currentTarget = null; //!< What the dog is currently trying to find a path to and move towards.
+    [SerializeField] private bool m_reachedTarget = false;      //!< Whether or not the dog has reached its target yet: collided with it.
 
     /** \fn Start
     *  \brief Instantiate the m_randomPoint object, set the dog's speed to walking, and its current target to the random point.

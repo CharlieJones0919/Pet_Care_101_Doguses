@@ -10,9 +10,9 @@ using UnityEngine.UI;
 */
 public class StoreSection : MonoBehaviour
 {
-    [SerializeField] private ItemType sectionCatergory; //!< ItemType of this StoreSection and all the Items within.
-    [SerializeField] private Text sectionLabel;         //!< The text displayed on this tab toggle button. Gets set to the ItemType of this StoreSection.
-    [SerializeField] private List<Item> sectionItems;   //!< The items of the same ItemType in this section.
+    [SerializeField] private ItemType sectionCatergory = 0; //!< ItemType of this StoreSection and all the Items within.
+    [SerializeField] private Text sectionLabel = null;                 //!< The text displayed on this tab toggle button. Gets set to the ItemType of this StoreSection.
+    [SerializeField] private List<Item> sectionItems = null;           //!< The items of the same ItemType in this section.
     private Dictionary<int, List<Item>> pageItems = new Dictionary<int, List<Item>>();
 
     [SerializeField] private int extraSectionPages = 0; //!< How many "pages" are in this section. This is simply the number of sectionItems divided by how many ItemSlots are in the store UI to display said Items.

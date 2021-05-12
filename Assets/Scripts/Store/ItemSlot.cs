@@ -9,9 +9,9 @@ using UnityEngine.UI;
 */
 public class ItemSlot : MonoBehaviour
 {
-    [SerializeField] private Toggle itemToggle;  //!< Toggle/checkbox UI component of the slot.
-    [SerializeField] private Image displayImage; //!< Image UI component of the slot - this will be set to the sprite of the Item it's currently set to.
-    private Item displayItem;                    //!< Reference to the Item this slot is displaying/representing.
+    [SerializeField] private Toggle itemToggle = null;  //!< Toggle/checkbox UI component of the slot.
+    [SerializeField] private Image displayImage = null; //!< Image UI component of the slot - this will be set to the sprite of the Item it's currently set to.
+    private Item displayItem;                           //!< Reference to the Item this slot is displaying/representing.
 
     /** \fn SetItem
     *  \brief Called by StoreController and set when populating a StoreSection's page Items to set which Item this slot should be displaying in the page.

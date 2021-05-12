@@ -207,21 +207,21 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
-    [SerializeField] private Controller controller;      //!< Reference to the game controller.
-    [SerializeField] private float defaultCareDecrement; //!< A serializable float value to set the amount the dogs' care values are decreased by each update by default.
+    [SerializeField] private Controller controller = null;         //!< Reference to the game controller.
+    [SerializeField] private float defaultCareDecrement = -0.005f; //!< A serializable float value to set the amount the dogs' care values are decreased by each update by default.
 
     private Dictionary<DogCareValue, Dictionary<string, Vector2>> careValueStates = new Dictionary<DogCareValue, Dictionary<string, Vector2>>();    //!< A Dictionary list of all the care values a dog should have, paired with the states each of those care values can be in depending on its float value at run-time (check CareProperties in Controller for more info), and the lower/upper bounds of said state.
     private Dictionary<DogPersonalityValue, Dictionary<string, Vector2>> personalityValueStates = new Dictionary<DogPersonalityValue, Dictionary<string, Vector2>>(); //!< The same as careValueStates but for the dogs' personality values.
 
     public Dog dogPrefabBase;                            //!< The unmodified dog object prefab. Won't have its breed specific model components yet, care/personality values, or individual details like an age and breed set yet - those are created/set in this class.
     private Dictionary<DogDataField, List<GameObject>> modelList = new Dictionary<DogDataField, List<GameObject>>(); //!< A list of all the additional dog model components such as alternative ears, tails, and snouts.
-    [SerializeField] private string dogModelPartsPath;   //!< Asset folder base directory path as a string to find the additional dog model parts in.
+    [SerializeField] private string dogModelPartsPath = "Art/Models/DogComponentModels/BreedSpecific";   //!< Asset folder base directory path as a string to find the additional dog model parts in.
 
     private List<ModelOrientation> modelOrientations = new List<ModelOrientation>();                        //!< A list of all the defined ModelOrientations. Used to set the component's rotations/positions based on the description for such in their breed's BreedData field.
     private Dictionary<string, float> modelScalers = new Dictionary<string, float>();                       //!< A dictionary of paired scaling descriptions as defined in the BreedData.txt file with an actual value for how much the dog's GameObject should be scaled based on its key description.
     private Dictionary<DogDataField, Vector3> scalingDirections = new Dictionary<DogDataField, Vector3>();  //!< Which directions the modelScalers values should be applied in depending on the data field. (E.g. "Size" should be applied on all axies, whereas "Leg_Length" should only be applied on the Y-axis).
 
-    [SerializeField] private string breedDataFileDir;    //!< A string file path to the directory BreedData.txt is being kept in.
+    [SerializeField] private string breedDataFileDir = "/Scripts/ReferenceFiles/BreedData.txt";    //!< A string file path to the directory BreedData.txt is being kept in.
     private DataTable breedData = new DataTable();       //!< A data table which will be populated by the data in BreedData.txt for easier/faster access to its data.
     private int dogBreedsDefined = 0;                    //!< How many dog breeds were defined in BreedData.txt - used to iterate through the list of breeds to find their data values. Assigned after the file has been read.
 

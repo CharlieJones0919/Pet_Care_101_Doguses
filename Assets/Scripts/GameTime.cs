@@ -11,21 +11,21 @@ using UnityEngine.UI;
 */
 public class GameTime : MonoBehaviour
 {
-    [SerializeField] private Controller controller;      //!< Reference to the game controller.
-    [SerializeField] private DogGeneration dogGenerator; //!< Reference to DogGeneration so a new dog can be generated every in-game week.
-    [SerializeField] private int timeAdjustment;         //!< Multiplier from regular seconds to game time.
+    [SerializeField] private Controller controller = null;      //!< Reference to the game controller.
+    [SerializeField] private DogGeneration dogGenerator = null; //!< Reference to DogGeneration so a new dog can be generated every in-game week.
+    [SerializeField] private int timeAdjustment = 0;            //!< Multiplier from regular seconds to game time.
                                                          
-    [SerializeField] private Text dateTextbox;           //!< UI to output the current in-game date to.
-    [SerializeField] private Text timeTextbox;           //!< UI to output the current in-game time to.
-    [SerializeField] private Text totalDaysTextbox;      //!< UI to output the total number of in-game days passed since the game started.
+    [SerializeField] private Text dateTextbox = null;           //!< UI to output the current in-game date to.
+    [SerializeField] private Text timeTextbox = null;           //!< UI to output the current in-game time to.
+    [SerializeField] private Text totalDaysTextbox = null;      //!< UI to output the total number of in-game days passed since the game started.
 
     private static float gameTimeSeconds = 0;            //!< Game-time Seconds. 
-    private static int   gameTimeMinutes = 0;            //!< Game-time Minutes. 
-    private static int   gameTimeHours = 20;              //!< Game-time Hours. (Game starts at 8AM).
-    private static int   gameTimeDays = 0;               //!< Game-time Days.
-    private static int   gameTimeDaysTotal = 0;          //!< Game-time Days Total.
-    private static int   gameTimeWeeks = 0;              //!< Game-time Weeks. 
-    private static int   gameTimeYears = 0;              //!< Game-time Years. 
+    private static int gameTimeMinutes = 0;              //!< Game-time Minutes. 
+    private static int gameTimeHours = 8;                //!< Game-time Hours. (Game starts at 8AM).
+    private static int gameTimeDays = 0;                 //!< Game-time Days.
+    private static int gameTimeDaysTotal = 0;            //!< Game-time Days Total.
+    private static int gameTimeWeeks = 0;                //!< Game-time Weeks. 
+    private static int gameTimeYears = 0;                //!< Game-time Years. 
 
     private delegate void TimeFunction();                //!< Delegate function for time triggered functions to define. (So they can be added to lists as generic types for iterating through to call at the appropritate time stamps).
     private List<TimeFunction> dailyFunctions = new List<TimeFunction>();       //!< List of daily functions. 

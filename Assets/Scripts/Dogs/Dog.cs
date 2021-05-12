@@ -14,8 +14,8 @@ using UnityEngine;
 */
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private Controller controller; //!< Reference to the game controller.     //!< Reference to the game's Controller script to retrieve data required by all dogs.
-    [SerializeField] private Pathfinding navigation;    //!< Instance of the Pathfinding script for the dog to utalize for navigation around the map.
+    [SerializeField] private Controller controller = null;     //!< Reference to the game controller.     //!< Reference to the game's Controller script to retrieve data required by all dogs.
+    [SerializeField] private Pathfinding navigation = null;    //!< Instance of the Pathfinding script for the dog to utalize for navigation around the map.
     public void SetController(Controller ctrl) { controller = ctrl; navigation.m_aStarSearch = controller.groundSearch; navigation.m_randomPointStorage = controller.randomPointStorage; }
 
     public string m_name;     //!< This dog's name. 
@@ -24,15 +24,15 @@ public class Dog : MonoBehaviour
     public int m_age;         //!< Age of this dog - how long since it has was instantiated in game time. 
     public Dictionary<BodyPart, BodyComponent> m_body = new Dictionary<BodyPart, BodyComponent>(); //!< References to all the dog's body parts. (The definition for a BodyPart and BodyComponent are in the DogGeneration file).
 
-    public Animator m_animationCTRL;         //!< Animation controller. 
-    public BoxCollider m_collider;           //!< Dog's collider component/bounds. Set dynamically in DogGeneration depending on the dog's mesh space varying by breed type.
-    [SerializeField] private Rigidbody m_RB; //!< Dog's rigid body to derive its speed from/to.
+    public Animator m_animationCTRL;                //!< Animation controller. 
+    public BoxCollider m_collider;                  //!< Dog's collider component/bounds. Set dynamically in DogGeneration depending on the dog's mesh space varying by breed type.
+    [SerializeField] private Rigidbody m_RB = null; //!< Dog's rigid body to derive its speed from/to.
 
     public Dictionary<DogCareValue, CareProperty> m_careValues = new Dictionary<DogCareValue, CareProperty>();                                      //!< A list of the dog's current care value properties so they can be easily iterated through.
     public Dictionary<DogPersonalityValue, PersonalityProperty> m_personalityValues = new Dictionary<DogPersonalityValue, PersonalityProperty>();   //!< A list of the dog's personality value properties so they can be easily iterated through. (Have not been implemented in full to be conditional on the dog's average care values in the long term).
 
-    private Item m_currentItemTarget;                           //!< An item the dog is currently focused on. Stored so it can be travelled to or used if reached and usable.
-    [SerializeField] private GameObject m_currentObjectTarget;  //!< The specific object instance of the current target item.
+    private Item m_currentItemTarget;                                  //!< An item the dog is currently focused on. Stored so it can be travelled to or used if reached and usable.
+    [SerializeField] private GameObject m_currentObjectTarget = null;  //!< The specific object instance of the current target item.
 
     private float m_heldItemPrevYPos;                                  //!< If an item has been picked up, it's previous Y position is stored so it can be placed back down.
     private Vector3 m_holdingOffset = new Vector3(0.0f, -0.45f, 1.0f); //!< Local offset from the dog's snout a held item should be positioned at.

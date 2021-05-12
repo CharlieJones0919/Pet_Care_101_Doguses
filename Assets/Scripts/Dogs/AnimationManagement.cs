@@ -6,7 +6,7 @@ using UnityEngine;
 */
 public class AnimationManagement : MonoBehaviour
 {
-    [SerializeField] private Dog dog; //!< A reference to the dog this animator is attached to. Required to allow the animations to influence the dog's behaviour.
+    [SerializeField] private Dog dog = null; //!< A reference to the dog this animator is attached to. Required to allow the animations to influence the dog's behaviour.
 
     /** \fn NeedsToFinishAnimation
     *  \brief Sets the dog's "NEEDS_2_FINISH_ANIM" fact as true. The dog can't exit the pause state until this is unset back to false. Used so the dog stops all behaviours until finishing specific animations. (E.g. Pauses while finishing the waking up animation).

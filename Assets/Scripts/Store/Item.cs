@@ -15,8 +15,8 @@ using UnityEngine;
 */
 public class Item : MonoBehaviour, ISerializationCallbackReceiver
 {
-    public bool doNotDeploy;                                //!< Whether the item should be displayed in the store. (Added last minute to de-include items I ran out of time to implement).
-    [SerializeField] private int defaultNumToInstantiate;  //!< How many object prefabs for this model should be instantiated by default. (This isn't a cap on the number that can be activated/purchased, but if it's known that there will be many instances it could save on overhead to create them ahead of time instead of during play-time).
+    public bool doNotDeploy = false;                          //!< Whether the item should be displayed in the store. (Added last minute to de-include items I ran out of time to implement).
+    [SerializeField] private int defaultNumToInstantiate = 0; //!< How many object prefabs for this model should be instantiated by default. (This isn't a cap on the number that can be activated/purchased, but if it's known that there will be many instances it could save on overhead to create them ahead of time instead of during play-time).
 
     [SerializeField] private List<DogCareValue> careFufills = new List<DogCareValue>();                      //!< Serializable list of the DogCareValues this item modifies when used by a dog. Added to the m_careFufillments Dictionary as a key when entry is submitted in the inspector.
     [SerializeField] private List<float> careFufillmentAmounts = new List<float>();                          //!< Serializable float amount the modified DogCareValues are modified by when this item is used. Added to the m_careFufillments Dictionary as a value when entry is submitted in the inspector.
@@ -26,22 +26,22 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     private Dictionary<DogCareValue, float> m_careFufillments = new Dictionary<DogCareValue, float>();                      //!< A Dictionary list of the care values in a dog modified when using this item, paired with the amount the care value is modified by.
     private Dictionary<DogPersonalityValue, float> m_personalityFufillments = new Dictionary<DogPersonalityValue, float>(); //!< A Dictionary list of the personality values in a dog modified when using this item, paired with the amount the personality value is modified by.
 
-    private GameObject m_defaultNullObject;                      //!< An empty game object for when game objects shouldn't be set to any actual reference anymore, but unity throws errors if game objects are set to null during runtime.
-    private GameObject m_instanceParent;                         //!< The empty GameObject the Item prefab instances should be parented to. Just specified for organisation and ease of finding instances, and so held items (which are made a child of a dog's snout object) can be placed back from where they came from. 
-    [SerializeField] private ItemInstance m_instancePrefab;      //!< The GameObject representation of this Item. An instance of this will be activated to the game world when the Item is purchased from the store.
-    [SerializeField] private Vector3 m_instancesInactivePos;     //!< A position to place the GameObject instances of this Item when they're deactivated and out of use. (Under the floor).
+    private GameObject m_defaultNullObject;                                 //!< An empty game object for when game objects shouldn't be set to any actual reference anymore, but unity throws errors if game objects are set to null during runtime.
+    private GameObject m_instanceParent;                                    //!< The empty GameObject the Item prefab instances should be parented to. Just specified for organisation and ease of finding instances, and so held items (which are made a child of a dog's snout object) can be placed back from where they came from. 
+    [SerializeField] private ItemInstance m_instancePrefab = null;          //!< The GameObject representation of this Item. An instance of this will be activated to the game world when the Item is purchased from the store.
+    [SerializeField] private Vector3 m_instancesInactivePos = Vector3.zero; //!< A position to place the GameObject instances of this Item when they're deactivated and out of use. (Under the floor).
 
-    private List<ItemInstance> m_instancePool = new List<ItemInstance>(); //!< A list of the m_instancePrefab objects instantiated to be activated representations of this item. The object includes a simple ItemInstance class which contains additional data like if that instance is currently being used or is active.
+    private List<ItemInstance> m_instancePool = new List<ItemInstance>();   //!< A list of the m_instancePrefab objects instantiated to be activated representations of this item. The object includes a simple ItemInstance class which contains additional data like if that instance is currently being used or is active.
 
-    [SerializeField] private ItemType m_itemType;                //!< The ItemType of this Item. (E.g. FOOD, BED, TOYS, etc...).
+    [SerializeField] private ItemType m_itemType = 0;            //!< The ItemType of this Item. (E.g. FOOD, BED, TOYS, etc...).
     [SerializeField] private string m_name = null;               //!< Name of this Item to be displayed in the store. (E.g. Dry Kibble, Plush Duck, etc...).
-    [SerializeField] private Sprite m_sprite;                    //!< The image to be displayed in the store for this Item.
-    [SerializeField] private float m_price;                      //!< Price of this Item for the store.
-    [SerializeField] private string m_description;               //!< Description of this Item for the store.
+    [SerializeField] private Sprite m_sprite = null;             //!< The image to be displayed in the store for this Item.
+    [SerializeField] private float m_price = 0;                  //!< Price of this Item for the store.
+    [SerializeField] private string m_description = null;        //!< Description of this Item for the store.
 
-    [SerializeField] private bool m_singleUse;                   //!< Whether or not this item can be used multiple times or just once. (E.g. Food items are single use and will be deactivated after use, but beds will remain after use).
-    [SerializeField] private Vector2 m_relUsePos;                //!< Where the dog should be positioned on the X and Z axis relative to an object instance of this Item when using it. (E.g. Placed in the centre of a bed). Only X&Y as the dogs heights/Y-positions will vary depending on breed which would differ their required Y-offset.
-    [SerializeField] private bool m_needsUseOffset;              //!< Whether or not to actually set the dog's position to the specified m_relUsePos. Some Items don't require the dog to be positioned anywhere in partiular around the item instance to use them.
+    [SerializeField] private bool m_singleUse = false;           //!< Whether or not this item can be used multiple times or just once. (E.g. Food items are single use and will be deactivated after use, but beds will remain after use).
+    [SerializeField] private Vector2 m_relUsePos = Vector2.zero; //!< Where the dog should be positioned on the X and Z axis relative to an object instance of this Item when using it. (E.g. Placed in the centre of a bed). Only X&Y as the dogs heights/Y-positions will vary depending on breed which would differ their required Y-offset.
+    [SerializeField] private bool m_needsUseOffset = false;      //!< Whether or not to actually set the dog's position to the specified m_relUsePos. Some Items don't require the dog to be positioned anywhere in partiular around the item instance to use them.
 
     /** \fn InstantiatePool
     *   \brief Called in StoreController for each Item to generate its ItemInstance objects. 

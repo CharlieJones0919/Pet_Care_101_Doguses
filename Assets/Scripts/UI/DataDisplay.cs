@@ -10,58 +10,59 @@ using UnityEngine.UI;
 */
 public class DataDisplay : MonoBehaviour
 {
-    [SerializeField] private Controller controller;     //!< Reference to the game controller.
-    [SerializeField] private Dog focusedDog;            //!< The dog to output the data of.
-    [SerializeField] private GameObject newDogPanel;    //!< The adoption screen panel to activate when a new dog is added.
+    [SerializeField] private Controller controller = null;     //!< Reference to the game controller.
+    [SerializeField] private Dog focusedDog = null;            //!< The dog to output the data of.
+    [SerializeField] private GameObject newDogPanel = null;    //!< The adoption screen panel to activate when a new dog is added.
 
     public Dictionary<string, Text> generalDataDisplayUI = new Dictionary<string, Text>();                                                       //!< UI for outputting data other than Care/Personality values. (E.g. Name, Breed, age, etc...).
     public Dictionary<DogCareValue, KeyValuePair<Slider, Text>> careValueDisplayUI = new Dictionary<DogCareValue, KeyValuePair<Slider, Text>>(); //!< UI for outputting the dog's care values, paired with the percentage text and a key for the specific care value this slider/text are for.
     public Dictionary<DogPersonalityValue, Slider> personalityValueDisplayUI = new Dictionary<DogPersonalityValue, Slider>();                    //!< UI for outputting the dog's personality values, with a key for the specific personality value this slider is for.
 
-    /** \fn OnEnable
+    /** \fn OnOpen
     *  \brief When the panel is activated, its general data UI elements to the values of the current dog of focus. (This will be set via Control as called by CameraControl when a dog is tapped/clicked).
     */
-    private void OnEnable()
+    public void OnOpen(Dog newFocus)
     {
-        if (focusedDog != null)
+        gameObject.SetActive(true);
+        focusedDog = newFocus;
+
+        foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
         {
-            foreach (KeyValuePair<string, Text> textElement in generalDataDisplayUI)
+            switch (textElement.Key)
             {
-                switch (textElement.Key)
-                {
-                    case ("NameText"):
-                        if (focusedDog.m_name != "")
-                        {
-                            ToggleNameInputField(false);
-                            textElement.Value.text = focusedDog.m_name.Replace("_", " ");
-                        }
-                        else
-                            ToggleNameInputField(true);
-                        break;
-                    case ("AgeText"):
-                        textElement.Value.text = focusedDog.m_age.ToString() + " yrs";
-                        break;
-                    case ("BreedText"):
-                        textElement.Value.text = focusedDog.m_breed.ToString().Replace("_", " ");
-                        break;
-                    default:
-                        if (textElement.Key != "NameTextbox")
-                        {
-                            Debug.Log("Attempting to set incorrectly tagged Text UI element: " + textElement.Key);
-                        }
-                        break;
-                }
+                case ("NameText"):
+                    if (focusedDog.m_name != "")
+                    {
+                        ToggleNameInputField(false);
+                        textElement.Value.text = focusedDog.m_name.Replace("_", " ");
+                    }
+                    else
+                        ToggleNameInputField(true);
+                    break;
+                case ("AgeText"):
+                    textElement.Value.text = focusedDog.m_age.ToString() + " yrs";
+                    break;
+                case ("BreedText"):
+                    textElement.Value.text = focusedDog.m_breed.ToString().Replace("_", " ");
+                    break;
+                default:
+                    if (textElement.Key != "NameTextbox")
+                    {
+                        Debug.Log("Attempting to set incorrectly tagged Text UI element: " + textElement.Key);
+                    }
+                    break;
             }
         }
     }
 
-    /** \fn OnDisable
+    /** \fn OnClose
     *  \brief When the panel is de-activated, it tells the controller to unset all the dogs' "IS_FOCUS_DOG" facts as true.
     */
-    private void OnDisable()
+    public void OnClose()
     {
         focusedDog = null;
         controller.NotFocusedOnDog();
+        gameObject.SetActive(false);
     }
 
     /** \fn FixedUpdate
@@ -84,10 +85,10 @@ public class DataDisplay : MonoBehaviour
         }
     }
 
-    /** \fn SetFocusDog
-    *  \brief Called by CameraControl when a dog is tapped/clicked. Sets this script's reference to a dog to the one passed in after being hit by a camera raycast. 
-    */
-    public void SetFocusDog(Dog focus) { focusedDog = focus; gameObject.SetActive(true); }
+    ///** \fn SetFocusDog
+    //*  \brief Called by CameraControl when a dog is tapped/clicked. Sets this script's reference to a dog to the one passed in after being hit by a camera raycast. 
+    //*/
+    //public void SetFocusDog(Dog focus) { focusedDog = focus; }
 
     /** \fn ActivateNewDogPanel
      *  \brief Activates the adoption screen when a new dog is generated. Called by the Control class. 
@@ -100,7 +101,6 @@ public class DataDisplay : MonoBehaviour
     public void NewDogAdded()
     {
         controller.PAUSE(false);
-        gameObject.SetActive(true);
         newDogPanel.SetActive(false);
     }
 
