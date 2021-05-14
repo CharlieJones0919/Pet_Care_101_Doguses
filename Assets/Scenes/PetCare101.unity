@@ -3119,7 +3119,7 @@ MonoBehaviour:
   m_initialZoom: 0
   m_cameraRotationEnabled: 1
   m_followTarget: {fileID: 0}
-  m_followOffset: {x: 0, y: 10, z: 10}
+  m_followOffset: {x: 0, y: 7.5, z: 10}
 --- !u!1 &635635606
 GameObject:
   m_ObjectHideFlags: 0
