@@ -131,9 +131,8 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a42566bfe932ac4c8336d2f1325cb431b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a42566bfe932ac4c8336d2f1325cb431b">Start</a> ()</td></tr>
-<tr class="memdesc:a42566bfe932ac4c8336d2f1325cb431b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the BreedData.txt file and adds the data to the breedData DataTable, retrieves the dog model parts from the assets folder, defines the orientation + scaling descriptions as values, then finally defines the dog's care and personality values/states/bounds.  <a href="class_dog_generation.html#a42566bfe932ac4c8336d2f1325cb431b">More...</a><br /></td></tr>
-<tr class="separator:a42566bfe932ac4c8336d2f1325cb431b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab84da0148b0a92da946e877754eb8f05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#ab84da0148b0a92da946e877754eb8f05">Awake</a> ()</td></tr>
+<tr class="separator:ab84da0148b0a92da946e877754eb8f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb4cf5c0c38eb009fdef7afe79b7ed4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#adb4cf5c0c38eb009fdef7afe79b7ed4e">DefineDogPropStates</a> ()</td></tr>
 <tr class="memdesc:adb4cf5c0c38eb009fdef7afe79b7ed4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Listing the states of each DogCareValue and DogPersonality value then adding them to the appropriate states dictionary.  <a href="class_dog_generation.html#adb4cf5c0c38eb009fdef7afe79b7ed4e">More...</a><br /></td></tr>
 <tr class="separator:adb4cf5c0c38eb009fdef7afe79b7ed4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,10 +164,10 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a33ad53ab623cde1a42fd076beca352c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_controller.html">Controller</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a33ad53ab623cde1a42fd076beca352c4">controller</a></td></tr>
+<tr class="memitem:a33ad53ab623cde1a42fd076beca352c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_controller.html">Controller</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a33ad53ab623cde1a42fd076beca352c4">controller</a> = null</td></tr>
 <tr class="memdesc:a33ad53ab623cde1a42fd076beca352c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference to the game controller.  <a href="class_dog_generation.html#a33ad53ab623cde1a42fd076beca352c4">More...</a><br /></td></tr>
 <tr class="separator:a33ad53ab623cde1a42fd076beca352c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a24685917056260b8f6f7a959bee40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#ad2a24685917056260b8f6f7a959bee40">defaultCareDecrement</a></td></tr>
+<tr class="memitem:ad2a24685917056260b8f6f7a959bee40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#ad2a24685917056260b8f6f7a959bee40">defaultCareDecrement</a> = -0.005f</td></tr>
 <tr class="memdesc:ad2a24685917056260b8f6f7a959bee40"><td class="mdescLeft">&#160;</td><td class="mdescRight">A serializable float value to set the amount the dogs' care values are decreased by each update by default.  <a href="class_dog_generation.html#ad2a24685917056260b8f6f7a959bee40">More...</a><br /></td></tr>
 <tr class="separator:ad2a24685917056260b8f6f7a959bee40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82a93c5bb3cc39bfb7403e8f0b0f598f"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, Dictionary&lt; string, Vector2 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a82a93c5bb3cc39bfb7403e8f0b0f598f">careValueStates</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552be">DogCareValue</a>, Dictionary&lt;string, Vector2&gt;&gt;()</td></tr>
@@ -180,7 +179,7 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aa5a40fff51d94ca6482d88e8e63c84c2"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, List&lt; GameObject &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#aa5a40fff51d94ca6482d88e8e63c84c2">modelList</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, List&lt;GameObject&gt;&gt;()</td></tr>
 <tr class="memdesc:aa5a40fff51d94ca6482d88e8e63c84c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A list of all the additional dog model components such as alternative ears, tails, and snouts.  <a href="class_dog_generation.html#aa5a40fff51d94ca6482d88e8e63c84c2">More...</a><br /></td></tr>
 <tr class="separator:aa5a40fff51d94ca6482d88e8e63c84c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4ffef11bf7e344a6bb2f22cb9ea0101"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#ab4ffef11bf7e344a6bb2f22cb9ea0101">dogModelPartsPath</a></td></tr>
+<tr class="memitem:ab4ffef11bf7e344a6bb2f22cb9ea0101"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#ab4ffef11bf7e344a6bb2f22cb9ea0101">dogModelPartsPath</a> = null</td></tr>
 <tr class="memdesc:ab4ffef11bf7e344a6bb2f22cb9ea0101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asset folder base directory path as a string to find the additional dog model parts in.  <a href="class_dog_generation.html#ab4ffef11bf7e344a6bb2f22cb9ea0101">More...</a><br /></td></tr>
 <tr class="separator:ab4ffef11bf7e344a6bb2f22cb9ea0101"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e10e6fe9d5a227beee0a7c724a98306"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="struct_dog_generation_1_1_model_orientation.html">ModelOrientation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a8e10e6fe9d5a227beee0a7c724a98306">modelOrientations</a> = new List&lt;<a class="el" href="struct_dog_generation_1_1_model_orientation.html">ModelOrientation</a>&gt;()</td></tr>
@@ -192,9 +191,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:af56a97d7dfd05fa2b934acd372eedabe"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; <a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, Vector3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#af56a97d7dfd05fa2b934acd372eedabe">scalingDirections</a> = new Dictionary&lt;<a class="el" href="_dog_generation_8cs.html#a876c86d6595c6e086c827400d784e327">DogDataField</a>, Vector3&gt;()</td></tr>
 <tr class="memdesc:af56a97d7dfd05fa2b934acd372eedabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which directions the modelScalers values should be applied in depending on the data field. (E.g. "Size" should be applied on all axies, whereas "Leg_Length" should only be applied on the Y-axis).  <a href="class_dog_generation.html#af56a97d7dfd05fa2b934acd372eedabe">More...</a><br /></td></tr>
 <tr class="separator:af56a97d7dfd05fa2b934acd372eedabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81012ac8cb7612e19b9051d3bafb223a"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a">breedDataFileDir</a></td></tr>
-<tr class="memdesc:a81012ac8cb7612e19b9051d3bafb223a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A string file path to the directory BreedData.txt is being kept in.  <a href="class_dog_generation.html#a81012ac8cb7612e19b9051d3bafb223a">More...</a><br /></td></tr>
-<tr class="separator:a81012ac8cb7612e19b9051d3bafb223a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d3adde1bb91f7cbc954411d33f2782"><td class="memItemLeft" align="right" valign="top">TextAsset&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782">breedDataFile</a> = null</td></tr>
+<tr class="memdesc:a53d3adde1bb91f7cbc954411d33f2782"><td class="mdescLeft">&#160;</td><td class="mdescRight">The BreedData.txt file where all the different breeds' personality and physical characteristic values are defined.  <a href="class_dog_generation.html#a53d3adde1bb91f7cbc954411d33f2782">More...</a><br /></td></tr>
+<tr class="separator:a53d3adde1bb91f7cbc954411d33f2782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a4ff96ebb9d70f388a68c744d044655"><td class="memItemLeft" align="right" valign="top">DataTable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655">breedData</a> = new DataTable()</td></tr>
 <tr class="memdesc:a3a4ff96ebb9d70f388a68c744d044655"><td class="mdescLeft">&#160;</td><td class="mdescRight">A data table which will be populated by the data in BreedData.txt for easier/faster access to its data.  <a href="class_dog_generation.html#a3a4ff96ebb9d70f388a68c744d044655">More...</a><br /></td></tr>
 <tr class="separator:a3a4ff96ebb9d70f388a68c744d044655"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,6 +277,31 @@ Private Attributes</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab84da0148b0a92da946e877754eb8f05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab84da0148b0a92da946e877754eb8f05">&#9670;&nbsp;</a></span>Awake()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DogGeneration.Awake </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -636,33 +660,6 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a42566bfe932ac4c8336d2f1325cb431b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42566bfe932ac4c8336d2f1325cb431b">&#9670;&nbsp;</a></span>Start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">DogGeneration.Start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reads the BreedData.txt file and adds the data to the breedData DataTable, retrieves the dog model parts from the assets folder, defines the orientation + scaling descriptions as values, then finally defines the dog's care and personality values/states/bounds. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a3a4ff96ebb9d70f388a68c744d044655"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a4ff96ebb9d70f388a68c744d044655">&#9670;&nbsp;</a></span>breedData</h2>
@@ -688,8 +685,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a81012ac8cb7612e19b9051d3bafb223a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81012ac8cb7612e19b9051d3bafb223a">&#9670;&nbsp;</a></span>breedDataFileDir</h2>
+<a id="a53d3adde1bb91f7cbc954411d33f2782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53d3adde1bb91f7cbc954411d33f2782">&#9670;&nbsp;</a></span>breedDataFile</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -698,7 +695,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string DogGeneration.breedDataFileDir</td>
+          <td class="memname">TextAsset DogGeneration.breedDataFile = null</td>
         </tr>
       </table>
   </td>
@@ -708,7 +705,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>A string file path to the directory BreedData.txt is being kept in. </p>
+<p>The BreedData.txt file where all the different breeds' personality and physical characteristic values are defined. </p>
 
 </div>
 </div>
@@ -746,7 +743,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_controller.html">Controller</a> DogGeneration.controller</td>
+          <td class="memname"><a class="el" href="class_controller.html">Controller</a> DogGeneration.controller = null</td>
         </tr>
       </table>
   </td>
@@ -770,7 +767,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float DogGeneration.defaultCareDecrement</td>
+          <td class="memname">float DogGeneration.defaultCareDecrement = -0.005f</td>
         </tr>
       </table>
   </td>
@@ -818,7 +815,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string DogGeneration.dogModelPartsPath</td>
+          <td class="memname">string DogGeneration.dogModelPartsPath = null</td>
         </tr>
       </table>
   </td>

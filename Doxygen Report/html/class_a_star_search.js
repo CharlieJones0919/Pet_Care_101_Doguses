@@ -19,7 +19,6 @@ var class_a_star_search =
     [ "nodeSize", "class_a_star_search.html#aeee12e56c0267160f43552ebfb9caf4c", null ],
     [ "obstacleLayerMask", "class_a_star_search.html#a8fa21b17b221b291b5d3938746e3d938", null ],
     [ "openSet", "class_a_star_search.html#ad6452bacd81f37f40362989d82884f01", null ],
-    [ "pathFound", "class_a_star_search.html#a7f2b35f7214344eeee835e7e8d3f4435", null ],
     [ "rootNodePos", "class_a_star_search.html#a94f588523002868bd68942719839c0f5", null ],
     [ "searching", "class_a_star_search.html#afa8b826a0a0a42176dbc04a56464bd27", null ]
 ];

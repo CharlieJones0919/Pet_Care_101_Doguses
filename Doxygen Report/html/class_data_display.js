@@ -1,12 +1,11 @@
 var class_data_display =
 [
-    [ "ActivateNewDogPanel", "class_data_display.html#a2fc59b71eed6527575ae7da9c4f27541", null ],
+    [ "ActivateNewDogPanel", "class_data_display.html#a84f6a8789c85078b1d8f0961d7931207", null ],
     [ "FixedUpdate", "class_data_display.html#a5726fc292035b716062c534b8adb8046", null ],
     [ "GetFocusDog", "class_data_display.html#addf385c08a852fbfcd5eacb9d24eb7a2", null ],
     [ "NewDogAdded", "class_data_display.html#ae28be6951fcbe8a3e615ba42aa13c86f", null ],
-    [ "OnDisable", "class_data_display.html#ace78dcfb34ced7413fc9422708722e39", null ],
-    [ "OnEnable", "class_data_display.html#af0e443e475ef30091e26a55e178be5fd", null ],
-    [ "SetFocusDog", "class_data_display.html#a5ab1c915c91488e6c6d3500462d6c34c", null ],
+    [ "OnClose", "class_data_display.html#af1d9d0cd70399508ed80a02203c5296e", null ],
+    [ "OnOpen", "class_data_display.html#a368109ef2bdd4d24e7ae8c7f072dfa37", null ],
     [ "SetNewDogName", "class_data_display.html#ace8b54f46466c0deed6e0b3caf8bb482", null ],
     [ "ToggleNameInputField", "class_data_display.html#ad9289167addc242908444a1b4bb968c0", null ],
     [ "careValueDisplayUI", "class_data_display.html#aafb06dc864ce06584ef89acc7bd2e3e0", null ],

@@ -3,7 +3,7 @@ var searchData=
   ['actionnodefunction_0',['ActionNodeFunction',['../class_b_t_action.html#aee703414f482ed8efb8a28d0b2a74196',1,'BTAction']]],
   ['activate_1',['Activate',['../class_item_instance.html#a46ced9399eecd9348fd20261269628d3',1,'ItemInstance']]],
   ['activateavailableinstanceto_2',['ActivateAvailableInstanceTo',['../class_item.html#a1bd2dbb961b9385e219cdeeafd07565c',1,'Item']]],
-  ['activatenewdogpanel_3',['ActivateNewDogPanel',['../class_data_display.html#a2fc59b71eed6527575ae7da9c4f27541',1,'DataDisplay']]],
+  ['activatenewdogpanel_3',['ActivateNewDogPanel',['../class_data_display.html#a84f6a8789c85078b1d8f0961d7931207',1,'DataDisplay']]],
   ['add_4',['Add',['../class_heap.html#afa49dc9b828e2ed756a6877e51257a83',1,'Heap']]],
   ['adddog_5',['AddDog',['../class_controller.html#a7116ed1e0e179cfa53e277a3e34877ab',1,'Controller']]],
   ['addnewtopool_6',['AddNewToPool',['../class_item.html#a6b613be4efca12e82d58b46ebbf46fab',1,'Item']]],
@@ -32,5 +32,5 @@ var searchData=
   ['astarsearch_2ecs_29',['AStarSearch.cs',['../_a_star_search_8cs.html',1,'']]],
   ['attempttoreachtarget_30',['AttemptToReachTarget',['../class_pathfinding.html#ae8ad48ed6951bc09e9a4b8845a14ffe0',1,'Pathfinding']]],
   ['attention_31',['Attention',['../_dog_generation_8cs.html#a58e4d5f2fa4621379ee0a5b276e552bea2aa97e44cace7cb882c9dcba32940f8f',1,'DogGeneration.cs']]],
-  ['awake_32',['Awake',['../class_dog.html#a0082adad7652cc0e2ef13bfc012265d1',1,'Dog']]]
+  ['awake_32',['Awake',['../class_dog.html#a0082adad7652cc0e2ef13bfc012265d1',1,'Dog.Awake()'],['../class_dog_generation.html#ab84da0148b0a92da946e877754eb8f05',1,'DogGeneration.Awake()']]]
 ];

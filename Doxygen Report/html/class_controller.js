@@ -20,6 +20,7 @@ var class_controller =
     [ "UpdateMoneyValue", "class_controller.html#a734ecdaf65f08e25de09996261a3505c", null ],
     [ "allDogs", "class_controller.html#a3b6ec9c9a5a1995ec7afc8462a559507", null ],
     [ "bedItemPositions", "class_controller.html#ae1c4b164dfb9682f8246f16d433c1146", null ],
+    [ "cameraController", "class_controller.html#a6bdee732790dbf7cc67bcbd9f3ee85d2", null ],
     [ "defaultNULL", "class_controller.html#abdecc3cbc7ed830c70047bc90f3456cd", null ],
     [ "dogLimit", "class_controller.html#a84da05a69f55d9249ebdd5d18c0822fd", null ],
     [ "ffButtonText", "class_controller.html#aaa2bff9fcd831b1150744be516df01bf", null ],
