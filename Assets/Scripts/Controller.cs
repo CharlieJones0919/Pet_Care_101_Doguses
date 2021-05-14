@@ -87,6 +87,8 @@ public class Controller : MonoBehaviour
         UIOutput.gameObject.SetActive(true);
         UIOutput.OnOpen(newDog);
         PAUSE(true);
+
+        cameraController.m_followTarget = newDog.gameObject;
     }
 
     /** \fn NumberOfDogs
