@@ -14,8 +14,7 @@ public class GetUIComponent : MonoBehaviour
 {
     [SerializeField] private DataDisplay UIOutputScript = null; //!< Reference to the DataDisplay script in the DogInfoPanel. Set as a serialized field in the inspector.
 
-    /** \fn GetUIComponent
-    *  \brief Add its component[s] to the appropriate dictionary in DataDisplay depending on which components can be found in this object and what this object's tag is. 
+    /** \brief Add its component[s] to the appropriate dictionary in DataDisplay depending on which components can be found in this object and what this object's tag is. 
     *  If the object's tag is set to be the same as a DogCareValue/DogPersonalityValue it'll make the dictionary key one of those enums by parsing its tag as such.
     */
     private void Start()

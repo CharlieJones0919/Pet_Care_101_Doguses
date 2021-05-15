@@ -14,7 +14,7 @@ using UnityEngine;
 */
 public class Dog : MonoBehaviour
 {
-    [SerializeField] private Controller controller = null;     //!< Reference to the game controller.     //!< Reference to the game's Controller script to retrieve data required by all dogs.
+    [SerializeField] private Controller controller = null;     //!< Reference to the game's Controller script to retrieve data required by all dogs.
     [SerializeField] private Pathfinding navigation = null;    //!< Instance of the Pathfinding script for the dog to utalize for navigation around the map.
     public void SetController(Controller ctrl) { controller = ctrl; navigation.m_aStarSearch = controller.groundSearch; navigation.m_randomPointStorage = controller.randomPointStorage; }
 
@@ -48,41 +48,49 @@ public class Dog : MonoBehaviour
     //////////////////////////////////////////// BEHAVIOURAL TREE VARIABLES ////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Action nodes which are children to sequence nodes which must be successful in a sequence for the sequence node to succeed.
+    
     //////////////////// Check Current FSM State Actions ////////////////////
-    private BTAction check_Idle_State;     //!< Whether the dog is currently in its Idle     state.
-    private BTAction check_Hungry_State;   //!< Whether the dog is currently in its Hungry   state.
-    private BTAction check_Tired_State;    //!< Whether the dog is currently in its Tired    state.
-    private BTAction check_Playful_State;  //!< Whether the dog is currently in its Playful  state.
+    private BTAction check_Idle_State;     //!< Whether the dog is currently in its Idle state.
+    private BTAction check_Hungry_State;   //!< Whether the dog is currently in its Hungry state.
+    private BTAction check_Tired_State;    //!< Whether the dog is currently in its Tired state.
+    private BTAction check_Playful_State;  //!< Whether the dog is currently in its Playful state.
+  
     //////////////////// Swap FSM State Actions ////////////////////
     private BTAction swp_Idle_State;       //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Idle state.
-    private BTAction swp_Pause_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Hungry state.
-    private BTAction swp_Hungry_State;     //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Tired state.
-    private BTAction swp_Tired_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Playful state.
-    private BTAction swp_Playful_State;
+    private BTAction swp_Pause_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Pause state.
+    private BTAction swp_Hungry_State;     //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Hungry state. 
+    private BTAction swp_Tired_State;      //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Tired state. 
+    private BTAction swp_Playful_State;    //!< Whether one of the dog's BT sequences have determined that the dog should swap into its Playful state.
+  
     //////////////////// Status Check Actions ////////////////////
-    ///// Hunger Status /////
+    // Hunger Status // 
     private BTAction check_Starving;       //!< Whether the dog's Hunger CareValue is currently in the state of Starving. 
     private BTAction check_Hungry;         //!< Whether the dog's Hunger CareValue is currently in the state of Hungry.   
     private BTAction check_Fed;            //!< Whether the dog's Hunger CareValue is currently in the state of Fed.      
     private BTAction check_Overfed;        //!< Whether the dog's Hunger CareValue is currently in the state of Overfed.  
-    ///// Attention Status /////         
+   
+    // Attention Status //         
     private BTAction check_Lonely;         //!< Whether the dog's Attention CareValue is currently in the state of Lonely.      
     private BTAction check_Loved;          //!< Whether the dog's Attention CareValue is currently in the state of Loved.       
     private BTAction check_Overcrowded;    //!< Whether the dog's Attention CareValue is currently in the state of Overcrowded. 
-    ///// Rest Status /////              
+   
+    // Rest Status //              
     private BTAction check_Exhausted;      //!< Whether the dog's Rest CareValue is currently in the state of Exhausted.   
     private BTAction check_Tired;          //!< Whether the dog's Rest CareValue is currently in the state of Tired.       
     private BTAction check_Rested;         //!< Whether the dog's Rest CareValue is currently in the state of Rested.      
     private BTAction check_Rejuvinated;    //!< Whether the dog's Rest CareValue is currently in the state of Rejuvinated. 
-    ///// Hygiene Status /////              
+  
+    // Hygiene Status //              
     ///private BTAction check_Filthy;
     ///private BTAction check_Dirty;
     ///private BTAction check_Clean;
-    ///// Health Status /////
+   
+    // Health Status // 
     private BTAction check_Dying;          //!< Whether the dog's Health CareValue is currently in the state of Dying.    
     private BTAction check_Sick;           //!< Whether the dog's Health CareValue is currently in the state of Sick.     
     private BTAction check_Healthy;        //!< Whether the dog's Health CareValue is currently in the state of Healthy.  
-    ///// Happiness Status /////         
+    
+    // Happiness Status //         
     private BTAction check_Distressed;     //!< Whether the dog's Happiness CareValue is currently in the state of Distressed.
     private BTAction check_Upset;          //!< Whether the dog's Happiness CareValue is currently in the state of Upset.     
     private BTAction check_Happy;          //!< Whether the dog's Happiness CareValue is currently in the state of Happy.     
@@ -422,11 +430,11 @@ public class Dog : MonoBehaviour
     private BTState TiredState() { if (m_facts["TIRED"]) { return BTState.SUCCESS; } return BTState.FAILURE; }     //!< Function implementation of its BTAction.
     private BTState PlayfulState() { if (m_facts["PLAYFUL"]) { return BTState.SUCCESS; } return BTState.FAILURE; } //!< Function implementation of its BTAction.
 
-    private BTState SWP_IdleState() { m_facts["SWP_IDLE"] = true; return BTState.SUCCESS; }                        //!< Function implementation of its BTAction.
-    private BTState SWP_PauseState() { m_facts["SWP_PAUSE"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
-    private BTState SWP_HungryState() { m_facts["SWP_HUNGRY"] = true; return BTState.SUCCESS; }                    //!< Function implementation of its BTAction.
-    private BTState SWP_TiredState() { m_facts["SWP_TIRED"] = true; return BTState.SUCCESS; }                      //!< Function implementation of its BTAction.
-    private BTState SWP_PlayfulState() { m_facts["SWP_PLAYFUL"] = true; return BTState.SUCCESS; }                  //!< Function implementation of its BTAction.
+    private BTState SWP_IdleState() { m_facts["SWP_IDLE"] = true; return BTState.SUCCESS; }           //!< Function implementation of its BTAction.
+    private BTState SWP_PauseState() { m_facts["SWP_PAUSE"] = true; return BTState.SUCCESS; }         //!< Function implementation of its BTAction.
+    private BTState SWP_HungryState() { m_facts["SWP_HUNGRY"] = true; return BTState.SUCCESS; }       //!< Function implementation of its BTAction.
+    private BTState SWP_TiredState() { m_facts["SWP_TIRED"] = true; return BTState.SUCCESS; }         //!< Function implementation of its BTAction.
+    private BTState SWP_PlayfulState() { m_facts["SWP_PLAYFUL"] = true; return BTState.SUCCESS; }     //!< Function implementation of its BTAction.
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////// CARE VALUE BTACTION FUNCTION BINDINGS ///////////////////////////////////////////////
@@ -596,8 +604,7 @@ public class Dog : MonoBehaviour
     /** \fn CanFindFood
          * \brief Function implementation of its BTAction - checks the Control script for currently active Food Items in its Item list from the StoreController. */
     private BTState CanFindFood() { if (FindItemType(ItemType.FOOD)) { return BTState.SUCCESS; } return BTState.FAILURE; }
-    /** \fn CanFindBed                                                                                                                                           
-         * \brief Function implementation of its BTAction - checks the Control script for currently active Bed Items in its Item list from the StoreController.  */
+    /** \brief Function implementation of its BTAction - checks the Control script for currently active Bed Items in its Item list from the StoreController.  */
     private BTState CanFindBed() { if (FindItemType(ItemType.BED)) { return BTState.SUCCESS; } return BTState.FAILURE; }
     /** \fn CanFindToys                                                                                                                                          
          * \brief Function implementation of its BTAction - checks the Control script for currently active Toy Items in its Item list from the StoreController.  */
@@ -633,7 +640,7 @@ public class Dog : MonoBehaviour
         return m_personalityValues[forProperty].GetState();
     }
 
-    /** \fn TargetItemIsFor                                                                                                               
+    /** \bool TargetItemIsFor                                                                                                               
     * \brief Returns whether or not the dog's current target Item modifies the given Care Value when used.
     */
     private bool TargetItemIsFor(DogCareValue value)
@@ -645,7 +652,7 @@ public class Dog : MonoBehaviour
         return false;
     }
 
-    /** \fn TargetItemIsFor                                                                                                               
+    /** \bool TargetItemIsFor                                                                                                               
     * \brief Returns whether or not the dog's current target Item modifies the given Personality Value when used.
     */
     private bool TargetItemIsFor(DogPersonalityValue value)

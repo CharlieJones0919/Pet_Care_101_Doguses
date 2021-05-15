@@ -120,9 +120,7 @@ public struct BodyComponent
     private GameObject m_parent;        //!< Parent of this GameObject in the hierarchy.
     private List<DogDataField> m_data;  //!< The DogDataField data from the BreedData.txt file which should be applied to that component. (E.g. If this is a BodyPart, the Leg_Length data should be applied to it for scaling in DogGeneration).
 
-    /** \fn BodyComponent
-    *  \brief A constructor to set all of the struct's values with just 1 DogDataField entry.
-    */
+    /** \brief A constructor to set all of the struct's values with just 1 DogDataField entry. */
     public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField data)
     {
         m_part = type;
@@ -132,9 +130,7 @@ public struct BodyComponent
         m_data.Add(data);
     }
 
-    /** \fn BodyComponent
-    *  \brief A constructor to set all of the struct's values with multiple DogDataField entries passed in as an array.
-    */
+    /** \brief A constructor to set all of the struct's values with multiple DogDataField entries passed in as an array. */
     public BodyComponent(BodyPart type, GameObject component, GameObject parent, DogDataField[] dataList)
     {
         m_part = type;
@@ -144,9 +140,7 @@ public struct BodyComponent
         foreach (DogDataField field in dataList) { m_data.Add(field); };
     }
 
-    /** \fn BodyComponent
-    *  \brief A constructor to set the struct's BodyPart type, object, and parent, but no DogDataField entries.
-    */
+    /** \brief A constructor to set the struct's BodyPart type, object, and parent, but no DogDataField entries. */
     public BodyComponent(BodyPart type, GameObject component, GameObject parent)
     {
         m_part = type;
@@ -155,21 +149,16 @@ public struct BodyComponent
         m_data = new List<DogDataField>();
     }
 
-    /** \fn SetData
-    *  \brief Add a single DogDataField entry to this component's list. */
+    /** \brief Add a single DogDataField entry to this component's list. */
     public void SetData(DogDataField data) { m_data.Add(data); }
-    /** \fn SetData
-    *  \brief Add a multiple DogDataField entries to this component's list as an array. */
+    /** \brief Add a multiple DogDataField entries to this component's list as an array. */
     public void SetData(DogDataField[] dataList) { foreach (DogDataField field in dataList) { m_data.Add(field); }; }
 
-    /** \fn GetPartType
-    *  \brief Returns this component's BodyPart enum. */
+    /** \brief Returns this component's BodyPart enum. */
     public BodyPart GetPartType() { return m_part; }
-    /** \fn GetParent
-    *  \brief Returns this component's parent object. */
+    /** \brief Returns this component's parent object. */
     public GameObject GetParent() { return m_parent.gameObject; }
-    /** \fn GetDataList
-    *  \brief Returns this component's applicable DogDataField enum entries. */
+    /** \brief Returns this component's applicable DogDataField enum entries. */
     public List<DogDataField> GetDataList() { return m_data; }
 }
 
@@ -179,9 +168,7 @@ public struct BodyComponent
 */
 public class DogGeneration : MonoBehaviour
 {
-    /** \struct ModelOrientation
-    *  \brief A short struct for storing different body part/model positioning/orientation descriptions from BreedData with the real data of what that should make the model's rotation, what that would be mirrored (for if the body component's position isn't centred on the dog), etc.
-    */
+    /** \brief A short struct for storing different body part/model positioning/orientation descriptions from BreedData with the real data of what that should make the model's rotation, what that would be mirrored (for if the body component's position isn't centred on the dog), etc. */
     private struct ModelOrientation
     {
         public DogDataField m_type;  //!< The component orientation data field from the BreedData.txt file. (E.g. Ear_Orientation, Tail_Orientation, etc...).
@@ -193,9 +180,7 @@ public class DogGeneration : MonoBehaviour
         public Vector3 m_mirrorPos;  //!< This component's position locally mirrored. (The ear parts use this as they aren't centered on the dog object so one of them must be reflected).
         public Vector3 m_mirrorRot;  //!< This component's rotation locally mirrored. (The ear parts use this as they aren't centered on the dog object so one of them must be reflected).
 
-        /** \struct ModelOrientation
-        *  \brief A constructor to instatiate a ModelOrientation structure with all its required variables.
-        */
+        /** \brief A constructor to instatiate a ModelOrientation structure with all its required variables. */
         public ModelOrientation(DogDataField type, string description, Vector3 position, Vector3 rotation, bool usePosition = true)
         {
             m_type = type; m_description = description; m_position = position; m_rotation = rotation; m_usePosition = usePosition;
@@ -225,9 +210,7 @@ public class DogGeneration : MonoBehaviour
     private DataTable breedData = new DataTable();               //!< A data table which will be populated by the data in BreedData.txt for easier/faster access to its data.
     private int dogBreedsDefined = 0;                            //!< How many dog breeds were defined in BreedData.txt - used to iterate through the list of breeds to find their data values. Assigned after the file has been read.
 
-    /** \fn Start
-    *  \brief Reads the BreedData.txt file and adds the data to the breedData DataTable, retrieves the dog model parts from the assets folder, defines the orientation + scaling descriptions as values, then finally defines the dog's care and personality values/states/bounds.
-    */
+    /** \brief Reads the BreedData.txt file and adds the data to the breedData DataTable, retrieves the dog model parts from the assets folder, defines the orientation + scaling descriptions as values, then finally defines the dog's care and personality values/states/bounds. */
     private void Awake()
     {
         ////////////////// Read the Breed Data from the Dog Data Text File //////////////////
@@ -287,9 +270,7 @@ public class DogGeneration : MonoBehaviour
         DefineDogPropStates();
     }
 
-    /** \fn DefineDogPropStates
-    *  \brief Listing the states of each DogCareValue and DogPersonality value then adding them to the appropriate states dictionary.
-    */
+    /** \brief Listing the states of each DogCareValue and DogPersonality value then adding them to the appropriate states dictionary. */
     private void DefineDogPropStates()
     {
         //////////////////// Care Value States ////////////////////
@@ -345,9 +326,7 @@ public class DogGeneration : MonoBehaviour
         AddStatesToProperty(DogPersonalityValue.Bond, bondStates, bondStateRanges);
     }
 
-    /** \fn AddStatesToProperty
-     *  \brief Used by DefineDogPropStates() to add the listed string and Vector2 bounds arrays to the careValueStates dictionary after checking an equal number of state names to ranges have been created.
-     */
+    /** \brief Used by DefineDogPropStates() to add the listed string and Vector2 bounds arrays to the careValueStates dictionary after checking an equal number of state names to ranges have been created. */
     private void AddStatesToProperty(DogCareValue property, string[] names, Vector2[] ranges)
     {
         if (names.Length != ranges.Length) { Debug.LogWarning("Inequal number of state names to ranges attempting to be added to: " + property); return; }
@@ -356,9 +335,7 @@ public class DogGeneration : MonoBehaviour
         careValueStates.Add(property, states);
     }
 
-    /** \fn AddStatesToProperty
-     *  \brief Used by DefineDogPropStates() to add the listed string and Vector2 bounds arrays to the personalityValueStates dictionary after checking an equal number of state names to ranges have been created.
-     */
+    /** \brief Used by DefineDogPropStates() to add the listed string and Vector2 bounds arrays to the personalityValueStates dictionary after checking an equal number of state names to ranges have been created. */
     private void AddStatesToProperty(DogPersonalityValue property, string[] names, Vector2[] ranges)
     {
         if (names.Length != ranges.Length) { Debug.LogWarning("Inequal number of state names to ranges attempting to be added to: " + property); return; }
@@ -367,9 +344,7 @@ public class DogGeneration : MonoBehaviour
         personalityValueStates.Add(property, states);
     }
 
-    /** \fn GetBreedValue
-     *  \brief Returns the given data field for the given breed from the data table as a string. (E.g. Calling with the parameters as French_Bulldog & Size will return "Small").
-     */
+    /** \brief Returns the given data field for the given breed from the data table as a string. (E.g. Calling with the parameters as French_Bulldog & Size will return "Small"). */
     private string GetBreedValue(DogBreed breed, DogDataField dataField)
     {
         for (int i = 0; i < dogBreedsDefined; i++)
@@ -383,9 +358,7 @@ public class DogGeneration : MonoBehaviour
         return null;
     }
 
-    /** \fn DEBUG_GenerateAllDogs
-     *  \brief Not for actual use. Just an informal function for debugging purposes to check all dogs are generated correctly.
-     */
+    /** \brief Not for actual use. Just an informal function for debugging purposes to check all dogs are generated correctly. */
     public void DEBUG_GenerateAllDogs()
     {
         foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
@@ -394,17 +367,13 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
-    /** \fn GenerateRandomNewDog
-     *  \brief Called by GameTime to generate a new dog of a random breed from the DogBreed enum list.
-     */
+    /** \brief Called by GameTime to generate a new dog of a random breed from the DogBreed enum list. */
     public void GenerateRandomNewDog()
     {
         GenerateDog((DogBreed)UnityEngine.Random.Range(0, dogBreedsDefined));
     }
 
-    /** \fn GenerateDog
-     *  \brief Calls all the required functions to instantiate a working new Dog object with data values and model components/modifications set specific to the chosen parameter breed. 
-     */
+    /** \brief Calls all the required functions to instantiate a working new Dog object with data values and model components/modifications set specific to the chosen parameter breed. */
     private Dog GenerateDog(DogBreed breed)
     {
         ///// Instantiate the Prefab Dog Object /////
@@ -437,9 +406,7 @@ public class DogGeneration : MonoBehaviour
         return newDog;
     }
 
-    /** \fn DefineDogProperties
-     *  \brief Adds all the previously defined Care and Personality states/bounds to the new dog's list of these values as CareProperties and PersonalityProperties. For the Personality properties their values are also assigned here based on their breed's personality value rankings from BreedData.txt.
-     */
+    /** \brief Adds all the previously defined Care and Personality states/bounds to the new dog's list of these values as CareProperties and PersonalityProperties. For the Personality properties their values are also assigned here based on their breed's personality value rankings from BreedData.txt. */
     private void DefineDogProperties(Dog dog)
     {
         ///// Instantiate Dog's Care Properties & Decrement /////
@@ -473,12 +440,10 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
-    /** \fn FinaliseDogBody
-     *  \brief Instantiates the remaining dog body parts not included in the base prefab as they vary by breed. Adds them to the dog's body list then modifies the components (previously existing AND new) to match their descriptions set per breed in BreedData.txt.
-     */
+    /** \brief Instantiates the remaining dog body parts not included in the base prefab as they vary by breed. Adds them to the dog's body list then modifies the components (previously existing AND new) to match their descriptions set per breed in BreedData.txt. */
     private void FinaliseDogBody(DogBreed breed, Dictionary<BodyPart, BodyComponent> dog)
     {
-        ///// Set Non-Existing Body Part Hierarchy Parents /////
+        // Set Non-Existing Body Part Hierarchy Parents //
         Dictionary<BodyPart, GameObject> parentAssignments = new Dictionary<BodyPart, GameObject>()
         {
             { BodyPart.Ear0, dog[BodyPart.Head].m_component  },
@@ -487,7 +452,7 @@ public class DogGeneration : MonoBehaviour
             { BodyPart.Tail, dog[BodyPart.Rear].m_component  }
         };
 
-        ///// Set Non-Existing Body Part's Applicable Data Fields /////
+       // Set Non-Existing Body Part's Applicable Data Fields //
         Dictionary<BodyPart, DogDataField[]> dataAssignments = new Dictionary<BodyPart, DogDataField[]>()
         {
             { BodyPart.Ear0, new DogDataField[]  { DogDataField.Ear_Kind, DogDataField.Ear_Orientation   }},
@@ -496,7 +461,7 @@ public class DogGeneration : MonoBehaviour
             { BodyPart.Tail, new DogDataField[]  { DogDataField.Tail_Kind, DogDataField.Tail_Orientation }}
         };
 
-        ///// Create Non-Existing Body Part Objects /////
+        // Create Non-Existing Body Part Objects //
         foreach (BodyPart part in (BodyPart[])Enum.GetValues(typeof(BodyPart)))
         {
             if (!dog.ContainsKey(part))
@@ -511,12 +476,12 @@ public class DogGeneration : MonoBehaviour
             }
         }
 
-        ///// Lists of Components to Scale and Rotate /////
-        /// (These are added to lists first so all scaling can be done first, THEN rotations). ///
+        // Lists of Components to Scale and Rotate //
+        // (These are added to lists first so all scaling can be done first, THEN rotations). //
         Dictionary<BodyPart, DogDataField> compsToScale = new Dictionary<BodyPart, DogDataField>();
         Dictionary<BodyPart, DogDataField> compsToRotate = new Dictionary<BodyPart, DogDataField>();
 
-        ///// Identify Which Dog Body Parts Need Scaling or Orienting /////
+        // Identify Which Dog Body Parts Need Scaling or Orienting //
         foreach (KeyValuePair<BodyPart, BodyComponent> part in dog)
         {
             foreach (DogDataField entry in part.Value.GetDataList())
@@ -533,9 +498,7 @@ public class DogGeneration : MonoBehaviour
         dog[BodyPart.Waist].m_component.transform.localScale += scalingDirections[DogDataField.Size] * modelScalers[GetBreedValue(breed, DogDataField.Size)];
     }
 
-    /** \fn CreateComponentModel
-     *  \brief Used by FinaliseDogBody() to create the missing dog components. This function gets which component model should be instantiated based on the given parameter breed then sets the new object's hierarchy parent as the object specified in FinaliseDogBody().
-     */
+    /** \brief Used by FinaliseDogBody() to create the missing dog components. This function gets which component model should be instantiated based on the given parameter breed then sets the new object's hierarchy parent as the object specified in FinaliseDogBody(). */
     private GameObject CreateComponentModel(DogBreed breed, GameObject parent, DogDataField modelKind)
     {
         List<GameObject> modelOptions = modelList[modelKind]; // Shorten the list of model options down from the full model list to just the ones of the body part kind. (E.g. Tails, Snouts, etc...).
@@ -559,9 +522,7 @@ public class DogGeneration : MonoBehaviour
         Debug.LogWarning("No " + modelKind + " model was found for the breed: " + breed); return null;
     }
 
-    /** \fn SetComponentScale
-     *  \brief Sets the given body part component to have the scale that it should for its breed (e.g. X-Short legs for Corgis and X-Long legs for Dachshunds).
-     */
+    /** \brief Sets the given body part component to have the scale that it should for its breed (e.g. X-Short legs for Corgis and X-Long legs for Dachshunds). */
     private void SetComponentScale(DogBreed breed, BodyComponent component, DogDataField scalingDesc)
     {
         string breedScale = GetBreedValue(breed, scalingDesc);
@@ -602,9 +563,7 @@ public class DogGeneration : MonoBehaviour
         Debug.LogWarning(breed + " has the following invalid data entry for: " + scalingDesc); return;
     }
 
-    /** \fn SetComponentOrientations
-     *  \brief Sets the given body part component to have the rotation/position (orientation) that it should for its breed (e.g. Downwards side ears for Shih-Tzus and Upwards top ears for French Bulldogs).
-     */
+    /** \brief Sets the given body part component to have the rotation/position (orientation) that it should for its breed (e.g. Downwards side ears for Shih-Tzus and Upwards top ears for French Bulldogs). */
     private void SetComponentOrientations(DogBreed breed, BodyComponent component, DogDataField orientationDesc)
     {
         string breedOrientation = GetBreedValue(breed, orientationDesc);

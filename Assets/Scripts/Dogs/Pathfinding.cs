@@ -48,7 +48,7 @@ public class Pathfinding : MonoBehaviour
     }
 
     /** \fn SetSpeed
-    *  \brief A publically accessible
+    *  \brief A publically accessible function to set the velocity the dog moves at when travelling towwards a position node.
     */
     public void SetSpeed(MoveSpeed pace)
     {
@@ -120,7 +120,7 @@ public class Pathfinding : MonoBehaviour
      */
     public void SetTargetToRandom() { m_currentTarget = m_randomPoint; FindPathTo(m_currentTarget); }
 
-    /** \fn FollowPathTo
+    /** \fn AttemptToReachTarget
      *  \brief Moves this GameObject along a found A* path to a specified point and returns as true once the dog has reached that object.
      */
     public bool AttemptToReachTarget()

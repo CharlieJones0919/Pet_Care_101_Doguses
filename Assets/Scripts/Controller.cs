@@ -33,8 +33,7 @@ public class Controller : MonoBehaviour
     public Dictionary<Vector3, bool> foodItemPositions = new Dictionary<Vector3, bool>(); //!< Positions temporary food items can be placed to.
     // Toys are placed randomly around the centre of the map as the dogs will move them anyway.
 
-    /** \fn PAUSE
-    *  \brief Sets the game's time scale to pause or play the game based on its bool parameter.
+    /** \brief Sets the game's time scale to pause or play the game based on its bool parameter.
     *  \param state Whether to pause or play the game's time.
     */
     public void PAUSE(bool state)
@@ -51,8 +50,7 @@ public class Controller : MonoBehaviour
         ffButtonText.text = "x" + Time.timeScale.ToString();
     }
 
-    /** \fn FASTFORWARD
-    *  \brief Increases the game's time scale to speed up the game to it's maximum value. Called by the fast forward button.
+    /** \brief Increases the game's time scale to speed up the game to it's maximum value. Called by the fast forward button.
     */
     public void FASTFORWARD()
     {
@@ -72,8 +70,7 @@ public class Controller : MonoBehaviour
         ffButtonText.text = "x" + Time.timeScale.ToString();
     }
 
-    /** \fn AddDog
-    *  \brief Called by DogGeneration when a new dog is made daily to add the new instance to the controller's list of dogs, and to activate the new dog screen panel.
+    /** \brief Called by DogGeneration when a new dog is made daily to add the new instance to the controller's list of dogs, and to activate the new dog screen panel.
     *  \param newDog The new dog instance created by DogGeneration.
     */
     public void AddDog(Dog newDog)
@@ -91,18 +88,15 @@ public class Controller : MonoBehaviour
         cameraController.m_followTarget = newDog.gameObject;
     }
 
-    /** \fn NumberOfDogs
-    *  \brief Returns the number of active dogs.
+    /** \brief Returns the number of active dogs.
     */
     public int NumberOfDogs() { return allDogs.Count; }
 
-    /** \fn GetAllDogs
-    *  \brief Returns the Dictionary of all world dogs.
+    /** \brief Returns the Dictionary of all world dogs.
     */
     public Dictionary<GameObject, Dog> GetAllDogs() { return allDogs; }
 
-    /** \fn AddToItemPools
-    *  \brief Used by the StoreController to add a new item to the Controller's complete list of items possible to purchase.
+    /** \brief Used by the StoreController to add a new item to the Controller's complete list of items possible to purchase.
     */
     public void AddToItemPools(ItemType itemGroup, Item item)
     {
@@ -113,8 +107,7 @@ public class Controller : MonoBehaviour
         itemPools[itemGroup].Add(item);
     }
 
-    /** \fn GetActiveItemFor
-    *  \brief Returns whether or not there is an item of the requested type available for use of the given dog in the item pool. If it is, the item itself will set the dog's current target to the available instance via the reference passed in as a parameter.
+    /** \brief Returns whether or not there is an item of the requested type available for use of the given dog in the item pool. If it is, the item itself will set the dog's current target to the available instance via the reference passed in as a parameter.
     */
     public bool GetActiveItemFor(ItemType requiredType, Dog attemptingDog)
     {
@@ -128,8 +121,7 @@ public class Controller : MonoBehaviour
         return false;
     }
 
-    /** \fn GetClosestActiveItemFor
-    *  \brief The same as GetActiveItemFor(), but tries to identify the closest item instance to the given dog.
+    /** \brief The same as GetActiveItemFor(), but tries to identify the closest item instance to the given dog.
     */
     public bool GetClosestActiveItemFor(ItemType requiredType, Dog attemptingDog)
     {
@@ -143,8 +135,7 @@ public class Controller : MonoBehaviour
         return false;
     }
 
-    /** \fn EndItemUse
-    *  \brief Calls the item's end use script, and if it was a temporary item which will be deactivated from the world, the position it was using will be made free again by setting its dictionary value back to false.
+    /** \brief Calls the item's end use script, and if it was a temporary item which will be deactivated from the world, the position it was using will be made free again by setting its dictionary value back to false.
     */
     public void EndItemUse(Item item, GameObject instance)
     {
@@ -159,38 +150,32 @@ public class Controller : MonoBehaviour
         item.StopUsingItemInstance(instance);
     }
 
-    /** \fn AgeDogs
-    *  \brief Called every year in game time to increase the age of all the dogs. (Doesn't really do anything at current as dog death didn't get implemented due to time constraints).
+    /** \brief Called every year in game time to increase the age of all the dogs. (Doesn't really do anything at current as dog death didn't get implemented due to time constraints).
     */
     public void AgeDogs()
     {
         if (allDogs.Count > 0) {   foreach (Dog K9 in allDogs.Values) { K9.m_age++; }  }
     }
 
-    /** \fn GetPlayerMoney
-    *  \brief Returns the player's money value indirectly via a float. (To prevent other classes from changing the real variable's value).
+    /** \brief Returns the player's money value indirectly via a float. (To prevent other classes from changing the real variable's value).
     */
     public float GetPlayerMoney() { float moneyVal = playerMoney; return moneyVal; }
 
-    /** \fn GiveAllowance
-    *  \brief Increases the player's money by the set daily allowance value.
+    /** \brief Increases the player's money by the set daily allowance value.
     */
     public void GiveAllowance()
     {
         tipPopUp.DisplayTipMessage("It's a new day! You've recieved your daily donation of " + allowance.ToString() + " credits!");
         UpdateMoneyValue(allowance);
     }
-    /** \fn GiveGoodCareBonus
-    *  \brief Bonus pay given by a Dog class if all of their care values are in good states.
+    /** \brief Bonus pay given by a Dog class if all of their care values are in good states.
     */
     public void GiveGoodCareBonus() { UpdateMoneyValue(bonusPay * Time.deltaTime); }
-    /** \fn HasEnoughMoney
-    *  \brief For the store controller to check if the player has enough money to pay for an item.
+    /** \brief For the store controller to check if the player has enough money to pay for an item.
     */
     public bool HasEnoughMoney(float cost) { return (cost <= playerMoney); }
 
-    /** \fn HasEnoughMoney
-    *  \brief For the store controller to pay for an item. (Subtracts the item's price from the player's money).
+    /** \brief For the store controller to pay for an item. (Subtracts the item's price from the player's money).
     */
     public bool MakePurchase(float cost)
     {
@@ -203,8 +188,7 @@ public class Controller : MonoBehaviour
         return false;
     }
 
-    /** \fn UpdateMoneyValue
-    *  \brief Updates the player's money value and the related UI textboxes.
+    /** \brief Updates the player's money value and the related UI textboxes.
     */
     private void UpdateMoneyValue(float modification)
     {
@@ -219,16 +203,14 @@ public class Controller : MonoBehaviour
         }
     }
 
-    /** \fn InsufficientFundsCheck
-    *  \brief Displays a tip message if the player is out of money.
+    /** \brief Displays a tip message if the player is out of money.
     */
     public void InsufficientFundsCheck()
     {
         if (playerMoney == 0) { tipPopUp.DisplayTipMessage("You don't have enough funds to buy anything right now. You'll get another donation tomorrow."); }
     }
 
-    /** \fn NotFocusedOnDog
-    *  \brief Sets all dogs to not be in focus if the DogInfoPanel is closed.
+    /** \brief Sets all dogs to not be in focus if the DogInfoPanel is closed.
     */
     public void NotFocusedOnDog()
     {
@@ -248,8 +230,7 @@ public class CareProperty
     private float m_value = 100; //!< The care property's current value. Set to 100 by default so the dog is in good health when first instantiated.
     private float m_decrement;   //!< Care properties are always going down and need replenishing. This is the default decrement to take from the value on each update.
 
-    /** \fn CareProperty
-    *  \brief Constructor to instantiate the care property's states, their bounds, and default decrement.
+    /** \brief Constructor to instantiate the care property's states, their bounds, and default decrement.
     */
     public CareProperty(Dictionary<string, Vector2> states, float defaultDec)
     {
@@ -258,8 +239,7 @@ public class CareProperty
         UpdateValue(0.0f);
     }
 
-    /** \fn IsState
-    *  \brief Returns whether or not the property is currently in the given parameter state.
+    /** \brief Returns whether or not the property is currently in the given parameter state.
     */
     public bool IsState(string state)
     {
@@ -267,18 +247,15 @@ public class CareProperty
         else { Debug.Log("No care property has a state defined as " + state); return false; }
     }
 
-    /** \fn GetUsualDecrement
-    *  \brief Returns the property's usual decrement.
+    /** \brief Returns the property's usual decrement.
     */
     public float GetUsualDecrement() { return m_decrement; }
 
-    /** \fn GetValue
-    *  \brief Returns the property's current value.
+    /** \brief Returns the property's current value.
     */
     public float GetValue() { return m_value; }
 
-    /** \fn UpdateValue
-    *  \brief Updates the property's value and checks which state[s] it's in now from that change.
+    /** \brief Updates the property's value and checks which state[s] it's in now from that change.
     */
     public void UpdateValue(float modifiyer)
     {
@@ -295,7 +272,7 @@ public class CareProperty
     }
 }
 
-/** \fn PersonalityProperty
+/** \class PersonalityProperty
 *  \brief The same as CareProperty except for the personality properties which can only be one state at a time and aren't decreased every update by default.
 */
 public class PersonalityProperty
@@ -304,8 +281,7 @@ public class PersonalityProperty
     private string m_currentState; //!< Current state based on the current numerical value of the property. Personality properties can only be one state at a time, because their state bounds don't overlap.
     private float m_value;         //!< The personality property's current value. This isn't given a default starting value like in CareProperty as the values are determined by the breed.
 
-    /** \fn PersonalityProperty
-    *  \brief Constructor to instantiate the personality property's states, their bounds, and default values based on breed.
+    /** \brief Constructor to instantiate the personality property's states, their bounds, and default values based on breed.
     */
     public PersonalityProperty(Dictionary<string, Vector2> states, float value)
     {
@@ -313,8 +289,7 @@ public class PersonalityProperty
         UpdateValue(value);
     }
 
-    /** \fn IsState
-    *  \brief Returns whether or not the property is currently in the given parameter state.
+    /** \brief Returns whether or not the property is currently in the given parameter state.
     */
     public bool IsState(string state)
     {
@@ -322,18 +297,15 @@ public class PersonalityProperty
         else { Debug.Log("No personality property has a state defined as " + state); return false; }
     }
 
-    /** \fn GetState
-    *  \brief Returns the property's current state.
+    /** \brief Returns the property's current state.
     */
     public string GetState() { return m_currentState; }
 
-    /** \fn GetValue
-    *  \brief Returns the property's current value.
+    /** \brief Returns the property's current value.
     */
     public float GetValue() { return m_value; }
 
-    /** \fn UpdateValue
-    *  \brief Updates the property's value and checks which state it's in now from that change.
+    /** \brief Updates the property's value and checks which state it's in now from that change.
     */
     public void UpdateValue(float modifiyer)
     {
