@@ -583,10 +583,10 @@ public class Dog : MonoBehaviour
     private BTState GoodCareBonuses()
     {
         controller.GiveGoodCareBonus();
-        m_personalityValues[DogPersonalityValue.Bond].UpdateValue(0.0005f);
-        m_personalityValues[DogPersonalityValue.Affection].UpdateValue(0.00025f);
-        m_personalityValues[DogPersonalityValue.Tolerance].UpdateValue(0.00005f);
-        m_personalityValues[DogPersonalityValue.Obedience].UpdateValue(0.0005f * m_personalityValues[DogPersonalityValue.Intelligence].GetValue());
+        m_personalityValues[DogPersonalityValue.Bond].UpdateValue(0.005f * Time.deltaTime);
+        m_personalityValues[DogPersonalityValue.Affection].UpdateValue(0.0025f * Time.deltaTime);
+        m_personalityValues[DogPersonalityValue.Tolerance].UpdateValue(0.005f * Time.deltaTime);
+        m_personalityValues[DogPersonalityValue.Obedience].UpdateValue(0.00025f * m_personalityValues[DogPersonalityValue.Intelligence].GetValue() * Time.deltaTime);
         return BTState.SUCCESS;
     }
 
