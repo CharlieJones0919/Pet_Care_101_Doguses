@@ -56,7 +56,7 @@ public class Hungry : State
         }
 
         // Check if the state should be exited. By returning null the state change will be caught by the next rule check.
-        foreach (BTSequence sequenceCheck in doggo.HungryEndSequences)
+        foreach (BTSequence sequenceCheck in doggo.ExitStateSeqeunces[typeof(Hungry)])
         {
             if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
         }

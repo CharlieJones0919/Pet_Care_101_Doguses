@@ -62,7 +62,7 @@ public class Tired : State
         }
 
         // Check if the state should be exited. By returning null the state change will be caught by the next rule check.
-        foreach (BTSequence sequenceCheck in doggo.TiredEndSequences)
+        foreach (BTSequence sequenceCheck in doggo.ExitStateSeqeunces[typeof(Tired)])
         {
             if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
         }
