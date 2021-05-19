@@ -367,6 +367,12 @@ public class DogGeneration : MonoBehaviour
         }
     }
 
+    /** \brief Not for actual use. Just an informal function for debugging purposes to check an individual breed is generated correctly. */
+    public void DEBUG_GenerateDogBreed(DogBreed type)
+    {
+        GenerateDog(type);
+    }
+
     /** \brief Called by GameTime to generate a new dog of a random breed from the DogBreed enum list. */
     public void GenerateRandomNewDog()
     {
@@ -490,11 +496,11 @@ public class DogGeneration : MonoBehaviour
                 if (entry.ToString().Contains("Orientation")) { compsToRotate.Add(part.Key, entry); }
             }
         }
-        ///// Scale then Orient Required Body Parts to Breed Specifications /////
+        // Scale then Orient Required Body Parts to Breed Specifications //
         foreach (KeyValuePair<BodyPart, DogDataField> entry in compsToScale) { SetComponentScale(breed, dog[entry.Key], entry.Value); }
         foreach (KeyValuePair<BodyPart, DogDataField> entry in compsToRotate) { SetComponentOrientations(breed, dog[entry.Key], entry.Value); }
 
-        ///// Scale Entire Dog to Breed Size Specification /////
+        // Scale Entire Dog to Breed Size Specification //
         dog[BodyPart.Waist].m_component.transform.localScale += scalingDirections[DogDataField.Size] * modelScalers[GetBreedValue(breed, DogDataField.Size)];
     }
 
