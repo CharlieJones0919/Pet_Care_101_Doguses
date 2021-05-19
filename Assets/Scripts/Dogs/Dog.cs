@@ -131,7 +131,7 @@ public class Dog : MonoBehaviour
     private BTAction move_Running;         //!< Sets the dog's Pathfinding script moving speed to its defined Running speed.
 
     //////////////////// Behaviour Tree Condition Sequence Lists for Leaving Each State ////////////////////
-    public List<BTSequence> GlobalSequences = new List<BTSequence>();       //!< A sequence of BT node checks general values which shouldn't result in state changes. Includes a check for if the dog is in good health and the others are for setting the dog's walking speed. 
+    public List<BTSequence> GlobalSequences;       //!< A sequence of BT node checks general values which shouldn't result in state changes. Includes a check for if the dog is in good health and the others are for setting the dog's walking speed. 
     public Dictionary<Type, List<BTSequence>> ExitStateSeqeunces = new Dictionary<Type, List<BTSequence>>(); //!< The value is a sequence of BT node checks which if true will end in a BT node to set one of the dog's state change facts to true so the next rule list check will result in the dog leaving the state type of the list's key.
 
     /** \fn Awake
@@ -267,8 +267,7 @@ public class Dog : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////// BEHAVIOUR TREE SEQUENCES ///////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        {
-            BTSequence[] globalSeqs =
+        GlobalSequences = new List<BTSequence>()
             {
                 new BTSequence(new List<BTNode> { check_AllGood, move_Running, bonus_GoodCare }),
 
@@ -280,12 +279,10 @@ public class Dog : MonoBehaviour
 
                 new BTSequence(new List<BTNode> { check_N_Lonely, check_N_Sick, check_N_Distressed, check_N_Starving, check_N_Exhausted, move_Walking })
             };
-            foreach (BTSequence sequence in globalSeqs) { GlobalSequences.Add(sequence); }
-        }
+
         // The behaviour tree sequences (list of conditional node checks/actions) to determine if the dog should exit its current FSM state.
         {
-            List<BTSequence> idleSequences = new List<BTSequence>();
-            BTSequence[] idleEndSeqs =
+            List<BTSequence> idleSequences = new List<BTSequence>()
             {
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_N_Tired, found_Food, swp_Hungry_State }),
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Hungry, check_Tired, found_N_Bed, found_Food, swp_Hungry_State }),
@@ -297,12 +294,10 @@ public class Dog : MonoBehaviour
                 new BTSequence(new List<BTNode> { check_Idle_State, check_N_Overfed, check_N_Lonely, check_N_Tired, found_Food, swp_Hungry_State }),
                 new BTSequence(new List<BTNode> { check_Idle_State, check_Rested, check_Fed, found_Toys, swp_Playful_State })
             };
-            foreach (BTSequence sequence in idleEndSeqs) { idleSequences.Add(sequence); }
             ExitStateSeqeunces.Add(typeof(Idle), idleSequences);
         }
         {
-            List<BTSequence> hungrySequences = new List<BTSequence>();
-            BTSequence[] hungryEndSeqs =
+            List<BTSequence> hungrySequences = new List<BTSequence>()
             {
                 new BTSequence(new List<BTNode> { check_Hungry_State, found_N_Food, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Overfed, swp_Pause_State }),
@@ -310,12 +305,10 @@ public class Dog : MonoBehaviour
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Exhausted, check_N_Starving, found_Bed, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Hungry_State, check_Fed, check_Rested, check_Lonely, found_Toys, swp_Pause_State })
             };
-            foreach (BTSequence sequence in hungryEndSeqs) { hungrySequences.Add(sequence); }
             ExitStateSeqeunces.Add(typeof(Hungry), hungrySequences);
         }
         {
-            List<BTSequence> tiredSequences = new List<BTSequence>();
-            BTSequence[] tiredEndSeqs =
+            List<BTSequence> tiredSequences = new List<BTSequence>()
             {
                 new BTSequence(new List<BTNode> { check_Tired_State, found_N_Bed, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Tired_State, check_Rejuvinated, swp_Pause_State }),
@@ -323,19 +316,15 @@ public class Dog : MonoBehaviour
                 new BTSequence(new List<BTNode> { check_Tired_State, check_Starving, check_N_Exhausted, found_Food, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Tired_State, check_Rested, check_Lonely, found_Toys, swp_Pause_State })
             };
-            foreach (BTSequence sequence in tiredEndSeqs) { tiredSequences.Add(sequence); }
             ExitStateSeqeunces.Add(typeof(Tired), tiredSequences);
         }
         {
-            List<BTSequence> playfulSequences = new List<BTSequence>();
-            BTSequence[] playfulEndSeqs =
+            List<BTSequence> playfulSequences = new List<BTSequence>()
             {
                 new BTSequence(new List<BTNode> { check_Playful_State, found_N_Toys, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Playful_State, check_Tired, swp_Pause_State }),
                 new BTSequence(new List<BTNode> { check_Playful_State, check_Hungry, swp_Pause_State }),
-
             };
-            foreach (BTSequence sequence in playfulEndSeqs) { playfulSequences.Add(sequence); }
             ExitStateSeqeunces.Add(typeof(Playful), playfulSequences);
         }
 
@@ -344,6 +333,7 @@ public class Dog : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         GetExistingBodyParts();
     }
+
     /** \fn Start
     *   \brief Called when the dog object is first made active. Finds itself a random point in the world to spawn to, sets its Y position so its feet are on the ground (as its height will vary on breed), then sets its current target as the default null object.
     */
