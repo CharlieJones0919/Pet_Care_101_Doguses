@@ -358,16 +358,33 @@ public class DogGeneration : MonoBehaviour
         return null;
     }
 
-    /** \brief Not for actual use. Just an informal function for debugging purposes to check all dogs are generated correctly. */
-    public void DEBUG_GenerateAllDogs()
+    /** \brief Not for actual use. Just an informal function for debugging purposes to check all dogs are generated correctly. Generates the next breed in the enum list not currently existing on the map. */
+    public void DEBUG_GenerateNonPresentBreed()
     {
         foreach (DogBreed dogBreed in (DogBreed[])DogBreed.GetValues(typeof(DogBreed)))
         {
-            GenerateDog(dogBreed);
+            bool instanceExists = false;
+
+            foreach (Dog dog in controller.GetAllDogs().Values)
+            {
+                if (dog.m_breed == dogBreed)
+                {
+                    instanceExists = true;
+                    break;
+                }
+            }
+
+            if (!instanceExists)
+            {
+                GenerateDog(dogBreed);
+                return;
+            }
         }
+
+        Debug.Log("All dog breeds already present.");
     }
 
-    /** \brief Not for actual use. Just an informal function for debugging purposes to check an individual breed is generated correctly. */
+    /** \brief Not for actual use. Just an informal function for debugging purposes to check an individual breed is generated correctly. Generates a breed of a specified type */
     public void DEBUG_GenerateDogBreed(DogBreed type)
     {
         GenerateDog(type);

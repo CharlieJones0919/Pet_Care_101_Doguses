@@ -112,15 +112,7 @@ public class CameraControl : MonoBehaviour
                 {
                     if (raycastHit.transform.gameObject == dog.Key)
                     {
-                        dog.Value.m_facts["IS_FOCUS"] = true;
-
-                        if (m_controller.UIOutput.GetFocusDog() != dog.Key)
-                        {
-                            m_followTarget = dog.Value.gameObject;
-                            m_controller.UIOutput.gameObject.SetActive(true);
-                            m_controller.UIOutput.OnOpen(dog.Value);
-
-                        }
+                        SetFocusDog(dog.Value);
                         return;
                     }
                 }
@@ -238,6 +230,22 @@ public class CameraControl : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    /** \fn SetFocusDog
+    *  \brief Sets the camera's current focus to a dog and activates the InfoPanel UI element for that dog.
+    **/
+    public void SetFocusDog(Dog dog)
+    {
+        dog.m_facts["IS_FOCUS"] = true;
+
+        if (m_controller.UIOutput.GetFocusDog() != dog)
+        {
+            m_followTarget = dog.gameObject;
+            m_controller.UIOutput.gameObject.SetActive(true);
+            m_controller.UIOutput.OnOpen(dog);
+
+        }
     }
 
     /** \fn ToggleRotation
