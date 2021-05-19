@@ -36,7 +36,7 @@ public class ItemInstance : MonoBehaviour
     /** \fn EndUse
     *   \brief If the Item this InstanceItem derived from WASN'T single-use, after being used the object will be remain active by its user will just be reset to null so it can be used again.
     */
-    public void EndUse() { if (CurrentlyActive()) { m_user = m_nullUser; } }
+    public void EndUse() { m_user = m_nullUser; }
 
     /** \fn UsableFor
     *   \brief Returns whether or not this instance can be used by the specified object (should be a dog). It's usable if the instance doesn't currently have a user (it's set to the null object), or the user IS the object specified already, and this instance is [still] active.

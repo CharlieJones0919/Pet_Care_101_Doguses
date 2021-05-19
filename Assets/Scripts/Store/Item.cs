@@ -78,19 +78,16 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     */
     public void ActivateAvailableInstanceTo(Vector3 spawnPos)
     {
-        if (m_instancePool.Count != 0)
+        foreach (ItemInstance instance in m_instancePool)
         {
-            foreach (ItemInstance instance in m_instancePool)
+            if (instance != null)
             {
-                if (instance != null)
+                if (!instance.CurrentlyActive())
                 {
-                    if (!instance.CurrentlyActive())
-                    {
-                        instance.Activate(spawnPos);
-                        return;
-                    }
+                    instance.Activate(spawnPos);
+                    return;
                 }
-            }        
+            }
         }
         //If none were available for activation in the pool already.
         AddNewToPool().Activate(spawnPos);
@@ -112,7 +109,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     */
     public bool TryGetAvailableInstance(Dog attemptingUser)
     {
-        if (m_instancePool.Count != 0)
+        if (m_instancePool.Count > 0)
         {
             foreach (ItemInstance instance in m_instancePool)
             {
@@ -135,7 +132,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     */
     public bool TryGetClosestAvailableInstance(Dog attemptingUser)
     {
-        if (m_instancePool.Count != 0)
+        if (m_instancePool.Count > 0)
         {
             Vector3 userPosition = attemptingUser.gameObject.transform.position;
             ItemInstance closestInstanceSoFar = null;
@@ -159,9 +156,10 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
 
             if (closestInstanceSoFar != null)
             {
-                attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.gameObject);  return true;
+                attemptingUser.SetCurrentTargetItem(this, closestInstanceSoFar.gameObject); return true;
             }
         }
+        else { Debug.Log("None"); }
         return false;
     }
 

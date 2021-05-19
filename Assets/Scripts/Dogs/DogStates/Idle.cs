@@ -59,7 +59,7 @@ public class Idle : State
         foreach (BTSequence sequenceCheck in doggo.ExitStateSeqeunces[typeof(Idle)])
         {
             if (sequenceCheck.Evaluate() == BTState.SUCCESS) { return null; }
-        }
+        }     
 
         // If the state wasn't exited, proceed with the regular state behaviour.
         doggo.Wander();

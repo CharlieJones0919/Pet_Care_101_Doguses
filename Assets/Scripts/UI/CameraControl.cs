@@ -244,7 +244,6 @@ public class CameraControl : MonoBehaviour
             m_followTarget = dog.gameObject;
             m_controller.UIOutput.gameObject.SetActive(true);
             m_controller.UIOutput.OnOpen(dog);
-
         }
     }
 

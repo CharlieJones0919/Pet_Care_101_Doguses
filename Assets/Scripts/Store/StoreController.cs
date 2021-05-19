@@ -48,8 +48,7 @@ public class StoreController : MonoBehaviour
 
     [SerializeField] private Button purchaseButton = null;             //!< Reference to the purchase button for making interactable or not depending on if the player has enough money to buy the Item they're currently toggled on.                                                    
 
-    /** \fn Start
-    *  \brief Retrieves all the Item prefabs from the assets directory and instantiates tabs for each of the ItemType enums. Makes StoreSections for each ItemType/tab and populates their Item lists with the retrieved Item prefabs of the same ItemType.
+    /** \brief Retrieves all the Item prefabs from the assets directory and instantiates tabs for each of the ItemType enums. Makes StoreSections for each ItemType/tab and populates their Item lists with the retrieved Item prefabs of the same ItemType.
     *  Also sets all the possible Item placement positions based on the ground's dimensions and saves them to Controller's list of available placement positions.
     */
     private void Start()
@@ -136,8 +135,7 @@ public class StoreController : MonoBehaviour
         purchaseButton.interactable = true;
     }
 
-    /** \fn PurchaseAttempt
-    *  \brief Called by the store menu Purchase Button when clicked/tapped. If the player currently has enough money for the ItemSlot Item currently selected, and there are positions available to place Items in, an instance of that Item will be activated and positioned on the world floor.
+    /** \brief Called by the store menu Purchase Button when clicked/tapped. If the player currently has enough money for the ItemSlot Item currently selected, and there are positions available to place Items in, an instance of that Item will be activated and positioned on the world floor.
     */
     public void PurchaseAttempt()
     {
@@ -186,8 +184,7 @@ public class StoreController : MonoBehaviour
         }
     }
 
-    /** \fn SetFocusItem
-    *  \brief Called by ItemSlot toggles when clicked/tapped, with itself as the parameter. Sets the item display UI to the Item being referenced/displayed in that ItemSlot.  
+    /** \brief Called by ItemSlot toggles when clicked/tapped, with itself as the parameter. Sets the item display UI to the Item being referenced/displayed in that ItemSlot.  
     */
     public void SetFocusItem(ItemSlot focusSlot)
     {
@@ -205,8 +202,7 @@ public class StoreController : MonoBehaviour
         }
     }
 
-    /** \fn SectionSelected
-    *  \brief Called by StoreSection toggles when clicked/tapped, with itself as the parameter. Sets currentSection to that tab's ItemType catergory then updates the ItemSlots' Items to be the ItemList for that section by calling UpdateDisplayedItems().
+    /** \brief Called by StoreSection toggles when clicked/tapped, with itself as the parameter. Sets currentSection to that tab's ItemType catergory then updates the ItemSlots' Items to be the ItemList for that section by calling UpdateDisplayedItems().
     */
     public void SectionSelected(StoreSection tabButton)
     {
@@ -217,8 +213,7 @@ public class StoreController : MonoBehaviour
         UpdateDisplayedItems();
     }
 
-    /** \fn ChangeSectionPage
-    *  \brief Called by the page back/next buttons when clicked/tapped, with the bool as true for the next button and false for the back button. Adds or subtracts 1 from the currentSectionPage value then updates the ItemSlots' Items to the StoreSection Items of that page by calling UpdateDisplayedItems().
+    /** \brief Called by the page back/next buttons when clicked/tapped, with the bool as true for the next button and false for the back button. Adds or subtracts 1 from the currentSectionPage value then updates the ItemSlots' Items to the StoreSection Items of that page by calling UpdateDisplayedItems().
     */
     public void ChangeSectionPage(bool turnRight)
     {
@@ -244,8 +239,7 @@ public class StoreController : MonoBehaviour
         }
     }
 
-    /** \fn UpdateDisplayedItems
-    *  \brief Sets the ItemSlots' reference Items to the Item list of the current StoreSection and current page number of that list.
+    /** \brief Sets the ItemSlots' reference Items to the Item list of the current StoreSection and current page number of that list.
     */
     private void UpdateDisplayedItems()
     {

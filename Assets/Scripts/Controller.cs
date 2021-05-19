@@ -138,7 +138,7 @@ public class Controller : MonoBehaviour
             {
                 if (item.TryGetClosestAvailableInstance(attemptingDog)) { return true; }
             }
-        } 
+        }
         return false;
     }
 
@@ -280,6 +280,8 @@ public class CareProperty
     */
     public bool IsState(string state)
     {
+        //UpdateValue(0);
+
         if (m_states.ContainsKey(state)) { return m_currentStates.Contains(state); }
         else { Debug.Log("No care property has a state defined as " + state); return false; }
     }

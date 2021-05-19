@@ -384,7 +384,7 @@ public class DogGeneration : MonoBehaviour
         Debug.Log("All dog breeds already present.");
     }
 
-    /** \brief Not for actual use. Just an informal function for debugging purposes to check an individual breed is generated correctly. Generates a breed of a specified type */
+    /** \brief Not for actual use. Just an informal function for debugging purposes to check an individual breed is generated correctly. Generates a breed of a specified type. */
     public void DEBUG_GenerateDogBreed(DogBreed type)
     {
         GenerateDog(type);
