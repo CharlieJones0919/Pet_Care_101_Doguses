@@ -45,7 +45,7 @@ public class GameTime : MonoBehaviour
         controller.tipPopUp.DisplayTipMessage("This is your first dog! You should buy them a bed and some food with your first daily allowance at the store. (Bottom left).");
         controller.tipPopUp.DisplayTipMessage("You're currently recieving a bonus because your dog has peak care values.");
         controller.tipPopUp.DisplayTipMessage("Use the blue buttons to control the game's speed.");
-        controller.tipPopUp.DisplayTipMessage("And remember, always do your own reseach if you're going to adopt a dog or any pet. While intended to be educational, the information given in this game is gamified/anacdotal and not academically cited.");
+        controller.tipPopUp.DisplayTipMessage("And remember, always do your own reseach when making a care decision for your pet. While intended to be educational, the information implied in this game is gamified & subjective.");
     }
 
     /** \fn Update
