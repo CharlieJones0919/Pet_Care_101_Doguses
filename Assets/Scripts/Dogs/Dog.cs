@@ -726,12 +726,9 @@ public class Dog : MonoBehaviour
 
                     if (m_currentItemTarget.NeedsUseOffset())
                     {
-                        Vector3 usePosition = m_currentObjectTarget.transform.position;
-                        Vector2 usePosOffset = m_currentItemTarget.GetUsePosOffset();
-                        usePosition.x += usePosOffset.x;
-                        usePosition.y = transform.position.y;
-                        usePosition.z += usePosOffset.y;
-                        transform.position = usePosition;
+                        Vector3 usePos = m_currentObjectTarget.transform.position + m_currentItemTarget.GetUsePosOffset();
+                        usePos.y += transform.position.y;
+                        transform.position = usePos;
                     }
 
                     if (m_currentItemTarget.IsSingleUse())

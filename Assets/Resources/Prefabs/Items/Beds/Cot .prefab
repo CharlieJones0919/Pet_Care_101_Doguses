@@ -54,7 +54,7 @@ MonoBehaviour:
   personalityFufillmentAmounts:
   - 0.000125
   - 0.00015
-  m_instancePrefab: {fileID: 7134088005383308378, guid: c5fa6c2235488bf4e8fdb578da5f0450,
+  m_instancePrefab: {fileID: 1619229728352014971, guid: b4de0acb41e72bb4cb1831e9956d9c41,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -10, z: 0}
   m_itemType: 2
@@ -65,5 +65,5 @@ MonoBehaviour:
     be more comfortable than the ground, and will be warmer due to the distance made
     from the cold floor.
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0}
+  m_relUsePos: {x: 0, y: 1.5, z: 0}
   m_needsUseOffset: 1

@@ -54,7 +54,7 @@ MonoBehaviour:
   personalityFufillmentAmounts:
   - 0.0002
   - 0.00025
-  m_instancePrefab: {fileID: 7134088005383308378, guid: c5fa6c2235488bf4e8fdb578da5f0450,
+  m_instancePrefab: {fileID: 9112361658312237801, guid: 26bc865cc6b7b664ebb1fe621e434feb,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -10, z: 0}
   m_itemType: 2
@@ -64,5 +64,5 @@ MonoBehaviour:
   m_description: One of the most comfortable options and cheaper than a bought for
     purpose dog bed.
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0}
+  m_relUsePos: {x: 0, y: 0.25, z: 0}
   m_needsUseOffset: 1

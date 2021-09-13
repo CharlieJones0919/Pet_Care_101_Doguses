@@ -54,7 +54,7 @@ MonoBehaviour:
   personalityFufillmentAmounts:
   - -0.000115
   - -0.000105
-  m_instancePrefab: {fileID: 7134088005383308378, guid: c5fa6c2235488bf4e8fdb578da5f0450,
+  m_instancePrefab: {fileID: 5125679557522645801, guid: 2a339c68c5f1e7546b1e105bd531f228,
     type: 3}
   m_instancesInactivePos: {x: 0, y: -10, z: 0}
   m_itemType: 2
@@ -65,5 +65,5 @@ MonoBehaviour:
     as comfortable for your dog. This option may be bad for your dog's health in
     the long run due to the lack of padding and poor protection from the cold.
   m_singleUse: 0
-  m_relUsePos: {x: 0, y: 0}
+  m_relUsePos: {x: 0, y: 0.5, z: 0}
   m_needsUseOffset: 1

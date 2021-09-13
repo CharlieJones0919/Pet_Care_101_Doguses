@@ -40,7 +40,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     [SerializeField] private string m_description = null;        //!< Description of this Item for the store.
 
     [SerializeField] private bool m_singleUse = false;           //!< Whether or not this item can be used multiple times or just once. (E.g. Food items are single use and will be deactivated after use, but beds will remain after use).
-    [SerializeField] private Vector2 m_relUsePos = Vector2.zero; //!< Where the dog should be positioned on the X and Z axis relative to an object instance of this Item when using it. (E.g. Placed in the centre of a bed). Only X&Y as the dogs heights/Y-positions will vary depending on breed which would differ their required Y-offset.
+    [SerializeField] private Vector3 m_relUsePos = Vector2.zero; //!< Where the dog should be positioned on the object instance when using it. (E.g. Placed in the centre of a bed). 
     [SerializeField] private bool m_needsUseOffset = false;      //!< Whether or not to actually set the dog's position to the specified m_relUsePos. Some Items don't require the dog to be positioned anywhere in partiular around the item instance to use them.
 
     /** \fn InstantiatePool
@@ -287,7 +287,7 @@ public class Item : MonoBehaviour, ISerializationCallbackReceiver
     /** \fn GetUsePosOffset
     *   \brief Returns the Item's position offset for use.
     */
-    public Vector2 GetUsePosOffset() { return m_relUsePos; }
+    public Vector3 GetUsePosOffset() { return m_relUsePos; }
     /** \fn GetUsePosOffset
     *   \brief Returns whether the Item's requires a position offset to use.
     */

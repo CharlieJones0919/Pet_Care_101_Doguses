@@ -280,8 +280,10 @@ public class DogGeneration : MonoBehaviour
         string[] attentionState = { "Lonely", "Loved", "Overcrowded" };
         Vector2[] attentionStateRanges = { new Vector2(0, 50), new Vector2(50, 100), new Vector2(100, 100) };
 
-        string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated" };
-        Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 50), new Vector2(50, 100), new Vector2(100, 100) };
+        //string[] restState = { "Exhausted", "Tired", "Rested", "Rejuvinated" };
+        //Vector2[] restStateRanges = { new Vector2(0, 20), new Vector2(0, 50), new Vector2(50, 100), new Vector2(100, 100) };
+        string[] restState = { "Tired" };
+        Vector2[] restStateRanges = { new Vector2(0, 100) };
 
         string[] hygieneState = { "Filthy", "Dirty", "Clean" };
         Vector2[] hygieneStateRanges = { new Vector2(0, 20), new Vector2(0, 60), new Vector2(60, 100) };
