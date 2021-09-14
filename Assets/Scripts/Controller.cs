@@ -21,7 +21,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private Text ffButtonText = null; //!< Reference to the number text on the fast forward button to display the current time multiplier to.
 
     [SerializeField] private float playerMoney = 0;    //!< The player's in-game currency value.
-    private const float allowance = 50;                //!< How much money the player is given daily. (In-game days).
+    private const float allowance = 75;                //!< How much money the player is given daily. (In-game days).
     private const float bonusPay = 0.05f;              //!< How much money the player is given for as long as a dog has peak care conditions.
     [SerializeField] private List<Text> playerMoneyTextboxes = new List<Text>(); //!< Textboxes the player's money value is outputted to.
 
