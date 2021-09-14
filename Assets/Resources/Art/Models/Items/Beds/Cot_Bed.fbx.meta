@@ -13,7 +13,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: DetailColourB
-    second: {fileID: 2100000, guid: 351aedab16e41014b8313d72f899df74, type: 2}
+    second: {fileID: 2100000, guid: be80737d8c0a7a24da72f7fc1565cffd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
